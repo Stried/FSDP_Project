@@ -1,7 +1,7 @@
 const express = require("express");
-const ecolifeData = require("../models/ecolifeData");
 const router = express.Router();
 const yup = require("yup");
+const { ecolifeData } = require('../models');
 
 router.post("/createAccount", async (req, res) => {
     let data = req.body;
@@ -30,3 +30,5 @@ router.post("/createAccount", async (req, res) => {
     let result = await ecolifeData.create(data);
     res.json(result);
 })
+
+module.exports = router
