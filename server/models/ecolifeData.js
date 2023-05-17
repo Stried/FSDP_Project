@@ -27,3 +27,6 @@ module.exports = (sequelize, DataTypes) => {
 
     return userAccount;
 }
+
+module.exports = (sequlize, DataTypes) => {
+}

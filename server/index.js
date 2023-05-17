@@ -10,6 +10,9 @@ app.get("/", (req, res) => {
     res.send("Welcome to EcoLife");
 })
 
-app.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}`);
+const db = require("./models");
+db.sequelize.sync({ alter: true }).then(() => {
+    app.listen(port, () => {
+      console.log(`Server running on http://localhost:${port}`);
+    });
 })
