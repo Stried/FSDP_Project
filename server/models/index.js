@@ -11,8 +11,8 @@ require('dotenv').config();
 // Create sequelize instance using config
 // THis file creates the sequelized instance and reads the model files from the same directory
 let sequelize = new Sequelize(
-    process.env.DB_NAME, process.env.DB_USER, process.env.DB_PWD,
     {
+        host: "localhost",
         dialect: 'sqlite',
         storage: "data/ecolife.sqlite",
     }

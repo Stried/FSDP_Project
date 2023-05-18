@@ -1,7 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const yup = require("yup");
-const { ecolifeData } = require('../models');
+const { sequelize } = require("../models/");
+const { DataTypes } = require("sequelize");
+const { ecolifeData } = require('../models/')
 
 router.post("/createAccount", async (req, res) => {
     let data = req.body;
