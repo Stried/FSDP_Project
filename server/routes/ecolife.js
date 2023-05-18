@@ -94,12 +94,37 @@ router.put("/editUser/:id", async (req, res) => {
 
     if (userAccount == 1) {
         res.json({
-            message: "Tutorial has been successfully updated."
+            message: "User has been successfully updated."
         })
     } else {
         res.status(400).json({
-            message: `Cannot update tutorial with id ${user}`
+            message: `Cannot update User with id ${user}`
         })
+    }
+})
+
+// Deleting Individual Account (Admin only or accessible bby user?)
+router.delete("/deleteUser/:id", async (req, res) => {
+    let user = req.params.id;
+    
+    let findUser = UserAccount.findByPk(user);
+    if (!findUser) {
+        console.log("User not found.") // Should not be happening if accessible by user.
+        res.sendStatus(404);
+    } else {
+        let deleteUser = await UserAccount.destroy({
+            where: {id: user}
+        })
+
+        if (deleteUser == 1) {
+            res.json({
+                message: "User was successfully deleted."
+            })
+        } else {
+            res.status(400).json({
+                message: `Cannot delete user with id ${user}`
+            })
+        }
     }
 })
 
