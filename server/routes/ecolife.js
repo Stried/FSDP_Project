@@ -3,8 +3,9 @@ const router = express.Router();
 const yup = require("yup");
 const { sequelize } = require("../models/");
 const { DataTypes } = require("sequelize");
-const { ecolifeData } = require('../models/')
+const { UserAccount, Sequelize } = require('../models/')
 
+// Alan - Accont Creation
 router.post("/createAccount", async (req, res) => {
     let data = req.body;
     let validationSchema = yup.object().shape({
@@ -29,8 +30,28 @@ router.post("/createAccount", async (req, res) => {
     data.emailAccount = data.emailAccount.trim()
     data.password = data.password.trim();
 
-    let result = await ecolifeData.create(data);
-    res.json(result);
+    // TODO: Fix this create() is not defined 
+    try {
+        let result = await UserAccount.create(data);
+        res.json(result);
+    } catch (err) {
+        console.error(err);
+        throw err;
+    }
+})
+
+// View Individual Account (User)
+router.get("/user/:id", async (req, res) => {
+    let user = req.params.id;
+    let data = req.body;
+
+    let userAccount = await UserAccount.findByPk(user);
+    res.json(userAccount)
+
+    if (!userAccount) {
+        res.sendStatus(404);
+        return;
+    }
 })
 
 module.exports = router

@@ -9,7 +9,7 @@ app.use(express.json());
 let port = process.env.APP_PORT;
 
 app.get("/", (req, res) => {
-    res.send("Welcome to EcoLife");
+    res.send("Welcome to EcoLife. Where are my children?!");
 })
 
 // Routes

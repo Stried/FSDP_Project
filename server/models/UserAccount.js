@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const userAccount = sequelize.define("accountCreation", {
+    const UserAccount = sequelize.define("UserAccount", {
         uniqueID: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4
@@ -34,5 +34,5 @@ module.exports = (sequelize, DataTypes) => {
         }
     });
 
-    return userAccount;
+    return UserAccount;
 }
