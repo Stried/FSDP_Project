@@ -3,7 +3,7 @@ const router = express.Router();
 const yup = require("yup");
 const { sequelize } = require("../models/");
 const { DataTypes } = require("sequelize");
-const { UserAccount, Sequelize } = require('../models/')
+const { UserAccount, Sequelize } = require('../models/') // imports the model name from models
 
 // Alan - Accont Creation
 router.post("/createAccount", async (req, res) => {
@@ -41,7 +41,7 @@ router.post("/createAccount", async (req, res) => {
 })
 
 // View Individual Account (User)
-router.get("/user/:id", async (req, res) => {
+router.get("/user/:id", async (req, res) => { // Remember to put req then res
     let user = req.params.id;
     let data = req.body;
 
@@ -51,6 +51,33 @@ router.get("/user/:id", async (req, res) => {
     if (!userAccount) {
         res.sendStatus(404);
         return;
+    }
+})
+
+// Edit Individual Account (User)
+router.put("/editUser/:id", async (req, res) => {
+    let user = req.params.id;
+    let data = req.body;
+    console.log(data)
+
+    let findAccount = UserAccount.findByPk(user);
+    if (!findAccount) {
+        res.sendStatus(404);
+        return;
+    }
+
+    let userAccount = await UserAccount.update(data, {
+        where: { id: user }
+    });
+
+    if (userAccount == 1) {
+        res.json({
+            message: "Tutorial has been successfully updated."
+        })
+    } else {
+        res.status(400).json({
+            message: `Cannot update tutorial with id ${user}`
+        })
     }
 })
 
