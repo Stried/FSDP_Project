@@ -2,7 +2,7 @@ import "./App.css";
 import { Container, AppBar, Toolbar, Typography } from "@mui/material";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Ecolife from "./pages/Ecolife";
-import UserCreateAccount from "./pages/User/userCreateAccount";
+import UserCreateAccount from "./pages/User/UserCreateAccount";
 
 function App() {
   return (

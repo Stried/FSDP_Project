@@ -23,7 +23,7 @@ body {
     color: lightgray !important;
   }
   .MuiFormLabel-root.Mui-focused {
-    color: #1976d2 !important;
+    color: #44F840 !important;
   }
   .MuiFormLabel-root.Mui-error {
     color: #d32f2f !important;
@@ -32,7 +32,7 @@ body {
     border-color: lightgray !important;
   }
   .MuiInputBase-root.Mui-focused fieldset {
-    border-color: #1976d2 !important;
+    border-color: #44F840 !important;
   }
   .MuiInputBase-root.Mui-error fieldset {
     border-color: #d32f2f !important;
