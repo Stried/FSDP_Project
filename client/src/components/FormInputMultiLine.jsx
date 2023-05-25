@@ -9,7 +9,8 @@ const CssTextField = Constants.CssTextField;
 
 function FormInputMultiLine(props) {
   return (
-    <CssTextField
+    <CssTextField 
+        sx={{input: {color: "black"}}}
       fullWidth
       multiline
       margin="normal"

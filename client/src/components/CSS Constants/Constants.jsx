@@ -1,23 +1,28 @@
 import styled from "@emotion/styled";
-import { TextField } from "@mui/material";
+import { AppBar, TextField } from "@mui/material";
 import React from "react";
 
 export const CssTextField = styled(TextField)({
-    "& label.Mui-focused": {
-        color: "green",
+  "& label.Mui-focused": {
+    color: "#028A0F",
+  },
+  "& .MuiInput-underline:after": {
+    borderBottomColor: "#028A0F",
+  },
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+        borderColor: "black",
+        borderWidth: "2px",
+        
     },
-    "& .MuiInput-underline:after": {
-        borderBottomColor: "green",
+    "&:hover fieldset": {
+      borderColor: "#028A0F",
     },
-    "& .MuiOutlinedInput-root": {
-        "& fieldset": {
-            borderColor: "black",
-        },
-        "&:hover fieldset": {
-            borderColor: "greenyellow",
-        },
-        "&.Mui-focused fieldset": {
-            borderColor: "green",
-        },
-    },
+    "&.Mui-focused fieldset": {
+        borderColor: "#028A0F",
+      },
+    input: {
+        color: "black",
+    }
+  },
 });
