@@ -9,28 +9,34 @@ import './App.css'
 
 function App() {
   return (
-    <Router>
-      <AppBar position="static" className="AppBar">
+    <div >
+      <Router>
+        <AppBar position="static" className="AppBar">
+          <Container className="bg-green-600">
+            <Toolbar disableGutters={true}>
+              <Link to="/">
+                <Typography
+                  variant="h6"
+                  component="div"
+                  className="text-red-400"
+                >
+                  EcoLife
+                </Typography>
+              </Link>
+              <Link to="/createAccount">
+                <Typography>Create Account</Typography>
+              </Link>
+            </Toolbar>
+          </Container>
+        </AppBar>
         <Container>
-          <Toolbar disableGutters={true} className='bg-green-600'>
-            <Link to="/">
-              <Typography variant="h6" component="div" className="text-red-400">
-                EcoLife
-              </Typography>
-            </Link>
-            <Link to="/createAccount">
-              <Typography>Create Account</Typography>
-            </Link>
-          </Toolbar>
+          <Routes>
+            <Route path={"/"} element={<Ecolife />} />
+            <Route path={"/createAccount"} element={<UserCreateAccount />} />
+          </Routes>
         </Container>
-      </AppBar>
-      <Container>
-        <Routes>
-          <Route path={"/"} element={<Ecolife />} />
-          <Route path={"/createAccount"} element={<UserCreateAccount />} />
-        </Routes>
-      </Container>
-    </Router>
+      </Router>
+    </div>
   );
 }
 

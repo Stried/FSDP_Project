@@ -1,43 +1,18 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
 import React from "react";
 import "./../App.css";
+import FormInputSingleLine from "./../components/FormInputSingleLine"
+import FormInputMultiLine from "./../components/FormInputMultiLine";
 
 function UserCreateAccount() {
   return (
     <Box>
-      <Button variant="contained" className="">
-        Test
-      </Button>
-      <Typography className="text-red-400">Account Creation</Typography>
-      <Box component={"form"} sx={{ width: "50%" }}>
-        <TextField
-          className="tw-border-green-400"
-          sx={{}}
-          variant="standard"
-          fullWidth
-          margin="normal"
-          autoComplete="off"
-          type="text"
-          required
-          label="Full Name"
-          name="fullName"
-          focused
-          color="success"
-        />
-        <TextField
-          sx={{}}
-          variant="standard"
-          fullWidth
-          margin="normal"
-          autoComplete="off"
-          type="text"
-          required
-          label="Username"
-          name="username"
-          focused
-          color="success"
-        />
-      </Box>
+      <div className="bg-gray-400 w-1/2 bg-opacity-60 px-3 my-2 rounded-lg">
+        <Box component={"form"} sx={{}}>
+          <FormInputSingleLine name="Full Name" />
+          <FormInputSingleLine name="Username" />
+        </Box>
+      </div>
     </Box>
   );
 }
