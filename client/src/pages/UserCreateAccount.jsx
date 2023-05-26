@@ -7,7 +7,13 @@ import FormInputMultiLine from "./../components/FormInputMultiLine";
 function UserCreateAccount() {
   return (
     <Box>
-      <div className="bg-stone-300 w-1/2 p-3 my-2 rounded-lg">
+      <div className="bg-transparent w-1/2 p-3 my-2 rounded-lg">
+        <Box>
+          <Typography variant="h4">
+            Sign Up For <span className="text-green-400 italic font-medium">Ecolife</span>
+          </Typography>
+        </Box>
+
         <Box component={"form"} sx={{}}>
           <FormInputSingleLine name="Full Name" />
           <FormInputSingleLine name="Username" />

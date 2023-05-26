@@ -10,7 +10,7 @@ import * as Constants from "./../src/components/CSS Constants/Constants";
 
 function App() {
   return (
-    <div>
+    <div className="w-screen h-screen | bg-gray-300 dark:bg-zinc-900">
       <EcoLifeAppBar />
     </div>
   );

@@ -16,9 +16,7 @@ function Ecolife() {
   return (
     <Box>
       <Box sx={{ flexGrow: 1 }} />
-          <Link to="/createAccount" style={{ textDecoration: "none" }}>
-        <Button variant="contained">Find my balls</Button>
-      </Link>
+
     </Box>
   );
 }

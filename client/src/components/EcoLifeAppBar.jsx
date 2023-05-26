@@ -11,28 +11,64 @@ import UserCreateAccount from "../pages/UserCreateAccount";
 function EcoLifeAppBar() {
   return (
     <Router>
-      <nav className="w-screen bg-black dark:bg-green-500 text-white dark:text-black">
+      <nav className="w-screen flex dark:bg-black bg-green-500 dark:text-white text-black">
         <div className="p-3 w-fit">
           <Link to={"/"}>
             <h1
-              className="w-fit | hover:dark:text-white hover:text-green-500 | hover:ease-in-out duration-300
+              className="w-fit | hover:text-white dark:hover:text-green-500 | hover:ease-in-out duration-300
                     italic font-semibold text-4xl | mx-4 my-2"
             >
               Ecolife
+              
             </h1>
           </Link>
         </div>
-        <div name="otherLinks">
-            
+        <div name="otherLinks" className="w-full flex mt-3 mx-4 py-1">
+          <Link to="">
+            <h1
+              className="w-fit | hover:text-white dark:hover:text-green-500 | hover:ease-in-out duration-300
+                    font-medium text-2xl | mx-5 my-2"
+            >
+              Store
+            </h1>
+          </Link>
+
+          <Link to="">
+            <h1
+              className="w-fit | hover:text-white dark:hover:text-green-500 | hover:ease-in-out duration-300
+                    font-medium text-2xl | mx-5 my-2"
+            >
+              Location
+            </h1>
+          </Link>
+
+          <Link to="">
+            <h1
+              className="w-fit | hover:text-white dark:hover:text-green-500 | hover:ease-in-out duration-300
+                    font-medium text-2xl | mx-5 my-2"
+            >
+              Trial Runs
+            </h1>
+          </Link>
+        </div>
+        <div name="loginButton" className="right-0 absolute my-3 mx-2">
+          <Link to="/createAccount">
+            <h1
+              className="w-fit | hover:text-white dark:hover:text-green-500 | border-white dark:border-green-500 border-solid border-2 rounded
+              hover:ease-in-out duration-300 | font-semibold text-xl | mx-4 mt-3 px-2 py-1 | float-right"
+            >
+              Log In
+            </h1>
+          </Link>
         </div>
       </nav>
 
-      {/* <Container>
+      <Container>
         <Routes>
-          <Route path={"/"} element={<Ecolife />} />
+          <Route path={"/"}/>
           <Route path={"/createAccount"} element={<UserCreateAccount />} />
         </Routes>
-      </Container> */}
+      </Container>
     </Router>
   );
 }

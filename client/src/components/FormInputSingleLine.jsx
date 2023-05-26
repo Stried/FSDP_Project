@@ -1,23 +1,28 @@
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { Box, Button, TextField, Typography, CssBaseline } from "@mui/material";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 import React from "react";
 import "./../App.css";
 import * as Constants from "./CSS Constants/Constants";
 
 const CssTextField = Constants.CssTextField;
+const DarkTheme = Constants.DarkTheme;
 
 function FormInputSingleLine(props) {
   return (
-    <CssTextField
-      className="border-green-400 border-5"
-      fullWidth
-      margin="normal"
-      autoComplete="off"
-      type="text"
-      required
-      label={props.name}
-      name={props.name}
-      inputProps={{ style: { color: "green" } }}
-    />
+    <ThemeProvider theme={DarkTheme}>
+      <CssBaseline />
+      <CssTextField
+        className="border-green-400 border-5"
+        fullWidth
+        margin="normal"
+        autoComplete="off"
+        type="text"
+        required
+        label={props.name}
+        name={props.name}
+        inputProps={{ style: { color: "white" } }}
+      />
+    </ThemeProvider>
   );
 }
 
