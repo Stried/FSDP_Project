@@ -13,7 +13,7 @@ router.post("/createAccount", async (req, res) => {
         userName: yup.string().trim().min(3).max(50).required(),
         phoneNo: yup.number().min(80000000).max(99999999).required(),
         emailAccount: yup.string().email().required(),
-        password: yup.string().min(8).max(16).required()
+        password: yup.string().min(8).max(30).required()
     });
     try {
         await validationSchema.validate(data, { abortEarly: false });
@@ -65,7 +65,7 @@ router.put("/editUser/:id", async (req, res) => {
         userName: yup.string().trim().min(3).max(50).required(),
         phoneNo: yup.number().min(80000000).max(99999999).required(),
         emailAccount: yup.string().email().required(),
-        password: yup.string().min(8).max(16).required(),
+        password: yup.string().min(8).max(30).required(),
     });
 
     try {

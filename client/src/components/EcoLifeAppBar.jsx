@@ -12,7 +12,7 @@ import UserEnterAccount from "../pages/UserEnterAccount";
 function EcoLifeAppBar() {
   return (
     <Router>
-      <nav className="flex dark:bg-black bg-green-500 dark:text-white text-black">
+      <nav className="flex dark:bg-black bg-green-500 dark:text-white text-black overflow-x-hidden">
         <div className="p-3 w-fit">
           <Link to={"/"}>
             <h1
