@@ -10,7 +10,6 @@ const DarkTheme = Constants.DarkTheme;
 function FormInputSingleLine(props) {
   return (
     <ThemeProvider theme={DarkTheme}>
-      <CssBaseline />
       <CssTextField
         className="border-green-400 border-5"
         fullWidth

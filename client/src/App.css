@@ -8,4 +8,9 @@
 
 body {
   background-color: rgb(209 213 219);
+  font-family: 'Montserrat', sans-serif;
+}
+
+input[type=checkbox] {
+  transform: scale(1.5);
 }
