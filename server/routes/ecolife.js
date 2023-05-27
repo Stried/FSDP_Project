@@ -30,6 +30,14 @@ router.post("/createAccount", async (req, res) => {
     data.emailAccount = data.emailAccount.trim()
     data.password = data.password.trim();
 
+    let user = await UserAccount.findOne({
+        where: { email: data.email }
+    });
+    if (user) {
+        res.status(400).json({ message: "Email already exists." });
+        return;
+    }
+
     // TODO: Fix this create() is not defined 
     try {
         let result = await UserAccount.create(data);

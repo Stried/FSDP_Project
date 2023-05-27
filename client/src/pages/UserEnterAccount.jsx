@@ -7,8 +7,8 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 function UserEnterAccount() {
     return (
-      <Box component={"div"} className="my-4 py-5 ">
-        <div className="bg-transparent w-1/2 py-3 my-5 rounded-lg ">
+      <Box component={"div"} className="py-5 ">
+        <div className="bg-transparent w-1/2 py-3 rounded-lg ">
           <Box>
             <Typography
               variant="h4"
@@ -34,7 +34,7 @@ function UserEnterAccount() {
             <Typography className="opacity-60 mb-4 text-black dark:text-white">
               Do not have an account?{" "}
               <span className="text-blue-400">
-                <Link to="/createAccount">Sign Up</Link>
+                <Link to="/user/createAccount">Sign Up</Link>
               </span>
             </Typography>
 

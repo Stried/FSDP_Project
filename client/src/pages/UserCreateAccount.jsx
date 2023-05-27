@@ -57,8 +57,8 @@ function UserCreateAccount() {
   });
 
   return (
-    <Box component={"div"} className="mt-4 py-5 h-screen">
-      <div className="bg-transparent w-1/2 py-3 my-5 rounded-lg ">
+    <Box component={"div"} className=" py-5 h-screen">
+      <div className="bg-transparent w-1/2 py-3 rounded-lg ">
         <Box>
           <Typography variant="h4" className="text-black dark:text-white">
             Sign Up For{" "}
@@ -115,7 +115,7 @@ function UserCreateAccount() {
           <Typography className="opacity-60 mb-4 text-black dark:text-white">
             Already have an account?{" "}
             <span className="text-blue-400">
-              <Link to="/login">Log In</Link>
+              <Link to="/user/login">Log In</Link>
             </span>
           </Typography>
 
