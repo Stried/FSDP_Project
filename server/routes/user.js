@@ -6,6 +6,7 @@ const { DataTypes } = require("sequelize");
 const { UserAccount, Sequelize } = require("../models/"); // imports the model name from models, must match waht is defined in the model
 const bcrypt = require("bcrypt");
 const { sign } = require("jsonwebtoken");
+const { validateToken } = require("../middlewares/auth");
 require('dotenv').config();
 
 // Alan - Accont Creation
@@ -62,13 +63,13 @@ router.post("/login", async (req, res) => {
     where: { emailAccount: data.emailAccount },
   });
   if (!user) {
-    res.status(400).json({ message: errorMsg + "No user found" });
+    res.status(400).json({ message: errorMsg});
     return;
   }
 
   let match = await bcrypt.compare(data.password, user.password);
   if (!match) {
-    res.status(400).json({ message: errorMsg + "Password wrong" });
+    res.status(400).json({ message: errorMsg });
   }
 
   let userInfo = {
@@ -83,6 +84,19 @@ router.post("/login", async (req, res) => {
     res.json({
         accessToken: accessToken,
         user: userInfo
+  });
+});
+
+router.get("/auth", validateToken, (req, res) => {
+  let userInfo = {
+    id: req.user.id,
+    fullName: req.user.fullName,
+    userName: req.user.userName,
+    emailAccount: req.user.emailAccount,
+    phoneNo: req.user.phoneNo
+  };
+  res.json({
+    user: userInfo
   });
 });
 

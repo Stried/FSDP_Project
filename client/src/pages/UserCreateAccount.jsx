@@ -13,6 +13,8 @@ import FormInputSingleLine from "./../components/FormInputSingleLine";
 import FormInputMultiLine from "./../components/FormInputMultiLine";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function UserCreateAccount() {
   const navigate = useNavigate();
@@ -61,10 +63,15 @@ function UserCreateAccount() {
       data.emailAccount = data.emailAccount.trim();
       data.password = data.password.trim();
 
-      http.post("/user/createAccount", data).then((res) => {
-        console.log(res.data);
-        navigate("/user/login");
-      });
+      http
+        .post("/user/createAccount", data)
+        .then((res) => {
+          console.log(res.data);
+          navigate("/user/login");
+        })
+        .catch(function (err) {
+          toast.error(`${err.response.data.message}`);
+        });
     },
   });
 
@@ -123,6 +130,8 @@ function UserCreateAccount() {
             error={formik.touched.password && Boolean(formik.errors.password)}
             helperText={formik.touched.password && formik.errors.password}
           />
+
+          <ToastContainer />
 
           <Typography className="opacity-60 mb-4 text-black dark:text-white">
             Already have an account?{" "}

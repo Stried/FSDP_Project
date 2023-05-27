@@ -26,5 +26,19 @@ module.exports = (sequelize, DataTypes) => {
         }
     });
 
+    // UserAccount.associate = (models) => {
+    //     UserAccount.hasMany(models.ModelName, {
+    //         foreignKey: "userId",
+    //         onDelete: "cascade"
+    //     })
+    // }
+
+    // ModelName.associate = (models) => {
+    //     ModelName.belongsTo(models.UserAccount, {
+    //         foreignKey: "userId",
+    //         as: "user"
+    //     })
+    // }
+
     return UserAccount;
 }
