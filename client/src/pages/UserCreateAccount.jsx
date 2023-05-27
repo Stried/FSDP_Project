@@ -1,5 +1,11 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  useNavigate,
+} from "react-router-dom";
 import React, { useEffect } from "react";
 import "./../App.css";
 import http from "../http";
@@ -9,6 +15,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 
 function UserCreateAccount() {
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       fullName: "",
@@ -53,6 +60,11 @@ function UserCreateAccount() {
       data.phoneNo = data.phoneNo.trim();
       data.emailAccount = data.emailAccount.trim();
       data.password = data.password.trim();
+
+      http.post("/user/createAccount", data).then((res) => {
+        console.log(res.data);
+        navigate("/user/login");
+      });
     },
   });
 
