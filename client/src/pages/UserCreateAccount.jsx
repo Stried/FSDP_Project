@@ -1,4 +1,13 @@
-import { Box, Button, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  TextField,
+  Typography,
+  InputAdornment,
+  IconButton,
+} from "@mui/material";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import {
   BrowserRouter as Router,
   Routes,
@@ -17,6 +26,14 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function UserCreateAccount() {
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
@@ -89,6 +106,7 @@ function UserCreateAccount() {
           <FormInputSingleLine
             name="Full Name"
             valueName="fullName"
+            type="text"
             onChange={formik.handleChange}
             value={formik.values.fullName}
             error={formik.touched.fullName && Boolean(formik.errors.fullName)}
@@ -97,6 +115,7 @@ function UserCreateAccount() {
           <FormInputSingleLine
             name="Username"
             valueName="userName"
+            type="text"
             onChange={formik.handleChange}
             value={formik.values.userName}
             error={formik.touched.userName && Boolean(formik.errors.userName)}
@@ -105,6 +124,7 @@ function UserCreateAccount() {
           <FormInputSingleLine
             name="Phone Number"
             valueName="phoneNo"
+            type="text"
             onChange={formik.handleChange}
             value={formik.values.phoneNo}
             error={formik.touched.phoneNo && Boolean(formik.errors.phoneNo)}
@@ -113,6 +133,7 @@ function UserCreateAccount() {
           <FormInputSingleLine
             name="Email Address"
             valueName="emailAccount"
+            type="text"
             onChange={formik.handleChange}
             value={formik.values.emailAccount}
             error={
@@ -125,10 +146,23 @@ function UserCreateAccount() {
           <FormInputSingleLine
             name="Password"
             valueName="password"
+            type={showPassword ? "text" : "password"}
             onChange={formik.handleChange}
             value={formik.values.password}
             error={formik.touched.password && Boolean(formik.errors.password)}
             helperText={formik.touched.password && formik.errors.password}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
           />
 
           <ToastContainer />

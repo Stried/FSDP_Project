@@ -17,6 +17,7 @@ const allRoutes = require('./routes/ecolife');
 app.use("/", allRoutes);
 const userRoute = require("./routes/user");
 app.use("/user", userRoute);
+const adminRoute = require("./routes/admin")
 
 const db = require("./models");
 db.sequelize.sync({ alter: true }).then(() => {
