@@ -4,11 +4,13 @@ import React from "react";
 import { useState, useEffect } from "react";
 import "./../App.css";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import http from "./../http";
 
 // Pages Import
 import Ecolife from "../pages/Ecolife";
 import UserCreateAccount from "../pages/UserCreateAccount";
 import UserEnterAccount from "../pages/UserEnterAccount";
+import UserDetailsPage from "../pages/UserDetailsPage";
 import { Button } from "@mui/base";
 
 function EcoLifeAppBar() {
@@ -17,7 +19,9 @@ function EcoLifeAppBar() {
   useEffect(() => {
     if (localStorage.getItem("accessToken")) {
       // Todo: Get user data from server
-      setUser({ name: "Stried" });
+      http.get("/user/auth").then((res) => {
+        setUser(res.data.user);
+      });
     }
   }, []);
 
@@ -70,13 +74,13 @@ function EcoLifeAppBar() {
         <div name="loginButton" className="w-full place-content-end my-2 mx-2">
           {user && (
             <>
-              <Link to="/">
+              <Link to="/user/viewAccount">
                 <h1
                   className="w-max | text-transparent bg-gradient-to-r from-green-400 to-emerald-600 bg-clip-text |
                   hover:text-white hover:bg-gradient-to-r from-green-400 to-emerald-600 hover:bg-clip-border rounded-lg
                     hover:ease-in-out duration-300 | font-medium italic text-2xl | mx-4 px-2 py-1 | float-right"
                 >
-                  {user.name}
+                  {user.userName}
                 </h1>
               </Link>
               <Button onClick={logout}>Logout</Button>
@@ -87,7 +91,7 @@ function EcoLifeAppBar() {
               <Link to="/user/login">
                 <h1
                   className="w-max | text-white hover:text-black | dark:hover:bg-gradient-to-r from-green-400 to-emerald-600 | border-white dark:border-green-500 border-solid border-2 rounded
-              hover:ease-in-out duration-300 | font-semibold text-xl | mx-4 mt-3 px-2 py-1 | float-right"
+              hover:ease-in-out duration-300 | font-semibold text-xl | mx-4 mt-1 px-2 py-1 | float-right"
                 >
                   Log In
                 </h1>
@@ -102,6 +106,7 @@ function EcoLifeAppBar() {
           <Route path={"/"} />
           <Route path={"/user/createAccount"} element={<UserCreateAccount />} />
           <Route path={"/user/login"} element={<UserEnterAccount />} />
+          <Route path={"/user/viewAccount"} element={<UserDetailsPage />} />
         </Routes>
       </Container>
     </Router>

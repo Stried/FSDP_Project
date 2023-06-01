@@ -70,6 +70,7 @@ router.post("/login", async (req, res) => {
   let match = await bcrypt.compare(data.password, user.password);
   if (!match) {
     res.status(400).json({ message: errorMsg });
+    return;
   }
 
   let userInfo = {
