@@ -37,13 +37,15 @@ function ChangeAccountDetails() {
         window.location = "/";
     };
 
+    let userInfo = user
+
     const formik = useFormik({
         initialValues: {
-            fullName: user.fullName,
-            userName: user.userName,
-            phoneNo: user.phoneNo,
-            emailAccount: user.emailAccount,
-            password: user.password
+            fullName: "",
+            userName: "",
+            phoneNo: "",
+            emailAccount: "",
+            password: ""
         },
         validationSchema: yup.object().shape({
             fullName: yup
@@ -92,5 +94,15 @@ function ChangeAccountDetails() {
                     toast.error(`${err.response.data.message}`);
                 });
         },
-    })
+    });
+
+    return (
+        <div>
+            <h1 className="text-white">
+                Change User Details
+            </h1>
+        </div>
+    )
 }
+
+export default ChangeAccountDetails

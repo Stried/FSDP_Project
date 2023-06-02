@@ -49,7 +49,7 @@ function ViewAccount() {
                                 </p>
                             </div>
                             <div id="nameSection" className="flex space-x-10">
-                                <div id="fullName" className="my-2">
+                                <div id="fullName" className="my-3">
                                     <h1 className="text-green-400 font-medium text-2xl">
                                         Full Name
                                     </h1>
@@ -57,7 +57,7 @@ function ViewAccount() {
                                         {user.fullName}
                                     </p>
                                 </div>
-                                <div id="userName" className="my-2">
+                                <div id="userName" className="my-3">
                                     <h1 className="text-green-400 font-medium text-2xl">
                                         Username
                                     </h1>
@@ -66,7 +66,7 @@ function ViewAccount() {
                                     </p>
                                 </div>
                             </div>
-                            <div id="emailAccount" className="my-2">
+                            <div id="emailAccount" className="my-3">
                                 <h1 className="text-green-400 font-medium text-2xl">
                                     Email Account
                                 </h1>
@@ -74,7 +74,7 @@ function ViewAccount() {
                                     {user.emailAccount}
                                 </p>
                             </div>
-                            <div id="phoneNo" className="my-2">
+                            <div id="phoneNo" className="my-3">
                                 <h1 className="text-green-400 font-medium text-2xl">
                                     Phone Number
                                 </h1>

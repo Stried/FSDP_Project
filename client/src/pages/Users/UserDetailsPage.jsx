@@ -17,9 +17,11 @@ import http from "../../http";
 import { ToastContainer, toast } from "react-toastify";
 
 import ViewAccount from "./userComponents/ViewAccount"
+import ChangeAccountDetails from "./userComponents/ChangeAccountDetails"
 
 function UserDetailsPage() {
   const [user, setUser] = useState(null);
+  const [isRendered, setIsRendered] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -38,9 +40,19 @@ function UserDetailsPage() {
     window.location = "/";
   };
 
+  const handleClick = event => {
+    setIsRendered(true)
+  }
+
   const viewAccount = () => {
     if (window.location.pathname === "/user/viewAccount") {
       return <ViewAccount />
+    }
+  }
+
+  const changeAccountDetails = () => {
+    if (window.location.pathname === "/user/viewAccount") {
+      return <ChangeAccountDetails />
     }
   }
 
@@ -50,31 +62,31 @@ function UserDetailsPage() {
         <div className="flex">
           <div className="w-1/4" id="sideBarMenu">
             <div className="text-zinc-400" id="userAccountOptions">
-              <h2 className="text-green-500 text-4xl font-medium">
+              <h2 className="text-green-500 text-3xl font-medium">
                 User Account
               </h2>
-              <ul className="text-2xl pl-5 border-l-2 border-solid border-white">
+              <ul className="text-xl pl-5 border-l-2 border-solid border-white">
                 <li className="pt-3 hover:text-green-500 hover:transition-ease-in-out duration-300">
                   <Link to="/user/viewAccount">
                     Account Details
                   </Link>
                 </li>
-                <li className="pt-3 hover:text-green-500 hover:transition-ease-in-out duration-300">
-                  <Link to="">
+                <li className="pt-4 hover:text-green-500 hover:transition-ease-in-out duration-300">
+                  <Link to="/user/viewAccount/changeAccountDetails">
                     Change Details
                   </Link>
                 </li>
-                <li className="pt-3 hover:text-green-500 hover:transition-ease-in-out duration-300">
+                <li className="pt-4 hover:text-green-500 hover:transition-ease-in-out duration-300">
                   <Link to="">
                     Payment Methods
                   </Link>
                 </li>
-                <li className="pt-3 hover:text-green-500 hover:transition-ease-in-out duration-300">
+                <li className="pt-4 hover:text-green-500 hover:transition-ease-in-out duration-300">
                   <Link to="">
                     Membership Status
                   </Link>
                 </li>
-                <li className="pt-3 hover:text-green-500 hover:transition-ease-in-out duration-300">
+                <li className="pt-4 hover:text-green-500 hover:transition-ease-in-out duration-300">
                   <Link to="">
                     Settings
                   </Link>
@@ -82,31 +94,31 @@ function UserDetailsPage() {
               </ul>
             </div>
             <div className="text-zinc-400 mt-5" id="ecolifeInformation">
-              <h2 className="text-green-500 text-4xl font-medium">
+              <h2 className="text-green-500 text-3xl font-medium">
                 Vehicle Information
               </h2>
-              <ul className="text-2xl pl-5 border-l-2 border-solid border-white">
+              <ul className="text-xl pl-5 border-l-2 border-solid border-white">
                 <li className="pt-3 hover:text-green-500 hover:transition-ease-in-out duration-300">
                   <Link to="">
                     Registered Vehicle
                   </Link>
                 </li>
-                <li className="pt-3 hover:text-green-500 hover:transition-ease-in-out duration-300">
+                <li className="pt-4 hover:text-green-500 hover:transition-ease-in-out duration-300">
                   <Link to="">
                     Purchased Vehicles
                   </Link>
                 </li>
-                <li className="pt-3 hover:text-green-500 hover:transition-ease-in-out duration-300">
+                <li className="pt-4 hover:text-green-500 hover:transition-ease-in-out duration-300">
                   <Link to="">
                     Sold Vehicles
                   </Link>
                 </li>
-                <li className="pt-3 hover:text-green-500 hover:transition-ease-in-out duration-300">
+                <li className="pt-4 hover:text-green-500 hover:transition-ease-in-out duration-300">
                   <Link to="">
                     Sales Status
                   </Link>
                 </li>
-                <li className="pt-3 hover:text-green-500 hover:transition-ease-in-out duration-300">
+                <li className="pt-4 hover:text-green-500 hover:transition-ease-in-out duration-300">
                   <Link to="">
                     Settings
                   </Link>
@@ -115,9 +127,11 @@ function UserDetailsPage() {
             </div>
           </div>
 
-          <div className="w-3/4 mx-5 h-full">
+          <div className="w-3/4 mx-5 h-full" id="displayComponents">
             {viewAccount()}
+            {changeAccountDetails()}
           </div>
+          
         </div>
       )}
     </div>

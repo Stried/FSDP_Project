@@ -127,8 +127,15 @@ router.get("/myAccount", validateToken, async (req, res) => {
 });
 
 // Edit Individual Account (User)
-router.put("/editUser/:id", async (req, res) => {
-  let user = req.params.id;
+router.put("/viewAccount/changeDetails", validateToken, async (req, res) => {
+  let userInfo = {
+    id: req.user.id,
+    fullName: req.user.fullName,
+    userName: req.user.userName,
+    emailAccount: req.user.emailAccount,
+    phoneNo: req.user.phoneNo,
+  };
+
   let data = req.body;
   console.log(data);
 
@@ -148,7 +155,7 @@ router.put("/editUser/:id", async (req, res) => {
     return;
   }
 
-  let findAccount = UserAccount.findByPk(user);
+  let findAccount = UserAccount.findByPk(userInfo.id);
   if (!findAccount) {
     res.sendStatus(404);
     return;
@@ -161,7 +168,7 @@ router.put("/editUser/:id", async (req, res) => {
   data.password = data.password.trim();
 
   let userAccount = await UserAccount.update(data, {
-    where: { id: user },
+    where: { id: userInfo.id },
   });
 
   if (userAccount == 1) {

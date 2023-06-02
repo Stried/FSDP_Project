@@ -12,6 +12,7 @@ import UserCreateAccount from "../pages/Users/UserCreateAccount";
 import UserEnterAccount from "../pages/Users/UserEnterAccount";
 import UserDetailsPage from "../pages/Users/UserDetailsPage";
 import { Button } from "@mui/base";
+import ChangeAccountDetails from "../pages/Users/userComponents/ChangeAccountDetails";
 
 function EcoLifeAppBar() {
   const [user, setUser] = useState(null);
@@ -107,6 +108,7 @@ function EcoLifeAppBar() {
           <Route path={"/user/createAccount"} element={<UserCreateAccount />} />
           <Route path={"/user/login"} element={<UserEnterAccount />} />
           <Route path={"/user/viewAccount"} element={<UserDetailsPage />} />
+          <Route exact path={"/user/viewAccount/changeDetails"} element={<ChangeAccountDetails />} />
         </Routes>
       </Container>
     </Router>
