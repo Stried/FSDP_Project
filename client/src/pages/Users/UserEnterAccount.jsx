@@ -1,7 +1,7 @@
 import React from "react";
-import "./../App.css";
-import FormInputSingleLine from "./../components/FormInputSingleLine";
-import FormInputMultiLine from "./../components/FormInputMultiLine";
+import "./../../App.css";
+import FormInputSingleLine from "./../../components/FormInputSingleLine";
+import FormInputMultiLine from "./../../components/FormInputMultiLine";
 import { Box, Button, TextField, Typography, InputAdornment, IconButton } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
@@ -14,7 +14,7 @@ import {
 } from "react-router-dom";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import http from "../http";
+import http from "../../http";
 import { ToastContainer, toast } from "react-toastify";
 
 function UserEnterAccount() {

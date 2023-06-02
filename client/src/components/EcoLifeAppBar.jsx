@@ -8,9 +8,9 @@ import http from "./../http";
 
 // Pages Import
 import Ecolife from "../pages/Ecolife";
-import UserCreateAccount from "../pages/UserCreateAccount";
-import UserEnterAccount from "../pages/UserEnterAccount";
-import UserDetailsPage from "../pages/UserDetailsPage";
+import UserCreateAccount from "../pages/Users/UserCreateAccount";
+import UserEnterAccount from "../pages/Users/UserEnterAccount";
+import UserDetailsPage from "../pages/Users/UserDetailsPage";
 import { Button } from "@mui/base";
 
 function EcoLifeAppBar() {
@@ -83,7 +83,7 @@ function EcoLifeAppBar() {
                   {user.userName}
                 </h1>
               </Link>
-              <Button onClick={logout}>Logout</Button>
+              
             </>
           )}
           {!user && (

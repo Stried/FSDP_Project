@@ -102,16 +102,26 @@ router.get("/auth", validateToken, (req, res) => {
 });
 
 // View Individual Account (User)
-router.get("/user/:id", async (req, res) => {
+router.get("/myAccount", validateToken, async (req, res) => {
   // Remember to put req then res
-  let user = req.params.id;
-  let data = req.body;
+  let userInfo = {
+    id: req.user.id,
+    fullName: req.user.fullName,
+    userName: req.user.userName,
+    emailAccount: req.user.emailAccount,
+    phoneNo: req.user.phoneNo,
+  };
 
-  let userAccount = await UserAccount.findByPk(user);
+  let userAccount = await UserAccount.findByPk(userInfo.id);
   res.json(userAccount);
 
   if (!userAccount) {
     res.sendStatus(404);
+    return;
+  }
+
+  if (!validateToken) {
+    res.sendStatus(401);
     return;
   }
 });
