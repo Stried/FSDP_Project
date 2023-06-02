@@ -108,7 +108,6 @@ function EcoLifeAppBar() {
           <Route path={"/user/createAccount"} element={<UserCreateAccount />} />
           <Route path={"/user/login"} element={<UserEnterAccount />} />
           <Route path={"/user/viewAccount"} element={<UserDetailsPage />} />
-          <Route exact path={"/user/viewAccount/changeDetails"} element={<ChangeAccountDetails />} />
         </Routes>
       </Container>
     </Router>

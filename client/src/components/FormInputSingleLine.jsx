@@ -66,6 +66,7 @@ function FormInputSingleLine(props) {
         autoComplete="off"
         type={props.type}
         required
+        defaultValue={props.defaultValue}
         label={props.name}
         name={props.valueName}
         inputProps={[{ style: { color: "white" } }]}

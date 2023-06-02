@@ -21,7 +21,7 @@ import ChangeAccountDetails from "./userComponents/ChangeAccountDetails"
 
 function UserDetailsPage() {
   const [user, setUser] = useState(null);
-  const [isRendered, setIsRendered] = useState(false);
+  const [isRendered, setIsRendered] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -39,10 +39,6 @@ function UserDetailsPage() {
     localStorage.clear();
     window.location = "/";
   };
-
-  const handleClick = event => {
-    setIsRendered(true)
-  }
 
   const viewAccount = () => {
     if (window.location.pathname === "/user/viewAccount") {
@@ -67,12 +63,12 @@ function UserDetailsPage() {
               </h2>
               <ul className="text-xl pl-5 border-l-2 border-solid border-white">
                 <li className="pt-3 hover:text-green-500 hover:transition-ease-in-out duration-300">
-                  <Link to="/user/viewAccount">
+                  <Link to="/user/viewAccount" onClick={() => setIsRendered("")}>
                     Account Details
                   </Link>
                 </li>
                 <li className="pt-4 hover:text-green-500 hover:transition-ease-in-out duration-300">
-                  <Link to="/user/viewAccount/changeAccountDetails">
+                  <Link to="/user/viewAccount" onClick={() => setIsRendered("changeAccountDetails")}>
                     Change Details
                   </Link>
                 </li>
@@ -128,8 +124,8 @@ function UserDetailsPage() {
           </div>
 
           <div className="w-3/4 mx-5 h-full" id="displayComponents">
-            {viewAccount()}
-            {changeAccountDetails()}
+            {isRendered === "" && (viewAccount())}
+            {isRendered === "changeAccountDetails" && (changeAccountDetails())}
           </div>
           
         </div>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Box, Button, TextField, Typography, InputAdornment, IconButton } from "@mui/material";
 import {
     BrowserRouter as Router,
     Routes,
@@ -14,8 +15,6 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-import { Button } from "@mui/base";
 
 function ChangeAccountDetails() {
     const [user, setUser] = useState(null);
@@ -85,10 +84,9 @@ function ChangeAccountDetails() {
             data.password = data.password.trim();
 
             http
-                .post("/user/createAccount", data)
+                .put("/user/viewAccount/changeDetails", data)
                 .then((res) => {
                     console.log(res.data);
-                    navigate("/user/login");
                 })
                 .catch(function (err) {
                     toast.error(`${err.response.data.message}`);
@@ -97,10 +95,31 @@ function ChangeAccountDetails() {
     });
 
     return (
-        <div>
-            <h1 className="text-white">
-                Change User Details
-            </h1>
+        <div className="text-white">
+            {user && (
+                <div>
+                    <h1 className="text-3xl font-medium">
+                        Change User Details
+                    </h1> 
+                    <Box component={"form"} onSubmit={formik.handleSubmit} className="w-2/3">
+                        <FormInputSingleLine
+                            name="Email Address"
+                            valueName="emailAccount"
+                            type="text"
+                            defaultValue={user.emailAccount}
+                            onChange={formik.handleChange}
+                            value={formik.values.emailAccount}
+                            error={
+                                formik.touched.emailAccount && Boolean(formik.errors.emailAccount)
+                            }
+                            helperText={
+                                formik.touched.emailAccount && formik.errors.emailAccount
+                            }
+                        />
+                    </Box>
+                </div>
+            )}
+
         </div>
     )
 }
