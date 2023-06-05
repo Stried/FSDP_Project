@@ -27,6 +27,7 @@ function FormInputSingleLine(props) {
       emailAccount: "",
       password: "",
     },
+    enableReinitialize: true,
     validationSchema: yup.object().shape({
       fullName: yup
         .string()
@@ -66,18 +67,17 @@ function FormInputSingleLine(props) {
         autoComplete="off"
         type={props.type}
         required
-        defaultValue={props.defaultValue}
         label={props.name}
         name={props.valueName}
-        inputProps={[{ style: { color: "white" } }]}
+        inputProps={{ style: { color: "white" } }}
         InputProps={{
           endAdornment: props.endAdornment
         }}
         onChange={props.onChange}
+        initialValues={props.initialValues}
         value={props.value}
         error={props.error}
         helperText={props.helperText}
-        endAdornment={props.endAdornment}
       />
     </ThemeProvider>
   );

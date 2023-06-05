@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Box, Button, TextField, Typography, InputAdornment, IconButton } from "@mui/material";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import {
     BrowserRouter as Router,
     Routes,
@@ -30,14 +32,26 @@ function ChangeAccountDetails() {
             navigate("/user/login");
         }
     }, []);
+    
+    const [showPassword, setShowPassword] = React.useState(false);
+
+    const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
 
     const logout = () => {
         localStorage.clear();
         window.location = "/";
     };
 
-    let userInfo = user
-
+    let userInfo = () => {
+        http.get("/user/auth").then((res) => {
+            return res.data.user;
+        });
+    }
+    
     const formik = useFormik({
         initialValues: {
             fullName: "",
@@ -46,6 +60,7 @@ function ChangeAccountDetails() {
             emailAccount: "",
             password: ""
         },
+        enableReinitialize: true,
         validationSchema: yup.object().shape({
             fullName: yup
                 .string()
@@ -87,6 +102,7 @@ function ChangeAccountDetails() {
                 .put("/user/viewAccount/changeDetails", data)
                 .then((res) => {
                     console.log(res.data);
+                    logout()
                 })
                 .catch(function (err) {
                     toast.error(`${err.response.data.message}`);
@@ -103,10 +119,36 @@ function ChangeAccountDetails() {
                     </h1> 
                     <Box component={"form"} onSubmit={formik.handleSubmit} className="w-2/3">
                         <FormInputSingleLine
+                            name="Full Name"
+                            valueName="fullName"
+                            type="text"
+                            onChange={formik.handleChange}
+                            initialValues={user.fullName}
+                            value={formik.values.fullName}
+                            error={
+                                formik.touched.fullName && Boolean(formik.errors.fullName)
+                            }
+                            helperText={
+                                formik.touched.fullName && formik.errors.fullName
+                            }
+                        />
+                        <FormInputSingleLine
+                            name="Username"
+                            valueName="userName"
+                            type="text"
+                            onChange={formik.handleChange}
+                            value={formik.values.userName}
+                            error={
+                                formik.touched.userName && Boolean(formik.errors.userName)
+                            }
+                            helperText={
+                                formik.touched.userName && formik.errors.userName
+                            }
+                        />
+                        <FormInputSingleLine
                             name="Email Address"
                             valueName="emailAccount"
                             type="text"
-                            defaultValue={user.emailAccount}
                             onChange={formik.handleChange}
                             value={formik.values.emailAccount}
                             error={
@@ -116,6 +158,49 @@ function ChangeAccountDetails() {
                                 formik.touched.emailAccount && formik.errors.emailAccount
                             }
                         />
+                        <FormInputSingleLine
+                            name="Phone Number"
+                            valueName="phoneNo"
+                            type="text"
+                            onChange={formik.handleChange}
+                            value={formik.values.phoneNo}
+                            error={
+                                formik.touched.phoneNo && Boolean(formik.errors.phoneNo)
+                            }
+                            helperText={
+                                formik.touched.phoneNo && formik.errors.phoneNo
+                            }
+                        />
+                        <FormInputSingleLine
+                            name="Password"
+                            valueName="password"
+                            type={showPassword ? "text" : "password"}
+                            onChange={formik.handleChange}
+                            value={formik.values.password}
+                            error={formik.touched.password && Boolean(formik.errors.password)}
+                            helperText={formik.touched.password && formik.errors.password}
+                            endAdornment={
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        aria-label="toggle password visibility"
+                                        onClick={handleClickShowPassword}
+                                        onMouseDown={handleMouseDownPassword}
+                                        edge="end"
+                                    >
+                                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                                    </IconButton>
+                                </InputAdornment>
+                            }
+                        />
+                        <Box className="w-1/4 py-1">
+                            <Button
+                                variant="contained"
+                                type="submit"
+                                className="bg-green-400 text-black hover:bg-green-600 hover:text-white"
+                            >
+                                Update Details
+                            </Button>
+                        </Box>
                     </Box>
                 </div>
             )}
