@@ -14,13 +14,14 @@ instance.interceptors.request.use(function (config) {
   return Promise.reject(error);
 })
 
-instance.interceptors.response.use(function (response) {
-  return response;
-}, function (error) {
-  if (error.response.status === 401 || error.response.status === 403) {
-    localStorage.clear();
-    window.location="/user/login"
-  }
-})
+// TODO: Why does this collide with my data being undefined in forms.
+// instance.interceptors.response.use(function (response) {
+//   return response;
+// }, function (error) {
+//   if (error.response.status === 401 || error.response.status === 403) {
+//     localStorage.clear();
+//     window.location="/user/login"
+//   }
+// })
 
 export default instance;

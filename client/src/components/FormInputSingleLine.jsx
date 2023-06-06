@@ -74,7 +74,6 @@ function FormInputSingleLine(props) {
           endAdornment: props.endAdornment
         }}
         onChange={props.onChange}
-        initialValues={props.initialValues}
         value={props.value}
         error={props.error}
         helperText={props.helperText}

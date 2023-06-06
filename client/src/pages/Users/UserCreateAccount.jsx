@@ -73,23 +73,26 @@ function UserCreateAccount() {
         .max(30, "Passwords must be at most 30 characters.")
         .required(),
     }),
-    onSubmit: (data) => {
-      data.fullName = data.fullName.trim();
-      data.userName = data.userName.trim();
-      data.phoneNo = data.phoneNo.trim();
-      data.emailAccount = data.emailAccount.trim();
-      data.password = data.password.trim();
+    onSubmit: async (data) => {
+      const formData = {
+        fullName: data.fullName = data.fullName.trim(),
+        userName: data.userName = data.userName.trim(),
+        phoneNo: data.phoneNo = data.phoneNo.trim(),
+        emailAccount: data.emailAccount = data.emailAccount.trim(),
+        password: data.password = data.password.trim()
+      }
 
-      http
-        .post("/user/createAccount", data)
+      await http
+        .post("/user/createAccount", formData)
         .then((res) => {
-          console.log(res.data);
+          console.log(res.status)
           navigate("/user/login");
         })
         .catch(function (err) {
+          console.log(err)
           toast.error(`${err.response.data.message}`);
         });
-    },
+    }
   });
 
   return (

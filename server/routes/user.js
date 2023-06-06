@@ -33,12 +33,19 @@ router.post("/createAccount", async (req, res) => {
   data.emailAccount = data.emailAccount.trim();
   data.password = await bcrypt.hash(data.password, 10);
 
-  let user = await UserAccount.findOne({
+  let userEmail = await UserAccount.findOne({
     where: { emailAccount: data.emailAccount },
+  });
+  if (userEmail) {
+    res.status(400).json({ message: "Email already exists." });
+    return;
+  }
+
+  let userPhoneNo = await UserAccount.findOne({
     where: { phoneNo: data.phoneNo },
   });
-  if (user) {
-    res.status(400).json({ message: "Email or Phone Number already exists." });
+  if (userPhoneNo) {
+    res.status(400).json({ message: "Phone Number already exists" });
     return;
   }
 
@@ -47,6 +54,7 @@ router.post("/createAccount", async (req, res) => {
     res.json(result);
   } catch (err) {
     console.error(err);
+    res.json(err)
     throw err;
   }
 });
@@ -63,7 +71,7 @@ router.post("/login", async (req, res) => {
     where: { emailAccount: data.emailAccount },
   });
   if (!user) {
-    res.status(400).json({ message: errorMsg});
+    res.status(400).json({ message: errorMsg });
     return;
   }
 
