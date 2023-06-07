@@ -63,7 +63,7 @@ router.post("/createAccount", async (req, res) => {
 router.post("/login", async (req, res) => {
   let data = req.body;
 
-  data.emailAccount = data.emailAccount.trim().toLowerCase();
+  data.emailAccount = data.emailAccount.trim();
   data.password = data.password.trim();
 
   let errorMsg = "Email or password is incorrect.";
@@ -141,7 +141,7 @@ router.put("/viewAccount/changeDetails", validateToken, async (req, res) => {
     fullName: req.user.fullName,
     userName: req.user.userName,
     emailAccount: req.user.emailAccount,
-    phoneNo: req.user.phoneNo,
+    phoneNo: req.user.phoneNo
   };
 
   let data = req.body;
@@ -152,7 +152,6 @@ router.put("/viewAccount/changeDetails", validateToken, async (req, res) => {
     userName: yup.string().trim().min(3).max(50).required(),
     phoneNo: yup.number().min(80000000).max(99999999).required(),
     emailAccount: yup.string().email().required(),
-    password: yup.string().min(8).max(30).required(),
   });
 
   try {
@@ -163,7 +162,7 @@ router.put("/viewAccount/changeDetails", validateToken, async (req, res) => {
     return;
   }
 
-  let findAccount = UserAccount.findByPk(userInfo.id);
+  let findAccount = await UserAccount.findByPk(userInfo.id);
   if (!findAccount) {
     res.sendStatus(404);
     return;
@@ -173,7 +172,7 @@ router.put("/viewAccount/changeDetails", validateToken, async (req, res) => {
   data.userName = data.userName.trim();
   data.phoneNo = data.phoneNo;
   data.emailAccount = data.emailAccount.trim();
-  data.password = data.password.trim();
+  data.password = req.user.password
 
   let userAccount = await UserAccount.update(data, {
     where: { id: userInfo.id },
