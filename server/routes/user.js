@@ -88,11 +88,11 @@ router.post("/login", async (req, res) => {
     emailAccount: user.emailAccount,
     phoneNo: user.phoneNo,
     };
-    let accessToken = sign(userInfo, process.env.APP_SECRET);
+  let accessToken = sign(userInfo, process.env.APP_SECRET);
 
-    res.json({
-        accessToken: accessToken,
-        user: userInfo
+  res.json({
+      accessToken: accessToken,
+      user: userInfo
   });
 });
 

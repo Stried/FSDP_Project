@@ -19,7 +19,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function ChangeAccountDetails() {
-    const [user, setUser] = useState(null);
+    const [ user, setUser ] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -32,8 +32,8 @@ function ChangeAccountDetails() {
             navigate("/user/login");
         }
     }, []);
-    
-    const [showPassword, setShowPassword] = React.useState(false);
+
+    const [ showPassword, setShowPassword ] = React.useState(false);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -52,7 +52,7 @@ function ChangeAccountDetails() {
             return res.data.user;
         });
     }
-    
+
     const formik = useFormik({
         initialValues: {
             fullName: "",
@@ -96,7 +96,6 @@ function ChangeAccountDetails() {
             http
                 .put("/user/viewAccount/changeDetails", data)
                 .then((res) => {
-                    console.log(res.data);
                     logout()
                 })
                 .catch(function (err) {
@@ -107,19 +106,19 @@ function ChangeAccountDetails() {
 
     return (
         <div className="text-white">
-            {user && (
+            { user && (
                 <div>
                     <h1 className="text-3xl font-medium">
                         Change User Details
-                    </h1> 
-                    <Box component={"form"} onSubmit={formik.handleSubmit} className="w-2/3">
+                    </h1>
+                    <Box component={ "form" } onSubmit={ formik.handleSubmit } className="w-2/3">
                         <FormInputSingleLine
                             name="Full Name"
                             valueName="fullName"
                             type="text"
-                            onChange={formik.handleChange}
-                            initialValues={user.fullName}
-                            value={formik.values.fullName}
+                            onChange={ formik.handleChange }
+                            initialValues={ user.fullName }
+                            value={ formik.values.fullName }
                             error={
                                 formik.touched.fullName && Boolean(formik.errors.fullName)
                             }
@@ -131,8 +130,8 @@ function ChangeAccountDetails() {
                             name="Username"
                             valueName="userName"
                             type="text"
-                            onChange={formik.handleChange}
-                            value={formik.values.userName}
+                            onChange={ formik.handleChange }
+                            value={ formik.values.userName }
                             error={
                                 formik.touched.userName && Boolean(formik.errors.userName)
                             }
@@ -144,8 +143,8 @@ function ChangeAccountDetails() {
                             name="Email Address"
                             valueName="emailAccount"
                             type="text"
-                            onChange={formik.handleChange}
-                            value={formik.values.emailAccount}
+                            onChange={ formik.handleChange }
+                            value={ formik.values.emailAccount }
                             error={
                                 formik.touched.emailAccount && Boolean(formik.errors.emailAccount)
                             }
@@ -157,8 +156,8 @@ function ChangeAccountDetails() {
                             name="Phone Number"
                             valueName="phoneNo"
                             type="text"
-                            onChange={formik.handleChange}
-                            value={formik.values.phoneNo}
+                            onChange={ formik.handleChange }
+                            value={ formik.values.phoneNo }
                             error={
                                 formik.touched.phoneNo && Boolean(formik.errors.phoneNo)
                             }
@@ -166,7 +165,8 @@ function ChangeAccountDetails() {
                                 formik.touched.phoneNo && formik.errors.phoneNo
                             }
                         />
-                        <Box className="w-1/4 py-1">
+                        <Typography className="opacity-80 text-sm text-red-500">* Please note that changing your details will require you to log in again.</Typography>
+                        <Box className="w-1/4 py-1 mt-3">
                             <Button
                                 variant="contained"
                                 type="submit"
@@ -178,7 +178,7 @@ function ChangeAccountDetails() {
                     </Box>
                     <ToastContainer />
                 </div>
-            )}
+            ) }
 
         </div>
     )
