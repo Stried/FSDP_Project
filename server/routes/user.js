@@ -67,6 +67,8 @@ router.post("/login", async (req, res) => {
     data.password = data.password.trim();
 
     let errorMsg = "Email or password is incorrect.";
+
+    // Finds the user account using email.
     let user = await UserAccount.findOne({
         where: { emailAccount: data.emailAccount },
     });
@@ -75,19 +77,40 @@ router.post("/login", async (req, res) => {
         return;
     }
 
+    // Checks For Whether Password Matches
     let match = await bcrypt.compare(data.password, user.password);
     if (!match) {
         res.status(400).json({ message: errorMsg });
         return;
     }
 
-    let userInfo = {
-        id: user.id,
-        fullName: user.fullName,
-        userName: user.userName,
-        emailAccount: user.emailAccount,
-        phoneNo: user.phoneNo,
-    };
+    // Checks for whether user is an admin
+    let isAdmin = await AdminAccount.findOne({
+        where: { emailAccount: data.emailAccount }
+    });
+
+    let userInfo = {};
+
+    if (isAdmin) {
+        console.log("Admin is found!")
+        userInfo = {
+            id: user.id,
+            fullName: user.fullName,
+            userName: user.userName,
+            emailAccount: user.emailAccount,
+            phoneNo: user.phoneNo,
+            adminNo: isAdmin.adminNo
+        };
+    } else {
+        userInfo = {
+            id: user.id,
+            fullName: user.fullName,
+            userName: user.userName,
+            emailAccount: user.emailAccount,
+            phoneNo: user.phoneNo,
+        };
+    }
+
     let accessToken = sign(userInfo, process.env.APP_SECRET);
 
     res.json({
@@ -97,16 +120,31 @@ router.post("/login", async (req, res) => {
 });
 
 router.get("/auth", validateToken, (req, res) => {
-    let userInfo = {
-        id: req.user.id,
-        fullName: req.user.fullName,
-        userName: req.user.userName,
-        emailAccount: req.user.emailAccount,
-        phoneNo: req.user.phoneNo
-    };
-    res.json({
-        user: userInfo
-    });
+    if (!req.user.adminNo) {
+        let userInfo = {
+            id: req.user.id,
+            fullName: req.user.fullName,
+            userName: req.user.userName,
+            emailAccount: req.user.emailAccount,
+            phoneNo: req.user.phoneNo
+        };
+        res.json({
+            user: userInfo
+        });
+    } else {
+        let userInfo = {
+            id: req.user.id,
+            fullName: req.user.fullName,
+            userName: req.user.userName,
+            emailAccount: req.user.emailAccount,
+            phoneNo: req.user.phoneNo,
+            adminNo: req.user.adminNo
+        };
+        res.json({
+            user: userInfo
+        });
+    }
+
 });
 
 // View Individual Account (User)
