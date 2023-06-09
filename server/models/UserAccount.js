@@ -1,8 +1,8 @@
 module.exports = (sequelize, DataTypes) => {
     const UserAccount = sequelize.define("UserAccount", { // model name
-        uniqueID: {
+        id: {
             type: DataTypes.UUID,
-            defaultValue: DataTypes.UUIDV4
+            defaultValue: DataTypes.UUIDV1
         },
         fullName: {
             type: DataTypes.STRING,
@@ -18,7 +18,8 @@ module.exports = (sequelize, DataTypes) => {
         },
         emailAccount: { // Unique Key?
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            primaryKey: true
         },
         password: {
             type: DataTypes.STRING,
@@ -26,19 +27,12 @@ module.exports = (sequelize, DataTypes) => {
         }
     });
 
-    // UserAccount.associate = (models) => {
-    //     UserAccount.hasMany(models.ModelName, {
-    //         foreignKey: "userId",
-    //         onDelete: "cascade"
-    //     })
-    // }
-
-    // ModelName.associate = (models) => {
-    //     ModelName.belongsTo(models.UserAccount, {
-    //         foreignKey: "userId",
-    //         as: "user"
-    //     })
-    // }
+    UserAccount.associate = (models) => {
+        UserAccount.hasOne(models.AdminAccount, {
+            foreignKey: "emailAccount",
+            onDelete: "cascade"
+        });
+    };
 
     return UserAccount;
 }
