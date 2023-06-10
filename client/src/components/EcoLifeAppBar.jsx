@@ -16,6 +16,22 @@ import ChangeAccountDetails from "../pages/Users/userComponents/ChangeAccountDet
 
 import UserContext from "../contexts/UserContext";
 
+function AdminPanel(props) {
+    const isAdmin = props.isAdmin;
+    if (isAdmin) {
+        return (
+            <Link to="">
+                <h1
+                    className="w-max | hover:text-white dark:hover:text-green-500 | hover:ease-in-out duration-300
+                      font-medium text-xl | mx-5 my-2"
+                >
+                    Admin Panel
+                </h1>
+            </Link>
+        )
+    }
+}
+
 function EcoLifeAppBar() {
     const [ user, setUser ] = useState(null);
 
@@ -74,7 +90,12 @@ function EcoLifeAppBar() {
                                 Trial Runs
                             </h1>
                         </Link>
+                        { user && (
+                            <AdminPanel isAdmin={ user.adminNo } />
+                        ) }
                     </div>
+
+                    
                     <div name="loginButton" className="w-full place-content-end my-2 mx-2">
                         { user && (
                             <>

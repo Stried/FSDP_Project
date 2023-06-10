@@ -82,8 +82,19 @@ function ViewAccount() {
                                     {user.phoneNo}
                                 </p>
                             </div>
+                            <div id="status" className="my-3">
+                                <h1 className="text-green-400 font-medium text-2xl">
+                                    User Status
+                                </h1>
+                                <p className="text-2xl font-medium italic">
+                                    { user.adminNo }
+                                </p>
+                                <p className="text-2xl font-medium italic">
+                                    Status: To Be Finished
+                                </p>
+                            </div>
                         </div>
-                        <Button className="bg-red-500 rounded px-2 py-1 mt-10 text-xl font-medium" onClick={logout}>Logout</Button>
+                        <Button className="bg-red-500 rounded px-2 py-1 mt-4 text-xl font-medium" onClick={logout}>Logout</Button>
                     </div>
                 )}
             </div>
