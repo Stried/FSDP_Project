@@ -200,9 +200,11 @@ router.put("/viewAccount/changeDetails", validateToken, async (req, res) => {
         return;
     }
 
-    let findAccount = await UserAccount.findByPk(userInfo.id);
+    let findAccount = await UserAccount.findOne({
+        where: { emailAccount: userInfo.emailAccount }
+    });
     if (!findAccount) {
-        res.sendStatus(404);
+        res.sendStatus(404).json({message: "Email Not Found"});
         return;
     }
 
@@ -213,7 +215,7 @@ router.put("/viewAccount/changeDetails", validateToken, async (req, res) => {
     data.password = req.user.password
 
     let userAccount = await UserAccount.update(data, {
-        where: { id: userInfo.id },
+        where: { emailAccount: req.user.emailAccount },
     });
 
     if (userAccount == 1) {

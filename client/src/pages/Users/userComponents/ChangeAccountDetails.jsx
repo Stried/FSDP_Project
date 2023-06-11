@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Box, Button, TextField, Typography, InputAdornment, IconButton } from "@mui/material";
+import AspectRatio from '@mui/joy/AspectRatio';
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import {
@@ -33,6 +34,10 @@ function ChangeAccountDetails() {
         }
     }, []);
 
+
+
+    const [ imageFile, setImageFile ] = React.useState(null)
+
     const [ showPassword, setShowPassword ] = React.useState(false);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -46,12 +51,6 @@ function ChangeAccountDetails() {
         window.location = "/";
         window.location.reload;
     };
-
-    let userInfo = () => {
-        http.get("/user/auth").then((res) => {
-            return res.data.user;
-        });
-    }
 
     const onFileChange = (e) => {
         let file = e.target.files[ 0 ];
@@ -69,6 +68,7 @@ function ChangeAccountDetails() {
             })
                 .then((res) => {
                     console.log(res.data);
+                    setImageFile(res.data.filename);
                 })
                 .catch(function (error) {
                     console.log(error.response);
@@ -82,7 +82,6 @@ function ChangeAccountDetails() {
             userName: "",
             phoneNo: "",
             emailAccount: "",
-            password: ""
         },
         enableReinitialize: true,
         validationSchema: yup.object().shape({
@@ -91,30 +90,45 @@ function ChangeAccountDetails() {
                 .trim()
                 .min(3, "Name must be Minimum 3 Characters.")
                 .max(100, "Name must be Maximum 100 Characters")
-                .required("Name is required."),
+                .nullable(),
             userName: yup
                 .string()
                 .trim()
                 .min(3, "Name must be Minimum 3 Characters.")
                 .max(50, "Name must be Maximum 50 Characters")
-                .required("Name is required."),
+                .nullable(),
             phoneNo: yup
                 .number()
                 .typeError("Phone number must be a Singapore Number.")
                 .integer("Phone number must be a Singapore Number.")
                 .min(80000000, "Phone Number must be a Singapore Number.")
                 .max(99999999, "Phone Number must be a Singapore Number.")
-                .required("Phone Number is required."),
+                .nullable(),
             emailAccount: yup
                 .string()
                 .email("Please enter a valid email address.")
-                .required("Email is required."),
+                .nullable(),
         }),
         onSubmit: (data) => {
             data.fullName = data.fullName.trim();
+            if (Object.is(data.fullName, null)) {
+                data.fullName = user.fullName;
+            }
             data.userName = data.userName.trim();
+            if (Object.is(data.userName, null)) {
+                data.userName = user.userName;
+            }
             data.phoneNo = data.phoneNo.trim();
+            if (Object.is(data.phoneNo, null)) {
+                data.phoneNo = user.phoneNo;
+            }
             data.emailAccount = data.emailAccount.trim();
+            if (Object.is(data.emailAccount, null)) {
+                data.emailAccount = user.emailAccount;
+            }
+            if (imageFile) {
+                data.imageFile = imageFile;
+            }
 
             http
                 .put("/user/viewAccount/changeDetails", data)
@@ -195,6 +209,15 @@ function ChangeAccountDetails() {
                                 <input hidden accept="image/*" multiple type="file" onChange={ onFileChange } />
                             </Button>
                         </div>
+                        {
+                            imageFile && (
+                                <AspectRatio sx={ { mt: 2 } }>
+                                    <Box component="img" alt="tutorial"
+                                        src={ `${import.meta.env.VITE_FILE_BASE_URL}${imageFile}` }>
+                                    </Box>
+                                </AspectRatio>
+                            )
+                        }
 
                         <Typography className="opacity-80 text-sm text-red-500">* Please note that changing your details will require you to log in again.</Typography>
                         <Box className="w-1/4 py-1 mt-3">

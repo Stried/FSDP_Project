@@ -17,6 +17,7 @@ import {
     InputAdornment,
     IconButton,
 } from "@mui/material";
+import AspectRatio from '@mui/joy/AspectRatio';
 import { Formik } from "formik";
 
 import { ToastContainer, toast } from 'react-toastify';
@@ -44,6 +45,17 @@ function ViewAccount() {
 
     return (
         <div className="text-white">
+            <div className="float-right">
+                { user && user.imageFile && (                        
+                    <AspectRatio>
+                        <p>{ user.imageFile }</p>
+                        <Box component="img"
+                            src={ `${import.meta.env.VITE_FILE_BASE_URL}${user.imageFile}` }
+                            alt="user">
+                        </Box>
+                    </AspectRatio>
+                )}
+            </div>
             <div className="mx-5 ">
                 {user && (
                     <div id="userAccountDetails">
