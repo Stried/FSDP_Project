@@ -53,6 +53,29 @@ function ChangeAccountDetails() {
         });
     }
 
+    const onFileChange = (e) => {
+        let file = e.target.files[ 0 ];
+        if (file) {
+            if (file.size > 1024 * 1024) {
+                toast.error('Maximum file size is 1MB');
+                return;
+            }
+            let formData = new FormData();
+            formData.append('file', file);
+            http.post("/file/upload", formData, {
+                headers: {
+                    'Content-Type': "multipart/form-data"
+                }
+            })
+                .then((res) => {
+                    console.log(res.data);
+                })
+                .catch(function (error) {
+                    console.log(error.response);
+                })
+        }
+    }
+
     const formik = useFormik({
         initialValues: {
             fullName: "",
@@ -165,6 +188,14 @@ function ChangeAccountDetails() {
                                 formik.touched.phoneNo && formik.errors.phoneNo
                             }
                         />
+
+                        <div className="my-3">
+                            <Button component="label" className="bg-green-500 text-white px-2 py-1 rounded text-xl border-transparent border-2 border-solid hover:border-green-500 hover:border-2 hover:border-solid font-medium hover:transition-ease-in-out duration-300">
+                                Add/Change Profile Image
+                                <input hidden accept="image/*" multiple type="file" onChange={ onFileChange } />
+                            </Button>
+                        </div>
+
                         <Typography className="opacity-80 text-sm text-red-500">* Please note that changing your details will require you to log in again.</Typography>
                         <Box className="w-1/4 py-1 mt-3">
                             <Button

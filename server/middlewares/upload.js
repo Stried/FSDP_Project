@@ -1,5 +1,5 @@
 const multer = require('multer');
-const { naniod } = require('nanoid');
+const { nanoid } = require('nanoid');
 const path = require('path');
 
 const storage = multer.diskStorage({

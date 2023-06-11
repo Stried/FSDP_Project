@@ -9,7 +9,18 @@ import {
 import "./../../../App.css";
 import http from "../../../http";
 
-import { Button } from "@mui/base";
+import {
+    Box,
+    Button,
+    TextField,
+    Typography,
+    InputAdornment,
+    IconButton,
+} from "@mui/material";
+import { Formik } from "formik";
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function ViewAccount() {
     const [user, setUser] = useState(null);
@@ -44,8 +55,8 @@ function ViewAccount() {
                                 <h1 className="text-green-400 font-medium text-2xl">
                                     ID Number
                                 </h1>
-                                <p className="text-2xl font-medium italic">
-                                    {user.id}
+                                <p className="text-lg font-medium italic">
+                                    {user.id} <span className="text-green-400">/</span> {user.adminNo}
                                 </p>
                             </div>
                             <div id="nameSection" className="flex space-x-10">
@@ -82,19 +93,8 @@ function ViewAccount() {
                                     {user.phoneNo}
                                 </p>
                             </div>
-                            <div id="status" className="my-3">
-                                <h1 className="text-green-400 font-medium text-2xl">
-                                    User Status
-                                </h1>
-                                <p className="text-2xl font-medium italic">
-                                    { user.adminNo }
-                                </p>
-                                <p className="text-2xl font-medium italic">
-                                    Status: To Be Finished
-                                </p>
-                            </div>
                         </div>
-                        <Button className="bg-red-500 rounded px-2 py-1 mt-4 text-xl font-medium" onClick={logout}>Logout</Button>
+                        <Button className="bg-red-500 text-white rounded px-2 py-1 mt-4 text-xl font-medium border-transparent border-2 border-solid hover:border-red-500 hover:border-2 hover:border-solid hover:transition-ease-in-out duration-300" onClick={logout}>Logout</Button>
                     </div>
                 )}
             </div>

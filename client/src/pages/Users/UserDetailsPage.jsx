@@ -61,28 +61,28 @@ function UserDetailsPage() {
               <h2 className="text-green-500 text-3xl font-medium">
                 User Account
               </h2>
-              <ul className="text-xl pl-5 border-l-2 border-solid border-white">
-                <li className="pt-3 hover:text-green-500 hover:transition-ease-in-out duration-300">
+              <ul className="text-xl border-white">
+                <li className="pt-3 hover:text-green-500 hover:transition-ease-in-out duration-300 pl-5 border-l-2 border-solid hover:border-green-500">
                   <Link to="/user/viewAccount" onClick={() => setIsRendered("")}>
                     Account Details
                   </Link>
                 </li>
-                <li className="pt-4 hover:text-green-500 hover:transition-ease-in-out duration-300">
+                <li className="pt-3 hover:text-green-500 hover:transition-ease-in-out duration-300 pl-5 border-l-2 border-solid hover:border-green-500">
                   <Link to="/user/viewAccount" onClick={() => setIsRendered("changeAccountDetails")}>
                     Change Details
                   </Link>
                 </li>
-                <li className="pt-4 hover:text-green-500 hover:transition-ease-in-out duration-300">
+                <li className="pt-3 hover:text-green-500 hover:transition-ease-in-out duration-300 pl-5 border-l-2 border-solid hover:border-green-500">
                   <Link to="">
                     Payment Methods
                   </Link>
                 </li>
-                <li className="pt-4 hover:text-green-500 hover:transition-ease-in-out duration-300">
+                <li className="pt-3 hover:text-green-500 hover:transition-ease-in-out duration-300 pl-5 border-l-2 border-solid hover:border-green-500">
                   <Link to="">
                     Membership Status
                   </Link>
                 </li>
-                <li className="pt-4 hover:text-green-500 hover:transition-ease-in-out duration-300">
+                <li className="pt-3 hover:text-green-500 hover:transition-ease-in-out duration-300 pl-5 border-l-2 border-solid hover:border-green-500">
                   <Link to="">
                     Settings
                   </Link>
@@ -93,28 +93,28 @@ function UserDetailsPage() {
               <h2 className="text-green-500 text-3xl font-medium">
                 Vehicle Information
               </h2>
-              <ul className="text-xl pl-5 border-l-2 border-solid border-white">
-                <li className="pt-3 hover:text-green-500 hover:transition-ease-in-out duration-300">
+              <ul className="text-xl border-white">
+                <li className="pt-3 hover:text-green-500 hover:transition-ease-in-out duration-300 pl-5 border-l-2 border-solid hover:border-green-500">
                   <Link to="">
                     Registered Vehicle
                   </Link>
                 </li>
-                <li className="pt-4 hover:text-green-500 hover:transition-ease-in-out duration-300">
+                <li className="pt-3 hover:text-green-500 hover:transition-ease-in-out duration-300 pl-5 border-l-2 border-solid hover:border-green-500">
                   <Link to="">
                     Purchased Vehicles
                   </Link>
                 </li>
-                <li className="pt-4 hover:text-green-500 hover:transition-ease-in-out duration-300">
+                <li className="pt-3 hover:text-green-500 hover:transition-ease-in-out duration-300 pl-5 border-l-2 border-solid hover:border-green-500">
                   <Link to="">
                     Sold Vehicles
                   </Link>
                 </li>
-                <li className="pt-4 hover:text-green-500 hover:transition-ease-in-out duration-300">
+                <li className="pt-3 hover:text-green-500 hover:transition-ease-in-out duration-300 pl-5 border-l-2 border-solid hover:border-green-500">
                   <Link to="">
                     Sales Status
                   </Link>
                 </li>
-                <li className="pt-4 hover:text-green-500 hover:transition-ease-in-out duration-300">
+                <li className="pt-3 hover:text-green-500 hover:transition-ease-in-out duration-300 pl-5 border-l-2 border-solid hover:border-green-500">
                   <Link to="">
                     Settings
                   </Link>
