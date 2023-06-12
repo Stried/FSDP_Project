@@ -120,7 +120,7 @@ function ChangeAccountDetails() {
             if (Object.is(data.userName, null)) {
                 data.userName = user.userName;
             }
-            data.phoneNo = data.phoneNo.trim();
+            data.phoneNo = data.phoneNo;
             if (Object.is(data.phoneNo, null)) {
                 data.phoneNo = user.phoneNo;
             }

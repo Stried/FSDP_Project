@@ -64,6 +64,16 @@ function ViewAccount() {
                                     </p>
                                 </div>
                             </div>
+                            <div className="text-white mb-3">
+                                { user && user.imageFile !== "No image" && ( // Had to be non-nullable
+                                    <AspectRatio className="w-1/3 border-green-500 border-2 border-solid rounded">
+                                        <Box component="img"
+                                            src={ `${import.meta.env.VITE_FILE_BASE_URL}${user.imageFile}` }
+                                            alt="Profile Picture">
+                                        </Box>
+                                    </AspectRatio>
+                                ) }
+                            </div>
                             <div id="emailAccount" className="my-3">
                                 <h1 className="text-green-400 font-medium text-2xl">
                                     Email Account
@@ -81,24 +91,10 @@ function ViewAccount() {
                                 </p>
                             </div>
                         </div>
-                        <Button className="bg-red-500 text-white rounded px-2 py-1 mt-4 text-xl 
+                        <Button className="bg-red-500 text-white rounded px-2 py-1 mt-4 mb-10 text-xl 
                         font-medium border-transparent border-2 border-solid hover:border-red-500 
                         hover:border-2 hover:border-solid hover:transition-ease-in-out duration-300" onClick={ logout }>Logout</Button>
                     </div>
-                ) }
-            </div>
-            <div className="text-white">
-                <div className="">
-                    Test - this is where the image is supposed to be, but it isn't! :(
-                </div>
-                { user && user.imageFile && (
-                    <AspectRatio>
-                        <p>{ user.imageFile }</p>
-                        <Box component="img"
-                            src={ `${import.meta.env.VITE_FILE_BASE_URL}${user.imageFile}` }
-                            alt="user">
-                        </Box>
-                    </AspectRatio>
                 ) }
             </div>
         </div>

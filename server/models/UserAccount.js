@@ -26,7 +26,9 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         imageFile: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+            allowNull: false,
+            defaultValue: ""
         }
     });
 

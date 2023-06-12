@@ -33,6 +33,15 @@ router.post("/createAccount", async (req, res) => {
     data.emailAccount = data.emailAccount.trim();
     data.password = await bcrypt.hash(data.password, 10);
 
+    userInfo = {
+        fullName: data.fullName,
+        userName: data.userName,
+        phoneNo: data.phoneNo,
+        emailAccount: data.emailAccount,
+        imageFile: "No image",
+        password: data.password
+    }
+
     let userEmail = await UserAccount.findOne({
         where: { emailAccount: data.emailAccount },
     });
@@ -50,7 +59,7 @@ router.post("/createAccount", async (req, res) => {
     }
 
     try {
-        let result = await UserAccount.create(data);
+        let result = await UserAccount.create(userInfo);
         res.json(result);
     } catch (err) {
         console.error(err);
@@ -102,6 +111,8 @@ router.post("/login", async (req, res) => {
             imageFile: user.imageFile,
             adminNo: isAdmin.adminNo
         };
+        console.log(userInfo);
+        console.log(user);
     } else {
         userInfo = {
             id: user.id,
