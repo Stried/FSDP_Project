@@ -7,6 +7,8 @@ import './../../App.css'
 import * as Constants from "./../../../src/components/CSS Constants/Constants";
 import UserContext from "./../../contexts/UserContext";
 
+import { mapboxgl } from "mapbox-gl";
+
 function LocationsMain() {
     const [ user, setUser ] = useState(null);
 
@@ -18,6 +20,14 @@ function LocationsMain() {
             });
         }
     }, []);
+
+    mapboxgl.accessToken = "pk.eyJ1Ijoic3RyaWVkeXVlIiwiYSI6ImNsaHU4NmpmZDNjenkzZXFrbTVvMzZ6cHUifQ.YPwOcv8aMtZrcJcill0SOw"
+    const map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [LONGITUDE, LATITUDE],
+        zoom: ZOOM_LEVEL
+      });
 
     return (
         <Box>

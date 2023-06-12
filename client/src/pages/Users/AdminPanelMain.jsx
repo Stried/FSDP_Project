@@ -33,23 +33,23 @@ function AdminPanelMain() {
                         </h2>
                         <ul className=" text-zinc-400 text-xl border-white">
                             <li className="pt-3 hover:text-green-500 hover:transition-ease-in-out duration-300 pl-5 border-l-2 border-solid hover:border-green-500">
-                                <Link to="" onClick={() => setIsRendered("")}>
+                                <Link to="" onClick={ () => setIsRendered("") }>
                                     View Users
                                 </Link>
                             </li>
                             <li className="pt-3 hover:text-green-500 hover:transition-ease-in-out duration-300 pl-5 border-l-2 border-solid hover:border-green-500">
-                                <Link to="" >
-                                    View More Users
+                                <Link to="" onClick={ () => setIsRendered("") }>
+                                    User Orders
                                 </Link>
                             </li>
                             <li className="pt-3 hover:text-green-500 hover:transition-ease-in-out duration-300 pl-5 border-l-2 border-solid hover:border-green-500">
-                                <Link to="" >
-                                    View Even More Users
+                                <Link to="" onClick={ () => setIsRendered("") }>
+                                    Trial Runs
                                 </Link>
-                            </li> {/*Remember to remove text-red-800 later*/}
+                            </li>
                             <li className="pt-3 text-red-800 hover:text-green-500 hover:transition-ease-in-out duration-300 pl-5 border-l-2 border-solid hover:border-green-500">
-                                <Link to="" >
-                                    View ALL THE USERS!!!!
+                                <Link to="" onClick={ () => setIsRendered("") }>
+                                    Problem Reports
                                 </Link> 
                             </li>
                         </ul>
@@ -59,23 +59,18 @@ function AdminPanelMain() {
                         </h2>
                         <ul className=" text-zinc-400 text-xl border-white">
                             <li className="pt-3 hover:text-green-500 hover:transition-ease-in-out duration-300 pl-5 border-l-2 border-solid hover:border-green-500">
-                                <Link to="" >
-                                    View Vehicles
+                                <Link to="" onClick={ () => setIsRendered("") }>
+                                    Trial Vehicles                                   
                                 </Link>
                             </li>
                             <li className="pt-3 hover:text-green-500 hover:transition-ease-in-out duration-300 pl-5 border-l-2 border-solid hover:border-green-500">
-                                <Link to="" >
-                                    View More Vehicles
+                                <Link to="" onClick={ () => setIsRendered("") }>
+                                    Vehicle Stock
                                 </Link>
                             </li>
                             <li className="pt-3 hover:text-green-500 hover:transition-ease-in-out duration-300 pl-5 border-l-2 border-solid hover:border-green-500">
-                                <Link to="" >
-                                    View Even More Vehicles
-                                </Link>
-                            </li> {/*Remember to remove text-red-800 later*/}
-                            <li className="pt-3 text-red-800 hover:text-green-500 hover:transition-ease-in-out duration-300 pl-5 border-l-2 border-solid hover:border-green-500">
-                                <Link to="" >
-                                    View ALL THE VEHICLES!!!!
+                                <Link to="" onClick={ () => setIsRendered("") }>
+                                    Charger Locations
                                 </Link>
                             </li>
                         </ul>
@@ -83,8 +78,8 @@ function AdminPanelMain() {
                 </div>
 
                 {/* <div className="w-3/4 mx-5 h-full" id="displayComponents">
-                    { isRendered === "" && ("") }
-                    { isRendered === "changeAccountDetails" && (changeAccountDetails()) }
+                    { isRendered === "" && () }
+                    { isRendered === "" && () }
                 </div> */}
             </Box>
         )
