@@ -10,12 +10,8 @@ import "./../../../App.css";
 import http from "../../../http";
 
 import {
-    Box,
-    Button,
-    TextField,
-    Typography,
-    InputAdornment,
-    IconButton,
+    Box, Button, TextField,
+    Typography, InputAdornment, IconButton
 } from "@mui/material";
 import AspectRatio from '@mui/joy/AspectRatio';
 import { Formik } from "formik";
@@ -24,7 +20,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function ViewAccount() {
-    const [user, setUser] = useState(null);
+    const [ user, setUser ] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -45,22 +41,11 @@ function ViewAccount() {
 
     return (
         <div className="text-white">
-            <div className="float-right">
-                { user && user.imageFile && (                        
-                    <AspectRatio>
-                        <p>{ user.imageFile }</p>
-                        <Box component="img"
-                            src={ `${import.meta.env.VITE_FILE_BASE_URL}${user.imageFile}` }
-                            alt="user">
-                        </Box>
-                    </AspectRatio>
-                )}
-            </div>
             <div className="mx-5 ">
-                {user && (
+                { user && (
                     <div id="userAccountDetails">
                         <p className="text-3xl font-medium">
-                            {user.fullName}'s Account Details
+                            { user.fullName }'s Account Details
                         </p>
                         <div className="my-3">
                             <div id="idNumber" className="">
@@ -68,7 +53,7 @@ function ViewAccount() {
                                     ID Number
                                 </h1>
                                 <p className="text-lg font-medium italic">
-                                    {user.id} <span className="text-green-400">/</span> {user.adminNo}
+                                    { user.id } <span className="text-green-400">/</span> { user.adminNo }
                                 </p>
                             </div>
                             <div id="nameSection" className="flex space-x-10">
@@ -77,7 +62,7 @@ function ViewAccount() {
                                         Full Name
                                     </h1>
                                     <p className="text-2xl font-medium italic">
-                                        {user.fullName}
+                                        { user.fullName }
                                     </p>
                                 </div>
                                 <div id="userName" className="my-3">
@@ -85,7 +70,7 @@ function ViewAccount() {
                                         Username
                                     </h1>
                                     <p className="text-2xl font-medium italic">
-                                        {user.userName}
+                                        { user.userName }
                                     </p>
                                 </div>
                             </div>
@@ -94,7 +79,7 @@ function ViewAccount() {
                                     Email Account
                                 </h1>
                                 <p className="text-2xl font-medium italic">
-                                    {user.emailAccount}
+                                    { user.emailAccount }
                                 </p>
                             </div>
                             <div id="phoneNo" className="my-3">
@@ -102,13 +87,29 @@ function ViewAccount() {
                                     Phone Number
                                 </h1>
                                 <p className="text-2xl font-medium italic">
-                                    {user.phoneNo}
+                                    { user.phoneNo }
                                 </p>
                             </div>
                         </div>
-                        <Button className="bg-red-500 text-white rounded px-2 py-1 mt-4 text-xl font-medium border-transparent border-2 border-solid hover:border-red-500 hover:border-2 hover:border-solid hover:transition-ease-in-out duration-300" onClick={logout}>Logout</Button>
+                        <Button className="bg-red-500 text-white rounded px-2 py-1 mt-4 text-xl 
+                        font-medium border-transparent border-2 border-solid hover:border-red-500 
+                        hover:border-2 hover:border-solid hover:transition-ease-in-out duration-300" onClick={ logout }>Logout</Button>
                     </div>
-                )}
+                ) }
+            </div>
+            <div className="text-white">
+                <div className="">
+                    Test - this is where the image is supposed to be.
+                </div>
+                { user && user.imageFile && (
+                    <AspectRatio>
+                        <p>{ user.imageFile }</p>
+                        <Box component="img"
+                            src={ `${import.meta.env.VITE_FILE_BASE_URL}${user.imageFile}` }
+                            alt="user">
+                        </Box>
+                    </AspectRatio>
+                ) }
             </div>
         </div>
     )

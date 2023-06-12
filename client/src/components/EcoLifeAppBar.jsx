@@ -52,7 +52,7 @@ function EcoLifeAppBar() {
     return (
         <UserContext.Provider value={ { user, setUser } } >
             <Router>
-                <nav className="navbar w-full flex  py-6 dark:bg-gradient-to-b from-black to-zinc-900 bg-green-500 dark:text-white text-black overflow-x-hidden">
+                <nav className="navbar w-full flex  py-6  dark:text-white text-black overflow-x-hidden">
                     <div className="p-3 w-fit">
                         <Link to={ "/" }>
                             <h1

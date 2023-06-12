@@ -99,6 +99,7 @@ router.post("/login", async (req, res) => {
             userName: user.userName,
             emailAccount: user.emailAccount,
             phoneNo: user.phoneNo,
+            imageFile: user.imageFile,
             adminNo: isAdmin.adminNo
         };
     } else {
@@ -108,6 +109,7 @@ router.post("/login", async (req, res) => {
             userName: user.userName,
             emailAccount: user.emailAccount,
             phoneNo: user.phoneNo,
+            imageFile: user.imageFile
         };
     }
 
@@ -148,7 +150,7 @@ router.get("/auth", validateToken, (req, res) => {
 });
 
 // View Individual Account (User)
-router.get("/myAccount", validateToken, async (req, res) => {
+router.get("/viewAccount", validateToken, async (req, res) => {
     // Remember to put req then res
     let userInfo = {
         id: req.user.id,
@@ -156,9 +158,15 @@ router.get("/myAccount", validateToken, async (req, res) => {
         userName: req.user.userName,
         emailAccount: req.user.emailAccount,
         phoneNo: req.user.phoneNo,
+        fileImage: req.user.fileImage,
+        adminNo: req.user.adminNo
     };
+    console.log(userInfo);
+    res.json(userInfo);
 
-    let userAccount = await UserAccount.findByPk(userInfo.id);
+    let userAccount = await UserAccount.findOne({
+        where: { emailAccount: userInfo.emailAccount }
+    });
     res.json(userAccount);
 
     if (!userAccount) {
@@ -178,7 +186,8 @@ router.get("/viewAccount/changeDetails", validateToken, async (req, res) => {
         fullName: req.user.fullName,
         userName: req.user.userName,
         emailAccount: req.user.emailAccount,
-        phoneNo: req.user.phoneNo
+        phoneNo: req.user.phoneNo,
+        imageFile: req.user.imageFile
     };
 
     res.json(userInfo);

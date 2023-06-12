@@ -11,10 +11,13 @@ require('dotenv').config();
 // Create sequelize instance using config
 // THis file creates the sequelized instance and reads the model files from the same directory
 let sequelize = new Sequelize(
+    process.env.DB_NAME, process.env.DB_USER, process.env.DB_PWD,
     {
-        host: "localhost",
-        dialect: 'sqlite',
-        storage: "data/ecolife.sqlite",
+        host: process.env.DB_HOST,
+        port: process.env.DB_PORT,
+        dialect: 'mysql',
+        logging: false,
+        timezone: '+08:00'
     }
 );
 fs.readdirSync(__dirname).filter(file => { // Reads all the files in models

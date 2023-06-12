@@ -11,7 +11,7 @@ app.use(express.static('public'));
 let port = process.env.APP_PORT;
 
 app.get("/", (req, res) => {
-    res.send("Welcome to EcoLife. Where are my children?!");
+    res.send("Welcome to EcoLife. Chunny is Love, Chunny is Life. <3");
 })
 
 // Routes

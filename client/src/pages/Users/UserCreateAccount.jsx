@@ -8,13 +8,7 @@ import {
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import {
-    BrowserRouter as Router,
-    Routes,
-    Route,
-    Link,
-    useNavigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from "react-router-dom";
 import React, { useEffect } from "react";
 import "./../../App.css";
 import http from "../../http";
