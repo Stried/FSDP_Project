@@ -172,6 +172,18 @@ router.get("/myAccount", validateToken, async (req, res) => {
     }
 });
 
+router.get("/viewAccount/changeDetails", validateToken, async (req, res) => {
+    let userInfo = {
+        id: req.user.id,
+        fullName: req.user.fullName,
+        userName: req.user.userName,
+        emailAccount: req.user.emailAccount,
+        phoneNo: req.user.phoneNo
+    };
+
+    res.json(userInfo);
+})
+
 // Edit Individual Account (User)
 router.put("/viewAccount/changeDetails", validateToken, async (req, res) => {
     let userInfo = {

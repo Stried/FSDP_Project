@@ -34,17 +34,24 @@ function ChangeAccountDetails() {
         }
     }, []);
 
-
-
+    const [ userInfo, setUserInfo ] = useState({
+        fullName: "",
+        userName: "",
+        emailAccount: "",
+        phoneNo: ""
+    })
     const [ imageFile, setImageFile ] = React.useState(null)
 
-    const [ showPassword, setShowPassword ] = React.useState(false);
-
-    const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-    };
+    useEffect(() => {
+        http.get("/user/viewAccount/changeDetails")
+            .then((res) => {
+                console.log(res.data);
+                setUserInfo(res.data);
+            })
+            .catch(function (error) {
+                console.log(error.response.data.message);
+            });
+    }, []);
 
     const logout = () => {
         localStorage.clear();
@@ -66,23 +73,18 @@ function ChangeAccountDetails() {
                     'Content-Type': "multipart/form-data"
                 }
             })
-                .then((res) => {
-                    console.log(res.data);
-                    setImageFile(res.data.filename);
-                })
-                .catch(function (error) {
-                    console.log(error.response);
-                })
+            .then((res) => {
+                console.log(res.data);
+                setImageFile(res.data.filename);
+            })
+            .catch(function (error) {
+                console.log(error.response);
+            })
         }
     }
 
     const formik = useFormik({
-        initialValues: {
-            fullName: "",
-            userName: "",
-            phoneNo: "",
-            emailAccount: "",
-        },
+        initialValues: userInfo,
         enableReinitialize: true,
         validationSchema: yup.object().shape({
             fullName: yup
