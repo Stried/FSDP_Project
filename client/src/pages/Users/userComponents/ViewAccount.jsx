@@ -23,6 +23,16 @@ import UserContext from "../../../contexts/UserContext";
 function ViewAccount() {
     const navigate = useNavigate();
     const { user } = useContext(UserContext);
+    // const [ user, setUser ] = useState(null); // when context is refreshed, profile image is gone.
+
+    // useEffect(() => {
+    //     if (localStorage.getItem("accessToken")) {
+    //         // Todo: Get user data from server
+    //         http.get('/user/auth').then((res) => {
+    //             setUser(res.data.user);
+    //         });
+    //     }
+    // }, []);
 
     const logout = () => {
         localStorage.clear();
@@ -71,7 +81,7 @@ function ViewAccount() {
                                             src={ `${import.meta.env.VITE_FILE_BASE_URL}${user.imageFile}` }
                                             alt="Profile Picture">
                                         </Box>
-                                    </AspectRatio>
+                                    </AspectRatio>                               
                                 ) }
                             </div>
                             <div id="emailAccount" className="my-3">

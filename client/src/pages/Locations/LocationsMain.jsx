@@ -1,16 +1,22 @@
 import { Container, AppBar, Toolbar, Typography, CssBaseline, Box } from "@mui/material";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import React, { useRef, useEffect, useState } from 'react';
 import http from './../../http'
 import './../../App.css'
 
 import * as Constants from "./../../../src/components/CSS Constants/Constants";
 import UserContext from "./../../contexts/UserContext";
 
-import { mapboxgl } from "mapbox-gl";
+import mapboxgl from 'mapbox-gl';
 
 function LocationsMain() {
     const [ user, setUser ] = useState(null);
+    const mapContainer = useRef(null);
+    const map = useRef(null);
+    const lng = -70.9;
+    const lat = 42.35;
+    const zoom = 9;
+
 
     useEffect(() => {
         if (localStorage.getItem("accessToken")) {
@@ -21,16 +27,26 @@ function LocationsMain() {
         }
     }, []);
 
-    mapboxgl.accessToken = "pk.eyJ1Ijoic3RyaWVkeXVlIiwiYSI6ImNsaHU4NmpmZDNjenkzZXFrbTVvMzZ6cHUifQ.YPwOcv8aMtZrcJcill0SOw"
-    const map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/mapbox/streets-v11',
-        center: [LONGITUDE, LATITUDE],
-        zoom: ZOOM_LEVEL
-      });
+    useEffect(() => {
+        mapboxgl.accessToken = 'pk.eyJ1Ijoic3RyaWVkeXVlIiwiYSI6ImNsaXQwdDdiazBxNGczcm90ZGd3MjN6dTAifQ.HXKvrVBcshVr-KWaj2aBGA';
+
+        if (!map.current) {
+            map.current = new mapboxgl.Map({
+                container: mapContainer.current,
+                style: 'mapbox://styles/mapbox/streets-v12',
+                center: [ lng, lat ],
+                zoom: zoom
+            });
+        }
+    }, [ lng, lat, zoom ]);
 
     return (
         <Box>
+            <div className="rounded-lg bg-white shadow-2xl">
+                <div ref={ mapContainer } style={ { width: '100%', height: '400px' } }></div>
+            </div>
+
+
             <div className="flex flex-col items-center">
                 <h1 className="text-4xl font-bold mt-8 mb-6 text-white">Chunny Bible &#x1F62D;</h1>
 
@@ -99,6 +115,10 @@ function LocationsMain() {
                             Even if it means cringe forevermore.</p>
                     </div>
                 </div>
+            </div>
+
+            <div id="map">
+                <div ref={ mapContainer } className="map-container" />
             </div>
         </Box>
     );
