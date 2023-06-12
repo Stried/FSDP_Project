@@ -1,4 +1,4 @@
-// idk if I can change these database later
+// May need to add some more if not enough stuff or details
 
 module.exports = (sequelize, DataTypes) => {
     const Store = sequelize.define("Store", {
@@ -26,7 +26,19 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
-        carStartProduction: {
+        carSpeed: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        carFuelType: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        carFuelConsume: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        carProductionDate: {
             type: DataTypes.DATEONLY,
             allowNull: false
         },
@@ -42,18 +54,23 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: false
         },
-        carFuelConsume: {
+        carWheels: {
             type: DataTypes.INTEGER,
             allowNull: false
         },
-        carFuelType: {
-            type: DataTypes.STRING,
+        carLength: {
+            type: DataTypes.INTEGER,
             allowNull: false
         },
-        carSpeed: {
+        carWidth: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        carHeight: {
             type: DataTypes.INTEGER,
             allowNull: false
         }
-        
-    }    
-)}
+    });
+
+    return Store
+}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
     BrowserRouter as Router,
     Routes,
@@ -18,21 +18,11 @@ import { Formik } from "formik";
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import UserContext from "../../../contexts/UserContext";
 
 function ViewAccount() {
-    const [ user, setUser ] = useState(null);
     const navigate = useNavigate();
-
-    useEffect(() => {
-        if (localStorage.getItem("accessToken")) {
-            // Todo: Get user data from server
-            http.get("/user/auth").then((res) => {
-                setUser(res.data.user);
-            });
-        } else {
-            navigate("/user/login");
-        }
-    }, []);
+    const { user } = useContext(UserContext);
 
     const logout = () => {
         localStorage.clear();
@@ -99,7 +89,7 @@ function ViewAccount() {
             </div>
             <div className="text-white">
                 <div className="">
-                    Test - this is where the image is supposed to be.
+                    Test - this is where the image is supposed to be, but it isn't! :(
                 </div>
                 { user && user.imageFile && (
                     <AspectRatio>

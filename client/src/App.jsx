@@ -1,6 +1,7 @@
 import { Container, AppBar, Toolbar, Typography, CssBaseline } from "@mui/material";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Ecolife from "./pages/Ecolife";
+import LocationsFunc from "./pages/Locations/LocationsMain"
 import UserCreateAccount from "./pages/Users/UserCreateAccount";
 import { useState, useEffect } from "react";
 import http from './http'

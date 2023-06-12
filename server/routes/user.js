@@ -324,4 +324,19 @@ router.post("/createAdmin", async (req, res) => {
     }
 })
 
+router.get("/adminPanel", validateToken, async (req, res) => {
+    let userInfo = {
+        fullName: req.user.fullName,
+        userName: req.user.userName,
+        emailAccount: req.user.emailAccount,
+        phoneNo: req.user.phoneNo,
+        adminNo: req.user.adminNo,
+    }
+
+    if (!userInfo.adminNo) {
+        console.log("Page Not Found!");
+        res.status(404).json("Page Is Not Found.");
+    }
+})
+
 module.exports = router;
