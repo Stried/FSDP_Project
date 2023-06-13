@@ -8,8 +8,9 @@ const yup = require("yup");
 router.post("/", async (req, res) => {
     let data = req.body;
     data.carProductionDate = Date.parse(data.carProductionDate);
-    data.carProductionDate = new Date(data.carProductionDate)
-
+    data.carProductionDate = Date(data.carProductionDate)
+    // realise that date cannot be validated this way, so got to find another way... zzz
+    
     // Validate request body
     let validationSchema = yup.object().shape({
         carName: yup.string().trim().min(10).max(100).required(),
@@ -39,6 +40,7 @@ router.post("/", async (req, res) => {
         res.status(400).json({ errors: err.errors });
         return;
     }
+    
     data.carName = data.carName.trim();
     data.carDescription = data.carDescription.trim();
     data.carBrand = data.carBrand.trim();
@@ -146,6 +148,23 @@ router.put("/:id", async (req, res) => {
     else {
         res.status(400).json({
             message: `Cannot update store item with id ${id}.`
+        });
+    }
+});
+
+router.delete("/:id", async (req, res) => {
+    let id = req.params.id;
+    let num = await Store.destroy({
+        where: { id: id }
+    })
+    if (num == 1) {
+        res.json({
+            message: "Store item was deleted successfully."
+        });
+    }
+    else {
+        res.status(400).json({
+            message: `Cannot delete store item with id ${id}.`
         });
     }
 });

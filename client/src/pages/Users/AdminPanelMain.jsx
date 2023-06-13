@@ -19,7 +19,7 @@ function AdminPanelMain() {
 
     return (
         user && (
-            <Box>
+            <Box className="">
                 <div className="text-white">
                     <h1 className="text-green-500 text-4xl font-medium">
                         Admin Panel
@@ -49,7 +49,7 @@ function AdminPanelMain() {
                                     Trial Runs
                                 </Link>
                             </li>
-                            <li className="pt-3 text-red-800 hover:text-green-500 hover:transition-ease-in-out duration-300 pl-5 border-l-2 border-solid hover:border-green-500">
+                            <li className="pt-3 hover:text-green-500 hover:transition-ease-in-out duration-300 pl-5 border-l-2 border-solid hover:border-green-500">
                                 <Link to="" onClick={ () => setIsRendered("") }>
                                     Problem Reports
                                 </Link> 
