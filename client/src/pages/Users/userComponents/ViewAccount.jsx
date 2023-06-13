@@ -23,21 +23,23 @@ import UserContext from "../../../contexts/UserContext";
 function ViewAccount() {
     const navigate = useNavigate();
     const { user } = useContext(UserContext);
-    // const [ user, setUser ] = useState(null); // when context is refreshed, profile image is gone.
-
-    // useEffect(() => {
-    //     if (localStorage.getItem("accessToken")) {
-    //         // Todo: Get user data from server
-    //         http.get('/user/auth').then((res) => {
-    //             setUser(res.data.user);
-    //         });
-    //     }
-    // }, []);
 
     const logout = () => {
         localStorage.clear();
         window.location = "/";
     };
+
+    try {
+        useEffect(() => {
+            if (user && user.imageFile) {
+                localStorage.setItem("userImageFile", `${user.imageFile}`);
+                user.imageFile = localStorage.getItem("userImageFile");
+            }
+        }, [ user ]);
+    } catch (err) {
+        console.log(err);
+        user.imageFile = localStorage.getItem("userImageFile");
+    }
 
     return (
         <div className="text-white">
@@ -78,7 +80,7 @@ function ViewAccount() {
                                 { user && user.imageFile !== "No image" && ( // Had to be non-nullable
                                     <AspectRatio className="w-1/3 border-green-500 border-2 border-solid rounded">
                                         <Box component="img"
-                                            src={ `${import.meta.env.VITE_FILE_BASE_URL}${user.imageFile}` }
+                                            src={ `${import.meta.env.VITE_FILE_BASE_URL}${localStorage.getItem("userImageFile")}` }
                                             alt="Profile Picture">
                                         </Box>
                                     </AspectRatio>                               

@@ -17,7 +17,7 @@ router.post("/", async (req, res) => {
         carModification: yup.string().trim().required(),
         carSpeed: yup.number().integer().required(),
         carFuelType: yup.string().required(), 
-        carFuelConsumation: yup.number().integer().required(),
+        carFuelConsume: yup.number().integer().required(),
         carProductionDate: yup.date().required(),
         carBodyType: yup.string().trim().required(),
         carSeats: yup.number().integer().min(1).required(),
@@ -48,50 +48,13 @@ router.post("/", async (req, res) => {
     res.json(data);
 });
 
-router.get("/", async (req, res) => {
-    let condition = {};
-    let search = req.query.search;
-    if (search) {
-        condition[Sequelize.Op.or] = [
-            { carName: { [Sequelize.Op.like]: `%${search}%` } },
-            { carPrice: { [Sequelize.Op.like]: `%${search}%` } }
-        ]
-    }
-
+router.get("/store", async (req, res) => {
     let list = await Store.findAll({
-        where: condition,
-        order: [['carName', 'carPrice']] // to-do (lemme think about it)
-    })
+        order: [['carName', 'carDescription', 'carPrice', 'carBrand', 'carModel', 'carModification', 'carSpeed', 'carFuelType',
+                'carFuelConsume', 'carProductionDate', 'carBodyType', 'carSeats', 'carDoors', 'carWheels', 
+                'carLength', 'carWidth', 'carHeight']] // to-do (lemme think about it)
+    });
     res.json(list);
 }); 
-
-router.get("/:id", async (req, res) => {
-    let id = req.params.id;
-    let store = await Store.findByPk(id);
-    res.json(store);
-    // Check id not found
-    if (!store) {
-        res.sendStatus(404);
-        return;
-    }
-});
-
-router.put("/:id", async (req, res) => {
-    let id = req.params.id;
-    let data = req.body;
-    let num = await Store.update(data, {
-        where: { id: id }
-    });
-    if (num == 1) {
-        res.json({
-            message: "Store Item was updated successfully."
-        });
-    }
-    else {
-        res.status(400).json({
-            message: `Cannot update store item with id ${id}.`
-        });
-    }
-});
 
 module.exports = router;
