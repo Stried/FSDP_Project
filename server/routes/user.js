@@ -348,6 +348,14 @@ router.get("/adminPanel", validateToken, async (req, res) => {
         console.log("Page Not Found!");
         res.status(404).json("Page Is Not Found.");
     }
+     
+    const condition = {};
+    const allUsers = await UserAccount.findAll({
+        where: condition,
+        order: [ [ 'emailAccount', 'DESC' ] ],
+    })
+
+    res.json(allUsers);
 })
 
 module.exports = router;

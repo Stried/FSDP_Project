@@ -17,10 +17,16 @@ app.get("/", (req, res) => {
 // Routes
 const allRoutes = require('./routes/ecolife');
 app.use("/", allRoutes);
+
 const userRoute = require("./routes/user");
 app.use("/user", userRoute);
+
+const adminRoute = require("./routes/admin");
+app.use("/admin", adminRoute);
+
 const fileRoute = require('./routes/file');
 app.use("/file", fileRoute);
+
 const storeRoute = require('./routes/store');
 app.use("/store", storeRoute);
 

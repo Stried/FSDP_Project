@@ -9,6 +9,9 @@ import {
 } from "react-router-dom";
 import UserContext from "../../contexts/UserContext";
 
+import ViewAllAccounts from "./adminComponents/ViewAllAccounts"; 
+import ViewAccount from "./userComponents/ViewAccount";
+
 function AdminPanelMain() {
     const { user } = useContext(UserContext);
 
@@ -17,16 +20,15 @@ function AdminPanelMain() {
     return (
         user && (
             <Box>
-                <div>
-                    <div className="text-white">
-                        <h1 className="text-green-500 text-4xl font-medium">
-                            Admin Panel
-                        </h1>
-                        <p className="text-lg">
-                            Logged In: <span className="text-green-500">{ user.adminNo }</span>
-                        </p>
-                    </div>
-
+                <div className="text-white">
+                    <h1 className="text-green-500 text-4xl font-medium">
+                        Admin Panel
+                    </h1>
+                    <p className="text-lg">
+                        Logged In: <span className="text-green-500">{ user.adminNo }</span>
+                    </p>
+                </div>
+                <div className="flex">
                     <div className="w-1/3 mt-3" id="sideBarMenu">
                         <h2 className="text-green-500 text-3xl font-medium">
                             Administrative <span className="text-white text-2xl">User</span>
@@ -75,12 +77,13 @@ function AdminPanelMain() {
                             </li>
                         </ul>
                     </div>
+
+                    <div className="w-2/3 mx-5 h-full" id="displayComponents">
+                        { isRendered === "" && (<ViewAllAccounts />) }
+                    </div>
                 </div>
 
-                {/* <div className="w-3/4 mx-5 h-full" id="displayComponents">
-                    { isRendered === "" && () }
-                    { isRendered === "" && () }
-                </div> */}
+
             </Box>
         )
 

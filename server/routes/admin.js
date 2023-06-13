@@ -3,32 +3,27 @@ const router = express.Router();
 const yup = require("yup");
 const { sequelize } = require("../models/");
 const { DataTypes } = require("sequelize");
-const { UserAccount, Sequelize } = require("../models/"); // imports the model name from models, must match waht is defined in the model
+const { UserAccount, AdminAccount, Sequelize } = require("../models/"); // imports the model name from models, must match waht is defined in the model
 const bcrypt = require("bcrypt");
 const { sign } = require("jsonwebtoken");
 const { validateToken } = require("../middlewares/auth");
-const AdminAccount = require("../models/AdminAccount");
-require("dotenv").config();
+require('dotenv').config();
 
-router.post("/createAdmin/:uniqueID", async (req, res) => {
-    let data = req.data;
-    let uid = req.data.uniqueID
-    let validationSchema = yup.object().shape({
-        adminNo: yup.string().trim().min(5).max(5).required(),
-    });
-    try {
-        await validateSchema.validate(data, { abortEarly: false });
-    } catch (err) {
-        console.error(err);
-        res.status(400).json({ errors: err.errors });
-        return;
+// Views all Accounts Created
+router.get("/adminPanel", validateToken, async (req, res) => {
+    let user = req.user;
+    let condition = {};
+
+    if (!user.adminNo) {
+        window.location.pathname === "/"
     }
 
-    let errorMsg = "Account does not exist."
-    let user = await AdminAccount.findOne({
-        where: {uniqueID: uniqueID}
+    const allUsers = await UserAccount.findAll({
+        where: condition,
+        order: [['emailAccount', 'DESC']],
     })
-    if (!user) {
-        res.status(400).json({message: errorMsg})
-    }
-})
+
+    res.json(allUsers);
+}) 
+
+module.exports = router;
