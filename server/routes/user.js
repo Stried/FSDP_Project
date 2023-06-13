@@ -38,7 +38,7 @@ router.post("/createAccount", async (req, res) => {
         userName: data.userName,
         phoneNo: data.phoneNo,
         emailAccount: data.emailAccount,
-        imageFile: "No image",
+        imageFile: "default.jpg",
         password: data.password
     }
 
