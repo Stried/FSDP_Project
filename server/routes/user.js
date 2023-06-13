@@ -350,6 +350,17 @@ router.get("/adminPanel", validateToken, async (req, res) => {
     }
      
     const condition = {};
+    let search = req.query.search;
+    if (search) {
+        condition[ Sequelize.Op.or ] = [
+            { id: { [ Sequelize.Op.like ]: `%${search}%` } },
+            { fullName: { [ Sequelize.Op.like ]: `%${search}%` } },
+            { userName: { [ Sequelize.Op.like ]: `%${search}%` } },
+            { emailAccount: { [ Sequelize.Op.like ]: `%${search}%` } },
+            { phoneNo: { [ Sequelize.Op.like ]: `%${search}%` } },
+        ]
+    }
+
     const allUsers = await UserAccount.findAll({
         where: condition,
         order: [ [ 'emailAccount', 'DESC' ] ],
