@@ -4,9 +4,14 @@ import UserContext from "../../../contexts/UserContext";
 import React, { useEffect, useState } from "react";
 import http from "../../../http";
 
+import {
+    Dropdown,
+    Ripple,
+    initTE,
+} from "tw-elements";
+
 function ViewAllAccounts() {
     const [ userList, setUserList ] = useState([]);
-
     const getUsers = () => {
         http.get("/user/adminPanel").then((res) => {
             setUserList(res.data);
@@ -16,35 +21,37 @@ function ViewAllAccounts() {
     const [ displayStyle, setDisplayStyle ] = useState("Full");
 
     const [ search, setSearch ] = useState("");
-
     const onSearchChange = (e) => {
         setSearch(e.target.value);
     }
-
     const searchUsers = () => {
         http.get(`/user/adminPanel?search=${search}`).then((res) => {
             setUserList(res.data);
         })
     }
-
     const onSearchKeyDown = (e) => {
         if (e.key === "Enter") {
             searchUsers();
         };
     };
-
     const onClickSearch = () => {
         searchUsers();
     };
-
     const onClickClear = () => {
         setSearch("");
         getUsers();
     }
-
     useEffect(() => {
         getUsers();
     }, []);
+
+    useEffect(() => {
+        initTE({ Dropdown, Ripple });
+    }, []);
+    // const dropdownElementList = [].slice.call(document.querySelectorAll('[data-te-dropdown-toggle-ref]'));
+    // const dropdownList = dropdownElementList.map((dropdownToggleEl) => {
+    //     return new te.Dropdown(dropdownToggleEl);
+    // });
 
     return (
         <Box>
@@ -80,8 +87,8 @@ function ViewAllAccounts() {
                         {
                             userList.map((user, i) => {
                                 return (
-                                    <li key={ i } className="list-none">
-                                        <ul className="">
+                                    <ul key={ i } className="list-none">
+                                        <li className="">
                                             { user && displayStyle === "Contained" && (
                                                 <div className="mr-2 mb-2">
                                                     <div className=" bg-zinc-800 bg-opacity-70 text-white p-5 rounded border-transparent border-2 border-solid hover:border-green-500 hover:transition-ease-in-out duration-300">
@@ -93,8 +100,8 @@ function ViewAllAccounts() {
                                                     </div>
                                                 </div>
                                             ) }
-                                        </ul>
-                                    </li>
+                                        </li>
+                                    </ul>
                                 )
                             })
                         }
@@ -107,8 +114,8 @@ function ViewAllAccounts() {
                         {
                             userList.map((user, i) => {
                                 return (
-                                    <li key={ i } className="list-none">
-                                        <ul className="">
+                                    <ul key={ i } className="list-none">
+                                        <li className="">
                                             { user && displayStyle === "Full" && (
                                                 <div className="bg-zinc-800 bg-opacity-70 text-white my-3 mx-2 p-5 rounded border-transparent border-2 border-solid hover:border-green-500 hover:transition-ease-in-out duration-300">
                                                     <div className="">
@@ -135,14 +142,56 @@ function ViewAllAccounts() {
                                                     <p className="text-lg font-medium">ID: <span className="text-green-500">{ user.id }</span></p>
                                                 </div>
                                             ) }
-                                        </ul>
-                                    </li>
+                                        </li>
+                                    </ul>
                                 )
                             })
                         }
                     </div>
                 </Box>
-            )}
+            ) }
+            
+            <div className='relative' data-te-dropdown-ref>
+                <button className='flex items-center rounded bg-green-500 my-4 px-6 py-2 text-xl font-medium transition-ease-in-out duration-300'
+                    type='button'
+                    id='dropdownMenuButton'
+                    data-te-dropdown-toggle-ref
+                    aria-expanded="false"
+                    data-te-ripple-init
+                    data-te-ripple-color='green'
+                >
+                    Dropdown
+                </button>
+                <ul className='absolute z-10 float-left m-0 hidden min-w-max list-none overflow-hidden rounded bg-neutral-700 bg-clip-padding text-white text-left text-base shadow-lg'
+                    aria-labelledby='dropdownMenuButton'
+                    data-te-dropdown-menu-ref
+                >
+                    <li>
+                        <a className='block w-full whitespace-nowrap bg-transparent px-4 py-2 text-lg font-medium text-white'
+                            href=""
+                            data-te-dropdown-item-ref
+                        >
+                            Action
+                        </a>
+                    </li>
+                    <li>
+                        <a className='block w-full whitespace-nowrap bg-transparent px-4 py-2 text-lg font-medium text-white'
+                            href=""
+                            data-te-dropdown-item-ref
+                        >
+                            Action
+                        </a>
+                    </li>
+                    <li>
+                        <a className='block w-full whitespace-nowrap bg-transparent px-4 py-2 text-lg font-medium text-white'
+                            href=""
+                            data-te-dropdown-item-ref
+                        >
+                            Action
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </Box>
 
     )

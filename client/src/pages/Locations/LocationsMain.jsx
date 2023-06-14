@@ -46,6 +46,7 @@ function LocationsMain() {
                 <div ref={ mapContainer } style={ { width: '100%', height: '400px' } }></div>
             </div>
 
+            
 
             <div className="flex flex-col items-center">
                 <h1 className="text-4xl font-bold mt-8 mb-6 text-white">Chunny Bible &#x1F62D;</h1>
