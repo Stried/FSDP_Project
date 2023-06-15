@@ -1,3 +1,4 @@
+"use client"
 import { Container, AppBar, Toolbar, Typography, CssBaseline } from "@mui/material";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Ecolife from "./pages/Ecolife";
@@ -7,7 +8,9 @@ import { useState, useEffect } from "react";
 import http from './http'
 import './App.css'
 
+
 import EcoLifeAppBar from "./components/EcoLifeAppBar";
+import EcoLifeFooter from "./components/EcoLifeFooter";
 
 import * as Constants from "./../src/components/CSS Constants/Constants";
 import UserContext from "./contexts/UserContext";
@@ -27,8 +30,11 @@ function App() {
     return (
         <UserContext.Provider value={ { user, setUser } }>
             <div id="root" className="w-full h-screen overflow-x-hidden | bg-gradient-to-b from-zinc-900 to-black">
-                <div>
+                <div className="mb-10">
                     <EcoLifeAppBar />
+                </div>
+                <div className="mt-10">
+                    <EcoLifeFooter />
                 </div>
             </div>
         </UserContext.Provider>
