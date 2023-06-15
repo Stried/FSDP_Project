@@ -7,47 +7,15 @@ import './../../App.css'
 import * as Constants from "./../../../src/components/CSS Constants/Constants";
 import UserContext from "./../../contexts/UserContext";
 
-import mapboxgl from 'mapbox-gl';
+import { Map, Marker } from "pigeon-maps"
 
 function LocationsMain() {
-    const [ user, setUser ] = useState(null);
-    const mapContainer = useRef(null);
-    const map = useRef(null);
-    const lng = -70.9;
-    const lat = 42.35;
-    const zoom = 9;
-
-
-    useEffect(() => {
-        if (localStorage.getItem("accessToken")) {
-            // Todo: Get user data from server
-            http.get('/user/auth').then((res) => {
-                setUser(res.data.user);
-            });
-        }
-    }, []);
-
-    useEffect(() => {
-        mapboxgl.accessToken = 'pk.eyJ1Ijoic3RyaWVkeXVlIiwiYSI6ImNsaXQwdDdiazBxNGczcm90ZGd3MjN6dTAifQ.HXKvrVBcshVr-KWaj2aBGA';
-
-        if (!map.current) {
-            map.current = new mapboxgl.Map({
-                container: mapContainer.current,
-                style: 'mapbox://styles/mapbox/streets-v12',
-                center: [ lng, lat ],
-                zoom: zoom
-            });
-        }
-    }, [ lng, lat, zoom ]);
 
     return (
         <Box>
-            <div className="rounded-lg bg-white shadow-2xl">
-                <div ref={ mapContainer } style={ { width: '100%', height: '400px' } }></div>
-            </div>
-
-            
-
+            <Map height={ 300 } defaultCenter={ [ 1.3759366, 103.878986 ] } defaultZoom={ 17 }>
+                <Marker width={ 50 } anchor={ [ 1.3759366, 103.878986 ] } />
+            </Map>
             <div className="flex flex-col items-center">
                 <h1 className="text-4xl font-bold mt-8 mb-6 text-white">Chunny Bible &#x1F62D;</h1>
 
@@ -118,9 +86,9 @@ function LocationsMain() {
                 </div>
             </div>
 
-            <div id="map">
+            {/* <div id="map">
                 <div ref={ mapContainer } className="map-container" />
-            </div>
+            </div> */}
         </Box>
     );
 }
