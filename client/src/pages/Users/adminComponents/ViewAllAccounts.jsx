@@ -1,14 +1,9 @@
-import { Box, Typography, Grid, Card, CardContent, Input, IconButton, Button } from '@mui/material';
+import { Box, Typography, Grid, Card, CardContent, Input, IconButton } from '@mui/material';
 import { AccountCircle, AccessTime, Search, Clear, Edit } from '@mui/icons-material';
 import UserContext from "../../../contexts/UserContext";
 import React, { useEffect, useState } from "react";
 import http from "../../../http";
-
-import {
-    Dropdown,
-    Ripple,
-    initTE,
-} from "tw-elements";
+import { Dropdown, Button, Modal } from 'flowbite-react';
 
 function ViewAllAccounts() {
     const [ userList, setUserList ] = useState([]);
@@ -45,13 +40,7 @@ function ViewAllAccounts() {
         getUsers();
     }, []);
 
-    useEffect(() => {
-        initTE({ Dropdown, Ripple });
-    }, []);
-    // const dropdownElementList = [].slice.call(document.querySelectorAll('[data-te-dropdown-toggle-ref]'));
-    // const dropdownList = dropdownElementList.map((dropdownToggleEl) => {
-    //     return new te.Dropdown(dropdownToggleEl);
-    // });
+    const [ openModal, setOpenModal ] = useState("");
 
     return (
         <Box>
@@ -110,7 +99,7 @@ function ViewAllAccounts() {
             ) }
             { displayStyle === "Full" | displayStyle === "Semi" && (
                 <Box className="h-96 overflow-auto">
-                    <div className="text-white mx-2">
+                    <div className="text-white">
                         {
                             userList.map((user, i) => {
                                 return (
@@ -150,48 +139,50 @@ function ViewAllAccounts() {
                     </div>
                 </Box>
             ) }
-            
-            <div className='relative' data-te-dropdown-ref>
-                <button className='flex items-center rounded bg-green-500 my-4 px-6 py-2 text-xl font-medium transition-ease-in-out duration-300'
-                    type='button'
-                    id='dropdownMenuButton'
-                    data-te-dropdown-toggle-ref
-                    aria-expanded="false"
-                    data-te-ripple-init
-                    data-te-ripple-color='green'
-                >
-                    Dropdown
-                </button>
-                <ul className='absolute z-10 float-left m-0 hidden min-w-max list-none overflow-hidden rounded bg-neutral-700 bg-clip-padding text-white text-left text-base shadow-lg'
-                    aria-labelledby='dropdownMenuButton'
-                    data-te-dropdown-menu-ref
-                >
-                    <li>
-                        <a className='block w-full whitespace-nowrap bg-transparent px-4 py-2 text-lg font-medium text-white'
-                            href=""
-                            data-te-dropdown-item-ref
-                        >
-                            Action
-                        </a>
-                    </li>
-                    <li>
-                        <a className='block w-full whitespace-nowrap bg-transparent px-4 py-2 text-lg font-medium text-white'
-                            href=""
-                            data-te-dropdown-item-ref
-                        >
-                            Action
-                        </a>
-                    </li>
-                    <li>
-                        <a className='block w-full whitespace-nowrap bg-transparent px-4 py-2 text-lg font-medium text-white'
-                            href=""
-                            data-te-dropdown-item-ref
-                        >
-                            Action
-                        </a>
-                    </li>
-                </ul>
+            <div className='my-3 mx-2'>
+                <Dropdown label="Dropdown Button" color="success">
+                    <Dropdown.Header>
+                        <span className='text-green-500'>DropDowns</span>
+                    </Dropdown.Header>
+                    <Dropdown.Item>
+                        Dashboard
+                    </Dropdown.Item>
+                    <Dropdown.Item>
+                        Settings
+                    </Dropdown.Item>
+                    <Dropdown.Item>
+                        Earnings
+                    </Dropdown.Item>
+                    <Dropdown.Item>
+                        Sign out
+                    </Dropdown.Item>
+                </Dropdown>
             </div>
+
+            <div className='my-3 mx-2'>
+                <Button color="success" onClick={() => setOpenModal("dismissable")}>
+                    Test
+                </Button>
+                <Modal dismissible show={ openModal === "dismissable" } onClose={ () => setOpenModal("") }>
+                    <Modal.Header>
+                        Terms and Conditions
+                    </Modal.Header>
+                    <Modal.Body>
+                        <div className='p-5'>
+                            Testing one two three
+                        </div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button color="success">
+                            Ok
+                        </Button>
+                        <Button color="red" onClick={() => setOpenModal("")}>
+                            Decline
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+            </div>
+
         </Box>
 
     )

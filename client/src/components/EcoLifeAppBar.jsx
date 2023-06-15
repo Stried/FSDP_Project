@@ -45,11 +45,11 @@ function EcoLifeAppBar() {
 
     return (
         <Router>
-            <nav className="navbar w-full flex  py-6  dark:text-white text-black overflow-x-hidden">
+            <nav className="navbar w-full flex  py-6 text-white overflow-x-hidden">
                 <div className="p-3 w-fit">
                     <Link to={ "/" }>
                         <h1
-                            className="w-fit | dark:bg-gradient-to-r from-green-400 to-emerald-600 text-transparent bg-clip-text |
+                            className="w-fit | bg-gradient-to-r from-green-400 to-emerald-600 text-transparent bg-clip-text |
             hover:ease-in-out duration-300 | italic font-semibold text-4xl | mx-4 my-2"
                         >
                             Ecolife

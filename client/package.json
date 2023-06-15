@@ -20,6 +20,8 @@
     "axios": "^1.4.0",
     "dayjs": "^1.11.7",
     "firebase": "^9.22.1",
+    "flowbite": "^1.6.6",
+    "flowbite-react": "^0.4.7",
     "formik": "^2.2.9",
     "mapbox-gl": "^2.15.0",
     "react": "^18.2.0",
@@ -27,7 +29,6 @@
     "react-map-gl": "^7.0.25",
     "react-router-dom": "^6.11.2",
     "react-toastify": "^9.1.3",
-    "tw-elements": "^1.0.0-beta2",
     "yup": "^1.2.0"
   },
   "devDependencies": {

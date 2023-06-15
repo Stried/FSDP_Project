@@ -81,12 +81,10 @@ function AdminPanelMain() {
                     </div>
                     
 
-                    <div className="w-2/3 mx-5 h-full" id="displayComponents">
+                    <div className="w-2/3 ml-8 h-full" id="displayComponents">
                         { isRendered === "" && (<ViewAllAccounts />) }
                     </div>
                 </div>
-
-
             </Box>
         )
 

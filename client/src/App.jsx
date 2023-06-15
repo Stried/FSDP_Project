@@ -26,7 +26,7 @@ function App() {
 
     return (
         <UserContext.Provider value={ { user, setUser } }>
-            <div id="root" className="w-full h-screen overflow-x-hidden | bg-gray-300 dark:bg-gradient-to-b from-zinc-900 to-black">
+            <div id="root" className="w-full h-screen overflow-x-hidden | bg-gradient-to-b from-zinc-900 to-black">
                 <div>
                     <EcoLifeAppBar />
                 </div>
