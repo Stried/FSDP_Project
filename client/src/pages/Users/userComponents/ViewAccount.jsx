@@ -50,6 +50,16 @@ function ViewAccount() {
                             { user.fullName }'s Account Details
                         </p>
                         <div className="my-3">
+                            <div className="text-white mb-3">
+                                { user && user.imageFile !== "No image" && ( // Had to be non-nullable
+                                    <AspectRatio className="w-2/5 border-green-500 border-2 border-solid rounded float-right mr-10">
+                                        <Box component="img"
+                                            src={ `${import.meta.env.VITE_FILE_BASE_URL}${localStorage.getItem("userImageFile")}` }
+                                            alt="Profile Picture">
+                                        </Box>
+                                    </AspectRatio>
+                                ) }
+                            </div>
                             <div id="idNumber" className="">
                                 <h1 className="text-green-400 font-medium text-2xl">
                                     ID Number
@@ -76,16 +86,7 @@ function ViewAccount() {
                                     </p>
                                 </div>
                             </div>
-                            <div className="text-white mb-3">
-                                { user && user.imageFile !== "No image" && ( // Had to be non-nullable
-                                    <AspectRatio className="w-1/3 border-green-500 border-2 border-solid rounded">
-                                        <Box component="img"
-                                            src={ `${import.meta.env.VITE_FILE_BASE_URL}${localStorage.getItem("userImageFile")}` }
-                                            alt="Profile Picture">
-                                        </Box>
-                                    </AspectRatio>                               
-                                ) }
-                            </div>
+
                             <div id="emailAccount" className="my-3">
                                 <h1 className="text-green-400 font-medium text-2xl">
                                     Email Account

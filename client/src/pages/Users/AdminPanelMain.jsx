@@ -14,12 +14,13 @@ import ViewAccount from "./userComponents/ViewAccount";
 
 function AdminPanelMain() {
     const { user } = useContext(UserContext);
+    const navigate = useNavigate();
 
     const [ isRendered, setIsRendered ] = useState("");
 
     return (
         user && (
-            <Box className="">
+            <Box className="ml-10">
                 <div className="flex">
                     <div>
                         <div className="text-white">

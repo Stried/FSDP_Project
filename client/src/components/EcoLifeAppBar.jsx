@@ -8,6 +8,7 @@ import http from "./../http";
 
 // Pages Import
 import Ecolife from "../pages/Ecolife";
+import PageNotFound from "../pages/PageNotFound";
 import UserCreateAccount from "../pages/Users/UserCreateAccount";
 import UserEnterAccount from "../pages/Users/UserEnterAccount";
 import UserDetailsPage from "../pages/Users/UserDetailsPage";
@@ -132,7 +133,8 @@ function EcoLifeAppBar() {
                     <Route path={ "/user/viewAccount" } element={ <UserDetailsPage /> } />
                     <Route path={ "/user/adminPanel" } element={ <AdminPanelMain /> } />
                     <Route path={ "/location/LocationsMain" } element={ <LocationsMain />} />
-                    <Route path={"/Trials/trialAdmin/TrialsAdminPage"} element={<TrialsAdminPage/>}/>
+                    <Route path={ "/Trials/trialAdmin/TrialsAdminPage" } element={ <TrialsAdminPage /> } />
+                    <Route path={ "*" } element={ <PageNotFound /> } />
                 </Routes>
             </div>
         </Router>

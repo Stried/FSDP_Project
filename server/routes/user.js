@@ -347,6 +347,7 @@ router.get("/adminPanel", validateToken, async (req, res) => {
     if (!userInfo.adminNo) {
         console.log("Page Not Found!");
         res.status(404).json("Page Is Not Found.");
+        return;
     }
      
     const condition = {};

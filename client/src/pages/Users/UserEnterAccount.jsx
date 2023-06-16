@@ -65,7 +65,7 @@ function UserEnterAccount() {
 	});
 
 	return (
-		<Box component={"div"} className="py-5 ">
+		<Box component={"div"} className="py-5 ml-10">
 			<div className="bg-transparent w-1/2 py-3 rounded-lg ">
 				<Box>
 					<Typography
