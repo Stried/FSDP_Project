@@ -12,7 +12,7 @@ import UserCreateAccount from "../pages/Users/UserCreateAccount";
 import UserEnterAccount from "../pages/Users/UserEnterAccount";
 import UserDetailsPage from "../pages/Users/UserDetailsPage";
 import AdminPanelMain from "../pages/Users/AdminPanelMain";
-
+import TrialsAdminPage from "../pages/Trials/trialAdmin/TrialsAdminPage";
 import LocationsMain from "../pages/Locations/LocationsMain";
 import { Button } from "@mui/base";
 import ChangeAccountDetails from "../pages/Users/userComponents/ChangeAccountDetails";
@@ -75,7 +75,7 @@ function EcoLifeAppBar() {
                         </h1>
                     </Link>
 
-                    <Link to="">
+                    <Link to="/Trials/trialAdmin/TrialsAdminPage">
                         <h1
                             className="w-max | hover:text-white dark:hover:text-green-500 | hover:ease-in-out duration-300
                     font-medium text-xl | mx-5 my-2"
@@ -132,6 +132,7 @@ function EcoLifeAppBar() {
                     <Route path={ "/user/viewAccount" } element={ <UserDetailsPage /> } />
                     <Route path={ "/user/adminPanel" } element={ <AdminPanelMain /> } />
                     <Route path={ "/location/LocationsMain" } element={ <LocationsMain />} />
+                    <Route path={"/Trials/trialAdmin/TrialsAdminPage"} element={<TrialsAdminPage/>}/>
                 </Routes>
             </Container>
         </Router>
