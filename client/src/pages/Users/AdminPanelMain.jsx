@@ -14,6 +14,7 @@ import ViewAccount from "./userComponents/ViewAccount";
 
 function AdminPanelMain() {
     const { user } = useContext(UserContext);
+    const navigate = useNavigate();
 
     const [ isRendered, setIsRendered ] = useState("");
 
