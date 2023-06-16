@@ -53,7 +53,7 @@ function UserDetailsPage() {
   }
 
   return (
-    <div className="w-screen">
+    <div className="w-screen ml-10">
       {user && (
         <div className="flex">
           <div className="w-1/4" id="sideBarMenu">

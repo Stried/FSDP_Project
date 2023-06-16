@@ -90,7 +90,7 @@ function UserCreateAccount() {
     });
 
     return (
-        <Box component={ "div" } className=" py-5 h-screen">
+        <Box component={ "div" } className=" py-5 h-screen ml-10">
             <div className="bg-transparent w-1/2 py-3 rounded-lg ">
                 <Box>
                     <Typography variant="h4" className="text-black dark:text-white">

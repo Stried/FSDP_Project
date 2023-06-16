@@ -200,50 +200,6 @@ function ViewAllAccounts() {
                     </div>
                 </Box>
             ) }
-            <div className='my-3 mx-2'>
-                <Dropdown label="Dropdown Button" color="success">
-                    <Dropdown.Header>
-                        <span className='text-green-500'>DropDowns</span>
-                    </Dropdown.Header>
-                    <Dropdown.Item>
-                        Dashboard
-                    </Dropdown.Item>
-                    <Dropdown.Item>
-                        Settings
-                    </Dropdown.Item>
-                    <Dropdown.Item>
-                        Earnings
-                    </Dropdown.Item>
-                    <Dropdown.Item>
-                        Sign out
-                    </Dropdown.Item>
-                </Dropdown>
-            </div>
-
-            {/* <div className='my-3 mx-2'>
-                <Button color="success" onClick={ () => setOpenModal("dismissable") }>
-                    Test
-                </Button>
-                <Modal dismissible show={ openModal === "dismissable" } onClose={ () => setOpenModal("") }>
-                    <Modal.Header>
-                        Terms and Conditions
-                    </Modal.Header>
-                    <Modal.Body>
-                        <div className='p-5'>
-                            Testing one two three
-                        </div>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button color="success">
-                            Ok
-                        </Button>
-                        <Button color="red" onClick={ () => setOpenModal("") }>
-                            Decline
-                        </Button>
-                    </Modal.Footer>
-                </Modal>
-            </div> */}
-
         </Box>
 
     )

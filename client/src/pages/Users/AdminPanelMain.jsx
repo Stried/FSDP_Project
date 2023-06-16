@@ -19,7 +19,7 @@ function AdminPanelMain() {
 
     return (
         user && (
-            <Box className="">
+            <Box className="ml-10">
                 <div className="flex">
                     <div>
                         <div className="text-white">
