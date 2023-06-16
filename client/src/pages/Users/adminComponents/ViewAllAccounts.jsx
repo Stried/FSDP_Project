@@ -45,7 +45,7 @@ function ViewAllAccounts() {
     return (
         <Box>
             <nav className="text-white text-xl font-medium flex space-x-5 mx-4 mb-2">
-                <button onClick={() => {setDisplayStyle("Full")}} className="border-green-500 border-2 border-solid px-3 py-1 rounded">
+                <button onClick={ () => { setDisplayStyle("Full") } } className="border-green-500 border-2 border-solid px-3 py-1 rounded">
                     Full
                 </button>
                 <button onClick={ () => { setDisplayStyle("Semi") } } className="border-green-500 border-2 border-solid px-3 py-1 rounded">
@@ -75,19 +75,41 @@ function ViewAllAccounts() {
                     <div className="text-white mx-2 grid grid-cols-4 columns-4">
                         {
                             userList.map((user, i) => {
+                                const isModalOpen = openModal === user.emailAccount; // Ensures the value is the user that is selected
+
                                 return (
                                     <ul key={ i } className="list-none">
                                         <li className="">
                                             { user && displayStyle === "Contained" && (
-                                                <div className="mr-2 mb-2">
-                                                    <div className=" bg-zinc-800 bg-opacity-70 text-white p-5 rounded border-transparent border-2 border-solid hover:border-green-500 hover:transition-ease-in-out duration-300">
-                                                        <div className=" justify-self-center">
-                                                            <img src={ `${import.meta.env.VITE_FILE_BASE_URL}${user.imageFile}` } alt="" className="w-14 h-14 rounded-full mx-auto" />
+                                                <div>
+                                                    <div className="mr-2 mb-2">
+                                                        <div onClick={ () => setOpenModal(user.emailAccount) } className=" bg-zinc-800 bg-opacity-70 text-white p-5 rounded border-transparent border-2 border-solid hover:border-green-500 hover:transition-ease-in-out duration-300">
+                                                            <div className=" justify-self-center">
+                                                                <img src={ `${import.meta.env.VITE_FILE_BASE_URL}${user.imageFile}` } alt="" className="w-14 h-14 rounded-full mx-auto" />
 
-                                                            <p className="text-xl font-medium text-center mt-2 overflow-hidden">{ user.fullName } </p>
+                                                                <p className="text-xl font-medium text-center mt-2 overflow-hidden">{ user.fullName } </p>
+                                                            </div>
                                                         </div>
                                                     </div>
+                                                    <Modal dismissible show={ isModalOpen } onClose={ () => setOpenModal("") }>
+                                                        <Modal.Header>
+                                                            { user.fullName }
+                                                        </Modal.Header>
+                                                        <Modal.Body>
+                                                            <div className='py-5 text-white text-xl font-medium'>
+                                                                <p><span className='text-green-500 text-xl font-medium'>ID: </span>{ user.id }</p>
+                                                                <p><span className='text-green-500 text-xl font-medium'>Full Name: </span>{ user.fullName }</p>
+                                                                <p><span className='text-green-500 text-xl font-medium'>Username: </span>{ user.userName }</p>
+                                                                <p><span className='text-green-500 text-xl font-medium'>Email Account: </span>{ user.emailAccount }</p>
+                                                                <p><span className='text-green-500 text-xl font-medium'>Phone No: </span>{ user.phoneNo }</p>
+                                                            </div>
+                                                        </Modal.Body>
+                                                        <Modal.Footer>
+                                                            <p className="w-fit | bg-gradient-to-r from-green-400 to-emerald-600 text-transparent bg-clip-text | hover:ease-in-out duration-300 | italic font-semibold text-xl">Ecolife</p>
+                                                        </Modal.Footer>
+                                                    </Modal>
                                                 </div>
+
                                             ) }
                                         </li>
                                     </ul>
@@ -102,33 +124,72 @@ function ViewAllAccounts() {
                     <div className="text-white">
                         {
                             userList.map((user, i) => {
+                                const isModalOpen = openModal === user.emailAccount; // Ensures the value is the user that is selected
+
                                 return (
                                     <ul key={ i } className="list-none">
                                         <li className="">
                                             { user && displayStyle === "Full" && (
-                                                <div className="bg-zinc-800 bg-opacity-70 text-white my-3 mx-2 p-5 rounded border-transparent border-2 border-solid hover:border-green-500 hover:transition-ease-in-out duration-300">
-                                                    <div className="">
-                                                        <img src={ `${import.meta.env.VITE_FILE_BASE_URL}${user.imageFile}` } alt="" className="w-24 h-24 rounded-full float-right" />
-                                                    </div>
+                                                <div>
+                                                    <div onClick={ () => setOpenModal(user.emailAccount) } className="bg-zinc-800 bg-opacity-70 text-white my-3 mx-2 p-5 rounded border-transparent border-2 border-solid hover:border-green-500 hover:transition-ease-in-out duration-300">
+                                                        <div className="">
+                                                            <img src={ `${import.meta.env.VITE_FILE_BASE_URL}${user.imageFile}` } alt="" className="w-24 h-24 rounded-full float-right" />
+                                                        </div>
 
-                                                    <p className="text-3xl font-semibold">{ user.fullName } </p>
-                                                    <p className="text-lg font-medium">ID: <span className="text-green-500">{ user.id }</span></p>
+                                                        <p className="text-3xl font-semibold">{ user.fullName } </p>
+                                                        <p className="text-lg font-medium">ID: <span className="text-green-500">{ user.id }</span></p>
 
-                                                    <br />
-                                                    <div>
-                                                        <p className="text-xl font-medium">Email: <span className="text-green-500">{ user.emailAccount }</span></p>
-                                                        <p className="text-xl font-medium">Phone no: <span className="text-green-500">{ user.phoneNo }</span></p>
-                                                    </div>
+                                                        <br />
+                                                        <div>
+                                                            <p className="text-xl font-medium">Email: <span className="text-green-500">{ user.emailAccount }</span></p>
+                                                            <p className="text-xl font-medium">Phone no: <span className="text-green-500">{ user.phoneNo }</span></p>
+                                                        </div>
+                                                    </div>                                                    <Modal dismissible show={ isModalOpen } onClose={ () => setOpenModal("") }>
+                                                        <Modal.Header>
+                                                            { user.fullName }
+                                                        </Modal.Header>
+                                                        <Modal.Body>
+                                                            <div className='py-5 text-white text-xl font-medium'>
+                                                                <p><span className='text-green-500 text-xl font-medium'>ID: </span>{ user.id }</p>
+                                                                <p><span className='text-green-500 text-xl font-medium'>Full Name: </span>{ user.fullName }</p>
+                                                                <p><span className='text-green-500 text-xl font-medium'>Username: </span>{ user.userName }</p>
+                                                                <p><span className='text-green-500 text-xl font-medium'>Email Account: </span>{ user.emailAccount }</p>
+                                                                <p><span className='text-green-500 text-xl font-medium'>Phone No: </span>{ user.phoneNo }</p>
+                                                            </div>
+                                                        </Modal.Body>
+                                                        <Modal.Footer>
+                                                            <p className="w-fit | bg-gradient-to-r from-green-400 to-emerald-600 text-transparent bg-clip-text | hover:ease-in-out duration-300 | italic font-semibold text-xl">Ecolife</p>
+                                                        </Modal.Footer>
+                                                    </Modal>
                                                 </div>
                                             ) }
                                             { user && displayStyle === "Semi" && (
-                                                <div className="bg-zinc-800 bg-opacity-70 text-white my-3 mx-2 p-5 rounded border-transparent border-2 border-solid hover:border-green-500 hover:transition-ease-in-out duration-300">
-                                                    <div className="">
-                                                        <img src={ `${import.meta.env.VITE_FILE_BASE_URL}${user.imageFile}` } alt="" className="w-14 h-14 rounded-full float-right" />
-                                                    </div>
+                                                <div>
+                                                    <div onClick={ () => setOpenModal(user.emailAccount) } className="bg-zinc-800 bg-opacity-70 text-white my-3 mx-2 p-5 rounded border-transparent border-2 border-solid hover:border-green-500 hover:transition-ease-in-out duration-300">
+                                                        <div className="">
+                                                            <img src={ `${import.meta.env.VITE_FILE_BASE_URL}${user.imageFile}` } alt="" className="w-14 h-14 rounded-full float-right" />
+                                                        </div>
 
-                                                    <p className="text-3xl font-semibold">{ user.fullName } </p>
-                                                    <p className="text-lg font-medium">ID: <span className="text-green-500">{ user.id }</span></p>
+                                                        <p className="text-3xl font-semibold">{ user.fullName } </p>
+                                                        <p className="text-lg font-medium">ID: <span className="text-green-500">{ user.id }</span></p>
+                                                    </div>
+                                                    <Modal dismissible show={ isModalOpen } onClose={ () => setOpenModal("") }>
+                                                        <Modal.Header>
+                                                            { user.fullName }
+                                                        </Modal.Header>
+                                                        <Modal.Body>
+                                                            <div className='py-5 text-white text-xl font-medium'>
+                                                                <p><span className='text-green-500 text-xl font-medium'>ID: </span>{ user.id }</p>
+                                                                <p><span className='text-green-500 text-xl font-medium'>Full Name: </span>{ user.fullName }</p>
+                                                                <p><span className='text-green-500 text-xl font-medium'>Username: </span>{ user.userName }</p>
+                                                                <p><span className='text-green-500 text-xl font-medium'>Email Account: </span>{ user.emailAccount }</p>
+                                                                <p><span className='text-green-500 text-xl font-medium'>Phone No: </span>{ user.phoneNo }</p>
+                                                            </div>
+                                                        </Modal.Body>
+                                                        <Modal.Footer>
+                                                            <p className="w-fit | bg-gradient-to-r from-green-400 to-emerald-600 text-transparent bg-clip-text | hover:ease-in-out duration-300 | italic font-semibold text-xl">Ecolife</p>
+                                                        </Modal.Footer>
+                                                    </Modal>
                                                 </div>
                                             ) }
                                         </li>
@@ -159,8 +220,8 @@ function ViewAllAccounts() {
                 </Dropdown>
             </div>
 
-            <div className='my-3 mx-2'>
-                <Button color="success" onClick={() => setOpenModal("dismissable")}>
+            {/* <div className='my-3 mx-2'>
+                <Button color="success" onClick={ () => setOpenModal("dismissable") }>
                     Test
                 </Button>
                 <Modal dismissible show={ openModal === "dismissable" } onClose={ () => setOpenModal("") }>
@@ -176,12 +237,12 @@ function ViewAllAccounts() {
                         <Button color="success">
                             Ok
                         </Button>
-                        <Button color="red" onClick={() => setOpenModal("")}>
+                        <Button color="red" onClick={ () => setOpenModal("") }>
                             Decline
                         </Button>
                     </Modal.Footer>
                 </Modal>
-            </div>
+            </div> */}
 
         </Box>
 
