@@ -147,12 +147,12 @@ const App = () => {
   };
 
 
-
+2
   return (
     <div className="relative min-h-screen">
       <div onClick={toggleArrowSidebar}>
       <button
-        className={`absolute right-[110%] top-0 z-50 p-4 bg-white text-grey transition-transform duration-500 ${
+        className={` z-50 p-4 ml-0 bg-white text-grey transition-transform duration-500 ${
           isOpen ? 'translate-x-64' : 'translate-x-0'
         }`}
         onClick={toggleNav}

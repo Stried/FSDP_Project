@@ -124,7 +124,7 @@ function EcoLifeAppBar() {
                 </div>
             </nav>
 
-            <Container>
+            <div>
                 <Routes>
                     <Route path={ "/" } />
                     <Route path={ "/user/createAccount" } element={ <UserCreateAccount /> } />
@@ -134,7 +134,7 @@ function EcoLifeAppBar() {
                     <Route path={ "/location/LocationsMain" } element={ <LocationsMain />} />
                     <Route path={"/Trials/trialAdmin/TrialsAdminPage"} element={<TrialsAdminPage/>}/>
                 </Routes>
-            </Container>
+            </div>
         </Router>
     );
 }
