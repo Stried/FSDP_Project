@@ -30,6 +30,9 @@ app.use("/file", fileRoute);
 const storeRoute = require('./routes/store');
 app.use("/store", storeRoute);
 
+const locationRoute = require("./routes/locations");
+app.use("/locations", locationRoute);
+
 const db = require("./models");
 db.sequelize.sync({ alter: true }).then(() => {
     app.listen(port, () => {

@@ -7,29 +7,27 @@ const yup = require("yup");
 
 router.post("/", async (req, res) => {
     let data = req.body;
-    data.carProductionDate = Date.parse(data.carProductionDate);
-    data.carProductionDate = Date(data.carProductionDate)
-    // realise that date cannot be validated this way, so got to find another way... zzz
     
     // Validate request body
     let validationSchema = yup.object().shape({
-        carName: yup.string().trim().min(10).max(100).required(),
+        carPlateNo: yup.string().trim().max(8).required(),
         carDescription:  yup.string().trim().required(),
         carPrice: yup.number().integer().required(),
         carBrand: yup.string().trim().required(),
         carModel: yup.string().trim().required(),
-        carModification: yup.string().trim().required(),
+        carEngine: yup.string().trim().required(),
         carSpeed: yup.number().integer().required(),
         carFuelType: yup.string().required(), 
         carFuelConsume: yup.number().integer().required(),
         carProductionDate: yup.date().required(),
         carBodyType: yup.string().trim().required(),
+        carColor: yup.string().trim().required(),
         carSeats: yup.number().integer().min(1).required(),
-        carDoors: yup.number().integer().min(2).required(),
-        carWheels: yup.number().integer().min(4).required(),
         carLength: yup.number().integer().required(),
         carWidth: yup.number().integer().required(),
-        carHeight: yup.number().integer().required() 
+        carHeight: yup.number().integer().required(),
+        isModified: yup.boolean().required(),
+        carMods: yup.string(),
     }); 
     try {
         await validationSchema.validate(data,
@@ -110,23 +108,24 @@ router.put("/:id", async (req, res) => {
 
     // Validate request body
     let validationSchema = yup.object().shape({
-        carName: yup.string().trim().min(10).max(100).required(),
+        carPlateNo: yup.string().trim().max(8).required(),
         carDescription:  yup.string().trim().required(),
         carPrice: yup.number().integer().required(),
         carBrand: yup.string().trim().required(),
         carModel: yup.string().trim().required(),
-        carModification: yup.string().trim().required(),
+        carEngine: yup.string().trim().required(),
         carSpeed: yup.number().integer().required(),
         carFuelType: yup.string().required(), 
         carFuelConsume: yup.number().integer().required(),
         carProductionDate: yup.date().required(),
         carBodyType: yup.string().trim().required(),
+        carColor: yup.string().trim().required(),
         carSeats: yup.number().integer().min(1).required(),
-        carDoors: yup.number().integer().min(2).required(),
-        carWheels: yup.number().integer().min(4).required(),
         carLength: yup.number().integer().required(),
         carWidth: yup.number().integer().required(),
-        carHeight: yup.number().integer().required() 
+        carHeight: yup.number().integer().required(),
+        isModified: yup.boolean().required(),
+        carMods: yup.string(), 
     }); 
     try {
         await validationSchema.validate(data,

@@ -10,12 +10,15 @@ import UserContext from "./../../contexts/UserContext";
 import { Map, Marker } from "pigeon-maps"
 
 function LocationsMain() {
-
+    const color = `hsl(0, 100%, 50%)`
     return (
         <Box>
-            <Map height={ 300 } defaultCenter={ [ 1.3759366, 103.878986 ] } defaultZoom={ 17 }>
-                <Marker width={ 50 } anchor={ [ 1.3759366, 103.878986 ] } />
-            </Map>
+            <div className="w-1/3 mx-auto">
+                <Map height={ 300 } defaultCenter={ [ 1.3759366, 103.878986 ] } defaultZoom={ 17 }>
+                    <Marker width={ 40 } color={ color } anchor={ [ 1.3759366, 103.878986 ] } />
+                </Map>
+            </div>
+
             <div className="flex flex-col items-center">
                 <h1 className="text-4xl font-bold mt-8 mb-6 text-white">Chunny Bible &#x1F62D;</h1>
 

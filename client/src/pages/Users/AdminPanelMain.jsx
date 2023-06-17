@@ -16,6 +16,12 @@ function AdminPanelMain() {
     const { user } = useContext(UserContext);
     const navigate = useNavigate();
 
+    try {
+        adminNo = user.adminNo;
+    } catch (err) {
+        navigate("/404")
+    }
+
     const [ isRendered, setIsRendered ] = useState("");
 
     return (
