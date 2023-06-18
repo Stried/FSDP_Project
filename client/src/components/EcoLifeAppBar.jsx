@@ -1,10 +1,12 @@
 // Libraries Import
+'use client'
 import { Container, AppBar, Toolbar, Typography } from "@mui/material";
 import React, { useContext } from "react";
 import { useState, useEffect } from "react";
 import "./../App.css";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import http from "./../http";
+import { Dropdown } from "flowbite-react";
 
 // Pages Import
 import Ecolife from "../pages/Ecolife";
@@ -13,10 +15,11 @@ import UserCreateAccount from "../pages/Users/UserCreateAccount";
 import UserEnterAccount from "../pages/Users/UserEnterAccount";
 import UserDetailsPage from "../pages/Users/UserDetailsPage";
 import AdminPanelMain from "../pages/Users/AdminPanelMain";
+
 import TrialsAdminPage from "../pages/Trials/trialAdmin/TrialsAdminPage";
+
 import LocationsMain from "../pages/Locations/LocationsMain";
-import { Button } from "@mui/base";
-import ChangeAccountDetails from "../pages/Users/userComponents/ChangeAccountDetails";
+import LocationsCreate from "../pages/Locations/LocationsCreate";
 
 import UserContext from "../contexts/UserContext";
 
@@ -32,6 +35,19 @@ function AdminPanel(props) {
                     Admin Panel
                 </h1>
             </Link>
+        )
+    }
+}
+
+function LocationsAdmin(props) {
+    const isAdmin = props.isAdmin;
+    if (isAdmin) {
+        return (
+            <Dropdown.Item>
+                <Link to="/locations/createLocation">
+                    <p className="">Add A Location</p>
+                </Link>
+            </Dropdown.Item>
         )
     }
 }
@@ -67,14 +83,18 @@ function EcoLifeAppBar() {
                         </h1>
                     </Link>
 
-                    <Link to="/location/LocationsMain">
-                        <h1
-                            className="w-max | hover:text-white dark:hover:text-green-500 | hover:ease-in-out duration-300
-                    font-medium text-xl | mx-5 my-2"
-                        >
-                            Location
-                        </h1>
-                    </Link>
+                    <div className="text-xl font-medium my-2 mx-5 hover:text-green-500 hover:transition-ease-in-out duration-300">
+                        <Dropdown inline label="Location" size="lg">
+                            <Dropdown.Item>
+                                <Link to="/locations/LocationsMain">
+                                    <p className="">View Locations</p>
+                                </Link>
+                            </Dropdown.Item>
+                            { user && (
+                                <LocationsAdmin isAdmin={ user.adminNo } />
+                            )}
+                        </Dropdown>
+                    </div>
 
                     <Link to="/Trials/trialAdmin/TrialsAdminPage">
                         <h1
@@ -132,7 +152,8 @@ function EcoLifeAppBar() {
                     <Route path={ "/user/login" } element={ <UserEnterAccount /> } />
                     <Route path={ "/user/viewAccount" } element={ <UserDetailsPage /> } />
                     <Route path={ "/user/adminPanel" } element={ <AdminPanelMain /> } />
-                    <Route path={ "/location/LocationsMain" } element={ <LocationsMain />} />
+                    <Route path={ "/locations/LocationsMain" } element={ <LocationsMain /> } />
+                    <Route path={ "/locations/createLocation" } element={ <LocationsCreate /> } />
                     <Route path={ "/Trials/trialAdmin/TrialsAdminPage" } element={ <TrialsAdminPage /> } />
                     <Route path={ "*" } element={ <PageNotFound /> } />
                 </Routes>

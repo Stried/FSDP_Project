@@ -18,6 +18,7 @@ function AdminPanelMain() {
 
     try {
         adminNo = user.adminNo;
+        return;
     } catch (err) {
         navigate("/404")
     }
