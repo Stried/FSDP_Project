@@ -101,10 +101,12 @@ function StoreAddItem() {
         <Box>
             <ToastContainer />
             <div className="text-white">
-                <h1 className="text-green-500 text-3xl font-medium">
+                <h1 className="text-green-500 text-3xl pl-10 font-medium">
                     Sell a Vehicle
                 </h1>
             </div>
         </Box>
     )
 }
+
+export default StoreAddItem;
