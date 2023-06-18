@@ -64,7 +64,7 @@ function LocationsCreate() {
                     toast.error(`${err.response.data.message}`)
                 });
         }
-    })
+    });
 
     return (
         <Box className="mx-10">
