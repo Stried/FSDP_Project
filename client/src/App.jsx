@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Ecolife from "./pages/Ecolife";
 import LocationsFunc from "./pages/Locations/LocationsMain"
 import UserCreateAccount from "./pages/Users/UserCreateAccount";
+import Store from "./pages/Store/StoreMain"; 
 import { useState, useEffect } from "react";
 import http from './http'
 import './App.css'

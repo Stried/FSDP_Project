@@ -21,6 +21,9 @@ import TrialsAdminPage from "../pages/Trials/trialAdmin/TrialsAdminPage";
 import LocationsMain from "../pages/Locations/LocationsMain";
 import LocationsCreate from "../pages/Locations/LocationsCreate";
 
+import StoreMain from "../pages/Store/StoreMain";
+import StoreAddItem from "../pages/Store/StoreAddItem";
+
 import UserContext from "../contexts/UserContext";
 
 function AdminPanel(props) {
@@ -74,7 +77,7 @@ function EcoLifeAppBar() {
                     </Link>
                 </div>
                 <div name="otherLinks" className="flex mt-3 mx-4 py-1">
-                    <Link to="">
+                    <Link to="/Store/StoreMain">
                         <h1
                             className="w-max | hover:text-white dark:hover:text-green-500 | hover:ease-in-out duration-300
                     font-medium text-xl | mx-5 my-2"
@@ -154,6 +157,8 @@ function EcoLifeAppBar() {
                     <Route path={ "/user/adminPanel" } element={ <AdminPanelMain /> } />
                     <Route path={ "/locations/LocationsMain" } element={ <LocationsMain /> } />
                     <Route path={ "/locations/createLocation" } element={ <LocationsCreate /> } />
+                    <Route path={ "/Store/StoreMain" } element= { <StoreMain /> } />
+                    <Route path={"/Store/StoreAddItem" } element= { <StoreAddItem /> } />
                     <Route path={ "/Trials/trialAdmin/TrialsAdminPage" } element={ <TrialsAdminPage /> } />
                     <Route path={ "*" } element={ <PageNotFound /> } />
                 </Routes>
