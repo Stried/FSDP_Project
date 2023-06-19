@@ -78,12 +78,12 @@ module.exports = (sequelize, DataTypes) => {
         }
     });
 
-    // Store.associate = (models) => {
-    //     Store.belongsTo(models.TrialCar, {
-    //         foreignKey: "carPlateNo",
-    //         as: "trialCar"
-    //     });
-    // };
+    Store.associate = (models) => {
+        Store.hasOne(models.TrialCar, {
+            foreignKey: "carPlateNo",
+            onDelete: "cascade"
+        });
+    };
 
     return Store;
 }

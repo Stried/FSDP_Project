@@ -13,9 +13,9 @@ module.exports = (sequelize, DataTypes) => {
         // ^ finds from Store database
     });
      TrialCar.associate = (models) => {
-         TrialCar.hasOne(models.Store, {
+         TrialCar.belongsTo(models.Store, {
              foreignKey: "carPlateNo",
-             onDelete: "cascade"
+             as: "carplate"
          });
      };
 
