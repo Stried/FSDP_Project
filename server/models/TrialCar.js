@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const TrialCar = sequelize.define("Trial", {
+    const TrialCar = sequelize.define("TrialCar", {
 
         modelName:{
             type: DataTypes.STRING,
@@ -12,12 +12,12 @@ module.exports = (sequelize, DataTypes) => {
         // let a = Store.findOne ({where: {carPlate = data.carPlate}}) | data.modelName = a.carPlate;
         // ^ finds from Store database
     });
-    // TrialCar.associate = (models) => {
-    //     TrialCar.hasOne(models.Store, {
-    //         foreignKey: "carPlateNo",
-    //         onDelete: "cascade"
-    //     });
-    // };
+     TrialCar.associate = (models) => {
+         TrialCar.hasOne(models.Store, {
+             foreignKey: "carPlateNo",
+             onDelete: "cascade"
+         });
+     };
 
     return TrialCar;
 }
