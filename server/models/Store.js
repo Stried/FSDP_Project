@@ -78,5 +78,12 @@ module.exports = (sequelize, DataTypes) => {
         }
     });
 
+    // Store.associate = (models) => {
+    //     Store.belongsTo(models.TrialCar, {
+    //         foreignKey: "carPlateNo",
+    //         as: "trialCar"
+    //     });
+    // };
+
     return Store;
 }

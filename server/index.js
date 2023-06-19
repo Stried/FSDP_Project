@@ -11,7 +11,7 @@ app.use(express.static('public'));
 let port = process.env.APP_PORT;
 
 app.get("/", (req, res) => {
-    res.send("Welcome to EcoLife. Chunny is Love, Chunny is Life. <3");
+    res.send("Welcome to EcoLife.");
 })
 
 // Routes
@@ -32,6 +32,9 @@ app.use("/store", storeRoute);
 
 const locationRoute = require("./routes/locations");
 app.use("/locations", locationRoute);
+
+const trialRoute = require("./routes/trials");
+app.use("/trials", trialRoute)
 
 const db = require("./models");
 db.sequelize.sync({ alter: true }).then(() => {
