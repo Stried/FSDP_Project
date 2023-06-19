@@ -7,7 +7,9 @@ const yup = require("yup");
 
 router.post("/", async (req, res) => {
     let data = req.body;
-    
+    data.carProductionDate = Date.parse(data.carProductionDate)
+    data.carProductionDate = new Date(data.carProductionDate)
+
     // Validate request body
     let validationSchema = yup.object().shape({
         carPlateNo: yup.string().trim().max(8).required(),
@@ -39,13 +41,14 @@ router.post("/", async (req, res) => {
         return;
     }
     
-    data.carName = data.carName.trim();
+    data.carPlateNo = data.carPlateNo.trim();
     data.carDescription = data.carDescription.trim();
     data.carBrand = data.carBrand.trim();
     data.carModel = data.carModel.trim();
-    data.carModification = data.carModification.trim();
+    data.carEngine = data.carEngine.trim();
     data.carFuelType = data.carFuelType.trim();
     data.carBodyType= data.carBodyType.trim();
+    data.carMods = data.carMods.trim();
 
     let result = await Store.create(data);
     res.json(data);

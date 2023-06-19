@@ -12,13 +12,13 @@ function FormInputMultiLine(props) {
     <CssTextField 
         sx={{input: {color: "black"}}}
       fullWidth
-      multiline
+      multiline minRows={props.multiline}
       margin="normal"
       autoComplete="off"
       type="text"
       required
       label={props.name}
-      name={props.name}
+      name={props.valueName}
       focused
     />
   );
