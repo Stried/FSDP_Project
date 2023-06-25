@@ -176,6 +176,9 @@ function ViewAllAccounts() {
                                                             </div>
                                                         </Modal.Body>
                                                         <Modal.Footer>
+                                                            <button onClick={ () => deleteUser(`${user.id}`) } className="px-3 py-2 bg-red-500 rounded font-medium">
+                                                                Delete
+                                                            </button>
                                                             <p className="w-fit | bg-gradient-to-r from-green-400 to-emerald-600 text-transparent bg-clip-text | hover:ease-in-out duration-300 | italic font-semibold text-xl">Ecolife</p>
                                                         </Modal.Footer>
                                                     </Modal>
@@ -205,6 +208,9 @@ function ViewAllAccounts() {
                                                             </div>
                                                         </Modal.Body>
                                                         <Modal.Footer>
+                                                            <button onClick={ () => deleteUser(`${user.id}`) } className="px-3 py-2 bg-red-500 rounded font-medium">
+                                                                Delete
+                                                            </button>
                                                             <p className="w-fit | bg-gradient-to-r from-green-400 to-emerald-600 text-transparent bg-clip-text | hover:ease-in-out duration-300 | italic font-semibold text-xl">Ecolife</p>
                                                         </Modal.Footer>
                                                     </Modal>
