@@ -4,14 +4,24 @@ import UserContext from "../../../contexts/UserContext";
 import React, { useEffect, useState } from "react";
 import http from "../../../http";
 import { Dropdown, Button, Modal } from 'flowbite-react';
+import { Link, useNavigate } from 'react-router-dom';
 
 function ViewAllAccounts() {
+    const navigate = useNavigate();
+
     const [ userList, setUserList ] = useState([]);
     const getUsers = () => {
         http.get("/user/adminPanel").then((res) => {
             setUserList(res.data);
         });
     };
+
+    const deleteUser = (userID) => {
+        http.delete(`/user/deleteUser/${userID}`).then((res) => {
+            console.log(res.data);
+            window.location.reload();
+        })
+    }
 
     const [ displayStyle, setDisplayStyle ] = useState("Full");
 
@@ -105,7 +115,14 @@ function ViewAllAccounts() {
                                                             </div>
                                                         </Modal.Body>
                                                         <Modal.Footer>
-                                                            <p className="w-fit | bg-gradient-to-r from-green-400 to-emerald-600 text-transparent bg-clip-text | hover:ease-in-out duration-300 | italic font-semibold text-xl">Ecolife</p>
+                                                            <p className="w-max float-right">
+                                                                <button onClick={ () => deleteUser(`${user.id}`) } className="px-3 py-2 bg-red-500 rounded font-medium">
+                                                                    Delete
+                                                                </button>
+                                                                <span className='w-fit | bg-gradient-to-r from-green-400 to-emerald-600 text-transparent bg-clip-text | hover:ease-in-out duration-300 | italic font-semibold text-xl'>
+                                                                    Ecolife
+                                                                </span>
+                                                            </p>
                                                         </Modal.Footer>
                                                     </Modal>
                                                 </div>
@@ -144,6 +161,7 @@ function ViewAllAccounts() {
                                                             <p className="text-xl font-medium">Email: <span className="text-green-500">{ user.emailAccount }</span></p>
                                                             <p className="text-xl font-medium">Phone no: <span className="text-green-500">{ user.phoneNo }</span></p>
                                                         </div>
+                                                        
                                                     </div>                                                    <Modal dismissible show={ isModalOpen } onClose={ () => setOpenModal("") }>
                                                         <Modal.Header>
                                                             { user.fullName }

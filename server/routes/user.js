@@ -232,14 +232,6 @@ router.put("/viewAccount/changeDetails", validateToken, async (req, res) => {
         return;
     }
 
-    let findAccount = await UserAccount.findOne({
-        where: { emailAccount: userInfo.emailAccount }
-    });
-    if (!findAccount) {
-        res.sendStatus(404).json({message: "Email Not Found"});
-        return;
-    }
-
     data.fullName = data.fullName.trim();
     data.userName = data.userName.trim();
     data.phoneNo = data.phoneNo;
@@ -256,7 +248,7 @@ router.put("/viewAccount/changeDetails", validateToken, async (req, res) => {
         });
     } else {
         res.status(400).json({
-            message: `Cannot update User with id ${user}`,
+            message: `Cannot update User with id ${userInfo.emailAccount}`,
         });
     }
 });
@@ -264,11 +256,28 @@ router.put("/viewAccount/changeDetails", validateToken, async (req, res) => {
 // Deleting Individual Account (Admin only or accessible bby user?)
 router.delete("/deleteUser/:id", async (req, res) => {
     let user = req.params.id;
+    
+    // let currentUserInfo = {
+    //     id: req.user.id,
+    //     fullName: req.user.fullName,
+    //     userName: req.user.userName,
+    //     emailAccount: req.user.emailAccount,
+    //     phoneNo: req.user.phoneNo,
+    //     adminNo: req.user.adminNo
+    // }
 
-    let findUser = UserAccount.findByPk(user);
+    // if (!currentUserInfo.adminNo || currentUserInfo.id != user) {
+    //     res.status(401).json({ message: "Unauthorised Action Taken!" });
+    //     return;
+    // };
+
+    let findUser = UserAccount.findOne({
+        where: { id: user }
+    });
     if (!findUser) {
         console.log("User not found."); // Should not be happening if accessible by user.
         res.sendStatus(404);
+        return;
     } else {
         let deleteUser = await UserAccount.destroy({
             where: { id: user },
