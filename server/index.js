@@ -37,7 +37,7 @@ const trialRoute = require("./routes/trials");
 app.use("/trials", trialRoute)
 
 const db = require("./models");
-db.sequelize.sync({ alter: true }).then(() => {
+db.sequelize.sync({ alter: true }).then(() => { // remove if using SQLite
     app.listen(port, () => {
       console.log(`Server running on http://localhost:${port}`);
     });
