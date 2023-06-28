@@ -16,7 +16,7 @@ function LocationsMain() {
     return (
         <Box>
             <div className="flex flex-col items-center">
-                <h1 className="text-4xl font-bold mt-8 mb-6 text-white">Locations &#x1F62D;</h1>
+                <h1 className="text-4xl font-bold mt-8 mb-6 text-white">Locations</h1>
 
                 <div className="max-w-3xl mx-auto grid grid-cols-2 gap-4">
                     <div className="bg-gray-200 p-4 rounded-lg mb-4">
