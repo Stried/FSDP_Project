@@ -1,28 +1,41 @@
 module.exports = (sequelize, DataTypes) => {
 const TrialReceipt=sequelize.define("TrialReceipt",{
 trialReceiptId:{
-    type:DataTypes.STRING,
-    allowNull:false
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV1,
+    primaryKey:true,
 },
 dateOfTrial:{
     type:DataTypes.DATEONLY,
     allowNull:false
 },
-phoneNumber:{
-    type:DataTypes.INTEGER,
-    allowNull:false
-},
 trialReport:{
     type:DataTypes.STRING,
-    allowNull:true
+    allowNull:true,
+    defaultValue:null
+},
+modelName:{
+    type:DataTypes.STRING,
+    allowNull:false
+},
+faultResolve:{
+    type:DataTypes.BOOLEAN,
+    allowNull:false,
+    defaultValue:true
 }
-
 });
-TrialReceipt.associate = (models) => {
-    TrialReceipt.hasOne(models.UserAccount, {
-        foreignKey: "userId",
-        onDelete: "cascade"
-    });
+// TrialReceipt.associate = (models) => {
+//     TrialReceipt.hasOne(models.UserAccount, {
+//         foreignKey: "userId",
+//         onDelete: "cascade"
+//     });
+// };
+TrialReceipt.associate = (models)=>{
+    TrialReceipt.hasOne(models.TrialCar, {
+        foreignKey:"id",
+        onDelete:"nullify"
+    })
 };
+
     return TrialReceipt;
 }
