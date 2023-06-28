@@ -5,10 +5,8 @@ const router = express.Router();
 const { Store, Sequelize } = require('../models'); 
 const yup = require("yup");
 
-router.post("/", async (req, res) => {
+router.post("/store", async (req, res) => {
     let data = req.body;
-    data.carProductionDate = Date.parse(data.carProductionDate)
-    data.carProductionDate = new Date(data.carProductionDate)
 
     // Validate request body
     let validationSchema = yup.object().shape({
@@ -33,7 +31,7 @@ router.post("/", async (req, res) => {
     }); 
     try {
         await validationSchema.validate(data,
-            { abortEarly: false, strict: true });
+            { abortEarly: false });
     }
     catch (err) {
         console.error(err);
@@ -106,8 +104,6 @@ router.put("/:id", async (req, res) => {
         return;
     }
     let data = req.body;
-    data.carProductionDate = Date.parse(data.carProductionDate);
-    data.carProductionDate = new Date(data.carProductionDate);
 
     // Validate request body
     let validationSchema = yup.object().shape({
@@ -132,7 +128,7 @@ router.put("/:id", async (req, res) => {
     }); 
     try {
         await validationSchema.validate(data,
-            { abortEarly: false, strict: true });
+            { abortEarly: false });
     }
     catch (err) {
         console.error(err);
