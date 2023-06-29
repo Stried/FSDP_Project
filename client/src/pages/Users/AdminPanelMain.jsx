@@ -9,7 +9,7 @@ import {
 } from "react-router-dom";
 import UserContext from "../../contexts/UserContext";
 
-import ViewAllAccounts from "./adminComponents/ViewAllAccounts"; 
+import ViewAllAccounts from "./adminComponents/ViewAllAccounts";
 import ViewAccount from "./userComponents/ViewAccount";
 
 function AdminPanelMain() {
@@ -17,16 +17,6 @@ function AdminPanelMain() {
     const navigate = useNavigate();
 
     const [ isRendered, setIsRendered ] = useState("");
-
-    if (!user) {
-        navigate("/404");
-        try {
-            const user = user.adminNo;
-        } catch (err) {
-            console.log(err);
-            navigate("/404");
-        }
-    }
 
     return (
         user && (
@@ -90,7 +80,7 @@ function AdminPanelMain() {
                             </ul>
                         </div>
                     </div>
-                    
+
 
                     <div className="w-2/3 ml-8 h-full" id="displayComponents">
                         { isRendered === "" && (<ViewAllAccounts />) }

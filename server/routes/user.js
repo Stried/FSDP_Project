@@ -120,7 +120,8 @@ router.post("/login", async (req, res) => {
             userName: user.userName,
             emailAccount: user.emailAccount,
             phoneNo: user.phoneNo,
-            imageFile: user.imageFile
+            imageFile: user.imageFile,
+            adminNo: null
         };
     }
 

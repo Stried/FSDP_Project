@@ -4,7 +4,7 @@ import { Container, AppBar, Toolbar, Typography } from "@mui/material";
 import React, { useContext } from "react";
 import { useState, useEffect } from "react";
 import "./../App.css";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link, Navigate } from "react-router-dom";
 import http from "./../http";
 import { Dropdown } from "flowbite-react";
 
@@ -63,8 +63,21 @@ function EcoLifeAppBar() {
         window.location = "/";
     };
 
+    const Protected = ({ isAdminCheck, children }) => {
+        if (!isAdminCheck) {
+            return <Navigate to={"/404"} />
+        }
+
+        return children
+    }
+
+    const [ isAdminCheck, setIsAdminCheck ] = useState(null);
+
     return (
         <Router>
+            { user && (
+                <div onLoad={ () => setIsAdminCheck(user.adminNo) } />
+            )}
             <nav className="navbar w-full flex  py-6 text-white overflow-x-hidden">
                 <div className="p-3 w-fit">
                     <Link to={ "/" }>
@@ -109,7 +122,7 @@ function EcoLifeAppBar() {
                     </Link>
                     
                     { user && (
-                        <div>
+                        <div onClick={ () => setIsAdminCheck(user.adminNo) }>
                             <AdminPanel isAdmin={ user.adminNo } />
                         </div>
                     ) }
@@ -154,7 +167,11 @@ function EcoLifeAppBar() {
                     <Route path={ "/user/createAccount" } element={ <UserCreateAccount /> } />
                     <Route path={ "/user/login" } element={ <UserEnterAccount /> } />
                     <Route path={ "/user/viewAccount" } element={ <UserDetailsPage /> } />
-                    <Route path={ "/user/adminPanel" } element={ <AdminPanelMain /> } />
+                    <Route path={ "/user/adminPanel" } element={
+                        <Protected isAdminCheck={isAdminCheck}>
+                            <AdminPanelMain />
+                        </Protected>
+                    } />
                     <Route path={ "/locations/LocationsMain" } element={ <LocationsMain /> } />
                     <Route path={ "/locations/createLocation" } element={ <LocationsCreate /> } />
                     <Route path={ "/Store/StoreMain" } element= { <StoreMain /> } />
