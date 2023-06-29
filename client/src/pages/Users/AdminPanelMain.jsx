@@ -10,7 +10,7 @@ import {
 import UserContext from "../../contexts/UserContext";
 
 import ViewAllAccounts from "./adminComponents/ViewAllAccounts";
-import ViewAccount from "./userComponents/ViewAccount";
+import CreateAdmin from "./adminComponents/CreateAdmin";
 
 function AdminPanelMain() {
     const { user } = useContext(UserContext);
@@ -42,8 +42,8 @@ function AdminPanelMain() {
                                     </Link>
                                 </li>
                                 <li className="pt-3 hover:text-green-500 hover:transition-ease-in-out duration-300 pl-5 border-l-2 border-solid hover:border-green-500">
-                                    <Link to="" onClick={ () => setIsRendered("") }>
-                                        User Orders
+                                    <Link to="" onClick={ () => setIsRendered("createAdmin") }>
+                                        Create Admins
                                     </Link>
                                 </li>
                                 <li className="pt-3 hover:text-green-500 hover:transition-ease-in-out duration-300 pl-5 border-l-2 border-solid hover:border-green-500">
@@ -84,6 +84,7 @@ function AdminPanelMain() {
 
                     <div className="w-2/3 ml-8 h-full" id="displayComponents">
                         { isRendered === "" && (<ViewAllAccounts />) }
+                        { isRendered === "createAdmin" && (<CreateAdmin />) }
                     </div>
                 </div>
             </Box>

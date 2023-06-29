@@ -297,7 +297,7 @@ router.delete("/deleteUser/:id", async (req, res) => {
 });
 
 // Admin Creation
-router.post("/createAdmin", async (req, res) => {
+router.post("/createAdmin", validateToken, async (req, res) => {
     let data = req.body;
 
     console.log(data);
