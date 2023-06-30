@@ -209,13 +209,13 @@ const App = () => {
             }`}>
             <Box component={"form"} sx={{}} onSubmit={formik.handleSubmit}>
                <FormInputSingleLine
-                  name="Model Name"
-                  valueName="modelName"
+                  name="Car Plate No"
+                  valueName="carPlateNo"
                   type="text"
                   onChange={formik.handleChange}
-                  value={formik.values.modelName}
-                  error={formik.touched.modelName && Boolean(formik.errors.modelName)}
-                  helperText={formik.touched.modelName && formik.errors.modelName}
+                  value={formik.values.carPlateNo}
+                  error={formik.touched.carPlateNo && Boolean(formik.errors.carPlateNo)}
+                  helperText={formik.touched.carPlateNo && formik.errors.carPlateNo}
                />
             </Box>
             <Button

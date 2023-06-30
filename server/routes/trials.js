@@ -1,33 +1,57 @@
 const express = require("express");
 const router = express.Router();
 const yup = require("yup");
-const { UserAccount, Store, TrialCar, TrialReceipt,  Sequelize } = require("../models/");
+const { UserAccount, Store, TrialCar, TrialReceipt, Sequelize } = require("../models/");
 const { validateToken } = require("../middlewares/auth");
 
-router.post("/createTrialCar", async(req, res)=>{
-let data =req.body;
-let validationSchema=yup.object().shape({
-    modelName: yup.string().trim().max(8).required(),
+router.post("/createTrialCar", async (req, res) => {
+    let data = req.body;
+    let validationSchema = yup.object().shape({
+        carPlateNo: yup.string().trim().min(3).required(),
+    });
+    try {
+        await validationSchema.validate(data,
+            { abortEarly: false, strict: true });
+    }
+    catch (err) {
+        console.error(err);
+        res.status(400).json({ errors: err.errors });
+        return;
+    }
+    
+    data.carPlateNo = data.carPlateNo.trim();
+
+    let carPlateCheck = await Store.findByPk(data.carPlateNo);
+    if (!carPlateCheck) {
+        res.status(400).json({ message: "Carplate Number not found!" })
+        return;
+    }
+
+    let carPlateRepeatCheck = await TrialCar.findOne({
+        where: { carPlateNo: data.carPlateNo }
+    });
+    if (carPlateRepeatCheck) {
+        res.status(400).json({ message: "Trial Car already exists!" })
+        return;
+    }
+
+    try {
+        let carModel = await Store.findByPk(data.carPlateNo);
+        data.name = carModel.carModel
+        data.carBrand = carModel.carBrand; // carSpeed = carModel.carSpeed
+    } catch (err) {
+        console.log(err);
+        return;
+    }
+
+    let result = await TrialCar.create(data);
+    res.json(result);
+
 });
-try {
-    await validationSchema.validate(data,
-        { abortEarly: false, strict: true });
-}
-catch (err) {
-    console.error(err);
-    res.status(400).json({ errors: err.errors });
-    return;
-}
-data.modelName=data.modelName.trim();
 
-let result= await TrialCar.create(data);
-res.json(result);
-
-});
-
-router.post("/createTrialReceipt", async(req, res)=>{
-    let data =req.body;
-    let validationSchema=yup.object().shape({
+router.post("/createTrialReceipt", async (req, res) => {
+    let data = req.body;
+    let validationSchema = yup.object().shape({
         dateOfTrial: yup.date().required(),
     });
     try {
@@ -39,27 +63,27 @@ router.post("/createTrialReceipt", async(req, res)=>{
         res.status(400).json({ errors: err.errors });
         return;
     }
-    data.dateOfTrial=data.dateOfTrial.trim();
-    let result= await TrialReceipt.create(data);
+    data.dateOfTrial = data.dateOfTrial.trim();
+    let result = await TrialReceipt.create(data);
     res.json(result);
-    
-    });
 
-router.get("/viewTrialCar", async(req, res)=>{
+});
+
+router.get("/viewTrialCar", async (req, res) => {
 
     const allTrialCars = await Store.findAll({
-        where: {carPlateNo}, //TODO: Solve this
+        where: { carPlateNo }, //TODO: Solve this
         order: [ [ 'carPlateNo', 'DESC' ] ],
     })
 });
 
-router.get("/viewTrialReceipt", validateToken, async(req, res)=>{
-const userInfo = req.user;
-const userTrialReceipt=await TrialReceipt.findAll({
-    where:{emailAccount: userInfo.emailAccount},
-    order:[ ['createdAt','DESC'] ],
-})
-    
+router.get("/viewTrialReceipt", validateToken, async (req, res) => {
+    const userInfo = req.user;
+    const userTrialReceipt = await TrialReceipt.findAll({
+        where: { emailAccount: userInfo.emailAccount },
+        order: [ [ 'createdAt', 'DESC' ] ],
+    })
+
     res.json(userTrialReceipt);
 });
 
@@ -76,8 +100,8 @@ router.get("/viewAllTrialReceipt", validateToken, async (req, res) => {
         condition[ Sequelize.Op.or ] = [
             { trialReceiptId: { [ Sequelize.Op.like ]: `%${search}%` } },
             { dateOfTrial: { [ Sequelize.Op.like ]: `%${search}%` } },
-            { modelName: {[Sequelize.Op.like]: `%${search}%`}},
-            { carPlateNo:{[Sequelize.Op.like]: `%${search}`}},
+            { modelName: { [ Sequelize.Op.like ]: `%${search}%` } },
+            { carPlateNo: { [ Sequelize.Op.like ]: `%${search}` } },
         ]
     }
 
@@ -87,10 +111,10 @@ router.get("/viewAllTrialReceipt", validateToken, async (req, res) => {
     })
 
     res.json(allReceipts);
-    
+
 });
-router.put("/viewAllTrialReceipt/changeDetails/:id", validateToken, async(req, res)=>{
-    let receipt=req.params.id;
+router.put("/viewAllTrialReceipt/changeDetails/:id", validateToken, async (req, res) => {
+    let receipt = req.params.id;
     let userInfo = {
         id: req.user.id,
         fullName: req.user.fullName,
@@ -98,7 +122,7 @@ router.put("/viewAllTrialReceipt/changeDetails/:id", validateToken, async(req, r
         emailAccount: req.user.emailAccount,
         phoneNo: req.user.phoneNo
     };
-    
+
     if (!userInfo.adminNo) {
         console.log("Page Not Found!");
         res.status(404).json("Page Is Not Found.");
@@ -122,16 +146,16 @@ router.put("/viewAllTrialReceipt/changeDetails/:id", validateToken, async(req, r
         where: { trialReceiptId: receipt },
     });
 
-if (trialReceipt==1){
-    res.json({
-        message: "Receipt has been successfully updated.",
-    });
-}else {
-    res.status(400).json({
-        message: `could not update Receipt with id ${receipt}`,
-    });
-}
+    if (trialReceipt == 1) {
+        res.json({
+            message: "Receipt has been successfully updated.",
+        });
+    } else {
+        res.status(400).json({
+            message: `could not update Receipt with id ${receipt}`,
+        });
+    }
 
 });
 
-module.exports=router
+module.exports = router
