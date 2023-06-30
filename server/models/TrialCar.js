@@ -1,8 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
     const TrialCar = sequelize.define("TrialCar", {
-        modelName:{
-            type: DataTypes.STRING,
-            allowNull:false
+        name:{
+            type: DataTypes.STRING
         }
         // based off the carplate
         // enter carplate as teh form

@@ -42,3 +42,6 @@ db.sequelize.sync({ alter: true }).then(() => { // remove if using SQLite
       console.log(`Server running on http://localhost:${port}`);
     });
 })
+.catch(error => {
+  console.log(error)
+})
