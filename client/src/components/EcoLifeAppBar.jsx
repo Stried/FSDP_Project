@@ -163,7 +163,7 @@ function EcoLifeAppBar() {
 
             <div>
                 <Routes>
-                    <Route path={ "/" } />
+                    <Route path={ "/" } element={ <Ecolife /> } />
                     <Route path={ "/user/createAccount" } element={ <UserCreateAccount /> } />
                     <Route path={ "/user/login" } element={ <UserEnterAccount /> } />
                     <Route path={ "/user/viewAccount" } element={ <UserDetailsPage /> } />

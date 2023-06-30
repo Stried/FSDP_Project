@@ -255,22 +255,22 @@ router.put("/viewAccount/changeDetails", validateToken, async (req, res) => {
 });
 
 // Deleting Individual Account (Admin only or accessible bby user?)
-router.delete("/deleteUser/:id", async (req, res) => {
+router.delete("/deleteUser/:id", validateToken, async (req, res) => {
     let user = req.params.id;
     
-    // let currentUserInfo = {
-    //     id: req.user.id,
-    //     fullName: req.user.fullName,
-    //     userName: req.user.userName,
-    //     emailAccount: req.user.emailAccount,
-    //     phoneNo: req.user.phoneNo,
-    //     adminNo: req.user.adminNo
-    // }
+    let currentUserInfo = {
+        id: req.user.id,
+        fullName: req.user.fullName,
+        userName: req.user.userName,
+        emailAccount: req.user.emailAccount,
+        phoneNo: req.user.phoneNo,
+        adminNo: req.user.adminNo
+    }
 
-    // if (!currentUserInfo.adminNo || currentUserInfo.id != user) {
-    //     res.status(401).json({ message: "Unauthorised Action Taken!" });
-    //     return;
-    // };
+    if (!currentUserInfo.adminNo || currentUserInfo.id != user) {
+        res.status(401).json({ message: "Unauthorised Action Taken!" });
+        return;
+    };
 
     let findUser = UserAccount.findOne({
         where: { id: user }
