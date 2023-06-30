@@ -24,16 +24,17 @@ faultResolve:{
     defaultValue:true
 }
 });
-// TrialReceipt.associate = (models) => {
-//     TrialReceipt.hasOne(models.UserAccount, {
-//         foreignKey: "userId",
-//         onDelete: "cascade"
-//     });
-// };
+TrialReceipt.associate = (models) => {
+    TrialReceipt.hasOne(models.UserAccount, {
+        foreignKey: "userId",
+        onDelete: "cascade"
+    });
+};
+
 TrialReceipt.associate = (models)=>{
     TrialReceipt.hasOne(models.TrialCar, {
         foreignKey:"id",
-        onDelete:"nullify"
+        onDelete:"cascade"
     })
 };
 

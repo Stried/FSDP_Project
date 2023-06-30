@@ -20,6 +20,12 @@ let sequelize = new Sequelize(
         timezone: '+08:00'
     }
 );
+
+// let sequelize = new Sequelize({
+//     dialect: 'sqlite',
+//     storage: 'data/ecolife.sqlite'
+//     });
+
 fs.readdirSync(__dirname).filter(file => { // Reads all the files in models
     return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
 })
