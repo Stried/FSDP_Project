@@ -22,13 +22,17 @@ function CreateAdmin() {
     const navigate = useNavigate();
     const formik = useFormik({
         initialValues: {
-            emailAccount: ""
+            emailAccount: "",
+            adminNo: ""
         },
         validationSchema: yup.object().shape({
             emailAccount: yup
                 .string()
                 .email("Please enter a valid email address.")
                 .required("Email is required."),
+            adminNo: yup
+                .string()
+                .required("Admin Number is required.")
         }),
         onSubmit: async (data) => {
             await http
@@ -62,6 +66,19 @@ function CreateAdmin() {
                     }
                 />
 
+                <FormInputSingleLine
+                    name="Admin Number"
+                    valueName="adminNo"
+                    type="text"
+                    onChange={ formik.handleChange }
+                    value={ formik.values.adminNo }
+                    error={
+                        formik.touched.adminNo && Boolean(formik.errors.adminNo)
+                    }
+                    helperText={
+                        formik.touched.adminNo && formik.errors.adminNo
+                    }
+                />
                 <Box className="w-fit py-1">
                     <Button
                         variant="contained"
