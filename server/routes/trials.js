@@ -8,6 +8,7 @@ router.post("/createTrialCar", async (req, res) => {
     let data = req.body;
     let validationSchema = yup.object().shape({
         carPlateNo: yup.string().trim().min(3).required(),
+        address: yup.string().trim().min(3).required(),
     });
     try {
         await validationSchema.validate(data,
@@ -20,6 +21,7 @@ router.post("/createTrialCar", async (req, res) => {
     }
     
     data.carPlateNo = data.carPlateNo.trim();
+    data.address = data.address.trim();
 
     let carPlateCheck = await Store.findByPk(data.carPlateNo);
     if (!carPlateCheck) {

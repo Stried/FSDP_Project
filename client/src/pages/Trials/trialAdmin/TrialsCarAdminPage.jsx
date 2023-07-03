@@ -152,20 +152,28 @@ const App = () => {
    const navigate = useNavigate();
    const formik = useFormik({
       initialValues: {
-         modelName: "",
+         name: "",
+         address: "",
       },
       validationSchema: yup.object().shape({
-         modelName: yup
+         name: yup
             .string()
             .trim()
             .min(3, "Name must be Minimum 3 Characters.")
             .max(100, "Name must be Maximum 100 Characters")
             .required("Name is required."),
+         address: yup
+            .string()
+            .trim()
+            .min(3, "address must be Minimum 3 Characters.")
+            .max(100, "address must be Maximum 100 Characters")
+            .required("Address is required")
 
       }),
       onSubmit: async (data) => {
          const formData = {
-            modelName: data.modelName = data.modelName.trim(),
+            name: data.name = data.name.trim(),
+            address: data.address = data.address.trim(),
          }
 
          await http
@@ -217,14 +225,102 @@ const App = () => {
                   error={formik.touched.carPlateNo && Boolean(formik.errors.carPlateNo)}
                   helperText={formik.touched.carPlateNo && formik.errors.carPlateNo}
                />
+
+               <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option</label>
+               <select
+                  id="countries"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+               >
+                  <option selected>Choose a country</option>
+                  <option
+                     valueName="selangoon dong"
+                     type="text"
+                     onChange={formik.handleChange}
+                     value={formik.values.address}
+                     error={formik.touched.address && Boolean(formik.errors.address)}
+                     helperText={formik.touched.address && formik.errors.address}
+
+                  >seloongang dong</option>
+                  <option
+                     valueName="selangoon xi"
+                     type="text"
+                     onChange={formik.handleChange}
+                     value={formik.values.address}
+                     error={formik.touched.address && Boolean(formik.errors.address)}
+                     helperText={formik.touched.address && formik.errors.address}
+
+                  >seloongang xi</option>
+
+               </select>
             </Box>
+            <br></br>
             <Button
-                                variant="contained"
-                                type="submit"
-                                className="bg-green-400 text-black hover:bg-green-600 hover:text-white"
-                            >
-                                Create
-                            </Button>
+               variant="contained"
+               type="submit"
+               className="bg-green-400 text-black hover:bg-green-600 hover:text-white"
+            >
+               Create
+            </Button>
+         </div>
+         <br></br>
+         <div class="relative overflow-x-auto shadow-md sm:rounded-lg mx-7" >
+            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+               <thead class="text-xs text-gray-700 uppercase bg-green-400 dark:bg-green-500 dark:text-black">
+                  <tr>
+                     <th scope="col" class="px-6 py-3">
+                        Car plate No.
+                     </th>
+                     <th scope="col" class="px-6 py-3">
+                        <div class="flex items-center">
+                           Car Model
+                           <a href="#"><svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512"><path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z" /></svg></a>
+                        </div>
+                     </th>
+                     <th scope="col" class="px-6 py-3">
+                        <div class="flex items-center">
+                           Car Brand
+                           <a href="#"><svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512"><path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z" /></svg></a>
+                        </div>
+                     </th>
+                     <th scope="col" class="px-6 py-3">
+                        <div class="flex items-center">
+                           Car Address
+                           <a href="#"><svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512"><path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z" /></svg></a>
+                        </div>
+                     </th>
+                     <th scope="col" class="px-6 py-3">
+                        <span class="sr-only">Edit</span>
+                     </th>
+                     <th>
+
+                     </th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        Apple MacBook Pro 17"
+                     </th>
+                     <td class="px-6 py-4">
+                        Silver
+                     </td>
+                     <td class="px-6 py-4">
+                        Laptop
+                     </td>
+                     <td class="px-6 py-4">
+                        $2999
+                     </td>
+                     <td class="pr-0 py-4 text-right">
+                        <a href="#" className="bg-green-400 p-2 px-5 rounded-md text-black hover:bg-green-600 hover:text-white ">View</a>
+                     </td>
+                     <td class="pl-0 pr-4 py-4 text-right">
+                        <a href="#" className="bg-red-400 p-2 px-5 rounded-md text-black hover:bg-red-600 hover:text-white ">Delete</a>
+                     </td>
+                  </tr>
+
+
+               </tbody>
+            </table>
          </div>
       </div>
    );
