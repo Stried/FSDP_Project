@@ -1,4 +1,4 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button, InputLabel, MenuItem } from "@mui/material";
 import zIndex from "@mui/material/styles/zIndex";
 import { useState, useEffect, useContext } from "react";
 import {
@@ -8,13 +8,15 @@ import {
    Link,
    useNavigate,
 } from "react-router-dom";
-
 import * as React from 'react';
 'use client';
+
+
 
 import FormInputSingleLine from "./../../../components/FormInputSingleLine";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import CustomSelectCars from "./customSelectCars";
 
 const SideNav = ({ isOpen }) => {
    const [accordionOpen, setAccordionOpen] = useState(false);
@@ -148,6 +150,10 @@ const App = () => {
       setArrowClose(!arrowClose);
    };
 
+   const options=[
+      {value:'serangoon', label:'serangoon'},
+      {value:'hougang', label:'hougang'},
+   ]
 
    const navigate = useNavigate();
    const formik = useFormik({
@@ -215,7 +221,7 @@ const App = () => {
 
          <div className={`text-white transition duration-500 ${isOpen ? ' opacity-25 ' : ' opacity-100 '
             }`}>
-            <Box component={"form"} sx={{}} onSubmit={formik.handleSubmit}>
+            <Box component={"form"} sx={{}} onSubmit={formik.handleSubmit} className="mx-7 ml-16">
                <FormInputSingleLine
                   name="Car Plate No"
                   valueName="carPlateNo"
@@ -226,44 +232,31 @@ const App = () => {
                   helperText={formik.touched.carPlateNo && formik.errors.carPlateNo}
                />
 
-               <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option</label>
-               <select
-                  id="countries"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-               >
-                  <option selected>Choose a country</option>
-                  <option
-                     valueName="selangoon dong"
-                     type="text"
-                     onChange={formik.handleChange}
-                     value={formik.values.address}
-                     error={formik.touched.address && Boolean(formik.errors.address)}
-                     helperText={formik.touched.address && formik.errors.address}
+               {/* <InputLabel id="demo-simple-select-label">Address</InputLabel> */}
+<label>test</label>
+<CustomSelectCars 
+value={formik.values.address}
+onChange={value=>formik.setFieldValue('address', value.value)}
+classnames={'input'}
+options={options}
 
-                  >seloongang dong</option>
-                  <option
-                     valueName="selangoon xi"
-                     type="text"
-                     onChange={formik.handleChange}
-                     value={formik.values.address}
-                     error={formik.touched.address && Boolean(formik.errors.address)}
-                     helperText={formik.touched.address && formik.errors.address}
+/>
 
-                  >seloongang xi</option>
-
-               </select>
+{formik.errors.address ? <div classnames='error'>{formik.errors.address}</div> : null}
+<br></br>
             </Box>
-            <br></br>
             <Button
                variant="contained"
                type="submit"
-               className="bg-green-400 text-black hover:bg-green-600 hover:text-white"
+               className="bg-green-400 mx-7 ml-16 text-black hover:bg-green-600 hover:text-white"
             >
                Create
             </Button>
-         </div>
-         <br></br>
-         <div class="relative overflow-x-auto shadow-md sm:rounded-lg mx-7" >
+            <br></br>
+            <br></br>
+            <br></br>
+            <h1 className="text-center ">Trial Car Records</h1>
+         <div class="relative overflow-x-auto shadow-md sm:rounded-lg mx-7 ml-16" >
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                <thead class="text-xs text-gray-700 uppercase bg-green-400 dark:bg-green-500 dark:text-black">
                   <tr>
@@ -322,6 +315,8 @@ const App = () => {
                </tbody>
             </table>
          </div>
+         </div>
+
       </div>
    );
 };
