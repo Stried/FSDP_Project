@@ -19,45 +19,6 @@ const CssTextField = Constants.CssTextField;
 const DarkTheme = Constants.DarkTheme;
 
 function FormInputSingleLine(props) {
-  const formik = useFormik({
-    initialValues: {
-      fullName: "",
-      userName: "",
-      phoneNo: "",
-      emailAccount: "",
-      password: "",
-    },
-    enableReinitialize: true,
-    validationSchema: yup.object().shape({
-      fullName: yup
-        .string()
-        .trim()
-        .min(3, "Name must be Minimum 3 Characters.")
-        .max(100, "Name must be Maximum 100 Characters")
-        .required(),
-      userName: yup
-        .string()
-        .trim()
-        .min(3, "Name must be Minimum 3 Characters.")
-        .max(50, "Name must be Maximum 50 Characters")
-        .required(),
-      phoneNo: yup
-        .number()
-        .min(80000000, "Phone Number must be a Singapore Number.")
-        .max(99999999, "Phone Number must be a Singapore Number.")
-        .required(),
-      emailAccount: yup.string().email().required(),
-      password: yup.string().min(8).max(16).required(),
-    }),
-    onSubmit: (data) => {
-      data.fullName = data.fullName.trim();
-      data.userName = data.userName.trim();
-      data.phoneNo = data.phoneNo.trim();
-      data.emailAccount = data.emailAccount.trim();
-      data.password = data.password.trim();
-    },
-  });
-
   return (
     <ThemeProvider theme={DarkTheme}>
       <CssTextField
