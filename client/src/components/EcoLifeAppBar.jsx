@@ -15,15 +15,14 @@ import UserCreateAccount from "../pages/Users/UserCreateAccount";
 import UserEnterAccount from "../pages/Users/UserEnterAccount";
 import UserDetailsPage from "../pages/Users/UserDetailsPage";
 import AdminPanelMain from "../pages/Users/AdminPanelMain";
-
+import TrialsAddPage from "../pages/Trials/trialAdmin/TrialsCarAdd";
 import TrialsAdminPage from "../pages/Trials/trialAdmin/TrialsCarAdminPage";
-
+import TrialsUpdatePage from "../pages/Trials/trialAdmin/TrialsCarAdminUpdate";
 import LocationsMain from "../pages/Locations/LocationsMain";
 import LocationsCreate from "../pages/Locations/LocationsCreate";
 
 import StoreMain from "../pages/Store/StoreMain";
 import StoreAddItem from "../pages/Store/StoreAddItem";
-import StoreUpdateItem from "../pages/Store/StoreUpdateItem";
 
 import UserContext from "../contexts/UserContext";
 
@@ -122,6 +121,7 @@ function EcoLifeAppBar() {
                         </h1>
                     </Link>
                     
+                
                     { user && (
                         <div onClick={ () => setIsAdminCheck(user.adminNo) }>
                             <AdminPanel isAdmin={ user.adminNo } />
@@ -175,12 +175,14 @@ function EcoLifeAppBar() {
                     } />
                     <Route path={ "/locations/LocationsMain" } element={ <LocationsMain /> } />
                     <Route path={ "/locations/createLocation" } element={ <LocationsCreate /> } />
-                    <Route path={ "/Store/StoreMain" } element={ <StoreMain /> } />
-                    <Route path={ "/Store/StoreAddItem" } element={ <StoreAddItem /> } />
-                    <Route path={ "/Store/StoreUpdateItem/:id" } element={ <StoreUpdateItem /> } />
+                    <Route path={ "/Store/StoreMain" } element= { <StoreMain /> } />
+                    <Route path={"/Store/StoreAddItem" } element= { <StoreAddItem /> } />
                     <Route path={ "/Trials/trialAdmin/TrialsCarAdminPage" } element={ <TrialsAdminPage /> } />
+                    <Route path={"/Trials/trialAdmin/TrialsCarAdminUpdate/:id"} element={<TrialsUpdatePage />} />
+                    <Route path={"/Trials/trialAdmin/TrialsCarAdd"} element={<TrialsAddPage />}/>
                     <Route path={ "*" } element={ <PageNotFound /> } />
                 </Routes>
+                
             </div>
         </Router>
     );

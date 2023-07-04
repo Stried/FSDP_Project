@@ -97,8 +97,9 @@ router.get("/LocationsMain", async (req, res) => {
     res.json(locations)
 })
 
-router.put("/updateLocation", validateToken, async (req, res) => {
+router.put("/updateLocation/:id", validateToken, async (req, res) => {
     let data = req.body;
+    let enteredPostalCode = req.params.id;
     let validationSchema = yup.object().shape({
         LatAxis: yup.number().required("Please specify the Latitute."),
         LongAxis: yup.number().required("Please specify the Longitude."),
@@ -139,7 +140,7 @@ router.put("/updateLocation", validateToken, async (req, res) => {
 
 
     let result = await Locations.update(locationInfo, {
-        where: { postalCode: locationInfo.postalCode }
+        where: { postalCode: enteredPostalCode }
     });
 
     if (result == 1) {
@@ -148,7 +149,7 @@ router.put("/updateLocation", validateToken, async (req, res) => {
         });
     } else {
         res.status(400).json({
-            message: `Cannot update User with id ${locationInfo.emailAccount}`,
+            message: `Cannot update location details with Postal Code ${enteredPostalCode}`,
         });
         return;
     }
@@ -159,10 +160,12 @@ router.delete("/deleteLocation/:id", validateToken, async (req, res) => {
     let location = req.params.id;
 
     if (req.user.adminNo == null) {
-        res.status(401).json({ message: "Unauthorized action taken.\nActions, logged.\nAddress, triangulated." });
+        res.status(401).json({
+            warning: ["Unauthorized action detected.", "Actions, logged.", "Address, triangulated."]
+        });
         return;
     }
-
+    
     let findLocation = await Locations.findOne({
         where: { postalCode: location } // cloumn_name: data
     });

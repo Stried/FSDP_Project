@@ -2,9 +2,9 @@ import { Container, AppBar, Toolbar, Typography, CssBaseline, Box, Grid, CardCon
 import { Search, Clear } from '@mui/icons-material';
 import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from "react-router-dom";
 import React, { useRef, useEffect, useState } from 'react';
+import { Button } from 'flowbite-react'
 import http from './../../http'
 import './../../App.css'
-
 
 import * as Constants from "./../../../src/components/CSS Constants/Constants";
 import UserContext from "./../../contexts/UserContext";
@@ -13,8 +13,14 @@ import { Map, Marker } from "pigeon-maps"
 
 function LocationsMain() {
     const color = `hsl(0, 100%, 50%)`
+
     return (
         <Box>
+            <div className="flex justify-center items-center">
+                <Link to="/locations/createLocation">
+                    <Button className="">Add Charger</Button>
+                </Link>
+            </div>
             <div className="flex flex-col items-center">
                 <h1 className="text-4xl font-bold mt-8 mb-6 text-white">Locations</h1>
 

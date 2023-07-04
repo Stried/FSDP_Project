@@ -72,11 +72,82 @@ router.post("/createTrialReceipt", async (req, res) => {
 });
 
 router.get("/viewTrialCar", async (req, res) => {
-
-    const allTrialCars = await Store.findAll({
-        where: { carPlateNo }, //TODO: Solve this
-        order: [ [ 'carPlateNo', 'DESC' ] ],
+    const leTrialCar = await TrialCar.findAll({
+        where: { },
     })
+
+    res.json(leTrialCar);
+});
+
+router.get("/viewTrialCar/:id", async (req, res) => {
+    const trialCar = req.params.id
+    const leTrialCar = await TrialCar.findAll({
+        where: {carPlateNo: trialCar},
+    })
+
+    console.log(trialCar);
+    console.log(leTrialCar);
+
+    res.json(leTrialCar);
+});
+
+router.put("/updateTrialCar/changeDetails/:id", validateToken, async (req, res) => {
+    let trialcar = req.params.id;
+    // let userInfo = {
+    //     id: req.user.id,
+    //     fullName: req.user.fullName,
+    //     userName: req.user.userName,
+    //     emailAccount: req.user.emailAccount,
+    //     phoneNo: req.user.phoneNo
+    // };
+
+    // if (!userInfo.adminNo) {
+    //     console.log("Page Not Found!");
+    //     res.status(404).json("Page Is Not Found.");
+    //     return;
+    // }
+    let data = req.body;
+    let validationSchema = yup.object().shape({
+        address: yup.string().trim().min(3).max(100),
+    });
+    try {
+        await validationSchema.validate(data, { abortEarly: false });
+    } catch (err) {
+        console.error(err);
+        res.status(400).json({ errors: err.errors });
+        return;
+    }
+
+    let trialCar = await TrialCar.update(data, {
+        where: { carPlateNo: trialcar },
+    });
+
+    if (trialCar == 1) {
+        res.json({
+            message: "Receipt has been successfully updated.",
+        });
+    } else {
+        res.status(400).json({
+            message: `could not update Receipt with id ${trialcar}`,
+        });
+    }
+});
+
+router.delete("/:carPlateNo", async (req, res) => {
+    let carplateNo = req.params.carPlateNo;
+    let num = await TrialCar.destroy({
+        where: { carPlateNo: carplateNo }
+    })
+    if (num == 1) {
+        res.json({
+            message: "trial car was deleted successfully."
+        });
+    }
+    else {
+        res.status(400).json({
+            message: `Cannot delete trial car with carPlateNo ${carPlateNo}.`
+        });
+    }
 });
 
 router.get("/viewTrialReceipt", validateToken, async (req, res) => {
