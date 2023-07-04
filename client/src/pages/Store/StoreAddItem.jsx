@@ -43,7 +43,7 @@ function StoreAddItem() {
             carWidth: "",
             carHeight: "",
             isModified: false,
-            carMods: ""
+            carMods: "None"
         },
         validationSchema: yup.object().shape({
             carPlateNo: yup.string().trim().max(8).required("Car Plate cannot be empty"),
