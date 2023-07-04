@@ -11,12 +11,12 @@ import {
 import * as React from 'react';
 'use client';
 
-
-
+import http from "./../../../http";
+import { ToastContainer, toast } from "react-toastify";
 import FormInputSingleLine from "./../../../components/FormInputSingleLine";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import CustomSelectCars from "./customSelectCars";
+import CustomSelectCars from "./CustomSelectCars";
 
 const SideNav = ({ isOpen }) => {
    const [accordionOpen, setAccordionOpen] = useState(false);
@@ -158,11 +158,11 @@ const App = () => {
    const navigate = useNavigate();
    const formik = useFormik({
       initialValues: {
-         name: "",
+         carPlateNo: "",
          address: "",
       },
       validationSchema: yup.object().shape({
-         name: yup
+         carPlateNo: yup
             .string()
             .trim()
             .min(3, "Name must be Minimum 3 Characters.")
@@ -178,12 +178,12 @@ const App = () => {
       }),
       onSubmit: async (data) => {
          const formData = {
-            name: data.name = data.name.trim(),
+            carPlateNo: data.carPlateNo = data.carPlateNo.trim(),
             address: data.address = data.address.trim(),
          }
 
          await http
-            .post("/createTrialCar", formData)
+            .post("/trials/createTrialCar", formData)
             .then((res) => {
                console.log(res.status)
                navigate("/TrialsCarAdminPage");
@@ -243,15 +243,16 @@ const App = () => {
                />
 
                {formik.errors.address ? <div classnames='error'>{formik.errors.address}</div> : null}
-               <br></br>
+                <br></br>
+                <Button
+                    variant="contained"
+                    type="submit"
+                    className="bg-green-400 mx-7 ml-16 text-black hover:bg-green-600 hover:text-white"
+                >
+                    Create
+                </Button>
             </Box>
-            <Button
-               variant="contained"
-               type="submit"
-               className="bg-green-400 mx-7 ml-16 text-black hover:bg-green-600 hover:text-white"
-            >
-               Create
-            </Button>
+
             <br></br>
             <br></br>
             <br></br>
@@ -316,7 +317,7 @@ const App = () => {
                </table>
             </div>
          </div>
-
+        <ToastContainer />
       </div>
    );
 };
