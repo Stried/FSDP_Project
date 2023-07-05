@@ -16,7 +16,6 @@ import { ToastContainer, toast } from "react-toastify";
 import FormInputSingleLine from "./../../../components/FormInputSingleLine";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import CustomSelectCars from "./CustomSelectCars";
 
 const SideNav = ({ isOpen }) => {
     const [ accordionOpen, setAccordionOpen ] = useState(false);

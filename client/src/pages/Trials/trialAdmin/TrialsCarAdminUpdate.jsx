@@ -434,7 +434,6 @@ function TrialsCarAdminUpdate() {
                     <br />
 
                     <label>Address</label>
-                    <label >Address</label>
           <CustomSelectCars
             value={formik.values.address}
             onChange={(value) => formik.setFieldValue("address", value.value)}
