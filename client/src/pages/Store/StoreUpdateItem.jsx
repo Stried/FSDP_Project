@@ -1,11 +1,4 @@
-import {
-    Box,
-    Button,
-    TextField,
-    Typography,
-    InputAdornment,
-    IconButton,
-    Checkbox,
+import { Box, Button, TextField, Typography, InputAdornment, IconButton, Checkbox, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions 
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
@@ -99,7 +92,7 @@ function StoreUpdateItem() {
             }
 
             http
-                .put(`/store/${carPlateNo}`, formData)
+                .put(`/store/${id}`, formData)
                 .then((res) => {
                     console.log(res.status);
                     navigate("/store/StoreMain");
@@ -110,6 +103,21 @@ function StoreUpdateItem() {
                 });
         }
     });
+
+    const deleteStoreItem = () => {
+        http.delete(`/store/${id}`)
+            .then((res) => {
+                console.log(res.data);
+                navigate("/store/StoreMain");
+            });
+    }
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => {
+        setOpen(true);
+    };
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     return (
         <Box component={"div"} className="pl-7">
@@ -122,7 +130,7 @@ function StoreUpdateItem() {
             </Box>
             <Box component={"form"} onSubmit={formik.handleSubmit}>
                 <div className="pr-7">
-                <div className="w-1/6 inline-flex">
+                    <div className="w-1/6 inline-flex">
                         <FormInputSingleLine
                             valueName="carPlateNo"
                             name="Plate Number"
@@ -133,7 +141,7 @@ function StoreUpdateItem() {
                             helperText={formik.touched.carPlateNo && formik.errors.carPlateNo}
                         />
                     </div>
-                    <br/>
+                    <br />
                     <div className="w-5/6 inline-flex">
                         <FormInputSingleLine
                             valueName="carDescription"
@@ -323,7 +331,7 @@ function StoreUpdateItem() {
                             helperText={formik.touched.carMods && formik.errors.carMods}
                         />
                     </div>
-                    <div>
+                    <div className="inline-flex">
                         <Button
                             variant="contained"
                             type="submit"
@@ -331,8 +339,31 @@ function StoreUpdateItem() {
                             Update
                         </Button>
                     </div>
+                    <div className="inline-flex ml-10">
+                        <Button type='button' onClick={handleOpen} className='bg-red-400 text-black hover:bg-red-600 hover:text-white'>Delete</Button>
+                    </div>
                 </div>
             </Box>
+            <Dialog open={open} onClose={handleClose} className="text-white">
+                <DialogTitle>
+                    Delete Store
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Are you sure you want to delete this store item?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button variant="contained" color="inherit"
+                        onClick={handleClose}>
+                        Cancel
+                    </Button>
+                    <Button variant="contained" color="error" className="text-black hover:text-white"
+                        onClick={deleteStoreItem}>
+                        Delete
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </Box>
     )
 }

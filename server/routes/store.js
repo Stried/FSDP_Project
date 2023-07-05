@@ -153,7 +153,7 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
     let id = req.params.id;
     let num = await Store.destroy({
-        where: { id: id }
+        where: { carPlateNo : id }
     })
     if (num == 1) {
         res.json({

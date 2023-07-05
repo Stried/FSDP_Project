@@ -3,7 +3,7 @@ import { Box, Typography, Input, IconButton, Grid, Card, CardContent } from '@mu
 import { AccessTime, Search, Clear } from '@mui/icons-material';
 import StoreAddItem from "../Store/StoreAddItem";
 import StoreUpdateItem from "../Store/StoreUpdateItem";
-import { Link, Routes, Route } from "react-router-dom";
+import { Link, Routes, Route, useParams } from "react-router-dom";
 import UserContext from "../../contexts/UserContext";
 import http from '../../http';
 
@@ -20,9 +20,9 @@ function User(props) {
     }
 }
 
-function Admin(props) {
-    const isAdmin = props.isAdmin;
-    if (isAdmin) {
+function AdminUpdate(props) {
+    const isAdminUpdate = props.isAdminUpdate;
+    if (isAdminUpdate) {
         return (
             <button type='button' className='w-max | text-white hover:text-black | dark:hover:bg-gradient-to-r from-green-400 to-emerald-600 | border-white dark:border-green-500 border-solid border-2 rounded   hover:ease-in-out duration-300 | font-semibold text-xl | mx-4 mr-10 m-10 px-2 py-1 | float-right inline'>Update your vehicle here!</button>
         )
@@ -96,7 +96,7 @@ function StoreMain() {
                     {
                         storeList.map((store, i) => {
                             return (
-                                <Grid item xs={12} md={6} lg={4} key={store.carPlateNo}>
+                                <Grid item xs={12} md={6} lg={6} key={store.carPlateNo}>
                                     <Card className="bg-black text-white">
                                         <CardContent>
                                             <Typography variant="h6" sx={{ mb: 1 }}>
@@ -150,10 +150,9 @@ function StoreMain() {
                                             <Typography sx={{ whiteSpace: 'pre-wrap' }}>
                                                 Car Mods: {store.carMods}
                                             </Typography>
-                                            <Link to={`/Store/StoreUpdateItem/${store.carPlateNo}`}>
-                                                {(user && (<Admin isAdmin={user.adminNo} />))}
+                                            <Link to={`/Store/StoreUpdateItem/${store.carPlateNo}`} className="inline-flex">
+                                                {(user && (<AdminUpdate isAdminUpdate={user.adminNo} />))}
                                             </Link>
-                                            
                                         </CardContent>
                                     </Card>
                                 </Grid>
