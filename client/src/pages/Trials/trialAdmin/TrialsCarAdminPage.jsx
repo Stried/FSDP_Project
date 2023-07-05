@@ -116,6 +116,12 @@ const SideNav = ({ isOpen }) => {
                             </ul>
                             { accordionOpen && (
                                 <div>
+                                                                        <a
+                                        href="/Trials/trialAdmin/TrialsCarAdd"
+                                        className="flex items-center pl-16 p-2 text-gray-900 rounded-lg dark:text-white dark:hover:text-black dark:hover:bg-green-400 transition duration-200 "
+                                    >
+                                        Add Trials
+                                    </a>
                                     <a
                                         href="#"
                                         className="flex items-center pl-16 p-2 text-gray-900 rounded-lg dark:text-white dark:hover:text-black dark:hover:bg-green-400 transition duration-200 "
@@ -453,7 +459,7 @@ const App = () => {
                     <Button
                         variant="contained"
                         type="submit"
-                        className="bg-green-400 mx-7 ml-16 text-black hover:bg-green-600 hover:text-white"
+                        className="bg-green-400 text-black hover:bg-green-600 hover:text-white"
                     >
                         Create
                     </Button>
@@ -536,7 +542,7 @@ const App = () => {
                                         <td class="px-6 py-4">{ trialCar.address }</td>
                                         <td class="pr-0 py-4 text-right">
                                             <Link to={ `/Trials/trialAdmin/TrialsCarAdminUpdate/${trialCar.carPlateNo}` } className="bg-green-400 p-2 px-5 rounded-md text-black hover:bg-green-600 hover:text-white ">
-                                                View
+                                                Update Address
                                             </Link>
                                         </td>
                                         <td class="pl-0 pr-4 py-4 text-right">

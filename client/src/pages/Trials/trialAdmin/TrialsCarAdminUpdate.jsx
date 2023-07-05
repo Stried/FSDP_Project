@@ -14,11 +14,16 @@ import * as yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { CheckBox } from "@mui/icons-material";
-
+import CustomSelectCars from "./CustomSelectCars";
 function TrialsCarAdminUpdate() {
     const navigate = useNavigate();
 
     let { carPlateNo } = useParams();
+
+    const options = [
+        { value: "serangoon", label: "serangoon" },
+        { value: "hougang", label: "hougang" },
+    ];
 
     const [ selectedTrialCar, setSelectedTrialCar ] = useState({
         id: "",
@@ -85,16 +90,13 @@ function TrialsCarAdminUpdate() {
                     <br />
 
                     <div className="w-1/4 inline-flex">
-                        <FormInputSingleLine
-                            valueName="address"
-                            name="Address"
-                            type="text"
-                            initialValues = {selectedTrialCar.address}
-                            value={ formik.values.address }
-                            onChange={ formik.handleChange }
-                            error={ formik.touched.address && Boolean(formik.errors.address) }
-                            helperText={ formik.touched.address && formik.errors.address }
-                        />
+                    <label>Address</label>
+                    <CustomSelectCars
+                        value={ formik.values.address }
+                        onChange={ (value) => formik.setFieldValue("address", value.value) }
+                        classnames={ "input" }
+                        options={ options }
+                    />
                     </div>
 
                     <div>
