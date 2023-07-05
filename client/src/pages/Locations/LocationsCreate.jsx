@@ -154,8 +154,9 @@ function LocationsCreate() {
             </Select>
           </div>
           <div className="max-w-md">
-            <Checkbox id="fastChargeToggle" />
-            <Label htmlFor="fastChargeToggle">FastCharge Capable?</Label>
+            <Checkbox id="fastChargeToggle"
+                      className="mr-3 mt-3" />
+            <Label htmlFor="fastChargeToggle" className="inline-flex content-center">FastCharge Capable?</Label>
           </div>
           <div className="mb-4">
             <Label htmlFor="chargerNumberInput" value="Number of Chargers" />
