@@ -117,6 +117,12 @@ const SideNav = ({ isOpen }) => {
               </ul>
               {accordionOpen && (
                 <div>
+                                    <a
+                    href="#"
+                    className="flex items-center pl-16 p-2 text-gray-900 rounded-lg dark:text-white dark:hover:text-black dark:hover:bg-green-400 transition duration-200 "
+                  >
+                    Add Trials
+                  </a>
                   <a
                     href="#"
                     className="flex items-center pl-16 p-2 text-gray-900 rounded-lg dark:text-white dark:hover:text-black dark:hover:bg-green-400 transition duration-200 "
@@ -306,6 +312,9 @@ const SideNav = ({ isOpen }) => {
 };
 
 const App = () => {
+
+
+  
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleNav = () => {
@@ -408,6 +417,7 @@ const App = () => {
           onSubmit={formik.handleSubmit}
           className="mx-7 ml-16"
         >
+          <label >Car Plate No</label>
           <FormInputSingleLine
             name="Car Plate No"
             valueName="carPlateNo"
@@ -419,8 +429,9 @@ const App = () => {
             }
             helperText={formik.touched.carPlateNo && formik.errors.carPlateNo}
           />
+<br></br>
+<br></br>
 
-          {/* <InputLabel id="demo-simple-select-label">Address</InputLabel> */}
           <label >Address</label>
           <CustomSelectCars
             value={formik.values.address}
