@@ -312,6 +312,9 @@ const SideNav = ({ isOpen }) => {
 };
 
 const App = () => {
+
+
+  
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleNav = () => {

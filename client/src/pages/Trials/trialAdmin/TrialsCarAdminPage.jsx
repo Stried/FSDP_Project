@@ -425,52 +425,9 @@ const App = () => {
                 className={ `text-white transition duration-500 ${isOpen ? " opacity-25 " : " opacity-100 "
                     }` }
             >
-                <Box
-                    component={ "form" }
-                    sx={ {} }
-                    onSubmit={ formik.handleSubmit }
-                    className="mx-7 ml-16"
-                >
-                    <FormInputSingleLine
-                        name="Car Plate No"
-                        valueName="carPlateNo"
-                        type="text"
-                        onChange={ formik.handleChange }
-                        value={ formik.values.carPlateNo }
-                        error={
-                            formik.touched.carPlateNo && Boolean(formik.errors.carPlateNo)
-                        }
-                        helperText={ formik.touched.carPlateNo && formik.errors.carPlateNo }
-                    />
 
-                    {/* <InputLabel id="demo-simple-select-label">Address</InputLabel> */ }
-                    <label className="sr-only">Address</label>
-
-                    <CustomSelectCars
-                        value={ formik.values.address }
-                        onChange={ (value) => formik.setFieldValue("address", value.value) }
-                        classnames={ "input" }
-                        classNames={{
-                            control: (state) =>
-                              state.isFocused ? 'border-red-600' : 'border-grey-300',
-                          }}
-                        options={ options }
-                    />
-
-                    { formik.errors.address ? (
-                        <div classnames="error">{ formik.errors.address }</div>
-                    ) : null }
-                    <br></br>
-                    <Button
-                        variant="contained"
-                        type="submit"
-                        className="bg-green-400 text-black hover:bg-green-600 hover:text-white"
-                    >
-                        Create
-                    </Button>
-                </Box>
-
-                <h1 className="text-center ">Trial Car Records</h1>
+                <h1 className="text-center text-5xl text-green-400">Trial Car Records</h1>
+                <br></br>
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg mx-7 ml-16">
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                         <thead class="text-xs text-gray-700 uppercase bg-green-400 dark:bg-green-500 dark:text-black">
