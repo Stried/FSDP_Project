@@ -1,53 +1,44 @@
-import {
-  Box,
-  TextField,
-  Typography,
-  InputAdornment,
-  IconButton,
-} from "@mui/material";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Link,
-  useNavigate,
-} from "react-router-dom";
-import React, { useEffect } from "react";
-import "./../../App.css";
-import http from "../../http";
-import FormInputSingleLine from "./../../components/FormInputSingleLine";
+import { useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
-import {
-  Button,
-  Checkbox,
-  Label,
-  TextInput,
-  Select,
-  ToggleSwitch,
-} from "flowbite-react";
-("use client");
+import Switch from "react-switch";
 
 function LocationsCreate() {
-  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    LatAxis: "",
+    LongAxis: "",
+    locationName: "",
+    streetName: "",
+    postalCode: "",
+    region: "",
+    fastCharge: false,
+    noOfChargers: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
+  const handleSwitchChange = (value) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      fastCharge: value,
+    }));
+  };
+
   const formik = useFormik({
-    initialValues: {
-      LatAxis: "",
-      LongAxis: "",
-      locationName: "",
-      streetName: "",
-      postalCode: "",
-      region: "",
-      fastCharge: "",
-      noOfChargers: "",
-    },
+    initialValues: formData,
     validationSchema: yup.object().shape({
-      LatAxis: yup.number().required("Please specify the Latitute."),
+      LatAxis: yup.number().required("Please specify the Latitude."),
       LongAxis: yup.number().required("Please specify the Longitude."),
       locationName: yup
         .string()
@@ -62,7 +53,7 @@ function LocationsCreate() {
       region: yup
         .string()
         .trim()
-        .oneOf(["N", "S", "E", "W"])
+        .oneOf(["North", "South", "East", "West"])
         .required("Please specify a valid region."),
       fastCharge: yup
         .boolean()
@@ -74,98 +65,161 @@ function LocationsCreate() {
         .required("Please specify the number of chargers in the location."),
     }),
     onSubmit: async (data) => {
-      const formData = {
-        LatAxis: data.LatAxis,
-        LongAxis: data.LongAxis,
-        locationName: (data.locationName = data.locationName.trim()),
-        streetName: (data.streetName = data.streetName.trim()),
-        postalCode: data.postalCode,
-        region: (data.region = data.region.trim()),
-        fastCharge: data.fastCharge,
-        noOfChargers: data.noOfChargers,
-      };
-
-      await http
-        .post("/locations/createLocation", formData)
-        .then(() => {
-          console.log(res.status);
-          navigate("/locations/LocationsMain");
-        })
-        .catch(function (err) {
-          console.log(err);
-          toast.error(`${err.response.data.message}`);
-        });
+      try {
+        await http.post("/locations/createLocation", data);
+        navigate("/locations/LocationsMain");
+      } catch (error) {
+        console.log(error);
+        toast.error(`${error.response.data.message}`);
+      }
     },
   });
 
   return (
-    <Box className="mx-10">
-      <ToastContainer />
-      <div className="text-white">
-        <h1 className="text-green-500 text-3xl font-medium">
+    <div className="bg-gray-900 py-10">
+      <div className="max-w-md mx-auto px-4">
+        <h1 className="text-green-400 text-3xl font-medium mb-4">
           Add a charger location
         </h1>
-        <form className="flex max-w-md flex-col gap-4">
-          <div className="mb-4">
-            <Label htmlFor="locationNameInput" value="Location Name" />
-            <TextInput
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label htmlFor="locationNameInput" className="text-white">
+              Location Name
+            </label>
+            <input
+              type="text"
               id="locationNameInput"
+              name="locationName"
               placeholder="Hougang Mall"
               required
+              className="bg-gray-800 text-gray-300 rounded-lg py-2 px-3 w-full"
+              value={formData.locationName}
+              onChange={handleChange}
             />
           </div>
-          <div className="mb-4">
-            <Label htmlFor="streetNameInput" value="Street Name" />
-            <TextInput
+          <div>
+            <label htmlFor="streetNameInput" className="text-white">
+              Street Name
+            </label>
+            <input
+              type="text"
               id="streetNameInput"
+              name="streetName"
               placeholder="90 Hougang Ave 10"
               required
+              className="bg-gray-800 text-gray-300 rounded-lg py-2 px-3 w-full"
+              value={formData.streetName}
+              onChange={handleChange}
             />
           </div>
-          <div className="mb-4">
-            <Label htmlFor="postalCodeInput" value="Postal Code" />
-            <TextInput id="postalCodeInput" placeholder="538766" required />
+          <div>
+            <label htmlFor="postalCodeInput" className="text-white">
+              Postal Code
+            </label>
+            <input
+              type="text"
+              id="postalCodeInput"
+              name="postalCode"
+              placeholder="538766"
+              required
+              className="bg-gray-800 text-gray-300 rounded-lg py-2 px-3 w-full"
+              value={formData.postalCode}
+              onChange={handleChange}
+            />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="latAxisInput" value="Latitude" />
-              <TextInput
+              <label htmlFor="latAxisInput" className="text-white">
+                Latitude
+              </label>
+              <input
+                type="text"
                 id="latAxisInput"
+                name="LatAxis"
                 placeholder="1.373554718211368"
                 required
+                className="bg-gray-800 text-gray-300 rounded-lg py-2 px-3 w-full"
+                value={formData.LatAxis}
+                onChange={handleChange}
               />
             </div>
             <div>
-              <Label htmlFor="lngAxisInput" value="Longitude" />
-              <TextInput
+              <label htmlFor="lngAxisInput" className="text-white">
+                Longitude
+              </label>
+              <input
+                type="text"
                 id="lngAxisInput"
+                name="LongAxis"
                 placeholder="103.89370104229617"
                 required
+                className="bg-gray-800 text-gray-300 rounded-lg py-2 px-3 w-full"
+                value={formData.LongAxis}
+                onChange={handleChange}
               />
             </div>
           </div>
-          <div className="max-w-md">
-            <Label htmlFor="regionInput" value="Region" />
-            <Select id="regionInput" required>
-              <option>North</option>
-              <option>South</option>
-              <option>East</option>
-              <option>West</option>
-            </Select>
+          <div>
+            <label htmlFor="regionInput" className="text-white">
+              Region
+            </label>
+            <select
+              id="regionInput"
+              name="region"
+              required
+              className="bg-gray-800 text-gray-300 rounded-lg py-2 px-3 w-full"
+              value={formData.region}
+              onChange={handleChange}
+            >
+              <option value="">Select region</option>
+              <option value="North">North</option>
+              <option value="South">South</option>
+              <option value="East">East</option>
+              <option value="West">West</option>
+            </select>
           </div>
-          <div className="max-w-md">
-            <Checkbox id="fastChargeToggle"
-                      className="mr-3 mt-3" />
-            <Label htmlFor="fastChargeToggle" className="inline-flex content-center">FastCharge Capable?</Label>
+          <div className="flex items-center">
+            <Switch
+              id="fastChargeToggle"
+              name="fastCharge"
+              checked={formData.fastCharge}
+              onChange={handleSwitchChange}
+              onColor="#3182ce"
+              offColor="#9ca3af"
+              checkedIcon={false}
+              uncheckedIcon={false}
+              height={20}
+              width={50}
+            />
+            <label htmlFor="fastChargeToggle" className="text-white pl-1">
+              FastCharge Capable?
+            </label>
           </div>
-          <div className="mb-4">
-            <Label htmlFor="chargerNumberInput" value="Number of Chargers" />
-            <TextInput id="chargerNumberInput" placeholder="4" required />
+          <div>
+            <label htmlFor="chargerNumberInput" className="text-white">
+              Number of Chargers
+            </label>
+            <input
+              type="number"
+              id="chargerNumberInput"
+              name="noOfChargers"
+              placeholder="4"
+              required
+              className="bg-gray-800 text-gray-300 rounded-lg py-2 px-3 w-full"
+              value={formData.noOfChargers}
+              onChange={handleChange}
+            />
           </div>
-          <Button type="submit">Submit</Button>
+          <button
+            type="submit"
+            className="bg-blue-500 text-white py-2 px-4 rounded-lg"
+          >
+            Submit
+          </button>
         </form>
       </div>
-    </Box>
+    </div>
+
   );
 }
 
