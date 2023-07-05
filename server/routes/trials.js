@@ -81,7 +81,7 @@ router.get("/viewTrialCar", async (req, res) => {
 
 router.get("/viewTrialCar/:id", async (req, res) => {
     const trialCar = req.params.id
-    const leTrialCar = await TrialCar.findAll({
+    const leTrialCar = await TrialCar.findOne({
         where: {carPlateNo: trialCar},
     })
 
