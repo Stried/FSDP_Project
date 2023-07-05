@@ -345,7 +345,7 @@ function TrialsCarAdminUpdate() {
         http.get(`/trials/viewTrialCar/${carPlateNo}`)
             .then((res) => {
                 console.log(res.data)
-                setSelectedTrialCar(res.data); // not working
+                setSelectedTrialCar(res.data); 
                 console.log("The trial car is " + carPlateNo);
                 window.location.reload;
             })
@@ -354,11 +354,10 @@ function TrialsCarAdminUpdate() {
             });
     }, []);
 
-    console.log("The ID is: " + carPlateNo); // the id is not the issue as well, seems to be printed repeatedly when i type something into the text box
 
-    // the issue is up to here
+
     const formik = useFormik({
-        initialValues: selectedTrialCar, // why isnt this showing, nope
+        initialValues: selectedTrialCar, 
         enableReinitialize: true,
         validationSchema: yup.object().shape({
             address: yup.string().trim().max(100).required("Address cannot be empty"),
@@ -366,9 +365,9 @@ function TrialsCarAdminUpdate() {
         onSubmit: (data) => {
             const formData = {
                 address: data.address.trim(),
-                // carPlateNo: carPlateNo, // not the trim, the data isnt being called from the url
+                
             }
-            console.log(formData) // it can update, cant fetch data yep but update works
+
 
             http
                 .put(`trials/updateTrialCar/changeDetails/${carPlateNo}`, formData)
@@ -434,15 +433,14 @@ function TrialsCarAdminUpdate() {
 
                     <br />
 
-                    <div className="w-1/4 inline-flex">
                     <label>Address</label>
-                    <CustomSelectCars
-                        value={ formik.values.address }
-                        onChange={ (value) => formik.setFieldValue("address", value.value) }
-                        classnames={ "input" }
-                        options={ options }
-                    />
-                    </div>
+                    <label >Address</label>
+          <CustomSelectCars
+            value={formik.values.address}
+            onChange={(value) => formik.setFieldValue("address", value.value)}
+            classnames={"input"}
+            options={options}
+          />
 
                     <div>
                         <Button

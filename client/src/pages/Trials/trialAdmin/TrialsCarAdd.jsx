@@ -429,7 +429,7 @@ const App = () => {
             helperText={formik.touched.carPlateNo && formik.errors.carPlateNo}
           />
 
-          {/* <InputLabel id="demo-simple-select-label">Address</InputLabel> */}
+
           <label >Address</label>
           <CustomSelectCars
             value={formik.values.address}
