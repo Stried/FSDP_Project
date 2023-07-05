@@ -23,6 +23,7 @@ import LocationsCreate from "../pages/Locations/LocationsCreate";
 
 import StoreMain from "../pages/Store/StoreMain";
 import StoreAddItem from "../pages/Store/StoreAddItem";
+import StoreUpdateItem from "../pages/Store/StoreUpdateItem";
 
 import UserContext from "../contexts/UserContext";
 
@@ -177,6 +178,7 @@ function EcoLifeAppBar() {
                     <Route path={ "/locations/createLocation" } element={ <LocationsCreate /> } />
                     <Route path={ "/Store/StoreMain" } element= { <StoreMain /> } />
                     <Route path={"/Store/StoreAddItem" } element= { <StoreAddItem /> } />
+                    <Route path={"/Store/StoreUpdateItem/:id" } element= { <StoreUpdateItem /> } />
                     <Route path={ "/Trials/trialAdmin/TrialsCarAdminPage" } element={ <TrialsAdminPage /> } />
                     <Route path={"/Trials/trialAdmin/TrialsCarAdminUpdate/:id"} element={<TrialsUpdatePage />} />
                     <Route path={"/Trials/trialAdmin/TrialsCarAdd"} element={<TrialsAddPage />}/>
