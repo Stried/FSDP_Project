@@ -344,7 +344,6 @@ router.get("/adminPanel", validateToken, async (req, res) => {
 router.put("/updatePassword", validateToken, async (res, req) => {
     let data = req.body;
 
-    let userAccount = await UserAccount.findByPk(req.user.emailAccount);
     let validationSchema = yup.object().shape({
         password: yup.string().min(8).max(30).required(),
     });
@@ -354,6 +353,22 @@ router.put("/updatePassword", validateToken, async (res, req) => {
         console.error(err);
         res.status(400).json({ errors: err.errors });
         return;
+    }
+
+    data.password = await bcrypt.hash(data.password, 10);
+
+    let userAccount = await UserAccount.update(data, {
+        where: { emailAccount: req.user.emailAccount },
+    });
+
+    if (userAccount == 1) {
+        res.json({
+            message: "User has been successfully updated.",
+        });
+    } else {
+        res.status(400).json({
+            message: `Cannot update User with id ${req.user.emailAccount}`,
+        });
     }
 
 })
