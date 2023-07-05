@@ -376,7 +376,7 @@ const App = () => {
             await http
                 .post("/trials/createTrialCar", formData)
                 .then((res) => {
-                    console.log(res.status);
+  
                     // navigate("/TrialsCarAdminPage");
                     window.location.reload()
                 })
@@ -444,11 +444,16 @@ const App = () => {
                     />
 
                     {/* <InputLabel id="demo-simple-select-label">Address</InputLabel> */ }
-                    <label>Address</label>
+                    <label className="sr-only">Address</label>
+
                     <CustomSelectCars
                         value={ formik.values.address }
                         onChange={ (value) => formik.setFieldValue("address", value.value) }
                         classnames={ "input" }
+                        classNames={{
+                            control: (state) =>
+                              state.isFocused ? 'border-red-600' : 'border-grey-300',
+                          }}
                         options={ options }
                     />
 
