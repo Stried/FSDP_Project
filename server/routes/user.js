@@ -345,7 +345,17 @@ router.put("/updatePassword", validateToken, async (res, req) => {
     let data = req.body;
 
     let userAccount = await UserAccount.findByPk(req.user.emailAccount);
-    
+    let validationSchema = yup.object().shape({
+        password: yup.string().min(8).max(30).required(),
+    });
+    try {
+        await validationSchema.validate(data, { abortEarly: false });
+    } catch (err) {
+        console.error(err);
+        res.status(400).json({ errors: err.errors });
+        return;
+    }
+
 })
 
 module.exports = router;
