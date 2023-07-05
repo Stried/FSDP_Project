@@ -35,7 +35,6 @@ function StoreUpdateItem() {
         carEngine: "",
         carSpeed: "",
         carFuelType: "",
-        carFuelType: "",
         carFuelConsume: "",
         carProductionDate: "",
         carBodyType: "",
@@ -100,7 +99,7 @@ function StoreUpdateItem() {
             }
 
             http
-                .put("/store/" + formData.carPlateNo, formData)
+                .put(`/store/${carPlateNo}`, formData)
                 .then((res) => {
                     console.log(res.status);
                     navigate("/store/StoreMain");
@@ -123,6 +122,18 @@ function StoreUpdateItem() {
             </Box>
             <Box component={"form"} onSubmit={formik.handleSubmit}>
                 <div className="pr-7">
+                <div className="w-1/6 inline-flex">
+                        <FormInputSingleLine
+                            valueName="carPlateNo"
+                            name="Plate Number"
+                            type="text"
+                            value={formik.values.carPlateNo}
+                            onChange={formik.handleChange}
+                            error={formik.touched.carPlateNo && Boolean(formik.errors.carPlateNo)}
+                            helperText={formik.touched.carPlateNo && formik.errors.carPlateNo}
+                        />
+                    </div>
+                    <br/>
                     <div className="w-5/6 inline-flex">
                         <FormInputSingleLine
                             valueName="carDescription"

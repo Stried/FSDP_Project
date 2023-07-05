@@ -13,7 +13,7 @@ function User(props) {
         return (
             <div className='inline'>
                 <Link to="/Store/StoreAddItem">
-                    <button type='button' class='w-max | text-white hover:text-black | dark:hover:bg-gradient-to-r from-green-400 to-emerald-600 | border-white dark:border-green-500 border-solid border-2 rounded   hover:ease-in-out duration-300 | font-semibold text-xl | mx-4 mr-10 m-10 px-2 py-1 | float-right inline'>Sell your vehicle here!</button>
+                    <button type='button' className='w-max | text-white hover:text-black | dark:hover:bg-gradient-to-r from-green-400 to-emerald-600 | border-white dark:border-green-500 border-solid border-2 rounded   hover:ease-in-out duration-300 | font-semibold text-xl | mx-4 mr-10 m-10 px-2 py-1 | float-right inline'>Sell your vehicle here!</button>
                 </Link>
             </div>
         )
@@ -24,7 +24,7 @@ function Admin(props) {
     const isAdmin = props.isAdmin;
     if (isAdmin) {
         return (
-            <button type='button' class='w-max | text-white hover:text-black | dark:hover:bg-gradient-to-r from-green-400 to-emerald-600 | border-white dark:border-green-500 border-solid border-2 rounded   hover:ease-in-out duration-300 | font-semibold text-xl | mx-4 mr-10 m-10 px-2 py-1 | float-right inline'>Update your vehicle here!</button>
+            <button type='button' className='w-max | text-white hover:text-black | dark:hover:bg-gradient-to-r from-green-400 to-emerald-600 | border-white dark:border-green-500 border-solid border-2 rounded   hover:ease-in-out duration-300 | font-semibold text-xl | mx-4 mr-10 m-10 px-2 py-1 | float-right inline'>Update your vehicle here!</button>
         )
     }
 }
@@ -151,7 +151,7 @@ function StoreMain() {
                                                 Car Mods: {store.carMods}
                                             </Typography>
                                             <Link to={`/Store/StoreUpdateItem/${store.carPlateNo}`}>
-                                                {(user && <Admin isAdmin={user.adminNo} />)}
+                                                {(user && (<Admin isAdmin={user.adminNo} />))}
                                             </Link>
                                             
                                         </CardContent>
@@ -164,7 +164,7 @@ function StoreMain() {
             </div>
             <Routes>
                 <Route path={"/StoreAddItem"} element={<StoreAddItem />} />
-                <Route path={"/StoreUpdateItem"} element={<StoreUpdateItem />} />
+                <Route path={"/StoreUpdateItem/:id"} element={<StoreUpdateItem />} />
             </Routes>
         </Box>
     )
