@@ -16,19 +16,19 @@ function LocationsMain() {
 
     return (
         <Box>
-            <div className="flex justify-center items-center">
-                <Link to="/locations/createLocation">
-                    <Button className="">Add Charger</Button>
-                </Link>
-            </div>
             <div className="flex flex-col items-center">
                 <h1 className="text-4xl font-bold mt-8 mb-6 text-white">Locations</h1>
+                <div className="mb-4 flex justify-center items-center">
+                    <Link to="/locations/createLocation">
+                        <Button className="">Add Charger</Button>
+                    </Link>
+                </div>
 
                 <div className="max-w-3xl mx-auto grid grid-cols-2 gap-4">
                     <div className="bg-gray-200 p-4 rounded-lg mb-4">
                         <h2 className="text-xl font-semibold mb-2">Charger 1 - Hougang</h2>
                         <p className="text-wrap">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                         </p>
                         <div className="mx-auto pt-2">
                             <Map height={300} defaultCenter={[1.3759366, 103.878986]} defaultZoom={17}>
@@ -40,7 +40,7 @@ function LocationsMain() {
                     <div className="bg-gray-200 p-4 rounded-lg mb-4">
                         <h2 className="text-xl font-semibold mb-2">Charger 2 - Sengkang</h2>
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                         </p>
                         <div className="mx-auto pt-2">
                             <Map height={300} defaultCenter={[1.391794253314477, 103.8946747593317]} defaultZoom={17}>
@@ -52,7 +52,7 @@ function LocationsMain() {
                     <div className="bg-gray-200 p-4 rounded-lg mb-4">
                         <h2 className="text-xl font-semibold mb-2">Charger 3 - Yio Chu Kang</h2>
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                         </p>
                         <div className="mx-auto pt-2">
                             <Map height={300} defaultCenter={[1.3838608875619876, 103.87702488676204]} defaultZoom={17}>
@@ -64,7 +64,7 @@ function LocationsMain() {
                     <div className="bg-gray-200 p-4 rounded-lg mb-4">
                         <h2 className="text-xl font-semibold mb-2">Charger 4 - Ang Mo Kio</h2>
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                         </p>
                         <div className="mx-auto pt-2">
                             <Map height={300} defaultCenter={[1.3773398962971761, 103.86640986410745]} defaultZoom={17}>
@@ -76,7 +76,7 @@ function LocationsMain() {
                     <div className="bg-gray-200 p-4 rounded-lg mb-4">
                         <h2 className="text-xl font-semibold mb-2">Charger 5 - Tampines</h2>
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                         </p>
                         <div className="mx-auto pt-2">
                             <Map height={300} defaultCenter={[1.3737872449775959, 103.9426749219287]} defaultZoom={17}>
@@ -88,7 +88,7 @@ function LocationsMain() {
                     <div className="bg-gray-200 p-4 rounded-lg mb-4">
                         <h2 className="text-xl font-semibold mb-2">Charger 6 - Bukit Timah</h2>
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                         </p>
                         <div className="mx-auto pt-2">
                             <Map height={300} defaultCenter={[1.3312098699919162, 103.7991151209977]} defaultZoom={17}>
@@ -100,7 +100,7 @@ function LocationsMain() {
                     <div className="bg-gray-200 p-4 rounded-lg mb-4">
                         <h2 className="text-xl font-semibold mb-2">Charger 7 - Bishan</h2>
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                         </p>
                         <div className="mx-auto pt-2">
                             <Map height={300} defaultCenter={[1.3596830291773792, 103.83989932095439]} defaultZoom={17}>
@@ -112,7 +112,7 @@ function LocationsMain() {
                     <div className="bg-gray-200 p-4 rounded-lg mb-4">
                         <h2 className="text-xl font-semibold mb-2">Charger 8 - Seletar</h2>
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                         </p>
                         <div className="mx-auto pt-2">
                             <Map height={300} defaultCenter={[1.420332721937346, 103.86357894837764]} defaultZoom={17}>

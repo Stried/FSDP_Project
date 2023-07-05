@@ -19,6 +19,7 @@
     "mysql2": "^3.4.2",
     "nanoid": "^3.3.6",
     "nodemon": "^2.0.22",
+    "react-switch": "^7.0.0",
     "sequelize": "^6.31.1",
     "yup": "^1.1.1"
   }
