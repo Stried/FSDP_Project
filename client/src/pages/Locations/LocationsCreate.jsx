@@ -153,7 +153,7 @@ function LocationsCreate() {
               <option>West</option>
             </Select>
           </div>
-          <div className="max-w-md flex items-center">
+          <div className="max-w-md">
             <Checkbox id="fastChargeToggle" />
             <Label htmlFor="fastChargeToggle">FastCharge Capable?</Label>
           </div>

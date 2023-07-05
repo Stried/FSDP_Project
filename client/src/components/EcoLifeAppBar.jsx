@@ -178,7 +178,7 @@ function EcoLifeAppBar() {
                     <Route path={ "/Store/StoreMain" } element= { <StoreMain /> } />
                     <Route path={"/Store/StoreAddItem" } element= { <StoreAddItem /> } />
                     <Route path={ "/Trials/trialAdmin/TrialsCarAdminPage" } element={ <TrialsAdminPage /> } />
-                    <Route path={"/Trials/trialAdmin/TrialsCarAdminUpdate/:id"} element={<TrialsUpdatePage />} />
+                    <Route path={"/Trials/trialAdmin/TrialsCarAdminUpdate/:carPlateNo"} element={<TrialsUpdatePage />} />
                     <Route path={"/Trials/trialAdmin/TrialsCarAdd"} element={<TrialsAddPage />}/>
                     <Route path={ "*" } element={ <PageNotFound /> } />
                 </Routes>

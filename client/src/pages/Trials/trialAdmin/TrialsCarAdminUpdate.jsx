@@ -18,32 +18,33 @@ import { CheckBox } from "@mui/icons-material";
 function TrialsCarAdminUpdate() {
     const navigate = useNavigate();
 
-    let { id } = useParams();
-    console.log("The ID is: " + id); // the id is not the issue as well, seems to be printed repeatedly when i type something into the text box
+    let { carPlateNo } = useParams();
+    console.log("The ID is: " + carPlateNo); // the id is not the issue as well, seems to be printed repeatedly when i type something into the text box
 
-    // The issue is within line 24 to 41
-    const [ trialCar, setTrialCar ] = useState({
+    const [ selectedTrialCar, setSelectedTrialCar ] = useState({
+        id: "",
+        address: "",
         carPlateNo: "",
-        address: ""
-    }); // its still using this instead of the updated one
+        name: "",
+        carBrand: ""
+    });
 
-    useEffect(() => { // the use effect is not starting when the function is called, thus no data is being passed
-        http.get(`trials/viewTrialCar/${id}`) // funny thing is, seems liek it is getting smth tho
-            .then((res) => { 
-                // issue is here i think
-                console.log("Hello PLease Appear"); // is called up to this point
-                setTrialCar(res.data); // this is the issue
-                console.log("Hello PLease Appear 2"); // is also called
-                console.log(res.data); // data is also being passed=
+    useEffect(() => {
+        http.get(`/trials/viewTrialCar/${carPlateNo}`)
+            .then((res) => {
+                console.log(res.data)
+                setSelectedTrialCar(res.data); // not working
+                console.log("The trial car is " + selectedTrialCar.id);
+                window.location.reload;
             })
             .catch(function (err) {
-                console.log(err); // catch is to not crash in case of error
-            })
-    }, []); // the useEffect is supposed to fetch data from the db and put it as the initial value
+                console.log(err);
+            });
+    }, []);
 
     // the issue is up to here
     const formik = useFormik({
-        initialValues: trialCar, // why isnt this showing, nope
+        initialValues: selectedTrialCar, // why isnt this showing, nope
         enableReinitialize: true,
         validationSchema: yup.object().shape({
             address: yup.string().trim().max(100).required("Address cannot be empty"),
@@ -86,8 +87,9 @@ function TrialsCarAdminUpdate() {
                     <div className="w-1/4 inline-flex">
                         <FormInputSingleLine
                             valueName="address"
-                            name="address"
+                            name="Address"
                             type="text"
+                            initialValues = {selectedTrialCar.address}
                             value={ formik.values.address }
                             onChange={ formik.handleChange }
                             error={ formik.touched.address && Boolean(formik.errors.address) }
