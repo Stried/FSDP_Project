@@ -1,14 +1,5 @@
 import React from "react";
 import Select from 'react-select';
-import styled from 'styled-components';
-
-
-
-const MySelect = (props) => {
-    return (
-       <SelectElement classNamePrefix="react-select" options={options} {...props}/>
-    )
-  }
 
 export default ({onChange, options, value, classnames}) => {
     const defaultValue=(options, value)=>{
@@ -29,6 +20,7 @@ export default ({onChange, options, value, classnames}) => {
             borderRadius: 5,
             colors: {
               ...theme.colors,
+
               primary25: '#22c55e',
               primary: '#22c55e',
             },
