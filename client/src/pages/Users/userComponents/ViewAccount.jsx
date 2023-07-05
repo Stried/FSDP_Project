@@ -22,7 +22,16 @@ import UserContext from "../../../contexts/UserContext";
 
 function ViewAccount() {
     const navigate = useNavigate();
-    const { user } = useContext(UserContext);
+    const { userInfo } = useContext(UserContext);
+
+    const [ user, setUser ] = useState({
+        fullName: "",
+        userName: "",
+        emailAccount: "",
+        phoneNo: "",
+        id: "",
+        imageFile: ""
+    })
 
     const logout = () => {
         localStorage.clear();
@@ -31,7 +40,7 @@ function ViewAccount() {
 
     try {
         useEffect(() => {
-            if (user && user.imageFile) {
+            if (userInfo) {
                 localStorage.setItem("userImageFile", `${user.imageFile}`);
                 user.imageFile = localStorage.getItem("userImageFile");
             }
@@ -41,10 +50,21 @@ function ViewAccount() {
         user.imageFile = localStorage.getItem("userImageFile");
     }
 
+    useEffect(() => {   
+        http.get("/user/viewAccount")
+            .then((res) => {
+                setUser(res.data);
+                console.log("User Info successfully logged.")
+            })
+            .catch(function (err) {
+                console.log(err);
+            })
+    }, [])
+
     return (
         <div className="text-white">
             <div className="mx-5 ">
-                { user && (
+                
                     <div id="userAccountDetails">
                         <p className="text-3xl font-medium">
                             { user.fullName }'s Account Details
@@ -54,19 +74,11 @@ function ViewAccount() {
                                 { user && user.imageFile !== "No image" && ( // Had to be non-nullable
                                     <AspectRatio className="w-2/5 border-green-500 border-2 border-solid rounded float-right mr-10">
                                         <Box component="img"
-                                            src={ `${import.meta.env.VITE_FILE_BASE_URL}${localStorage.getItem("userImageFile")}` }
+                                            src={ `${import.meta.env.VITE_FILE_BASE_URL}${user.imageFile}` }
                                             alt="Profile Picture">
                                         </Box>
                                     </AspectRatio>
                                 ) }
-                            </div>
-                            <div id="idNumber" className="">
-                                <h1 className="text-green-400 font-medium text-2xl">
-                                    ID Number
-                                </h1>
-                                <p className="text-lg font-medium italic">
-                                    { user.id } <span className="text-green-400">/</span> { user.adminNo }
-                                </p>
                             </div>
                             <div id="nameSection" className="flex space-x-10">
                                 <div id="fullName" className="my-3">
@@ -108,7 +120,7 @@ function ViewAccount() {
                         font-medium border-transparent border-2 border-solid hover:border-red-500 
                         hover:border-2 hover:border-solid hover:transition-ease-in-out duration-300" onClick={ logout }>Logout</Button>
                     </div>
-                ) }
+                
             </div>
         </div>
     )

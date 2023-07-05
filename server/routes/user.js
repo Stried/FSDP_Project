@@ -104,11 +104,7 @@ router.post("/login", async (req, res) => {
         console.log("Admin is found!")
         userInfo = {
             id: user.id,
-            fullName: user.fullName,
-            userName: user.userName,
             emailAccount: user.emailAccount,
-            phoneNo: user.phoneNo,
-            imageFile: user.imageFile,
             adminNo: isAdmin.adminNo
         };
         console.log(userInfo);
@@ -116,11 +112,7 @@ router.post("/login", async (req, res) => {
     } else {
         userInfo = {
             id: user.id,
-            fullName: user.fullName,
-            userName: user.userName,
             emailAccount: user.emailAccount,
-            phoneNo: user.phoneNo,
-            imageFile: user.imageFile,
             adminNo: null
         };
     }
@@ -137,10 +129,7 @@ router.get("/auth", validateToken, (req, res) => {
     if (!req.user.adminNo) {
         let userInfo = {
             id: req.user.id,
-            fullName: req.user.fullName,
-            userName: req.user.userName,
             emailAccount: req.user.emailAccount,
-            phoneNo: req.user.phoneNo
         };
         res.json({
             user: userInfo
@@ -148,10 +137,7 @@ router.get("/auth", validateToken, (req, res) => {
     } else {
         let userInfo = {
             id: req.user.id,
-            fullName: req.user.fullName,
-            userName: req.user.userName,
             emailAccount: req.user.emailAccount,
-            phoneNo: req.user.phoneNo,
             adminNo: req.user.adminNo
         };
         res.json({
@@ -164,22 +150,11 @@ router.get("/auth", validateToken, (req, res) => {
 // View Individual Account (User)
 router.get("/viewAccount", validateToken, async (req, res) => {
     // Remember to put req then res
-    let userInfo = {
-        id: req.user.id,
-        fullName: req.user.fullName,
-        userName: req.user.userName,
-        emailAccount: req.user.emailAccount,
-        phoneNo: req.user.phoneNo,
-        fileImage: req.user.fileImage,
-        adminNo: req.user.adminNo
-    };
-    console.log(userInfo);
-    res.json(userInfo);
-
     let userAccount = await UserAccount.findOne({
-        where: { emailAccount: userInfo.emailAccount }
+        where: { emailAccount: req.user.emailAccount }
     });
     res.json(userAccount);
+    console.log(userAccount)
 
     if (!userAccount) {
         res.sendStatus(404);
@@ -193,27 +168,17 @@ router.get("/viewAccount", validateToken, async (req, res) => {
 });
 
 router.get("/viewAccount/changeDetails", validateToken, async (req, res) => {
-    let userInfo = {
-        id: req.user.id,
-        fullName: req.user.fullName,
-        userName: req.user.userName,
-        emailAccount: req.user.emailAccount,
-        phoneNo: req.user.phoneNo,
-        imageFile: req.user.imageFile
-    };
+    let userAccount = req.user.emailAccount
 
-    res.json(userInfo);
+    let userDetails = await UserAccount.findByPk(userAccount);
+    // TODO: Update this from the db instead of the token
+
+    res.json(userDetails);
 })
 
 // Edit Individual Account (User)
 router.put("/viewAccount/changeDetails", validateToken, async (req, res) => {
-    let userInfo = {
-        id: req.user.id,
-        fullName: req.user.fullName,
-        userName: req.user.userName,
-        emailAccount: req.user.emailAccount,
-        phoneNo: req.user.phoneNo
-    };
+    // TODO: Update this from the db instead of the token
 
     let data = req.body;
     console.log(data);
@@ -260,12 +225,10 @@ router.delete("/deleteUser/:id", validateToken, async (req, res) => {
     
     let currentUserInfo = {
         id: req.user.id,
-        fullName: req.user.fullName,
-        userName: req.user.userName,
         emailAccount: req.user.emailAccount,
-        phoneNo: req.user.phoneNo,
         adminNo: req.user.adminNo
     }
+    // TODO: Update this from the db instead of the token
 
     if (!currentUserInfo.adminNo || currentUserInfo.id != user) {
         res.status(401).json({ message: "Unauthorised Action Taken!" });
@@ -347,12 +310,10 @@ router.post("/createAdmin", validateToken, async (req, res) => {
 
 router.get("/adminPanel", validateToken, async (req, res) => {
     let userInfo = {
-        fullName: req.user.fullName,
-        userName: req.user.userName,
         emailAccount: req.user.emailAccount,
-        phoneNo: req.user.phoneNo,
         adminNo: req.user.adminNo,
     }
+    // TODO: Update this from the db instead of the token
 
     if (!userInfo.adminNo) {
         console.log("Page Not Found!");
@@ -378,6 +339,13 @@ router.get("/adminPanel", validateToken, async (req, res) => {
     })
 
     res.json(allUsers);
+})
+
+router.put("/updatePassword", validateToken, async (res, req) => {
+    let data = req.body;
+
+    let userAccount = await UserAccount.findByPk(req.user.emailAccount);
+    
 })
 
 module.exports = router;

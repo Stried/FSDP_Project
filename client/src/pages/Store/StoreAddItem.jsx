@@ -20,6 +20,8 @@ import * as yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { CheckBox } from "@mui/icons-material";
+import { Label } from "flowbite-react";
+
 
 function StoreAddItem() {
     const navigate = useNavigate();
@@ -291,15 +293,16 @@ function StoreAddItem() {
                                 helperText={formik.touched.carHeight && formik.errors.carHeight}
                             />
                         </div>
-                        <div className="w-1/6 text-white pr-5"> 
-                            <Checkbox 
+                        <br/>
+                        <div className="w-1/6 text-white inline-flex mt-1">
+                            <Checkbox className="text-white -ml-3"
                                 value="Modified"
                                 name="isModified"
                                 type="checkbox"
                                 onChange={formik.handleChange}
                             />
-                            <span className="text-xl my-auto p-auto">Modified</span>
-                        </div>
+                            <span className="text-xl text-white flex content-center mt-1.5">Modified</span>
+                        </div>                            
                         <div className="w-1/2 pr-5"> 
                             <FormInputSingleLine 
                                 valueName="carMods"
