@@ -371,7 +371,8 @@ const App = () => {
                 .post("/trials/createTrialCar", formData)
                 .then((res) => {
                     console.log(res.status);
-                    navigate("/TrialsCarAdminPage");
+                    // navigate("/TrialsCarAdminPage");
+                    window.location.reload()
                 })
                 .catch(function (err) {
                     console.log(err);

@@ -19,12 +19,11 @@ function TrialsCarAdminUpdate() {
     const navigate = useNavigate();
 
     let { carPlateNo } = useParams();
-    console.log("The ID is: " + carPlateNo); // the id is not the issue as well, seems to be printed repeatedly when i type something into the text box
 
     const [ selectedTrialCar, setSelectedTrialCar ] = useState({
         id: "",
         address: "",
-        carPlateNo: "",
+        carPlateNo: carPlateNo,
         name: "",
         carBrand: ""
     });
@@ -34,7 +33,7 @@ function TrialsCarAdminUpdate() {
             .then((res) => {
                 console.log(res.data)
                 setSelectedTrialCar(res.data); // not working
-                console.log("The trial car is " + selectedTrialCar.id);
+                console.log("The trial car is " + carPlateNo);
                 window.location.reload;
             })
             .catch(function (err) {
@@ -42,26 +41,27 @@ function TrialsCarAdminUpdate() {
             });
     }, []);
 
+    console.log("The ID is: " + carPlateNo); // the id is not the issue as well, seems to be printed repeatedly when i type something into the text box
+
     // the issue is up to here
     const formik = useFormik({
         initialValues: selectedTrialCar, // why isnt this showing, nope
         enableReinitialize: true,
         validationSchema: yup.object().shape({
             address: yup.string().trim().max(100).required("Address cannot be empty"),
-
         }),
         onSubmit: (data) => {
             const formData = {
                 address: data.address.trim(),
-                carPlateNo: data.carPlateNo, // not the trim, the data isnt being called from the url
+                // carPlateNo: carPlateNo, // not the trim, the data isnt being called from the url
             }
             console.log(formData) // it can update, cant fetch data yep but update works
 
             http
-                .put(`trials/updateTrialCar/changeDetails/${id}`, formData)
+                .put(`trials/updateTrialCar/changeDetails/${carPlateNo}`, formData)
                 .then((res) => {
                     console.log(res.status);
-                    navigate("/Trial/TrialsCarAdminPage");
+                    navigate("/Trials/trialAdmin/TrialsCarAdminPage");
                 })
                 .catch(function (err) {
                     console.log(err);
