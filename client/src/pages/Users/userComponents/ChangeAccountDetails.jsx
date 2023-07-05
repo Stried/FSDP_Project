@@ -135,7 +135,7 @@ function ChangeAccountDetails() {
             http
                 .put("/user/viewAccount/changeDetails", data)
                 .then((res) => {
-                    logout()
+                    navigate("/")
                 })
                 .catch(function (err) {
                     toast.error(`${err.response.data.message}`);
@@ -176,19 +176,6 @@ function ChangeAccountDetails() {
                             }
                             helperText={
                                 formik.touched.userName && formik.errors.userName
-                            }
-                        />
-                        <FormInputSingleLine
-                            name="Email Address"
-                            valueName="emailAccount"
-                            type="text"
-                            onChange={ formik.handleChange }
-                            value={ formik.values.emailAccount }
-                            error={
-                                formik.touched.emailAccount && Boolean(formik.errors.emailAccount)
-                            }
-                            helperText={
-                                formik.touched.emailAccount && formik.errors.emailAccount
                             }
                         />
                         <FormInputSingleLine

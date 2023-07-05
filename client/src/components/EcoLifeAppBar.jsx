@@ -133,16 +133,16 @@ function EcoLifeAppBar() {
                 </div>
 
                 
-                <div name="loginButton" className="w-full place-content-end my-2 mx-2">
+                <div name="loginButton" className="w-full place-content-end my-auto mx-2">
                     { user && (
                         <>
                             <Link to="/user/viewAccount">
                                 <h1
                                     className="w-max | text-transparent bg-gradient-to-r from-green-400 to-emerald-600 bg-clip-text |
                 hover:text-white hover:bg-gradient-to-r from-green-400 to-emerald-600 hover:bg-clip-border rounded-lg
-                    hover:ease-in-out duration-300 | font-medium italic text-2xl | mx-4 px-2 py-1 | float-right"
+                    hover:ease-in-out duration-300 | font-medium italic text-xl | mx-4 px-2 py-1 | float-right"
                                 >
-                                    { user.userName }
+                                    { user.emailAccount }
                                 </h1>
                             </Link>
 
