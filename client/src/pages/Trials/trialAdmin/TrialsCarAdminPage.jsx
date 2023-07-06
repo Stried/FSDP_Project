@@ -486,6 +486,7 @@ const App = () => {
                                     <span class="sr-only">Edit</span>
                                 </th>
                                 <th></th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -498,18 +499,22 @@ const App = () => {
                                         >
                                             { trialCar.carPlateNo }
                                         </th>
+
                                         <td class="px-6 py-4">{ trialCar.name }</td>
                                         <td class="px-6 py-4">{ trialCar.carBrand }</td>
                                         <td class="px-6 py-4">{ trialCar.address }</td>
-                                        <td class="pr-0 py-4 text-right">
-                                            <Link to={ `/Trials/trialAdmin/TrialsCarAdminUpdate/${trialCar.carPlateNo}` } className="bg-green-400 p-2 px-5 rounded-md text-black hover:bg-green-600 hover:text-white ">
-                                                Update Address
+                                        <td >
+                                            <Link to={`/Trials/trialAdmin/TrialsCarDetailedPage/${trialCar.carPlateNo}`} className="bg-green-400 p-2 px-5 rounded-md text-black hover:bg-green-400 hover:text-white ">
+                                                View Details
                                             </Link>
                                         </td>
                                         <td>
-                                            <Link to={`/trials/viewTrialCar/${id}`}>
-                                                view details
-                                            </Link>
+                                        <Link
+                            to={ `/Trials/trialAdmin/TrialsCarAdminUpdate/${trialCar.carPlateNo}` }
+                            className="bg-green-400 p-2 px-5 rounded-md text-black hover:bg-green-600 hover:text-white "
+                        >
+                            Update Address
+                        </Link>
                                         </td>
                                         <td class="pl-0 pr-4 py-4 text-right">
                                             <a

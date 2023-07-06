@@ -186,7 +186,7 @@ function EcoLifeAppBar() {
                     <Route path={ "/Trials/trialAdmin/TrialsCarAdminPage" } element={ <TrialsAdminPage /> } />
                     <Route path={"/Trials/trialAdmin/TrialsCarAdminUpdate/:carPlateNo"} element={<TrialsUpdatePage />} />
                     <Route path={"/Trials/trialAdmin/TrialsCarAdd"} element={<TrialsAddPage />}/>
-                    <Route path={"/Trials/trialAdmin/TrialsCarDetailedPage/:carPlateNo"} element={<TrialsCarDetails />} />
+                    <Route path={"/Trials/trialAdmin/TrialsCarDetailedPage/:id"} element={<TrialsCarDetails />} />
                     <Route path={"/Trials/trialUsers/TrialsCarUserPage"} element={<TrialsCarUserPage />} />
                     <Route path={"/Trials/trialUsers/TrialsReceiptCreation/:carPlateNo"} element={<TrialsReceiptCreate />}/>
                     <Route path={ "*" } element={ <PageNotFound /> } />

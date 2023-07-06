@@ -1,4 +1,13 @@
-import { Box, Button, InputLabel, MenuItem } from "@mui/material";
+import {
+    Box,
+    Button,
+    InputLabel,
+    MenuItem,
+    Grid,
+    Typography,
+    Card,
+    CardContent,
+} from "@mui/material";
 import zIndex from "@mui/material/styles/zIndex";
 import { useState, useEffect, useContext } from "react";
 import {
@@ -7,6 +16,7 @@ import {
     Route,
     Link,
     useNavigate,
+    useParams,
 } from "react-router-dom";
 import * as React from "react";
 ("use client");
@@ -113,7 +123,7 @@ const SideNav = ({ isOpen }) => {
                             </ul>
                             { accordionOpen && (
                                 <div>
-                                                                        <a
+                                    <a
                                         href="/Trials/trialAdmin/TrialsCarAdd"
                                         className="flex items-center pl-16 p-2 text-gray-900 rounded-lg dark:text-white dark:hover:text-black dark:hover:bg-green-400 transition duration-200 "
                                     >
@@ -308,17 +318,35 @@ const SideNav = ({ isOpen }) => {
 };
 
 const App = () => {
+    const { id } = useParams();
+
     const [ isOpen, setIsOpen ] = useState(false);
 
-    const [ trialCarList, setTrialCarList ] = useState([]);
-    const getTrialCar = () => {
-        http.get(`/trials/viewTrialCar/${id}`).then((res) => {
-            setTrialCarList(res.data);
-        });
-    };
-
+    const [ trialCar, setTrialCar ] = useState({
+        carPlateNo: "",
+        carDescription: "",
+        carPrice: 0,
+        carBrand: "",
+        carModel: "",
+        carEngine: "",
+        carSpeed: 0,
+        carFuelType: "",
+        carFuelConsume: 0,
+        carProductionDate: "",
+        carBodyType: "",
+        carSeats: 0,
+        carLength: 0,
+        carWidth: 0,
+        carHeight: 0,
+        isModified: 0,
+        carMods: "",
+        carColor: "",
+    });
     useEffect(() => {
-        getTrialCar();
+        http.get(`/trials/viewTrialCar/${id}`).then((res) => {
+            setTrialCar(res.data);
+            console.log(res.data);
+        });
     }, []);
 
     const toggleNav = () => {
@@ -333,7 +361,7 @@ const App = () => {
 
     const editTrialCar = (id) => {
         navigate(`/Trials/trialAdmin/TrialsCarAdminUpdate/${id}`);
-    }
+    };
 
     const navigate = useNavigate();
 
@@ -375,136 +403,79 @@ const App = () => {
                 className={ `text-white transition duration-500 ${isOpen ? " opacity-25 " : " opacity-100 "
                     }` }
             >
-
-                <h1 className="text-center text-5xl text-green-400">Trial Car Records</h1>
+                <h1 className="text-center text-5xl text-green-400">
+                    Trial Car Records
+                </h1>
                 <br></br>
-                <div class="relative overflow-x-auto shadow-md sm:rounded-lg mx-7 ml-16">
-                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                        <thead class="text-xs text-gray-700 uppercase bg-green-400 dark:bg-green-500 dark:text-black">
-                            <tr>
-                                <th scope="col" class="px-6 py-3">
-                                    Car plate No.
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    <div class="flex items-center">
-                                        Car Model
-                                        <a href="#">
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                class="w-3 h-3 ml-1"
-                                                aria-hidden="true"
-                                                fill="currentColor"
-                                                viewBox="0 0 320 512"
-                                            >
-                                                <path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z" />
-                                            </svg>
-                                        </a>
-                                    </div>
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    <div class="flex items-center">
-                                        Car Brand
-                                        <a href="#">
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                class="w-3 h-3 ml-1"
-                                                aria-hidden="true"
-                                                fill="currentColor"
-                                                viewBox="0 0 320 512"
-                                            >
-                                                <path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z" />
-                                            </svg>
-                                        </a>
-                                    </div>
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    <div class="flex items-center">
-                                        Car Address
-                                        <a href="#">
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                class="w-3 h-3 ml-1"
-                                                aria-hidden="true"
-                                                fill="currentColor"
-                                                viewBox="0 0 320 512"
-                                            >
-                                                <path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z" />
-                                            </svg>
-                                        </a>
-                                    </div>
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    <span class="sr-only">Edit</span>
-                                </th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            { trialCarList.map((trialCar, i) => {
-                                return (
-                                    
-                                    <Grid item xs={12} md={6} lg={6} key={store.carPlateNo}>
-                                    <Card className="bg-black text-white">
-                                        <CardContent>
-                                            <Typography variant="h6" sx={{ mb: 1 }}>
-                                                Car Plate No: {store.carPlateNo}
-                                            </Typography>
-                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                                Car Description: {store.carDescription}
-                                            </Typography>
-                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                                Car Price: {store.carPrice}
-                                            </Typography>
-                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                                Car Brand: {store.carBrand}
-                                            </Typography>
-                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                                Car Model: {store.carModel}
-                                            </Typography>
-                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                                Car Engine: {store.carEngine}
-                                            </Typography>
-                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                                Car Speed: {store.carSpeed}
-                                            </Typography>
-                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                                Car Fuel Type: {store.carFuelType}
-                                            </Typography>
-                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                                Car Fuel Consume: {store.carFuelConsume}
-                                            </Typography>
-                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                                Car Production Date: {store.carProductionDate}
-                                            </Typography>
-                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                                Car Body Type: {store.carBodyType}
-                                            </Typography>
-                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                                Car Color: {store.carColor}
-                                            </Typography>
-                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                                Car Seats: {store.carSeats}
-                                            </Typography>
-                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                                Car Length: {store.carLength}
-                                            </Typography>
-                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                                Car Width: {store.carWidth}
-                                            </Typography>
-                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                                Car Height: {store.carHeight}
-                                            </Typography>
-                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                                Car Mods: {store.carMods}
-                                            </Typography>
-                                        </CardContent>
-                                    </Card>
-                                </Grid>
-                                );
-                            }) }
-                        </tbody>
-                    </table>
+                <div class="relative overflow-x-auto shadow-md sm:rounded-lg mx-7 ml-16 flex">
+                    <Grid item xs={ 12 } md={ 6 } lg={ 6 } key={ trialCar.carPlateNo }>
+                        <div className="text-3xl font-semibold float-left w-1/3 h-max">
+                            { trialCar.carPlateNo }
+                            <br />
+                            <div className="text-xl font-medium float-left">
+                                { trialCar.carDescription }
+                            </div>
+                            <br />
+                            <div>
+                                IMAGE HERE
+                            </div>
+                        </div>
+
+                        <div className="w-2/3 grid grid-cols-2 columns-2">
+                            <div className="w-max mr-10 mb-3 pb-3 px-2 font-medium text-xl space-y-1 border-b-gray-700 border-solid border-b-2">
+                                <p>
+                                    Car Brand: <span className="text-green-400">{ trialCar.carBrand }</span>
+                                </p>
+                               
+                                <p>
+                                    Car Model: <span className="text-green-400">{ trialCar.carModel }</span>
+                                </p>
+                                
+                                <p>
+                                    Car Engine: <span className="text-green-400">{ trialCar.carEngine }</span>
+                                </p>
+                                
+                                <p>
+                                    Car Speed: <span className="text-green-400">{ trialCar.carSpeed }</span>
+                                </p>
+                                <p>
+                                    Car Seats: <span className="text-green-400">{ trialCar.carSeats }</span>
+                                </p>
+                            </div>
+                            <div className="w-max ml-10 pl-5 pb-3 font-medium text-xl space-y-1">
+                                <p>
+                                    Car Fuel Type: <span className="text-green-400">{ trialCar.carFuelType }</span>
+                                </p>
+                                <p>
+                                    Car Fuel Consume: <span className="text-green-400">{ trialCar.carFuelConsume }</span>
+                                </p>
+                            </div>
+                            <div className="w-max mr-10 pb-3 px-2 font-medium text-xl space-y-1">
+                                <p>
+                                    Car Body Type: <span className="text-green-400">{ trialCar.carBodyType }</span>
+                                </p>
+                                <p>
+                                    Car Length: <span className="text-green-400">{ trialCar.carLength }</span>
+                                </p>
+                                <p>
+                                    Car Width: <span className="text-green-400">{ trialCar.carWidth }</span>
+                                </p>
+                                <p>
+                                    Car Height: <span className="text-green-400">{ trialCar.carHeight }</span>
+                                </p>
+                            </div>
+                            
+                        </div>
+                        
+                        
+                        
+                        
+                        
+                        
+                    </Grid>
+
                 </div>
+
             </div>
             <ToastContainer />
         </div>

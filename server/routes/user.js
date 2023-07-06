@@ -7,6 +7,7 @@ const { UserAccount, AdminAccount, Sequelize } = require("../models/"); // impor
 const bcrypt = require("bcrypt");
 const { sign } = require("jsonwebtoken");
 const { validateToken } = require("../middlewares/auth");
+const nodemailermock = require('nodemailer-mock');
 require('dotenv').config();
 
 // Alan - Accont Creation
@@ -351,12 +352,32 @@ router.put("/updatePassword", validateToken, async (req, res) => {
     console.log(data)
 
     let validationSchema = yup.object().shape({
+        currentPassword: yup.string().min(8).max(30).required(),
         password: yup.string().min(8).max(30).required(),
     });
     try {
         await validationSchema.validate(data, { abortEarly: false });
     } catch (err) {
         console.error(err);
+        return;
+    }
+
+    let currentUser = await UserAccount.findByPk(req.user.emailAccount);
+
+    // data.currentPassword = await bcrypt.hash(data.currentPassword, 10);
+    // console.log(data.currentPassword);
+    
+    // if (data.currentPassword != currentUser.password) {
+    //     console.log("Wrong Password")
+    //     res.status(400).json({ message: "Current password is wrong!" });
+    //     return;
+    // }
+
+    let comparePasswords = await bcrypt.compare(data.currentPassword, currentUser.password);
+
+    if (!comparePasswords) {
+        console.log("Wrong Password")
+        res.status(400).json({ message: "Current password is wrong!" });
         return;
     }
 
@@ -378,5 +399,8 @@ router.put("/updatePassword", validateToken, async (req, res) => {
     }
 })
 
+router.post("/forgetPassword", async (req, res) => {
+    
+})
 
 module.exports = router;
