@@ -11,9 +11,9 @@ import {
 import * as React from "react";
 ("use client");
 
-import http from "./../../../http";
+import http from "../../../http";
 import { ToastContainer, toast } from "react-toastify";
-import FormInputSingleLine from "./../../../components/FormInputSingleLine";
+import FormInputSingleLine from "../../../components/FormInputSingleLine";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
@@ -425,7 +425,7 @@ const App = () => {
                     }` }
             >
 
-                <h1 className="text-center text-5xl text-green-400">Trial Car Records</h1>
+                <h1 className="text-center text-5xl text-green-400">Trial Car User Page</h1>
                 <br></br>
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg mx-7 ml-16">
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -502,24 +502,11 @@ const App = () => {
                                         <td class="px-6 py-4">{ trialCar.carBrand }</td>
                                         <td class="px-6 py-4">{ trialCar.address }</td>
                                         <td class="pr-0 py-4 text-right">
-                                            <Link to={ `/Trials/trialAdmin/TrialsCarAdminUpdate/${trialCar.carPlateNo}` } className="bg-green-400 p-2 px-5 rounded-md text-black hover:bg-green-600 hover:text-white ">
-                                                Update Address
+                                            <Link to={ `/Trials/trialUsers/TrialsReceiptCreation/${trialCar.carPlateNo}` } className="bg-green-400 p-2 px-5 rounded-md text-black hover:bg-green-600 hover:text-white ">
+                                                Create Receipt
                                             </Link>
                                         </td>
-                                        <td>
-                                            <Link to={`/trials/viewTrialCar/${id}`}>
-                                                view details
-                                            </Link>
-                                        </td>
-                                        <td class="pl-0 pr-4 py-4 text-right">
-                                            <a
-                                                onClick={ () => deleteTrialCar(`${trialCar.carPlateNo}`) }
-                                                href="#"
-                                                className="bg-red-400 p-2 px-5 rounded-md text-black hover:bg-red-600 hover:text-white "
-                                            >
-                                                Delete
-                                            </a>
-                                        </td>
+
                                     </tr>
                                 );
                             }) }

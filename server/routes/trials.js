@@ -55,6 +55,7 @@ router.post("/createTrialReceipt/:id", async (req, res) => {
     let data = req.body;
     let validationSchema = yup.object().shape({
         dateOfTrial: yup.date().required(),
+        modelName:yup.trim().required(),
 
     });
     try {
@@ -67,6 +68,7 @@ router.post("/createTrialReceipt/:id", async (req, res) => {
         return;
     }
     data.dateOfTrial = data.dateOfTrial.trim();
+    data.modelName = data.dateOfTrial.trim();
     let result = await TrialReceipt.create(data);
     res.json(result);
 
@@ -82,7 +84,7 @@ router.get("/viewTrialCar", async (req, res) => {
 
 router.get("/viewTrialCar/:id", async (req, res) => {
     const trialCar = req.params.id
-    const leTrialCar = await TrialCar.findOne({
+    const leTrialCar = await Store.findOne({
         where: {carPlateNo: trialCar},
     })
 
@@ -125,11 +127,11 @@ router.put("/updateTrialCar/changeDetails/:id", validateToken, async (req, res) 
 
     if (trialCar == 1) {
         res.json({
-            message: "Receipt has been successfully updated.",
+            message: "Car has been successfully updated.",
         });
     } else {
         res.status(400).json({
-            message: `could not update Receipt with id ${trialcar}`,
+            message: `could not update Car with id ${trialcar}`,
         });
     }
 });

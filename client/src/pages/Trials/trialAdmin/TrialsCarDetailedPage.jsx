@@ -13,9 +13,6 @@ import * as React from "react";
 
 import http from "./../../../http";
 import { ToastContainer, toast } from "react-toastify";
-import FormInputSingleLine from "./../../../components/FormInputSingleLine";
-import { useFormik } from "formik";
-import * as yup from "yup";
 
 const SideNav = ({ isOpen }) => {
     const [ accordionOpen, setAccordionOpen ] = useState(false);
@@ -23,6 +20,7 @@ const SideNav = ({ isOpen }) => {
     const toggleAccordion = () => {
         setAccordionOpen(!accordionOpen);
     };
+
     return (
         <div
             className={ `fixed left-0 top-0 h-full w-64 bg-gradient-to-r z-50 text-white  transition-transform duration-300 transform ${isOpen ? "translate-x-0" : "-translate-x-full"
@@ -311,18 +309,14 @@ const SideNav = ({ isOpen }) => {
 
 const App = () => {
     const [ isOpen, setIsOpen ] = useState(false);
+
     const [ trialCarList, setTrialCarList ] = useState([]);
     const getTrialCar = () => {
-        http.get("/trials/viewTrialCar").then((res) => {
+        http.get(`/trials/viewTrialCar/${id}`).then((res) => {
             setTrialCarList(res.data);
         });
     };
-    const deleteTrialCar = (carPlateNo) => {
-        http.delete(`/trials/${carPlateNo}`).then((res) => {
-            console.log(res.data);
-            window.location.reload();
-        });
-    };
+
     useEffect(() => {
         getTrialCar();
     }, []);
@@ -341,50 +335,7 @@ const App = () => {
         navigate(`/Trials/trialAdmin/TrialsCarAdminUpdate/${id}`);
     }
 
-    const options = [
-        { value: "serangoon", label: "serangoon" },
-        { value: "hougang", label: "hougang" },
-    ];
-
     const navigate = useNavigate();
-    const formik = useFormik({
-        initialValues: {
-            carPlateNo: "",
-            address: "",
-        },
-        validationSchema: yup.object().shape({
-            carPlateNo: yup
-                .string()
-                .trim()
-                .min(3, "Name must be Minimum 3 Characters.")
-                .max(100, "Name must be Maximum 100 Characters")
-                .required("Name is required."),
-            address: yup
-                .string()
-                .trim()
-                .min(3, "address must be Minimum 3 Characters.")
-                .max(100, "address must be Maximum 100 Characters")
-                .required("Address is required"),
-        }),
-        onSubmit: async (data) => {
-            const formData = {
-                carPlateNo: (data.carPlateNo = data.carPlateNo.trim()),
-                address: (data.address = data.address.trim()),
-            };
-
-            await http
-                .post("/trials/createTrialCar", formData)
-                .then((res) => {
-  
-                    // navigate("/TrialsCarAdminPage");
-                    window.location.reload()
-                })
-                .catch(function (err) {
-                    console.log(err);
-                    toast.error(`${err.response.data.message}`);
-                });
-        },
-    });
 
     return (
         <div className="relative min-h-screen">
@@ -491,36 +442,64 @@ const App = () => {
                         <tbody>
                             { trialCarList.map((trialCar, i) => {
                                 return (
-                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                        <th
-                                            scope="row"
-                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                                        >
-                                            { trialCar.carPlateNo }
-                                        </th>
-                                        <td class="px-6 py-4">{ trialCar.name }</td>
-                                        <td class="px-6 py-4">{ trialCar.carBrand }</td>
-                                        <td class="px-6 py-4">{ trialCar.address }</td>
-                                        <td class="pr-0 py-4 text-right">
-                                            <Link to={ `/Trials/trialAdmin/TrialsCarAdminUpdate/${trialCar.carPlateNo}` } className="bg-green-400 p-2 px-5 rounded-md text-black hover:bg-green-600 hover:text-white ">
-                                                Update Address
-                                            </Link>
-                                        </td>
-                                        <td>
-                                            <Link to={`/trials/viewTrialCar/${id}`}>
-                                                view details
-                                            </Link>
-                                        </td>
-                                        <td class="pl-0 pr-4 py-4 text-right">
-                                            <a
-                                                onClick={ () => deleteTrialCar(`${trialCar.carPlateNo}`) }
-                                                href="#"
-                                                className="bg-red-400 p-2 px-5 rounded-md text-black hover:bg-red-600 hover:text-white "
-                                            >
-                                                Delete
-                                            </a>
-                                        </td>
-                                    </tr>
+                                    
+                                    <Grid item xs={12} md={6} lg={6} key={store.carPlateNo}>
+                                    <Card className="bg-black text-white">
+                                        <CardContent>
+                                            <Typography variant="h6" sx={{ mb: 1 }}>
+                                                Car Plate No: {store.carPlateNo}
+                                            </Typography>
+                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
+                                                Car Description: {store.carDescription}
+                                            </Typography>
+                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
+                                                Car Price: {store.carPrice}
+                                            </Typography>
+                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
+                                                Car Brand: {store.carBrand}
+                                            </Typography>
+                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
+                                                Car Model: {store.carModel}
+                                            </Typography>
+                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
+                                                Car Engine: {store.carEngine}
+                                            </Typography>
+                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
+                                                Car Speed: {store.carSpeed}
+                                            </Typography>
+                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
+                                                Car Fuel Type: {store.carFuelType}
+                                            </Typography>
+                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
+                                                Car Fuel Consume: {store.carFuelConsume}
+                                            </Typography>
+                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
+                                                Car Production Date: {store.carProductionDate}
+                                            </Typography>
+                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
+                                                Car Body Type: {store.carBodyType}
+                                            </Typography>
+                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
+                                                Car Color: {store.carColor}
+                                            </Typography>
+                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
+                                                Car Seats: {store.carSeats}
+                                            </Typography>
+                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
+                                                Car Length: {store.carLength}
+                                            </Typography>
+                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
+                                                Car Width: {store.carWidth}
+                                            </Typography>
+                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
+                                                Car Height: {store.carHeight}
+                                            </Typography>
+                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
+                                                Car Mods: {store.carMods}
+                                            </Typography>
+                                        </CardContent>
+                                    </Card>
+                                </Grid>
                                 );
                             }) }
                         </tbody>

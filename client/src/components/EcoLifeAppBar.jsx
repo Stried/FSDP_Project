@@ -21,6 +21,10 @@ import TrialsUpdatePage from "../pages/Trials/trialAdmin/TrialsCarAdminUpdate";
 import LocationsMain from "../pages/Locations/LocationsMain";
 import LocationsCreate from "../pages/Locations/LocationsCreate";
 
+import TrialsReceiptCreate from "../pages/Trials/trialUsers/TrialsReceiptCreation";
+import TrialsCarDetails from "../pages/Trials/trialAdmin/TrialsCarDetailedPage";
+import TrialsCarUserPage from "../pages/Trials/trialUsers/TrialsCarUserPage";
+
 import StoreMain from "../pages/Store/StoreMain";
 import StoreAddItem from "../pages/Store/StoreAddItem";
 import StoreUpdateItem from "../pages/Store/StoreUpdateItem";
@@ -182,6 +186,9 @@ function EcoLifeAppBar() {
                     <Route path={ "/Trials/trialAdmin/TrialsCarAdminPage" } element={ <TrialsAdminPage /> } />
                     <Route path={"/Trials/trialAdmin/TrialsCarAdminUpdate/:carPlateNo"} element={<TrialsUpdatePage />} />
                     <Route path={"/Trials/trialAdmin/TrialsCarAdd"} element={<TrialsAddPage />}/>
+                    <Route path={"/Trials/trialAdmin/TrialsCarDetailedPage/:carPlateNo"} element={<TrialsCarDetails />} />
+                    <Route path={"/Trials/trialUsers/TrialsCarUserPage"} element={<TrialsCarUserPage />} />
+                    <Route path={"/Trials/trialUsers/TrialsReceiptCreation/:carPlateNo"} element={<TrialsReceiptCreate />}/>
                     <Route path={ "*" } element={ <PageNotFound /> } />
                 </Routes>
                 
