@@ -32,7 +32,10 @@ function CreateAdmin() {
                 .required("Email is required."),
             adminNo: yup
                 .string()
-                .required("Admin Number is required.")
+                .trim()
+                .min(6, "It can only be 6 characters long")
+                .max(6, "It can only be 6 characters long")
+                .required(),
         }),
         onSubmit: async (data) => {
             await http
@@ -51,7 +54,7 @@ function CreateAdmin() {
     return (
         <div>
             <ToastContainer />
-            <Box component={"form"} onSubmit={formik.handleSubmit}>
+            <Box component={ "form" } onSubmit={ formik.handleSubmit }>
                 <FormInputSingleLine
                     name="Email Address"
                     valueName="emailAccount"
