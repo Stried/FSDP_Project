@@ -130,7 +130,7 @@ function StoreUpdateItem() {
             </Box>
             <Box component={"form"} onSubmit={formik.handleSubmit}>
                 <div className="pr-7">
-                    <div className="w-1/6 inline-flex">
+                    <div className="w-1/6">
                         <FormInputSingleLine
                             valueName="carPlateNo"
                             name="Plate Number"
@@ -141,8 +141,7 @@ function StoreUpdateItem() {
                             helperText={formik.touched.carPlateNo && formik.errors.carPlateNo}
                         />
                     </div>
-                    <br />
-                    <div className="w-5/6 inline-flex">
+                    <div className="w-5/6">
                         <FormInputSingleLine
                             valueName="carDescription"
                             name="Description"
@@ -153,8 +152,7 @@ function StoreUpdateItem() {
                             helperText={formik.touched.carDescription && formik.errors.carDescription}
                         />
                     </div>
-                    <br />
-                    <div className="w-1/5 inline-flex pr-5 appearance-none">
+                    <div className="w-1/5">
                         <FormInputSingleLine
                             valueName="carPrice"
                             name="Price ($)"
@@ -165,7 +163,7 @@ function StoreUpdateItem() {
                             helperText={formik.touched.carPrice && formik.errors.carPrice}
                         />
                     </div>
-                    <div className="w-1/3 inline-flex pr-5">
+                    <div className="w-1/3">
                         <FormInputSingleLine
                             valueName="carBrand"
                             name="Brand"
@@ -176,7 +174,7 @@ function StoreUpdateItem() {
                             helperText={formik.touched.carBrand && formik.errors.carBrand}
                         />
                     </div>
-                    <div className="w-1/3 inline-flex">
+                    <div className="w-1/3">
                         <FormInputSingleLine
                             valueName="carModel"
                             name="Model"
@@ -187,8 +185,7 @@ function StoreUpdateItem() {
                             helperText={formik.touched.carModel && formik.errors.carModel}
                         />
                     </div>
-
-                    <div className="w-1/4 inline-flex">
+                    <div className="w-1/4">
                         <FormInputSingleLine
                             valueName="carEngine"
                             name="Engine"
@@ -199,10 +196,10 @@ function StoreUpdateItem() {
                             helperText={formik.touched.carEngine && formik.errors.carEngine}
                         />
                     </div>
-                    <div className="w-1/6 inline-flex pl-5">
+                    <div className="w-1/6">
                         <FormInputSingleLine
                             valueName="carSpeed"
-                            name="Speed"
+                            name="Speed (km/h)"
                             type="number"
                             value={formik.values.carSpeed}
                             onChange={formik.handleChange}
@@ -210,8 +207,7 @@ function StoreUpdateItem() {
                             helperText={formik.touched.carSpeed && formik.errors.carSpeed}
                         />
                     </div>
-                    <br />
-                    <div className="w-1/4 inline-flex pr-5">
+                    <div className="w-1/4 pr-5">
                         <FormInputSingleLine
                             valueName="carFuelType"
                             name="Fuel Type"
@@ -222,10 +218,10 @@ function StoreUpdateItem() {
                             helperText={formik.touched.carFuelType && formik.errors.carFuelType}
                         />
                     </div>
-                    <div className="w-1/4 inline-flex">
+                    <div className="w-1/4">
                         <FormInputSingleLine
                             valueName="carFuelConsume"
-                            name="Fuel Consumption"
+                            name="Fuel Consumption (g/kwh)"
                             type="number"
                             value={formik.values.carFuelConsume}
                             onChange={formik.handleChange}
@@ -233,7 +229,7 @@ function StoreUpdateItem() {
                             helperText={formik.touched.carFuelConsume && formik.errors.carFuelConsume}
                         />
                     </div>
-                    <div className="w-1/5 pr-5">
+                    <div className="w-1/5">
                         <FormInputSingleLine
                             valueName="carProductionDate"
                             name="Production Date"
@@ -244,7 +240,7 @@ function StoreUpdateItem() {
                             helperText={formik.touched.carProductionDate && formik.errors.carProductionDate}
                         />
                     </div>
-                    <div className="w-1/5 pr-5 inline-flex">
+                    <div className="w-1/5">
                         <FormInputSingleLine
                             valueName="carBodyType"
                             name="Body Type"
@@ -255,7 +251,7 @@ function StoreUpdateItem() {
                             helperText={formik.touched.carBodyType && formik.errors.carBodyType}
                         />
                     </div>
-                    <div className="w-1/6 pr-5 inline-flex">
+                    <div className="w-1/6 pr-5">
                         <FormInputSingleLine
                             valueName="carColor"
                             name="Color"
@@ -311,14 +307,15 @@ function StoreUpdateItem() {
                             helperText={formik.touched.carHeight && formik.errors.carHeight}
                         />
                     </div>
-                    <div className="w-1/6 text-white pr-5">
-                        <Checkbox
+                    <br/>
+                    <div className="w-1/6 text-white inline-flex mt-1">
+                        <Checkbox className="text-white -ml-3"
                             value="Modified"
                             name="isModified"
                             type="checkbox"
                             onChange={formik.handleChange}
                         />
-                        <span className="text-xl my-auto p-auto">Modified</span>
+                        <span className="text-xl text-white flex content-center mt-1.5">Modified</span>
                     </div>
                     <div className="w-1/2 pr-5">
                         <FormInputSingleLine

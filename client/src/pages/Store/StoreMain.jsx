@@ -106,7 +106,7 @@ function StoreMain() {
                                                 Car Description: {store.carDescription}
                                             </Typography>
                                             <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                                Car Price: {store.carPrice}
+                                                Car Price: ${store.carPrice}
                                             </Typography>
                                             <Typography sx={{ whiteSpace: 'pre-wrap' }}>
                                                 Car Brand: {store.carBrand}
@@ -118,13 +118,13 @@ function StoreMain() {
                                                 Car Engine: {store.carEngine}
                                             </Typography>
                                             <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                                Car Speed: {store.carSpeed}
+                                                Car Speed: {store.carSpeed} km/h
                                             </Typography>
                                             <Typography sx={{ whiteSpace: 'pre-wrap' }}>
                                                 Car Fuel Type: {store.carFuelType}
                                             </Typography>
                                             <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                                Car Fuel Consume: {store.carFuelConsume}
+                                                Car Fuel Consume: {store.carFuelConsume} g/kwh
                                             </Typography>
                                             <Typography sx={{ whiteSpace: 'pre-wrap' }}>
                                                 Car Production Date: {store.carProductionDate}
@@ -139,13 +139,13 @@ function StoreMain() {
                                                 Car Seats: {store.carSeats}
                                             </Typography>
                                             <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                                Car Length: {store.carLength}
+                                                Car Length: {store.carLength}mm
                                             </Typography>
                                             <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                                Car Width: {store.carWidth}
+                                                Car Width: {store.carWidth}mm
                                             </Typography>
                                             <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                                Car Height: {store.carHeight}
+                                                Car Height: {store.carHeight}mm
                                             </Typography>
                                             <Typography sx={{ whiteSpace: 'pre-wrap' }}>
                                                 Car Mods: {store.carMods}
