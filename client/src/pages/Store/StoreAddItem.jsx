@@ -113,7 +113,7 @@ function StoreAddItem() {
             </Box>
             <Box component={ "form" } onSubmit={ formik.handleSubmit }>
                     <div className="pr-7">
-                        <div className="w-1/6 inline-flex pr-5"> 
+                        <div className="w-1/6 pr-5"> 
                             <FormInputSingleLine 
                                 valueName="carPlateNo"
                                 name="Plate Number"
@@ -124,7 +124,7 @@ function StoreAddItem() {
                                 helperText={formik.touched.carPlateNo && formik.errors.carPlateNo}
                             />
                         </div>
-                        <div className="w-5/6 inline-flex"> 
+                        <div className="w-5/6"> 
                             <FormInputSingleLine
                                 valueName="carDescription"
                                 name="Description"
@@ -135,8 +135,7 @@ function StoreAddItem() {
                                 helperText={formik.touched.carDescription && formik.errors.carDescription}
                             />
                         </div>
-                        <br/>
-                        <div className="w-1/5 inline-flex pr-5 appearance-none"> 
+                        <div className="w-1/5 pr-5"> 
                             <FormInputSingleLine 
                                 valueName="carPrice"
                                 name="Price ($)"
@@ -147,7 +146,7 @@ function StoreAddItem() {
                                 helperText={formik.touched.carPrice && formik.errors.carPrice}
                             />
                         </div>
-                        <div className="w-1/3 inline-flex pr-5">
+                        <div className="w-1/3 pr-5">
                             <FormInputSingleLine 
                                 valueName="carBrand"
                                 name="Brand"
@@ -158,7 +157,7 @@ function StoreAddItem() {
                                 helperText={formik.touched.carBrand && formik.errors.carBrand}
                             />
                         </div>
-                        <div className="w-1/3 inline-flex">
+                        <div className="w-1/3">
                             <FormInputSingleLine
                                 valueName="carModel" 
                                 name="Model"
@@ -169,8 +168,7 @@ function StoreAddItem() {
                                 helperText={formik.touched.carModel && formik.errors.carModel}
                             />
                         </div>
-                        
-                        <div className="w-1/4 inline-flex"> 
+                        <div className="w-1/3"> 
                             <FormInputSingleLine 
                                 valueName="carEngine"
                                 name="Engine"
@@ -181,7 +179,7 @@ function StoreAddItem() {
                                 helperText={formik.touched.carEngine && formik.errors.carEngine}
                             />
                         </div>
-                        <div className="w-1/6 inline-flex pl-5"> 
+                        <div className="w-1/6"> 
                             <FormInputSingleLine 
                                 valueName="carSpeed"
                                 name="Speed"
@@ -192,8 +190,7 @@ function StoreAddItem() {
                                 helperText={formik.touched.carSpeed && formik.errors.carSpeed}
                             />
                         </div>
-                        <br/>
-                        <div className="w-1/4 inline-flex pr-5"> 
+                        <div className="w-1/4 pr-5"> 
                             <FormInputSingleLine 
                                 valueName="carFuelType"
                                 name="Fuel Type"
@@ -204,7 +201,7 @@ function StoreAddItem() {
                                 helperText={formik.touched.carFuelType && formik.errors.carFuelType }
                             />
                         </div>
-                        <div className="w-1/4 inline-flex"> 
+                        <div className="w-1/4"> 
                             <FormInputSingleLine 
                                 valueName="carFuelConsume"
                                 name="Fuel Consumption"
@@ -226,7 +223,7 @@ function StoreAddItem() {
                                 helperText={formik.touched.carProductionDate && formik.errors.carProductionDate}
                             />
                         </div>
-                        <div className="w-1/5 pr-5 inline-flex"> 
+                        <div className="w-1/5 pr-5"> 
                             <FormInputSingleLine
                                 valueName="carBodyType"
                                 name="Body Type"
@@ -237,7 +234,7 @@ function StoreAddItem() {
                                 helperText={formik.touched.carBodyType && formik.errors.carBodyType}
                             />
                         </div>
-                        <div className="w-1/6 pr-5 inline-flex"> 
+                        <div className="w-1/6 pr-5"> 
                             <FormInputSingleLine 
                                 valueName="carColor"
                                 name="Color"
@@ -248,7 +245,7 @@ function StoreAddItem() {
                                 helperText={formik.touched.carColor && formik.errors.carColor}
                             />
                         </div>
-                        <div className="w-1/6 inline-flex"> 
+                        <div className="w-1/6"> 
                             <FormInputSingleLine 
                                 valueName="carSeats"
                                 name="Seats"
@@ -259,8 +256,7 @@ function StoreAddItem() {
                                 helperText={formik.touched.carSeats && formik.errors.carSeats}
                             />
                         </div>
-                        <br/>
-                        <div className="w-1/6 inline-flex pr-5"> 
+                        <div className="w-1/6 pr-5 inline-flex"> 
                             <FormInputSingleLine 
                                 valueName="carLength"
                                 name="Length (mm)"
@@ -271,7 +267,7 @@ function StoreAddItem() {
                                 helperText={formik.touched.carLength && formik.errors.carLength}
                             />
                         </div>
-                        <div className="w-1/6 inline-flex pr-5"> 
+                        <div className="w-1/6 pr-5 inline-flex"> 
                             <FormInputSingleLine 
                                 valueName="carWidth"
                                 name="Width (mm)"
@@ -282,7 +278,7 @@ function StoreAddItem() {
                                 helperText={formik.touched.carWidth && formik.errors.carWidth}
                             />
                         </div>
-                        <div className="w-1/6 inline-flex pr-5"> 
+                        <div className="w-1/6 pr-5 inline-flex"> 
                             <FormInputSingleLine 
                                 valueName="carHeight"
                                 name="Height (mm)"
@@ -293,7 +289,7 @@ function StoreAddItem() {
                                 helperText={formik.touched.carHeight && formik.errors.carHeight}
                             />
                         </div>
-                        <br/>
+                        <br />
                         <div className="w-1/6 text-white inline-flex mt-1">
                             <Checkbox className="text-white -ml-3"
                                 value="Modified"
