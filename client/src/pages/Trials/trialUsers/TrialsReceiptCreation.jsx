@@ -11,9 +11,9 @@ import {
 import * as React from "react";
 ("use client");
 
-import http from "./../../../http";
+import http from "../../../http";
 import { ToastContainer, toast } from "react-toastify";
-import FormInputSingleLine from "./../../../components/FormInputSingleLine";
+import FormInputSingleLine from "../../../components/FormInputSingleLine";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
@@ -337,34 +337,21 @@ const App = () => {
         setArrowClose(!arrowClose);
     };
 
-    const editTrialCar = (id) => {
-        navigate(`/Trials/trialAdmin/TrialsCarAdminUpdate/${id}`);
-    }
 
-    const options = [
-        { value: "serangoon", label: "serangoon" },
-        { value: "hougang", label: "hougang" },
-    ];
 
     const navigate = useNavigate();
     const formik = useFormik({
         initialValues: {
-            carPlateNo: "",
-            address: "",
+            dateOfTrial:"",
+            trialReport:"",
+            modelName:"",
+            faultResolve:true,
         },
         validationSchema: yup.object().shape({
-            carPlateNo: yup
-                .string()
+            dateOfTrial: yup
+                .date()
                 .trim()
-                .min(3, "Name must be Minimum 3 Characters.")
-                .max(100, "Name must be Maximum 100 Characters")
-                .required("Name is required."),
-            address: yup
-                .string()
-                .trim()
-                .min(3, "address must be Minimum 3 Characters.")
-                .max(100, "address must be Maximum 100 Characters")
-                .required("Address is required"),
+                .required("Date of trial is required"),
         }),
         onSubmit: async (data) => {
             const formData = {
@@ -373,7 +360,7 @@ const App = () => {
             };
 
             await http
-                .post("/trials/createTrialCar", formData)
+                .post("/createTrialReceipt/${id}", formData)
                 .then((res) => {
   
                     // navigate("/TrialsCarAdminPage");
@@ -425,107 +412,41 @@ const App = () => {
                     }` }
             >
 
-                <h1 className="text-center text-5xl text-green-400">Trial Car Records</h1>
+                <h1 className="text-center text-5xl text-green-400">Create Trial Receipt</h1>
                 <br></br>
-                <div class="relative overflow-x-auto shadow-md sm:rounded-lg mx-7 ml-16">
-                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                        <thead class="text-xs text-gray-700 uppercase bg-green-400 dark:bg-green-500 dark:text-black">
-                            <tr>
-                                <th scope="col" class="px-6 py-3">
-                                    Car plate No.
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    <div class="flex items-center">
-                                        Car Model
-                                        <a href="#">
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                class="w-3 h-3 ml-1"
-                                                aria-hidden="true"
-                                                fill="currentColor"
-                                                viewBox="0 0 320 512"
-                                            >
-                                                <path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z" />
-                                            </svg>
-                                        </a>
-                                    </div>
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    <div class="flex items-center">
-                                        Car Brand
-                                        <a href="#">
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                class="w-3 h-3 ml-1"
-                                                aria-hidden="true"
-                                                fill="currentColor"
-                                                viewBox="0 0 320 512"
-                                            >
-                                                <path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z" />
-                                            </svg>
-                                        </a>
-                                    </div>
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    <div class="flex items-center">
-                                        Car Address
-                                        <a href="#">
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                class="w-3 h-3 ml-1"
-                                                aria-hidden="true"
-                                                fill="currentColor"
-                                                viewBox="0 0 320 512"
-                                            >
-                                                <path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z" />
-                                            </svg>
-                                        </a>
-                                    </div>
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    <span class="sr-only">Edit</span>
-                                </th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            { trialCarList.map((trialCar, i) => {
-                                return (
-                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                        <th
-                                            scope="row"
-                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                                        >
-                                            { trialCar.carPlateNo }
-                                        </th>
-                                        <td class="px-6 py-4">{ trialCar.name }</td>
-                                        <td class="px-6 py-4">{ trialCar.carBrand }</td>
-                                        <td class="px-6 py-4">{ trialCar.address }</td>
-                                        <td class="pr-0 py-4 text-right">
-                                            <Link to={ `/Trials/trialAdmin/TrialsCarAdminUpdate/${trialCar.carPlateNo}` } className="bg-green-400 p-2 px-5 rounded-md text-black hover:bg-green-600 hover:text-white ">
-                                                Update Address
-                                            </Link>
-                                        </td>
-                                        <td>
-                                            <Link to={`/trials/viewTrialCar/${id}`}>
-                                                view details
-                                            </Link>
-                                        </td>
-                                        <td class="pl-0 pr-4 py-4 text-right">
-                                            <a
-                                                onClick={ () => deleteTrialCar(`${trialCar.carPlateNo}`) }
-                                                href="#"
-                                                className="bg-red-400 p-2 px-5 rounded-md text-black hover:bg-red-600 hover:text-white "
-                                            >
-                                                Delete
-                                            </a>
-                                        </td>
-                                    </tr>
-                                );
-                            }) }
-                        </tbody>
-                    </table>
-                </div>
+
+                    
+        <Box
+          component={"form"}
+          sx={{}}
+          onSubmit={formik.handleSubmit}
+          className="mx-7 ml-16"
+        >
+          <label >Date</label>
+          <FormInputSingleLine
+            name="Date of Trial"
+            valueName="dateOfTrial"
+            type="date"
+            value={formik.values.dateOfTrial}
+            onChange={formik.handleChange}
+            error={formik.touched.dateOfTrial && Boolean(formik.errors.dateOfTrial)}
+            helperText={formik.touched.dateOfTrial && formik.errors.dateOfTrial}
+          />
+<br></br>
+
+          {formik.errors.address ? (
+            <div classnames="error">{formik.errors.address}</div>
+          ) : null}
+          <br></br>
+          <Button
+            variant="contained"
+            type="submit"
+            className="bg-green-400 text-black hover:bg-green-600 hover:text-white"
+          >
+            Create
+          </Button>
+        </Box>
+
             </div>
             <ToastContainer />
         </div>
