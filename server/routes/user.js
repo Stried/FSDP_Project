@@ -223,15 +223,12 @@ router.put("/viewAccount/changeDetails", validateToken, async (req, res) => {
 router.delete("/deleteUser/:id", validateToken, async (req, res) => {
     let user = req.params.id;
     
-    let currentUserInfo = {
-        id: req.user.id,
-        emailAccount: req.user.emailAccount,
-        adminNo: req.user.adminNo
-    }
-    // TODO: Update this from the db instead of the token
+    console.log(req.user.id)
+    console.log(user)
 
-    if (!currentUserInfo.adminNo || currentUserInfo.id != user) {
+    if (req.user.id != user) {
         res.status(401).json({ message: "Unauthorised Action Taken!" });
+        console.log("Unauthorised action taken.");
         return;
     };
 
@@ -266,7 +263,7 @@ router.post("/createAdmin", validateToken, async (req, res) => {
     console.log(data);
 
     let validationSchema = yup.object().shape({
-        adminNo: yup.string().trim().min(6).max(6).required(),
+        adminNo: yup.string().trim().min(6, "It can only be 6 characters long").max(6, "It can only be 6 characters long").required(),
         emailAccount: yup.string().email().required(),
     });
 
@@ -290,6 +287,14 @@ router.post("/createAdmin", validateToken, async (req, res) => {
         where: { emailAccount: data.emailAccount }
     })
     if (match) {
+        res.status(400).json({ message: "User is already an Admin." })
+        return;
+    }
+
+    let adminNoMatch = await AdminAccount.findOne({
+        where: { adminNo: data.adminNo.trim() }
+    })
+    if (adminNoMatch) {
         res.status(400).json({ message: "User is already an Admin." })
         return;
     }
@@ -341,8 +346,9 @@ router.get("/adminPanel", validateToken, async (req, res) => {
     res.json(allUsers);
 })
 
-router.put("/updatePassword", validateToken, async (res, req) => {
+router.put("/updatePassword", validateToken, async (req, res) => {
     let data = req.body;
+    console.log(data)
 
     let validationSchema = yup.object().shape({
         password: yup.string().min(8).max(30).required(),
@@ -351,11 +357,11 @@ router.put("/updatePassword", validateToken, async (res, req) => {
         await validationSchema.validate(data, { abortEarly: false });
     } catch (err) {
         console.error(err);
-        res.status(400).json({ errors: err.errors });
         return;
     }
 
     data.password = await bcrypt.hash(data.password, 10);
+    console.log(data.password)
 
     let userAccount = await UserAccount.update(data, {
         where: { emailAccount: req.user.emailAccount },
@@ -370,7 +376,7 @@ router.put("/updatePassword", validateToken, async (res, req) => {
             message: `Cannot update User with id ${req.user.emailAccount}`,
         });
     }
-
 })
+
 
 module.exports = router;

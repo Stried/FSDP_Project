@@ -24,8 +24,24 @@ function Setting() {
     const { user } = useContext(UserContext);
     const navigate = useNavigate();
 
-    const deleteUser = (userID) => {
-        http.delete(`/user/deleteUser/${userID}`).then(() => {
+    const [ userInfo, setUserInfo ] = useState({
+        id: ""
+    })
+
+    useEffect(() => {
+        http.get("/user/viewAccount/changeDetails")
+            .then((res) => {
+                console.log(res.data);
+                setUserInfo(res.data);
+                console.log(userInfo.id)
+            })
+            .catch(function (error) {
+                console.log(error.response.data.message);
+            });
+    }, []);
+
+    const deleteUser = () => {
+        http.delete(`/user/deleteUser/${userInfo.id}`).then(() => {
             navigate("/")
             localStorage.clear();
             window.location.reload();
@@ -37,7 +53,7 @@ function Setting() {
     return (
         <div>
             {/* Modal to be implemented */}
-            <button onClick={ () => deleteUser(`${user.id}`)} className="px-3 py-2 bg-red-500 rounded font-medium">
+            <button onClick={ () => deleteUser()} className="px-3 py-2 bg-red-500 rounded font-medium">
                 Delete
             </button>
         </div>
