@@ -417,6 +417,7 @@ const App = () => {
           onSubmit={formik.handleSubmit}
           className="mx-7 ml-16"
         >
+          <label >Car Plate No</label>
           <FormInputSingleLine
             name="Car Plate No"
             valueName="carPlateNo"
@@ -428,8 +429,8 @@ const App = () => {
             }
             helperText={formik.touched.carPlateNo && formik.errors.carPlateNo}
           />
-
-          {/* <InputLabel id="demo-simple-select-label">Address</InputLabel> */}
+<br></br>
+<br></br>
           <label >Address</label>
           <CustomSelectCars
             value={formik.values.address}

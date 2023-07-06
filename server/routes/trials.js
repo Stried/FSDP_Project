@@ -51,10 +51,11 @@ router.post("/createTrialCar", async (req, res) => {
 
 });
 
-router.post("/createTrialReceipt", async (req, res) => {
+router.post("/createTrialReceipt/:id", async (req, res) => {
     let data = req.body;
     let validationSchema = yup.object().shape({
         dateOfTrial: yup.date().required(),
+
     });
     try {
         await validationSchema.validate(data,
