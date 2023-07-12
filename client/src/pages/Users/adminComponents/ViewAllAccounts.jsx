@@ -93,7 +93,7 @@ function ViewAllAccounts() {
                                             { user && displayStyle === "Contained" && (
                                                 <div>
                                                     <div className="mr-2 mb-2">
-                                                        <div onClick={ () => setOpenModal(user.emailAccount) } className=" bg-zinc-800 bg-opacity-70 text-white p-5 rounded border-transparent border-2 border-solid hover:border-green-500 hover:transition-ease-in-out duration-300">
+                                                        <div onClick={ () => setOpenModal(user.emailAccount) } className="cursor-pointer bg-zinc-800 bg-opacity-70 text-white p-5 rounded border-transparent border-2 border-solid hover:border-green-500 hover:transition-ease-in-out duration-300">
                                                             <div className=" justify-self-center">
                                                                 <img src={ `${import.meta.env.VITE_FILE_BASE_URL}${user.imageFile}` } alt="" className="w-14 h-14 rounded-full mx-auto" />
 
@@ -148,7 +148,7 @@ function ViewAllAccounts() {
                                         <li className="">
                                             { user && displayStyle === "Full" && (
                                                 <div>
-                                                    <div onClick={ () => setOpenModal(user.emailAccount) } className="bg-zinc-800 bg-opacity-70 text-white my-3 mx-2 p-5 rounded border-transparent border-2 border-solid hover:border-green-500 hover:transition-ease-in-out duration-300">
+                                                    <div onClick={ () => setOpenModal(user.emailAccount) } className="cursor-pointer bg-zinc-800 bg-opacity-70 text-white my-3 mx-2 p-5 rounded border-transparent border-2 border-solid hover:border-green-500 hover:transition-ease-in-out duration-300">
                                                         <div className="">
                                                             <img src={ `${import.meta.env.VITE_FILE_BASE_URL}${user.imageFile}` } alt="" className="w-24 h-24 rounded-full float-right" />
                                                         </div>
@@ -186,7 +186,7 @@ function ViewAllAccounts() {
                                             ) }
                                             { user && displayStyle === "Semi" && (
                                                 <div>
-                                                    <div onClick={ () => setOpenModal(user.emailAccount) } className="bg-zinc-800 bg-opacity-70 text-white my-3 mx-2 p-5 rounded border-transparent border-2 border-solid hover:border-green-500 hover:transition-ease-in-out duration-300">
+                                                    <div onClick={ () => setOpenModal(user.emailAccount) } className="cursor-pointer bg-zinc-800 bg-opacity-70 text-white my-3 mx-2 p-5 rounded border-transparent border-2 border-solid hover:border-green-500 hover:transition-ease-in-out duration-300">
                                                         <div className="">
                                                             <img src={ `${import.meta.env.VITE_FILE_BASE_URL}${user.imageFile}` } alt="" className="w-14 h-14 rounded-full float-right" />
                                                         </div>

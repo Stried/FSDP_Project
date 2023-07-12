@@ -364,15 +364,6 @@ router.put("/updatePassword", validateToken, async (req, res) => {
 
     let currentUser = await UserAccount.findByPk(req.user.emailAccount);
 
-    // data.currentPassword = await bcrypt.hash(data.currentPassword, 10);
-    // console.log(data.currentPassword);
-    
-    // if (data.currentPassword != currentUser.password) {
-    //     console.log("Wrong Password")
-    //     res.status(400).json({ message: "Current password is wrong!" });
-    //     return;
-    // }
-
     let comparePasswords = await bcrypt.compare(data.currentPassword, currentUser.password);
 
     if (!comparePasswords) {

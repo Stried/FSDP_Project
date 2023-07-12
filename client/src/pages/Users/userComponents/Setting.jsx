@@ -51,7 +51,19 @@ function Setting() {
     }
 
     return (
-        <div>
+        <div className="">         
+            <p className="text-white text-3xl font-medium mb-2">
+                Update Password
+            </p>
+            <Link to={ "/user/updatePassword" } className="mb-5">
+                <button className="bg-blue-400 font-medium px-3 py-2 rounded">
+                    Change Password.
+                </button>
+            </Link>
+            
+            <p className="text-white text-3xl font-medium mt-10 mb-2">
+                Delete Account
+            </p>
             {/* Modal to be implemented */}
             <button onClick={ () => deleteUser()} className="px-3 py-2 bg-red-500 rounded font-medium">
                 Delete
