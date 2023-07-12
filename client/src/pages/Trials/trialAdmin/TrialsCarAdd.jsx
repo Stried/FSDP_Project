@@ -330,6 +330,8 @@ const App = () => {
   const options = [
     { value: "serangoon", label: "serangoon" },
     { value: "hougang", label: "hougang" },
+    { value: "sengkang", label: "sengkang" },
+    { value: "test", label: "test" },
   ];
 
   const navigate = useNavigate();

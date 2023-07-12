@@ -8,16 +8,18 @@ export default ({ onChange, options, value, classnames }) => {
 
   return (
 
-    <div classnames={classnames} className="text-md">
+    <div classnames={classnames}>
 
 
       <Select
+      className="my-react-select-container"
+      classNamePrefix="my-react-select"
         value={defaultValue(options, value)}
         onChange={value => onChange(value)}
         theme={(theme) => ({
           ...theme,
 
-          borderRadius: 5,
+          borderRadius: 3,
           colors: {
             ...theme.colors,
 
@@ -25,7 +27,7 @@ export default ({ onChange, options, value, classnames }) => {
             primary: '#22c55e',
           },
         })}
-        className=" py-2.5 px-0 w-full text-sm border-0 border-b-2 dark:bg-black dark:text-lg dark:text-stone-950 dark:border-gray-700 "
+      
         options={options}
       />
     </div>
