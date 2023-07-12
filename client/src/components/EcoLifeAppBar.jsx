@@ -15,12 +15,14 @@ import UserCreateAccount from "../pages/Users/UserCreateAccount";
 import UserEnterAccount from "../pages/Users/UserEnterAccount";
 import UserDetailsPage from "../pages/Users/UserDetailsPage";
 import AdminPanelMain from "../pages/Users/AdminPanelMain";
-import TrialsAddPage from "../pages/Trials/trialAdmin/TrialsCarAdd";
-import TrialsAdminPage from "../pages/Trials/trialAdmin/TrialsCarAdminPage";
-import TrialsUpdatePage from "../pages/Trials/trialAdmin/TrialsCarAdminUpdate";
+import UserChangePassword from "../pages/Users/UserChangePassword";
+
 import LocationsMain from "../pages/Locations/LocationsMain";
 import LocationsCreate from "../pages/Locations/LocationsCreate";
 
+import TrialsAddPage from "../pages/Trials/trialAdmin/TrialsCarAdd";
+import TrialsAdminPage from "../pages/Trials/trialAdmin/TrialsCarAdminPage";
+import TrialsUpdatePage from "../pages/Trials/trialAdmin/TrialsCarAdminUpdate";
 import TrialsReceiptCreate from "../pages/Trials/trialUsers/TrialsReceiptCreation";
 import TrialsCarDetails from "../pages/Trials/trialAdmin/TrialsCarDetailedPage";
 import TrialsCarUserPage from "../pages/Trials/trialUsers/TrialsCarUserPage";
@@ -173,6 +175,7 @@ function EcoLifeAppBar() {
                     <Route path={ "/user/createAccount" } element={ <UserCreateAccount /> } />
                     <Route path={ "/user/login" } element={ <UserEnterAccount /> } />
                     <Route path={ "/user/viewAccount" } element={ <UserDetailsPage /> } />
+                    <Route path={ "/user/updatePassword" } element={ <UserChangePassword /> } />
                     <Route path={ "/user/adminPanel" } element={
                         <Protected isAdminCheck={isAdminCheck}>
                             <AdminPanelMain />
