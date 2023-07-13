@@ -83,16 +83,21 @@ router.get("/viewTrialCar", async (req, res) => {
 });
 
 router.get("/viewTrialCar/:id", async (req, res) => {
-    const trialCar = req.params.id
+    const trialCar = req.params.id;
     const leTrialCar = await Store.findOne({
-        where: {carPlateNo: trialCar},
-    })
-
+      where: { carPlateNo: trialCar },
+    });
+  
     console.log(trialCar);
     console.log(leTrialCar);
-
-    res.json(leTrialCar);
-});
+  
+    if (leTrialCar) {
+      // Check if the trial car exists
+      res.json(leTrialCar);
+    } else {
+      res.status(404).json({ error: "Trial car not found" });
+    }
+  });
 
 router.put("/updateTrialCar/changeDetails/:id", validateToken, async (req, res) => {
     let trialcar = req.params.id;

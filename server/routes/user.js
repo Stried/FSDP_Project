@@ -5,9 +5,10 @@ const { sequelize } = require("../models/");
 const { DataTypes } = require("sequelize");
 const { UserAccount, AdminAccount, Sequelize } = require("../models/"); // imports the model name from models, must match waht is defined in the model
 const bcrypt = require("bcrypt");
-const { sign } = require("jsonwebtoken");
+const { sign, verify } = require("jsonwebtoken");
 const { validateToken } = require("../middlewares/auth");
-const nodemailermock = require('nodemailer-mock');
+const nodemailer = require('nodemailer');
+const otpGenerator = require('otp-generator');
 require('dotenv').config();
 
 // Alan - Accont Creation
@@ -223,7 +224,7 @@ router.put("/viewAccount/changeDetails", validateToken, async (req, res) => {
 // Deleting Individual Account (Admin only or accessible bby user?)
 router.delete("/deleteUser/:id", validateToken, async (req, res) => {
     let user = req.params.id;
-    
+
     console.log(req.user.id)
     console.log(user)
 
@@ -326,7 +327,7 @@ router.get("/adminPanel", validateToken, async (req, res) => {
         res.status(404).json("Page Is Not Found.");
         return;
     }
-     
+
     const condition = {};
     let search = req.query.search;
     if (search) {
@@ -391,7 +392,105 @@ router.put("/updatePassword", validateToken, async (req, res) => {
 })
 
 router.post("/forgetPassword", async (req, res) => {
-    
+    const transport = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: "ecolife.usertest@gmail.com",
+            pass: "pkgasnfsumpudfik"
+        }
+    });
+
+    let data = req.body;
+
+    let validationSchema = yup.object().shape({
+        emailAccount: yup.string().email().required(),
+    });
+    try {
+        await validationSchema.validate(data, { abortEarly: false });
+    } catch (err) {
+        console.error(err);
+        res.status(400).json({ errors: err.errors });
+        return;
+    }
+
+    let findAccount = await UserAccount.findByPk(data.emailAccount);
+    if (!findAccount) {
+        res.status(400).json({ message: "Email account not found!" });
+    }
+
+    const otpUser = otpGenerator.generate(6, { upperCaseAlphabets: false, lowerCaseAlphabets: false, specialChars: false })
+
+    let user = {
+        emailAccount: findAccount.emailAccount,
+        otpUser: bcrypt.hash(otpUser, 10)
+    }
+
+    tempToken = sign(user, process.env.APP_SECRET);
+    let content = `Hey there! It seems you have forgotten your password!\nPlease click this link https://localhost:3001/user/forgetPassword?token=${tempToken} !\nYour OTP is ${otpUser}`
+
+    let emailContent = {
+        from: 'ecolife.userTest@gmail.com',
+        to: 'ecolife.userTest@gmail.com',
+        subject: 'Forget Password',
+        text: content
+    }
+
+    transport.sendMail(emailContent, function (err, data) {
+        if (err) {
+            console.log(err)
+        } else {
+            console.log('Email Sent Correctly!')
+        }
+    });
+    // request for user email account
+    // sign user into the token
+    // generate a OTP?
+})
+
+router.put("/forgetPassword", async (req, res) => {
+    let data = req.body;
+    let token = req.query.token;
+    let userEmail = "";
+    let otpUser = "";
+
+    try {
+        const checkToken = verify(token, process.env.APP_SECRET);
+        userEmail = checkToken.emailAccount;
+        otpUser = checkToken.otpUser;
+    } catch (err) {
+        console.log(err);
+        res.json(400).status({ message: "An error has occured." })
+    }
+
+    let validationSchema = yup.object().shape({
+        password: yup.string().min(8).max(30).required(),
+    });
+    try {
+        await validationSchema.validate(data, { abortEarly: false });
+    } catch (err) {
+        console.error(err);
+        return;
+    }
+
+    console.log(typeof data.otpUser)
+    if (bcrypt.compare(String(data.otpUser), String(otpUser)) == false) {
+        console.log("OTP does not match!");
+        res.status(400).json({ message: "OTP does not match!" });
+    }
+
+    let userAccount = await UserAccount.update(data, {
+        where: {emailAccount: userEmail}
+    })
+
+    if (userAccount == 1) {
+        res.json({
+            message: "User has been successfully updated.",
+        });
+    } else {
+        res.status(400).json({
+            message: `Cannot update User with id ${userEmail}`,
+        });
+    }
 })
 
 module.exports = router;
