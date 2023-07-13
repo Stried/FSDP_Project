@@ -88,11 +88,16 @@ router.get("/viewTrialCar/:id", async (req, res) => {
         where: {carPlateNo: trialCar},
     })
 
-    console.log(trialCar);
-    console.log(leTrialCar);
-
     res.json(leTrialCar);
 });
+
+router.get("/viewSpecificTrialCar/:id", async(req, res) => {
+    const trialCar = req.params.id
+    const TheTrialCar = await TrialCar.findOne({
+        where: {carPlateNo:trialCar},
+    })
+    res.json(TheTrialCar)
+})
 
 router.put("/updateTrialCar/changeDetails/:id", validateToken, async (req, res) => {
     let trialcar = req.params.id;
@@ -148,7 +153,7 @@ router.delete("/:carPlateNo", async (req, res) => {
     }
     else {
         res.status(400).json({
-            message: `Cannot delete trial car with carPlateNo ${carPlateNo}.`
+            message: `Cannot delete trial car with carPlateNo ${carplateNo}.`
         });
     }
 });
