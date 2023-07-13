@@ -81,7 +81,7 @@ const SideNav = ({ isOpen }) => {
                                                     width="32"
                                                     height="28"
                                                     fill="currentColor"
-                                                    class="bi bi-chevron-compact-down"
+                                                    className="bi bi-chevron-compact-down"
                                                     viewBox="0 0 16 16"
                                                 >
                                                     {" "}
@@ -99,7 +99,7 @@ const SideNav = ({ isOpen }) => {
                                                     width="32"
                                                     height="28"
                                                     fill="currentColor"
-                                                    class="bi bi-chevron-compact-up"
+                                                    className="bi bi-chevron-compact-up"
                                                     viewBox="0 0 16 16"
                                                 >
                                                     {" "}
@@ -347,6 +347,7 @@ function TrialsCarAdminUpdate() {
                 console.log(res.data)
                 setSelectedTrialCar(res.data);
                 console.log("The trial car is " + carPlateNo);
+                console.log("The address is: "+ res.data.address)
                 window.location.reload;
             })
             .catch(function (err) {
