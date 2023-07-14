@@ -422,11 +422,11 @@ router.post("/forgetPassword", async (req, res) => {
 
     let user = {
         emailAccount: findAccount.emailAccount,
-        otpUser: bcrypt.hash(otpUser, 10)
+        otpUser: await bcrypt.hash(otpUser, 10)
     }
 
     tempToken = sign(user, process.env.APP_SECRET);
-    let content = `Hey there! It seems you have forgotten your password!\nPlease click this link https://localhost:3001/user/forgetPassword?token=${tempToken} !\nYour OTP is ${otpUser}`
+    let content = `Hey there! It seems you have forgotten your password!\nPlease click this link http://localhost:3000/user/resetPassword?token=${tempToken} !\nYour OTP is ${otpUser}`
 
     let emailContent = {
         from: 'ecolife.userTest@gmail.com',
@@ -440,6 +440,7 @@ router.post("/forgetPassword", async (req, res) => {
             console.log(err)
         } else {
             console.log('Email Sent Correctly!')
+            res.json({sentEmail: "An email has been successfully sent!"})
         }
     });
     // request for user email account
@@ -447,16 +448,20 @@ router.post("/forgetPassword", async (req, res) => {
     // generate a OTP?
 })
 
-router.put("/forgetPassword", async (req, res) => {
+router.put("/resetPassword", async (req, res) => {
     let data = req.body;
     let token = req.query.token;
     let userEmail = "";
     let otpUser = "";
 
+    console.log(data)
     try {
         const checkToken = verify(token, process.env.APP_SECRET);
         userEmail = checkToken.emailAccount;
         otpUser = checkToken.otpUser;
+
+        console.log(userEmail);
+        console.log(otpUser)
     } catch (err) {
         console.log(err);
         res.json(400).status({ message: "An error has occured." })
@@ -469,6 +474,7 @@ router.put("/forgetPassword", async (req, res) => {
         await validationSchema.validate(data, { abortEarly: false });
     } catch (err) {
         console.error(err);
+        res.status(400).json({ message: "Password is required!" })
         return;
     }
 
@@ -478,9 +484,16 @@ router.put("/forgetPassword", async (req, res) => {
         res.status(400).json({ message: "OTP does not match!" });
     }
 
+    data.password = await bcrypt.hash(data.password, 10);
+
+    console.log(userEmail);
+    console.log(otpUser);
     let userAccount = await UserAccount.update(data, {
         where: {emailAccount: userEmail}
     })
+    if (!userAccount) {
+        console.log("No such Email found!");
+    }
 
     if (userAccount == 1) {
         res.json({
