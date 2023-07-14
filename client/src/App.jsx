@@ -12,6 +12,7 @@ import './App.css'
 
 import EcoLifeAppBar from "./components/EcoLifeAppBar";
 import EcoLifeFooter from "./components/EcoLifeFooter";
+import EcoLifeSideBar from "./components/EcoLifeSideBar";
 
 import * as Constants from "./../src/components/CSS Constants/Constants";
 import UserContext from "./contexts/UserContext";
@@ -43,6 +44,9 @@ function App() {
             <div id="root" className="w-full h-screen overflow-x-hidden | bg-gradient-to-b from-zinc-900 to-black">
                 <div className="mb-10">
                     <EcoLifeAppBar />
+                </div>
+                <div>
+                    <EcoLifeSideBar />
                 </div>
                 <div className="mt-10">
                     <EcoLifeFooter />

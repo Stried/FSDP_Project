@@ -18,15 +18,15 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 
 const SideNav = ({ isOpen }) => {
-    const [ accordionOpen, setAccordionOpen ] = useState(false);
+    const [accordionOpen, setAccordionOpen] = useState(false);
 
     const toggleAccordion = () => {
         setAccordionOpen(!accordionOpen);
     };
     return (
         <div
-            className={ `fixed left-0 top-0 h-full w-64 bg-gradient-to-r z-50 text-white  transition-transform duration-300 transform ${isOpen ? "translate-x-0" : "-translate-x-full"
-                }` }
+            className={`fixed left-0 top-0 h-full w-64 bg-gradient-to-r z-50 text-white  transition-transform duration-300 transform ${isOpen ? "translate-x-0" : "-translate-x-full"
+                }`}
         >
             <aside
                 id="separator-sidebar"
@@ -55,7 +55,7 @@ const SideNav = ({ isOpen }) => {
                         </li>
                         <li>
                             <ul>
-                                <button className=" w-full text-left" onClick={ toggleAccordion }>
+                                <button className=" w-full text-left" onClick={toggleAccordion}>
                                     <a
                                         href="#"
                                         className="flex font-medium items-center p-2 text-gray-900 rounded-lg dark:text-white dark:hover:text-black dark:hover:bg-green-400 transition duration-200 "
@@ -74,7 +74,7 @@ const SideNav = ({ isOpen }) => {
                                             ></path>
                                         </svg>
                                         <span className="ml-3">Trial's</span>
-                                        { !accordionOpen && (
+                                        {!accordionOpen && (
                                             <div className="pl-20 font-bold ">
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
@@ -84,15 +84,15 @@ const SideNav = ({ isOpen }) => {
                                                     class="bi bi-chevron-compact-down"
                                                     viewBox="0 0 16 16"
                                                 >
-                                                    { " " }
+                                                    {" "}
                                                     <path
                                                         fill-rule="evenodd"
                                                         d="M1.553 6.776a.5.5 0 0 1 .67-.223L8 9.44l5.776-2.888a.5.5 0 1 1 .448.894l-6 3a.5.5 0 0 1-.448 0l-6-3a.5.5 0 0 1-.223-.67z"
-                                                    />{ " " }
+                                                    />{" "}
                                                 </svg>
                                             </div>
-                                        ) }
-                                        { accordionOpen && (
+                                        )}
+                                        {accordionOpen && (
                                             <div className="pl-20 font-bold ">
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
@@ -102,20 +102,20 @@ const SideNav = ({ isOpen }) => {
                                                     class="bi bi-chevron-compact-up"
                                                     viewBox="0 0 16 16"
                                                 >
-                                                    { " " }
+                                                    {" "}
                                                     <path
                                                         fill-rule="evenodd"
                                                         d="M7.776 5.553a.5.5 0 0 1 .448 0l6 3a.5.5 0 1 1-.448.894L8 6.56 2.224 9.447a.5.5 0 1 1-.448-.894l6-3z"
-                                                    />{ " " }
+                                                    />{" "}
                                                 </svg>
                                             </div>
-                                        ) }
+                                        )}
                                     </a>
                                 </button>
                             </ul>
-                            { accordionOpen && (
+                            {accordionOpen && (
                                 <div>
-                                                                        <a
+                                    <a
                                         href="/Trials/trialAdmin/TrialsCarAdd"
                                         className="flex items-center pl-16 p-2 text-gray-900 rounded-lg dark:text-white dark:hover:text-black dark:hover:bg-green-400 transition duration-200 "
                                     >
@@ -134,7 +134,7 @@ const SideNav = ({ isOpen }) => {
                                         View Receipts
                                     </a>
                                 </div>
-                            ) }
+                            )}
                         </li>
                         <li>
                             <a
@@ -310,8 +310,8 @@ const SideNav = ({ isOpen }) => {
 };
 
 const App = () => {
-    const [ isOpen, setIsOpen ] = useState(false);
-    const [ trialCarList, setTrialCarList ] = useState([]);
+    const [isOpen, setIsOpen] = useState(false);
+    const [trialCarList, setTrialCarList] = useState([]);
     const getTrialCar = () => {
         http.get("/trials/viewTrialCar").then((res) => {
             setTrialCarList(res.data);
@@ -331,20 +331,11 @@ const App = () => {
         setIsOpen(!isOpen);
     };
 
-    const [ arrowClose, setArrowClose ] = useState(false);
+    const [arrowClose, setArrowClose] = useState(false);
 
     const toggleArrowSidebar = () => {
         setArrowClose(!arrowClose);
     };
-
-    const editTrialCar = (id) => {
-        navigate(`/Trials/trialAdmin/TrialsCarAdminUpdate/${id}`);
-    }
-
-    const options = [
-        { value: "serangoon", label: "serangoon" },
-        { value: "hougang", label: "hougang" },
-    ];
 
     const navigate = useNavigate();
     const formik = useFormik({
@@ -375,7 +366,7 @@ const App = () => {
             await http
                 .post("/trials/createTrialCar", formData)
                 .then((res) => {
-  
+
                     // navigate("/TrialsCarAdminPage");
                     window.location.reload()
                 })
@@ -388,46 +379,38 @@ const App = () => {
 
     return (
         <div className="relative min-h-screen">
-            <div onClick={ toggleArrowSidebar }>
+            <div onClick={toggleArrowSidebar}>
                 <button
-                    className={ `fixed z-50 p-3 py-5 ml-0 rounded-r-2xl bg-gradient-to-l from-green-400 to-emerald-600 text-grey transition-transform duration-300 ${isOpen ? "translate-x-64" : "translate-x-0"
-                        }` }
-                    onClick={ toggleNav }
+                    className={`fixed z-40 p-3 py-5 ml-0 w-4 h-24 rounded-r-2xl bg-gradient-to-l from-green-400 to-emerald-600 text-grey transition-transform duration-300 ${isOpen ? "translate-x-64" : "translate-x-0"
+                        }`}
+                    onClick={toggleNav}
                 >
-                    { !arrowClose && (
-                        <div className="h-8 w-8">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
-                                <path
-                                    fill="white"
-                                    d="m17.5 5.999-.707.707 5.293 5.293H1v1h21.086l-5.294 5.295.707.707L24 12.499l-6.5-6.5z"
-                                    data-name="Right"
-                                />
-                            </svg>
+                    {!arrowClose && (
+                        <div className="h-20 w-7 ">
+                            <div className="left-1 top-10 absolute ">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M470.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 256 265.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160zm-352 160l160-160c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L210.7 256 73.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0z" /></svg>
+                            </div>
                         </div>
-                    ) }
-                    { arrowClose && (
-                        <div className="h-8 w-8">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
-                                <path
-                                    fill="white"
-                                    d="M24 12.001H2.914l5.294-5.295-.707-.707L1 12.501l6.5 6.5.707-.707-5.293-5.293H24v-1z"
-                                    data-name="Left"
-                                />
-                            </svg>
+                    )}
+                    {arrowClose && (
+                        <div className="h-20 w-7">
+                            <div className="left-1 top-10 absolute ">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160zm352-160l-160 160c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L301.3 256 438.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0z" /></svg>
+                            </div>
                         </div>
-                    ) }
+                    )}
                 </button>
             </div>
-            <SideNav isOpen={ isOpen } />
+            <SideNav isOpen={isOpen} />
 
             <div
-                className={ `text-white transition duration-500 ${isOpen ? " opacity-25 " : " opacity-100 "
-                    }` }
+                className={`text-white transition duration-500 ${isOpen ? " opacity-25 " : " opacity-100 "
+                    }`}
             >
 
                 <h1 className="text-center text-5xl text-green-400">Trial Car Records</h1>
                 <br></br>
-                <div class="relative overflow-x-auto shadow-md sm:rounded-lg mx-7 ml-16">
+                <div class="relative overflow-x-auto shadow-md sm:rounded-lg mx-7">
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                         <thead class="text-xs text-gray-700 uppercase bg-green-400 dark:bg-green-500 dark:text-black">
                             <tr>
@@ -490,35 +473,35 @@ const App = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            { trialCarList.map((trialCar, i) => {
+                            {trialCarList.map((trialCar, i) => {
                                 return (
                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                         <th
                                             scope="row"
                                             class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                                         >
-                                            { trialCar.carPlateNo }
+                                            {trialCar.carPlateNo}
                                         </th>
 
-                                        <td class="px-6 py-4">{ trialCar.name }</td>
-                                        <td class="px-6 py-4">{ trialCar.carBrand }</td>
-                                        <td class="px-6 py-4">{ trialCar.address }</td>
+                                        <td class="px-6 py-4">{trialCar.name}</td>
+                                        <td class="px-6 py-4">{trialCar.carBrand}</td>
+                                        <td class="px-6 py-4">{trialCar.address}</td>
                                         <td >
                                             <Link to={`/Trials/trialAdmin/TrialsCarDetailedPage/${trialCar.carPlateNo}`} className="bg-green-400 p-2 px-5 rounded-md text-black hover:bg-green-400 hover:text-white ">
                                                 View Details
                                             </Link>
                                         </td>
                                         <td>
-                                        <Link
-                            to={ `/Trials/trialAdmin/TrialsCarAdminUpdate/${trialCar.carPlateNo}` }
-                            className="bg-green-400 p-2 px-5 rounded-md text-black hover:bg-green-600 hover:text-white "
-                        >
-                            Update Address
-                        </Link>
+                                            <Link
+                                                to={`/Trials/trialAdmin/TrialsCarAdminUpdate/${trialCar.carPlateNo}`}
+                                                className="bg-green-400 p-2 px-5 rounded-md text-black hover:bg-green-600 hover:text-white "
+                                            >
+                                                Update Address
+                                            </Link>
                                         </td>
                                         <td class="pl-0 pr-4 py-4 text-right">
                                             <a
-                                                onClick={ () => deleteTrialCar(`${trialCar.carPlateNo}`) }
+                                                onClick={() => deleteTrialCar(`${trialCar.carPlateNo}`)}
                                                 href="#"
                                                 className="bg-red-400 p-2 px-5 rounded-md text-black hover:bg-red-600 hover:text-white "
                                             >
@@ -527,7 +510,7 @@ const App = () => {
                                         </td>
                                     </tr>
                                 );
-                            }) }
+                            })}
                         </tbody>
                     </table>
                 </div>
