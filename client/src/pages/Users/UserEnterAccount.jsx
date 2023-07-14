@@ -112,21 +112,21 @@ function UserEnterAccount() {
 						}
 					/>
 
-					<div className="text-black dark:text-white">
-						<input type="checkbox" id="rememberMe" className="" />
-						<label for="rememberMe" className="mx-1 py-auto">
-							Remember Me
-						</label>
-					</div>
-
 					<ToastContainer />
 
-					<Typography className="opacity-60 mb-4 text-black dark:text-white">
+					<Typography className="opacity-60 text-black dark:text-white">
 						Do not have an account?{" "}
 						<span className="text-blue-400">
 							<Link to="/user/createAccount">Sign Up</Link>
 						</span>
-					</Typography>
+                    </Typography>
+
+                    <Typography className="opacity-60 mb-4 text-black dark:text-white">
+                        Forgot your password?{ " " }
+                        <span className="text-blue-400">
+                            <Link to="/user/forgetPassword">Reset it here!</Link>
+                        </span>
+                    </Typography>
 
 					<Box className="flex">
 						<Box className="w-1/4 py-1">

@@ -32,6 +32,8 @@ import StoreAddItem from "../pages/Store/StoreAddItem";
 import StoreUpdateItem from "../pages/Store/StoreUpdateItem";
 
 import UserContext from "../contexts/UserContext";
+import UserForgetPasswordEmail from "../pages/Users/UserForgetPasswordEmail";
+import UserForgetPasswordReset from "../pages/Users/UserForgetPasswordReset";
 
 function AdminPanel(props) {
     const isAdmin = props.isAdmin;
@@ -176,6 +178,8 @@ function EcoLifeAppBar() {
                     <Route path={ "/user/login" } element={ <UserEnterAccount /> } />
                     <Route path={ "/user/viewAccount" } element={ <UserDetailsPage /> } />
                     <Route path={ "/user/updatePassword" } element={ <UserChangePassword /> } />
+                    <Route path={ "/user/forgetPassword" } element={ <UserForgetPasswordEmail /> } />
+                    <Route path={ "/user/resetPassword" } element={ <UserForgetPasswordReset /> } />
                     <Route path={ "/user/adminPanel" } element={
                         <Protected isAdminCheck={isAdminCheck}>
                             <AdminPanelMain />
