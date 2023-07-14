@@ -322,6 +322,10 @@ const App = () => {
 
     const [ isOpen, setIsOpen ] = useState(false);
 
+    const [trialCarEntry, setTrialCarEntry] = useState({
+        address:""
+    })
+
     const [ trialCar, setTrialCar ] = useState({
         carPlateNo: "",
         carDescription: "",
@@ -348,6 +352,14 @@ const App = () => {
             console.log(res.data);
         });
     }, []);
+
+    useEffect(() => {
+        http.get(`/trials/viewSpecificTrialCar/${id}`).then((res) => {
+            setTrialCarEntry(res.data);
+            console.log(res.data);
+        });
+    }, []);
+
 
     const toggleNav = () => {
         setIsOpen(!isOpen);
@@ -414,6 +426,11 @@ const App = () => {
                             <br />
                             <div className="text-xl font-medium float-left">
                                 { trialCar.carDescription }
+                            </div>
+                            <br />
+                            <div className="text-xl font-medium float-left">
+                                Location:
+                                {trialCarEntry.address}
                             </div>
                             <br />
                             <div>

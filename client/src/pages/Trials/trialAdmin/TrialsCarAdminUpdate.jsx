@@ -18,15 +18,15 @@ import CustomSelectCars from "./CustomSelectCars";
 
 
 const SideNav = ({ isOpen }) => {
-    const [ accordionOpen, setAccordionOpen ] = useState(false);
+    const [accordionOpen, setAccordionOpen] = useState(false);
 
     const toggleAccordion = () => {
         setAccordionOpen(!accordionOpen);
     };
     return (
         <div
-            className={ `fixed left-0 top-0 h-full w-64 bg-gradient-to-r z-50 text-white  transition-transform duration-300 transform ${isOpen ? "translate-x-0" : "-translate-x-full"
-                }` }
+            className={`fixed left-0 top-0 h-full w-64 bg-gradient-to-r z-50 text-white  transition-transform duration-300 transform ${isOpen ? "translate-x-0" : "-translate-x-full"
+                }`}
         >
             <aside
                 id="separator-sidebar"
@@ -55,7 +55,7 @@ const SideNav = ({ isOpen }) => {
                         </li>
                         <li>
                             <ul>
-                                <button className=" w-full text-left" onClick={ toggleAccordion }>
+                                <button className=" w-full text-left" onClick={toggleAccordion}>
                                     <a
                                         href="#"
                                         className="flex font-medium items-center p-2 text-gray-900 rounded-lg dark:text-white dark:hover:text-black dark:hover:bg-green-400 transition duration-200 "
@@ -74,7 +74,7 @@ const SideNav = ({ isOpen }) => {
                                             ></path>
                                         </svg>
                                         <span className="ml-3">Trial's</span>
-                                        { !accordionOpen && (
+                                        {!accordionOpen && (
                                             <div className="pl-20 font-bold ">
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
@@ -84,15 +84,15 @@ const SideNav = ({ isOpen }) => {
                                                     className="bi bi-chevron-compact-down"
                                                     viewBox="0 0 16 16"
                                                 >
-                                                    { " " }
+                                                    {" "}
                                                     <path
                                                         fill-rule="evenodd"
                                                         d="M1.553 6.776a.5.5 0 0 1 .67-.223L8 9.44l5.776-2.888a.5.5 0 1 1 .448.894l-6 3a.5.5 0 0 1-.448 0l-6-3a.5.5 0 0 1-.223-.67z"
-                                                    />{ " " }
+                                                    />{" "}
                                                 </svg>
                                             </div>
-                                        ) }
-                                        { accordionOpen && (
+                                        )}
+                                        {accordionOpen && (
                                             <div className="pl-20 font-bold ">
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
@@ -102,20 +102,20 @@ const SideNav = ({ isOpen }) => {
                                                     className="bi bi-chevron-compact-up"
                                                     viewBox="0 0 16 16"
                                                 >
-                                                    { " " }
+                                                    {" "}
                                                     <path
                                                         fill-rule="evenodd"
                                                         d="M7.776 5.553a.5.5 0 0 1 .448 0l6 3a.5.5 0 1 1-.448.894L8 6.56 2.224 9.447a.5.5 0 1 1-.448-.894l6-3z"
-                                                    />{ " " }
+                                                    />{" "}
                                                 </svg>
                                             </div>
-                                        ) }
+                                        )}
                                     </a>
                                 </button>
                             </ul>
-                            { accordionOpen && (
+                            {accordionOpen && (
                                 <div>
-                                                                        <a
+                                    <a
                                         href="/Trials/trialAdmin/TrialsCarAdd"
                                         className="flex items-center pl-16 p-2 text-gray-900 rounded-lg dark:text-white dark:hover:text-black dark:hover:bg-green-400 transition duration-200 "
                                     >
@@ -134,7 +134,7 @@ const SideNav = ({ isOpen }) => {
                                         View Receipts
                                     </a>
                                 </div>
-                            ) }
+                            )}
                         </li>
                         <li>
                             <a
@@ -311,7 +311,7 @@ const SideNav = ({ isOpen }) => {
 
 function TrialsCarAdminUpdate() {
 
-    const [ isOpen, setIsOpen ] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
     const navigate = useNavigate();
 
@@ -327,13 +327,13 @@ function TrialsCarAdminUpdate() {
         setIsOpen(!isOpen);
     };
 
-    const [ arrowClose, setArrowClose ] = useState(false);
+    const [arrowClose, setArrowClose] = useState(false);
 
     const toggleArrowSidebar = () => {
         setArrowClose(!arrowClose);
     };
 
-    const [ selectedTrialCar, setSelectedTrialCar ] = useState({
+    const [selectedTrialCar, setSelectedTrialCar] = useState({
         id: "",
         address: "",
         carPlateNo: carPlateNo,
@@ -342,10 +342,10 @@ function TrialsCarAdminUpdate() {
     });
 
     useEffect(() => {
-        http.get(`/trials/viewTrialCar/${carPlateNo}`)
+        http.get(`/trials/viewSpecificTrialCar/${carPlateNo}`)
             .then((res) => {
                 console.log(res.data)
-                setSelectedTrialCar(res.data); 
+                setSelectedTrialCar(res.data);
                 console.log("The trial car is " + carPlateNo);
                 console.log("The address is: "+ res.data.address)
                 window.location.reload;
@@ -358,7 +358,7 @@ function TrialsCarAdminUpdate() {
 
 
     const formik = useFormik({
-        initialValues: selectedTrialCar, 
+        initialValues: selectedTrialCar,
         enableReinitialize: true,
         validationSchema: yup.object().shape({
             address: yup.string().trim().max(100).required("Address cannot be empty"),
@@ -366,7 +366,7 @@ function TrialsCarAdminUpdate() {
         onSubmit: (data) => {
             const formData = {
                 address: data.address.trim(),
-                
+
             }
 
 
@@ -385,75 +385,75 @@ function TrialsCarAdminUpdate() {
 
     return (
         <div className="relative min-h-screen">
-        <div onClick={ toggleArrowSidebar }>
-            <button
-                className={ `fixed z-50 p-3 py-5 ml-0 rounded-r-2xl bg-gradient-to-l from-green-400 to-emerald-600 text-grey transition-transform duration-300 ${isOpen ? "translate-x-64" : "translate-x-0"
-                    }` }
-                onClick={ toggleNav }
+            <div onClick={toggleArrowSidebar}>
+                <button
+                    className={`fixed z-50 p-3 py-5 ml-0 rounded-r-2xl bg-gradient-to-l from-green-400 to-emerald-600 text-grey transition-transform duration-300 ${isOpen ? "translate-x-64" : "translate-x-0"
+                        }`}
+                    onClick={toggleNav}
+                >
+                    {!arrowClose && (
+                        <div className="h-8 w-8">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
+                                <path
+                                    fill="white"
+                                    d="m17.5 5.999-.707.707 5.293 5.293H1v1h21.086l-5.294 5.295.707.707L24 12.499l-6.5-6.5z"
+                                    data-name="Right"
+                                />
+                            </svg>
+                        </div>
+                    )}
+                    {arrowClose && (
+                        <div className="h-8 w-8">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
+                                <path
+                                    fill="white"
+                                    d="M24 12.001H2.914l5.294-5.295-.707-.707L1 12.501l6.5 6.5.707-.707-5.293-5.293H24v-1z"
+                                    data-name="Left"
+                                />
+                            </svg>
+                        </div>
+                    )}
+                </button>
+            </div>
+            <SideNav isOpen={isOpen} />
+
+            <div
+                className={`text-white transition duration-500 ${isOpen ? " opacity-25 " : " opacity-100 "
+                    }`}
             >
-                { !arrowClose && (
-                    <div className="h-8 w-8">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
-                            <path
-                                fill="white"
-                                d="m17.5 5.999-.707.707 5.293 5.293H1v1h21.086l-5.294 5.295.707.707L24 12.499l-6.5-6.5z"
-                                data-name="Right"
+                <Box component={"div"} className="pl-7">
+                    <Box>
+                        <div className="text-white">
+                            <h1 className="text-green-500 text-3xl pb-3 font-medium italic">
+                                Update values for Trial Car
+                            </h1>
+                        </div>
+                    </Box>
+                    <Box component={"form"} onSubmit={formik.handleSubmit}>
+                        <div className="pr-7">
+
+                            <br />
+
+                            <label>Address</label>
+                            <CustomSelectCars
+                                value={formik.values.address}
+                                onChange={(value) => formik.setFieldValue("address", value.value)}
+                                classnames={"input"}
+                                options={options}
                             />
-                        </svg>
-                    </div>
-                ) }
-                { arrowClose && (
-                    <div className="h-8 w-8">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
-                            <path
-                                fill="white"
-                                d="M24 12.001H2.914l5.294-5.295-.707-.707L1 12.501l6.5 6.5.707-.707-5.293-5.293H24v-1z"
-                                data-name="Left"
-                            />
-                        </svg>
-                    </div>
-                ) }
-            </button>
-        </div>
-        <SideNav isOpen={ isOpen } />
-
-        <div
-            className={ `text-white transition duration-500 ${isOpen ? " opacity-25 " : " opacity-100 "
-                }` }
-        >
-        <Box component={ "div" } className="pl-7">
-            <Box>
-                <div className="text-white">
-                    <h1 className="text-green-500 text-3xl pb-3 font-medium italic">
-                        Update values for Trial Car
-                    </h1>
-                </div>
-            </Box>
-            <Box component={ "form" } onSubmit={ formik.handleSubmit }>
-                <div className="pr-7">
-
-                    <br />
-
-                    <label>Address</label>
-          <CustomSelectCars
-            value={formik.values.address}
-            onChange={(value) => formik.setFieldValue("address", value.value)}
-            classnames={"input"}
-            options={options}
-          />
-<br />
-                    <div>
-                        <Button
-                            variant="contained"
-                            type="submit"
-                            className="bg-green-400 text-black hover:bg-green-600 hover:text-white"							>
-                            Update
-                        </Button>
-                    </div>
-                </div>
-            </Box>
-        </Box>
-        </div>
+                            <br></br>
+                            <div>
+                                <Button
+                                    variant="contained"
+                                    type="submit"
+                                    className="bg-green-400 text-black hover:bg-green-600 hover:text-white"							>
+                                    Update
+                                </Button>
+                            </div>
+                        </div>
+                    </Box>
+                </Box>
+            </div>
         </div>
     )
 }
