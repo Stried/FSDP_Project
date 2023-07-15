@@ -54,8 +54,10 @@ function UserEnterAccount() {
 				.post("/user/login", data)
 				.then((res) => {
 					localStorage.setItem("accessToken", res.data.accessToken);
-					setUser(res.data.user);
-					navigate("/");
+                    setUser(res.data.user);
+                    
+                    navigate("/");
+                    window.location.reload();
 				})
 				.catch(function (err) {
 					console.log(err);

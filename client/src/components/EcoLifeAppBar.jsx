@@ -7,33 +7,7 @@ import "./../App.css";
 import { BrowserRouter as Router, Routes, Route, Link, Navigate } from "react-router-dom";
 import http from "./../http";
 import { Dropdown } from "flowbite-react";
-
-// Pages Import
-import Ecolife from "../pages/Ecolife";
-import PageNotFound from "../pages/PageNotFound";
-import UserCreateAccount from "../pages/Users/UserCreateAccount";
-import UserEnterAccount from "../pages/Users/UserEnterAccount";
-import UserDetailsPage from "../pages/Users/UserDetailsPage";
-import AdminPanelMain from "../pages/Users/AdminPanelMain";
-import UserChangePassword from "../pages/Users/UserChangePassword";
-
-import LocationsMain from "../pages/Locations/LocationsMain";
-import LocationsCreate from "../pages/Locations/LocationsCreate";
-
-import TrialsAddPage from "../pages/Trials/trialAdmin/TrialsCarAdd";
-import TrialsAdminPage from "../pages/Trials/trialAdmin/TrialsCarAdminPage";
-import TrialsUpdatePage from "../pages/Trials/trialAdmin/TrialsCarAdminUpdate";
-import TrialsReceiptCreate from "../pages/Trials/trialUsers/TrialsReceiptCreation";
-import TrialsCarDetails from "../pages/Trials/trialAdmin/TrialsCarDetailedPage";
-import TrialsCarUserPage from "../pages/Trials/trialUsers/TrialsCarUserPage";
-
-import StoreMain from "../pages/Store/StoreMain";
-import StoreAddItem from "../pages/Store/StoreAddItem";
-import StoreUpdateItem from "../pages/Store/StoreUpdateItem";
-
 import UserContext from "../contexts/UserContext";
-import UserForgetPasswordEmail from "../pages/Users/UserForgetPasswordEmail";
-import UserForgetPasswordReset from "../pages/Users/UserForgetPasswordReset";
 
 function AdminPanel(props) {
     const isAdmin = props.isAdmin;
@@ -83,10 +57,6 @@ function EcoLifeAppBar() {
     const [ isAdminCheck, setIsAdminCheck ] = useState(null);
 
     return (
-        <Router>
-            { user && (
-                <div onLoad={ () => setIsAdminCheck(user.adminNo) } />
-            )}
             <nav className="navbar w-full flex  py-6 text-white overflow-x-hidden">
                 <div className="p-3 w-fit">
                     <Link to={ "/" }>
@@ -170,37 +140,6 @@ function EcoLifeAppBar() {
                     ) }
                 </div>
             </nav>
-
-            <div>
-                <Routes>
-                    <Route path={ "/" } element={ <Ecolife /> } />
-                    <Route path={ "/user/createAccount" } element={ <UserCreateAccount /> } />
-                    <Route path={ "/user/login" } element={ <UserEnterAccount /> } />
-                    <Route path={ "/user/viewAccount" } element={ <UserDetailsPage /> } />
-                    <Route path={ "/user/updatePassword" } element={ <UserChangePassword /> } />
-                    <Route path={ "/user/forgetPassword" } element={ <UserForgetPasswordEmail /> } />
-                    <Route path={ "/user/resetPassword" } element={ <UserForgetPasswordReset /> } />
-                    <Route path={ "/user/adminPanel" } element={
-                        <Protected isAdminCheck={isAdminCheck}>
-                            <AdminPanelMain />
-                        </Protected>
-                    } />
-                    <Route path={ "/locations/LocationsMain" } element={ <LocationsMain /> } />
-                    <Route path={ "/locations/createLocation" } element={ <LocationsCreate /> } />
-                    <Route path={ "/Store/StoreMain" } element= { <StoreMain /> } />
-                    <Route path={"/Store/StoreAddItem" } element= { <StoreAddItem /> } />
-                    <Route path={"/Store/StoreUpdateItem/:id" } element= { <StoreUpdateItem /> } />
-                    <Route path={ "/Trials/trialAdmin/TrialsCarAdminPage" } element={ <TrialsAdminPage /> } />
-                    <Route path={"/Trials/trialAdmin/TrialsCarAdminUpdate/:carPlateNo"} element={<TrialsUpdatePage />} />
-                    <Route path={"/Trials/trialAdmin/TrialsCarAdd"} element={<TrialsAddPage />}/>
-                    <Route path={"/Trials/trialAdmin/TrialsCarDetailedPage/:id"} element={<TrialsCarDetails />} />
-                    <Route path={"/Trials/trialUsers/TrialsCarUserPage"} element={<TrialsCarUserPage />} />
-                    <Route path={"/Trials/trialUsers/TrialsReceiptCreation/:carPlateNo"} element={<TrialsReceiptCreate />}/>
-                    <Route path={ "*" } element={ <PageNotFound /> } />
-                </Routes>
-                
-            </div>
-        </Router>
     );
 }
 

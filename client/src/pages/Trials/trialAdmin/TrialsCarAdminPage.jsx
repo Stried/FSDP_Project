@@ -483,11 +483,20 @@ const App = () => {
                                             {trialCar.carPlateNo}
                                         </th>
 
-                                        <td class="px-6 py-4">{trialCar.name}</td>
-                                        <td class="px-6 py-4">{trialCar.carBrand}</td>
-                                        <td class="px-6 py-4">{trialCar.address}</td>
-                                        <td >
-                                            <Link to={`/Trials/trialAdmin/TrialsCarDetailedPage/${trialCar.carPlateNo}`} className="bg-green-400 p-2 px-5 rounded-md text-black hover:bg-green-400 hover:text-white ">
+                                        <td class="px-6 py-4">
+                                            {trialCar.name}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {trialCar.carBrand}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {trialCar.address}
+                                        </td>
+                                        <td>
+                                            <Link
+                                                to={`/Trials/trialAdmin/TrialsCarDetailedPage/${trialCar.carPlateNo}`}
+                                                className="bg-green-400 p-2 px-5 rounded-md text-black hover:bg-green-600 hover:text-white "
+                                            >
                                                 View Details
                                             </Link>
                                         </td>
@@ -501,7 +510,11 @@ const App = () => {
                                         </td>
                                         <td class="pl-0 pr-4 py-4 text-right">
                                             <a
-                                                onClick={() => deleteTrialCar(`${trialCar.carPlateNo}`)}
+                                                onClick={() =>
+                                                    deleteTrialCar(
+                                                        `${trialCar.carPlateNo}`
+                                                    )
+                                                }
                                                 href="#"
                                                 className="bg-red-400 p-2 px-5 rounded-md text-black hover:bg-red-600 hover:text-white "
                                             >
