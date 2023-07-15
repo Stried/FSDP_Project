@@ -7,7 +7,13 @@ import {
     Typography,
     CssBaseline,
 } from "@mui/material";
-import { BrowserRouter as Router, Routes, Route, Link, Navigate } from "react-router-dom";
+import {
+    BrowserRouter as Router,
+    Routes,
+    Route,
+    Link,
+    Navigate,
+} from "react-router-dom";
 import { useState, useEffect } from "react";
 import http from "./http";
 import "./App.css";
@@ -42,6 +48,8 @@ import StoreUpdateItem from "./pages/Store/StoreUpdateItem";
 
 import * as Constants from "./../src/components/CSS Constants/Constants";
 import UserContext from "./contexts/UserContext";
+import ViewAllAccounts from "./pages/Users/adminComponents/ViewAllAccounts";
+import CreateAdmin from "./pages/Users/adminComponents/CreateAdmin";
 
 function App() {
     const [user, setUser] = useState(null);
@@ -51,7 +59,7 @@ function App() {
             // Todo: Get user data from server
             http.get("/user/auth").then((res) => {
                 setUser(res.data.user);
-                setIsAdminCheck(res.data.user.adminNo)
+                setIsAdminCheck(res.data.user.adminNo);
             });
         }
     }, []);
@@ -63,10 +71,10 @@ function App() {
     }
 
     const Protected = ({ isAdminCheck, children }) => {
-        isAdminCheck = user.adminNo
+        isAdminCheck = user.adminNo;
         if (!isAdminCheck) {
-            console.log(isAdminCheck)
-            console.log("Failed")
+            console.log(isAdminCheck);
+            console.log("Failed");
             return <Navigate to={"/404"} />;
         }
 
@@ -90,7 +98,7 @@ function App() {
                         <EcoLifeSideBar />
                     </div>
 
-                    <div>
+                    <div className="px-12">
                         <Routes>
                             <Route
                                 path={"/"}
@@ -125,6 +133,22 @@ function App() {
                                 element={
                                     <Protected>
                                         <AdminPanelMain />
+                                    </Protected>
+                                }
+                            />
+                            <Route
+                                path={"/admin/viewAllUsers"}
+                                element={
+                                    <Protected>
+                                        <ViewAllAccounts />
+                                    </Protected>
+                                }
+                            />
+                            <Route
+                                path={"/admin/createAdmin"}
+                                element={
+                                    <Protected>
+                                        <CreateAdmin />
                                     </Protected>
                                 }
                             />

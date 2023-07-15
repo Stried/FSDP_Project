@@ -84,210 +84,57 @@ const SideNav = ({ isOpen }) => {
         setAccordionOpen(!accordionOpen);
     };
     return (
-
-            <div
-                className={`fixed left-0 top-0 h-full w-64 bg-gradient-to-r z-50 text-white  transition-transform duration-300 transform ${
-                    isOpen ? "translate-x-0" : "-translate-x-full"
-                }`}
+        <div
+            className={`fixed left-0 top-0 h-full w-64 bg-gradient-to-r z-50 text-white  transition-transform duration-300 transform ${
+                isOpen ? "translate-x-0" : "-translate-x-full"
+            }`}
+        >
+            <aside
+                id="separator-sidebar"
+                className="fixed top-0 left-0 z-50 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+                aria-label="Sidebar"
             >
-                <aside
-                    id="separator-sidebar"
-                    className="fixed top-0 left-0 z-50 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
-                    aria-label="Sidebar"
-                >
-                    <div className="h-full overflow-y-auto bg-emerald-600 ">
-                        <div className="py-7 px-4 w-full bg-gradient-to-t from-emerald-600 to-zinc-900">
-                            <Link to={"/"}>
-                                <h1
-                                    className="w-full ml-3 | bg-gradient-to-r from-green-400 to-emerald-600 text-transparent bg-clip-text |
-            hover:ease-in-out duration-300 | italic font-semibold text-4xl"
+                <div className="h-full overflow-y-auto bg-emerald-600 ">
+                    <div className="py-7 px-4 w-full bg-gradient-to-t from-emerald-600 to-zinc-900">
+                        <Link to={"/"}>
+                            <h1 className="w-full ml-3 | text-white | font-semibold text-2xl">
+                                Admin Panel
+                            </h1>
+                        </Link>
+                    </div>
+                    <ul className="space-y-2 px-3 py-4  font-medium text-lg">
+                        <li id="">
+                            <Link
+                                to="/Store/StoreMain"
+                                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white dark:hover:text-black dark:hover:bg-green-400 transition duration-200"
+                            >
+                                <svg
+                                    aria-hidden="true"
+                                    className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg"
                                 >
-                                    Ecolife
-                                </h1>
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z"
+                                        clip-rule="evenodd"
+                                    ></path>
+                                </svg>
+                                <span className="flex-1 ml-3 whitespace-nowrap">
+                                    Store
+                                </span>
                             </Link>
-                        </div>
-                        <ul className="space-y-2 px-3 py-4  font-medium text-lg">
-                            <li id="store">
-                                <Link
-                                    to="/Store/StoreMain"
-                                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white dark:hover:text-black dark:hover:bg-green-400 transition duration-200"
+                        </li>
+                        <li id="trials">
+                            <ul>
+                                <button
+                                    className=" w-full text-left"
+                                    onClick={toggleAccordion}
                                 >
-                                    <svg
-                                        aria-hidden="true"
-                                        className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                                        fill="currentColor"
-                                        viewBox="0 0 20 20"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <path
-                                            fill-rule="evenodd"
-                                            d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z"
-                                            clip-rule="evenodd"
-                                        ></path>
-                                    </svg>
-                                    <span className="flex-1 ml-3 whitespace-nowrap">
-                                        Store
-                                    </span>
-                                </Link>
-                            </li>
-                            <li id="trials">
-                                <ul>
-                                    <button
-                                        className=" w-full text-left"
-                                        onClick={toggleAccordion}
-                                    >
-                                        <a
-                                            href="#"
-                                            className="flex font-medium items-center p-2 text-gray-900 rounded-lg dark:text-white dark:hover:text-black dark:hover:bg-green-400 transition duration-200 "
-                                        >
-                                            <svg
-                                                aria-hidden="true"
-                                                className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                                                fill="currentColor"
-                                                viewBox="0 0 20 20"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                                <path
-                                                    fill-rule="evenodd"
-                                                    d="M5 4a3 3 0 00-3 3v6a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H5zm-1 9v-1h5v2H5a1 1 0 01-1-1zm7 1h4a1 1 0 001-1v-1h-5v2zm0-4h5V8h-5v2zM9 8H4v2h5V8z"
-                                                    clip-rule="evenodd"
-                                                ></path>
-                                            </svg>
-                                            <span className="ml-3">Trials</span>
-                                            {!accordionOpen && (
-                                                <div className="pl-20 font-bold ">
-                                                    <svg
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        width="32"
-                                                        height="28"
-                                                        fill="currentColor"
-                                                        class="bi bi-chevron-compact-down"
-                                                        viewBox="0 0 16 16"
-                                                    >
-                                                        {" "}
-                                                        <path
-                                                            fill-rule="evenodd"
-                                                            d="M1.553 6.776a.5.5 0 0 1 .67-.223L8 9.44l5.776-2.888a.5.5 0 1 1 .448.894l-6 3a.5.5 0 0 1-.448 0l-6-3a.5.5 0 0 1-.223-.67z"
-                                                        />{" "}
-                                                    </svg>
-                                                </div>
-                                            )}
-                                            {accordionOpen && (
-                                                <div className="pl-20 font-bold ">
-                                                    <svg
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        width="32"
-                                                        height="28"
-                                                        fill="currentColor"
-                                                        class="bi bi-chevron-compact-up"
-                                                        viewBox="0 0 16 16"
-                                                    >
-                                                        {" "}
-                                                        <path
-                                                            fill-rule="evenodd"
-                                                            d="M7.776 5.553a.5.5 0 0 1 .448 0l6 3a.5.5 0 1 1-.448.894L8 6.56 2.224 9.447a.5.5 0 1 1-.448-.894l6-3z"
-                                                        />{" "}
-                                                    </svg>
-                                                </div>
-                                            )}
-                                        </a>
-                                    </button>
-                                </ul>
-                                {accordionOpen && (
-                                    <div>
-                                        <a
-                                            href="/Trials/trialAdmin/TrialsCarAdd"
-                                            className="flex items-center pl-16 p-2 text-gray-900 rounded-lg dark:text-white dark:hover:text-black dark:hover:bg-green-400 transition duration-200 "
-                                        >
-                                            Add Trials
-                                        </a>
-                                        <a
-                                            href="#"
-                                            className="flex items-center pl-16 p-2 text-gray-900 rounded-lg dark:text-white dark:hover:text-black dark:hover:bg-green-400 transition duration-200 "
-                                        >
-                                            View Trials
-                                        </a>
-                                        <a
-                                            href="#"
-                                            className="flex items-center pl-16 p-2 text-gray-900 rounded-lg dark:text-white dark:hover:text-black dark:hover:bg-green-400 transition duration-200 "
-                                        >
-                                            View Receipts
-                                        </a>
-                                    </div>
-                                )}
-                            </li>
-                            <li id="locations">
-                                <Link
-                                    to="/locations/LocationsMain"
-                                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white dark:hover:text-black dark:hover:bg-green-400 transition duration-200"
-                                >
-                                    <svg
-                                        aria-hidden="true"
-                                        className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                                        fill="currentColor"
-                                        viewBox="0 0 20 20"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
-                                    </svg>
-                                    <span className="flex-1 ml-3 whitespace-nowrap">
-                                        Locations
-                                    </span>
-                                </Link>
-                            </li>
-                            <li id="someOtherOption">
-                                <Link
-                                    to="/"
-                                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white dark:hover:text-black dark:hover:bg-green-400 transition duration-200"
-                                >
-                                    <svg
-                                        aria-hidden="true"
-                                        className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                                        fill="currentColor"
-                                        viewBox="0 0 20 20"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
-                                        <path
-                                            fill-rule="evenodd"
-                                            d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z"
-                                            clip-rule="evenodd"
-                                        ></path>
-                                    </svg>
-                                    <span className="flex-1 ml-3 whitespace-nowrap ">
-                                        Car Management
-                                    </span>
-                                </Link>
-                            </li>
-                            <li id="someOtherOption">
-                                <a
-                                    href="#"
-                                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white dark:hover:text-black dark:hover:bg-green-400 transition duration-200"
-                                >
-                                    <svg
-                                        aria-hidden="true"
-                                        className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                                        fill="currentColor"
-                                        viewBox="0 0 20 20"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <path
-                                            fill-rule="evenodd"
-                                            d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                                            clip-rule="evenodd"
-                                        ></path>
-                                    </svg>
-                                    <span className="flex-1 ml-3 whitespace-nowrap">
-                                        User Feedback
-                                    </span>
-                                </a>
-                            </li>
-
-                            {!user && (
-                                <li>
-                                    <Link
-                                        to="/user/login"
-                                        className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white dark:hover:text-black dark:hover:bg-green-400 transition duration-200"
+                                    <a
+                                        href="#"
+                                        className="flex font-medium items-center p-2 text-gray-900 rounded-lg dark:text-white dark:hover:text-black dark:hover:bg-green-400 transition duration-200 "
                                     >
                                         <svg
                                             aria-hidden="true"
@@ -298,46 +145,143 @@ const SideNav = ({ isOpen }) => {
                                         >
                                             <path
                                                 fill-rule="evenodd"
-                                                d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z"
+                                                d="M5 4a3 3 0 00-3 3v6a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H5zm-1 9v-1h5v2H5a1 1 0 01-1-1zm7 1h4a1 1 0 001-1v-1h-5v2zm0-4h5V8h-5v2zM9 8H4v2h5V8z"
                                                 clip-rule="evenodd"
                                             ></path>
                                         </svg>
-                                        <span className="flex-1 ml-3 whitespace-nowrap">
-                                            Sign In
-                                        </span>
-                                    </Link>
-                                </li>
-                            )}
-                            {user && (
-                                <li>
-                                    <Link
-                                        to="/user/viewAccount"
-                                        className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white dark:hover:text-black dark:hover:bg-green-400 transition duration-200"
+                                        <span className="ml-3">Trials</span>
+                                        {!accordionOpen && (
+                                            <div className="pl-20 font-bold ">
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    width="32"
+                                                    height="28"
+                                                    fill="currentColor"
+                                                    class="bi bi-chevron-compact-down"
+                                                    viewBox="0 0 16 16"
+                                                >
+                                                    {" "}
+                                                    <path
+                                                        fill-rule="evenodd"
+                                                        d="M1.553 6.776a.5.5 0 0 1 .67-.223L8 9.44l5.776-2.888a.5.5 0 1 1 .448.894l-6 3a.5.5 0 0 1-.448 0l-6-3a.5.5 0 0 1-.223-.67z"
+                                                    />{" "}
+                                                </svg>
+                                            </div>
+                                        )}
+                                        {accordionOpen && (
+                                            <div className="pl-20 font-bold ">
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    width="32"
+                                                    height="28"
+                                                    fill="currentColor"
+                                                    class="bi bi-chevron-compact-up"
+                                                    viewBox="0 0 16 16"
+                                                >
+                                                    {" "}
+                                                    <path
+                                                        fill-rule="evenodd"
+                                                        d="M7.776 5.553a.5.5 0 0 1 .448 0l6 3a.5.5 0 1 1-.448.894L8 6.56 2.224 9.447a.5.5 0 1 1-.448-.894l6-3z"
+                                                    />{" "}
+                                                </svg>
+                                            </div>
+                                        )}
+                                    </a>
+                                </button>
+                            </ul>
+                            {accordionOpen && (
+                                <div>
+                                    <a
+                                        href="/Trials/trialAdmin/TrialsCarAdd"
+                                        className="flex items-center pl-16 p-2 text-gray-900 rounded-lg dark:text-white dark:hover:text-black dark:hover:bg-green-400 transition duration-200 "
                                     >
-                                        <span className="flex-1 whitespace-nowrap text-ellipsis">
-                                            {user.emailAccount}
-                                        </span>
-                                    </Link>
-                                </li>
-                            )}
-                        </ul>
-                        <ul className="mt-4 px-3 py-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700 text-lg">
-                            <li>
-                                {user && (
-                                    <div
-                                        onClick={() =>
-                                            setIsAdminCheck(user.adminNo)
-                                        }
+                                        Add Trials
+                                    </a>
+                                    <a
+                                        href="#"
+                                        className="flex items-center pl-16 p-2 text-gray-900 rounded-lg dark:text-white dark:hover:text-black dark:hover:bg-green-400 transition duration-200 "
                                     >
-                                        <AdminPanel isAdmin={user.adminNo} />
-                                    </div>
-                                )}
-                            </li>
-                        </ul>
-                    </div>
-                </aside>
-            </div>
-
+                                        View Trials
+                                    </a>
+                                    <a
+                                        href="#"
+                                        className="flex items-center pl-16 p-2 text-gray-900 rounded-lg dark:text-white dark:hover:text-black dark:hover:bg-green-400 transition duration-200 "
+                                    >
+                                        View Receipts
+                                    </a>
+                                </div>
+                            )}
+                        </li>
+                        <li id="locations">
+                            <Link
+                                to="/locations/LocationsMain"
+                                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white dark:hover:text-black dark:hover:bg-green-400 transition duration-200"
+                            >
+                                <svg
+                                    aria-hidden="true"
+                                    className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+                                </svg>
+                                <span className="flex-1 ml-3 whitespace-nowrap">
+                                    Locations
+                                </span>
+                            </Link>
+                        </li>
+                        <li id="createAdmin">
+                            <Link
+                                to="/admin/createAdmin"
+                                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white dark:hover:text-black dark:hover:bg-green-400 transition duration-200"
+                            >
+                                <svg
+                                    aria-hidden="true"
+                                    className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z"
+                                        clip-rule="evenodd"
+                                    ></path>
+                                </svg>
+                                <span className="flex-1 ml-3 whitespace-nowrap ">
+                                    Create Admin
+                                </span>
+                            </Link>
+                        </li>
+                        <li id="viewAllUsers">
+                            <Link
+                                to={"/admin/viewAllUsers"}
+                                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white dark:hover:text-black dark:hover:bg-green-400 transition duration-200"
+                            >
+                                <svg
+                                    aria-hidden="true"
+                                    className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                                        clip-rule="evenodd"
+                                    ></path>
+                                </svg>
+                                <span className="flex-1 ml-3 whitespace-nowrap">
+                                    View Users
+                                </span>
+                            </Link>
+                        </li>
+                    </ul>
+                </div>
+            </aside>
+        </div>
     );
 };
 
