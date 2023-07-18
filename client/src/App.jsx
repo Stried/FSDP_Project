@@ -87,7 +87,7 @@ function App() {
         <UserContext.Provider value={{ user, setUser }}>
             <div
                 id="root"
-                className="w-full h-screen overflow-x-hidden | bg-gradient-to-b from-zinc-900 to-black"
+                className="w-full h-screen overflow-x-hidden | bg-gradient-to-b dark:from-zinc-900 dark:to-black from-slate-200 to-white"
             >
                 <Router>
                     <div>

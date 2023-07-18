@@ -15,7 +15,7 @@ function AdminPanel(props) {
         return (
             <Link to="/user/adminPanel">
                 <h1
-                    className="w-max | hover:text-white dark:hover:text-green-500 | hover:ease-in-out duration-300
+                    className="w-max | hover:text-green-500 | hover:ease-in-out duration-300
                       font-medium text-xl | mx-5 my-2"
                 >
                     Admin Panel
@@ -57,89 +57,85 @@ function EcoLifeAppBar() {
     const [ isAdminCheck, setIsAdminCheck ] = useState(null);
 
     return (
-            <nav className="navbar w-full flex  py-6 text-white overflow-x-hidden">
-                <div className="p-3 w-fit">
-                    <Link to={ "/" }>
-                        <h1
-                            className="w-fit | bg-gradient-to-r from-green-400 to-emerald-600 text-transparent bg-clip-text |
+        <nav className="navbar w-full flex  py-6 dark:text-white text-zinc-900 overflow-x-hidden">
+            <div className="p-3 w-fit">
+                <Link to={"/"}>
+                    <h1
+                        className="w-fit | bg-gradient-to-r dark:from-green-400 dark:to-emerald-600 from-sky-400 to-blue-500 text-transparent bg-clip-text |
             hover:ease-in-out duration-300 | italic font-semibold text-4xl | mx-4 my-2"
-                        >
-                            Ecolife
-                        </h1>
-                    </Link>
-                </div>
-                <div name="otherLinks" className="flex mt-3 mx-4 py-1">
-                    <Link to="/Store/StoreMain">
-                        <h1
-                            className="w-max | hover:text-white dark:hover:text-green-500 | hover:ease-in-out duration-300
+                    >
+                        Ecolife
+                    </h1>
+                </Link>
+            </div>
+            <div
+                name="otherLinks"
+                className="flex mt-3 mx-4 py-1"
+            >
+                <Link to="/Store/StoreMain">
+                    <h1
+                        className="w-max | hover:text-green-500 | hover:ease-in-out duration-300
                     font-medium text-xl | mx-5 my-2"
-                        >
-                            Store
-                        </h1>
-                    </Link>
+                    >
+                        Store
+                    </h1>
+                </Link>
 
-                    <div className="text-xl font-medium my-2 mx-5 hover:text-green-500 hover:transition-ease-in-out duration-300">
-                        <Dropdown inline label="Location" size="lg">
-                            <Dropdown.Item>
-                                <Link to="/locations/LocationsMain">
-                                    <p className="">View Locations</p>
-                                </Link>
-                            </Dropdown.Item>
-                            { user && (
-                                <LocationsAdmin isAdmin={ user.adminNo } />
-                            )}
-                        </Dropdown>
+                <div className="text-xl font-medium my-2 mx-5 hover:text-green-500 hover:transition-ease-in-out duration-300">
+                    <Dropdown
+                        inline
+                        label="Location"
+                        size="lg"
+                    >
+                        <Dropdown.Item>
+                            <Link to="/locations/LocationsMain">
+                                <p className="">View Locations</p>
+                            </Link>
+                        </Dropdown.Item>
+                        {user && <LocationsAdmin isAdmin={user.adminNo} />}
+                    </Dropdown>
+                </div>
+
+                <Link to="/Trials/trialAdmin/TrialsCarAdminPage">
+                    <h1
+                        className="w-max | hover:text-green-500 | hover:ease-in-out duration-300
+                    font-medium text-xl | mx-5 my-2"
+                    >
+                        Trial Runs
+                    </h1>
+                </Link>
+
+                {user && (
+                    <div onClick={() => setIsAdminCheck(user.adminNo)}>
+                        <AdminPanel isAdmin={user.adminNo} />
                     </div>
+                )}
+            </div>
 
-                    <Link to="/Trials/trialAdmin/TrialsCarAdminPage">
-                        <h1
-                            className="w-max | hover:text-white dark:hover:text-green-500 | hover:ease-in-out duration-300
-                    font-medium text-xl | mx-5 my-2"
-                        >
-                            Trial Runs
-                        </h1>
-                    </Link>
-                    
-                
-                    { user && (
-                        <div onClick={ () => setIsAdminCheck(user.adminNo) }>
-                            <AdminPanel isAdmin={ user.adminNo } />
-                        </div>
-                    ) }
-                    
-
-                </div>
-
-                
-                <div name="loginButton" className="w-full place-content-end my-auto mx-2">
-                    { user && (
-                        <>
-                            <Link to="/user/viewAccount">
-                                <h1
-                                    className="w-max | text-transparent bg-gradient-to-r from-green-400 to-emerald-600 bg-clip-text |
-                hover:text-white hover:bg-gradient-to-r from-green-400 to-emerald-600 hover:bg-clip-border rounded-lg
-                    hover:ease-in-out duration-300 | font-medium italic text-xl | mx-4 px-2 py-1 | float-right"
-                                >
-                                    { user.emailAccount }
-                                </h1>
-                            </Link>
-
-                        </>
-                    ) }
-                    { !user && (
-                        <>
-                            <Link to="/user/login">
-                                <h1
-                                    className="w-max | text-white hover:text-black | dark:hover:bg-gradient-to-r from-green-400 to-emerald-600 | border-white dark:border-green-500 border-solid border-2 rounded
-            hover:ease-in-out duration-300 | font-semibold text-xl | mx-4 mt-1 px-2 py-1 | float-right"
-                                >
-                                    Log In
-                                </h1>
-                            </Link>
-                        </>
-                    ) }
-                </div>
-            </nav>
+            <div
+                name="loginButton"
+                className="w-full place-content-end my-auto mx-2"
+            >
+                {user && (
+                    <>
+                        <Link to="/user/viewAccount">
+                            <h1 className="w-max | font-medium italic text-xl | mx-4 px-2 py-1 | float-right | dark:text-green-500 text-sky-500">
+                                {user.emailAccount}
+                            </h1>
+                        </Link>
+                    </>
+                )}
+                {!user && (
+                    <>
+                        <Link to="/user/login">
+                            <h1 className="w-max font-semibold text-xl | mx-4 mt-1 px-2 py-1 | float-right | dark:text-green-500 text-sky-500 | border-2 border-solid dark:border-green-500 border-sky-500 rounded">
+                                Log In
+                            </h1>
+                        </Link>
+                    </>
+                )}
+            </div>
+        </nav>
     );
 }
 

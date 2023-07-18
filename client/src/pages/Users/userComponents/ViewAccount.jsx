@@ -62,68 +62,91 @@ function ViewAccount() {
     }, [])
 
     return (
-        <div className="text-white">
+        <div className="dark:text-white text-neutral-600">
             <div className="mx-5 ">
-                
-                    <div id="userAccountDetails">
-                        <p className="text-3xl font-medium">
-                            { user.fullName }'s Account Details
-                        </p>
-                        <div className="my-3">
-                            <div className="text-white mb-3">
-                                { user && user.imageFile !== "No image" && ( // Had to be non-nullable
-                                    <AspectRatio className="w-2/5 border-green-500 border-2 border-solid rounded float-right mr-10">
-                                        <Box component="img"
-                                            src={ `${import.meta.env.VITE_FILE_BASE_URL}${user.imageFile}` }
-                                            alt="Profile Picture">
-                                        </Box>
+                <div id="userAccountDetails">
+                    <p className="text-3xl font-medium">
+                        {user.fullName}'s Account Details
+                    </p>
+                    <div className="my-3">
+                        <div className="text-white mb-3">
+                            {user &&
+                                user.imageFile !== "No image" && ( // Had to be non-nullable
+                                    <AspectRatio className="w-2/5 dark:border-green-500 border-sky-400 border-2 border-solid rounded mr-12">
+                                        <Box
+                                            component="img"
+                                            src={`${
+                                                import.meta.env
+                                                    .VITE_FILE_BASE_URL
+                                            }${user.imageFile}`}
+                                            alt="Profile Picture"
+                                        ></Box>
                                     </AspectRatio>
-                                ) }
-                            </div>
-                            <div id="nameSection" className="flex space-x-10">
-                                <div id="fullName" className="my-3">
-                                    <h1 className="text-green-400 font-medium text-2xl">
-                                        Full Name
-                                    </h1>
-                                    <p className="text-2xl font-medium italic">
-                                        { user.fullName }
-                                    </p>
-                                </div>
-                                <div id="userName" className="my-3">
-                                    <h1 className="text-green-400 font-medium text-2xl">
-                                        Username
-                                    </h1>
-                                    <p className="text-2xl font-medium italic">
-                                        { user.userName }
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div id="emailAccount" className="my-3">
-                                <h1 className="text-green-400 font-medium text-2xl">
-                                    Email Account
+                                )}
+                        </div>
+                        <div
+                            id="nameSection"
+                            className="flex space-x-10"
+                        >
+                            <div
+                                id="fullName"
+                                className="my-3"
+                            >
+                                <h1 className="dark:text-green-400 text-sky-500 font-medium text-2xl">
+                                    Full Name
                                 </h1>
                                 <p className="text-2xl font-medium italic">
-                                    { user.emailAccount }
+                                    {user.fullName}
                                 </p>
                             </div>
-                            <div id="phoneNo" className="my-3">
-                                <h1 className="text-green-400 font-medium text-2xl">
-                                    Phone Number
+                            <div
+                                id="userName"
+                                className="my-3"
+                            >
+                                <h1 className="dark:text-green-400 text-sky-500 font-medium text-2xl">
+                                    Username
                                 </h1>
                                 <p className="text-2xl font-medium italic">
-                                    { user.phoneNo }
+                                    {user.userName}
                                 </p>
                             </div>
                         </div>
-                        <Button className="bg-red-500 text-white rounded px-2 py-1 mt-4 mb-10 text-xl 
-                        font-medium border-transparent border-2 border-solid hover:border-red-500 
-                        hover:border-2 hover:border-solid hover:transition-ease-in-out duration-300" onClick={ logout }>Logout</Button>
+
+                        <div
+                            id="emailAccount"
+                            className="my-3"
+                        >
+                            <h1 className="dark:text-green-400 text-sky-500 font-medium text-2xl">
+                                Email Account
+                            </h1>
+                            <p className="text-2xl font-medium italic">
+                                {user.emailAccount}
+                            </p>
+                        </div>
+                        <div
+                            id="phoneNo"
+                            className="my-3"
+                        >
+                            <h1 className="dark:text-green-400 text-sky-500 font-medium text-2xl">
+                                Phone Number
+                            </h1>
+                            <p className="text-2xl font-medium italic">
+                                {user.phoneNo}
+                            </p>
+                        </div>
                     </div>
-                
+                    <Button
+                        className="bg-red-500 text-white rounded px-2 py-1 mt-4 mb-10 text-xl 
+                        font-medium border-transparent border-2 border-solid hover:border-red-500 
+                        hover:border-2 hover:border-solid hover:transition-ease-in-out duration-300"
+                        onClick={logout}
+                    >
+                        Logout
+                    </Button>
+                </div>
             </div>
         </div>
-    )
+    );
 }
 
 export default ViewAccount
