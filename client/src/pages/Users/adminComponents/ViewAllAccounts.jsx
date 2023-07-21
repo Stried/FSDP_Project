@@ -59,7 +59,7 @@ function ViewAllAccounts() {
                     onClick={() => {
                         setDisplayStyle("Full");
                     }}
-                    className="text-neutral-700 border-sky-400 dark:border-green-500 border-2 border-solid px-3 py-1 rounded"
+                    className="text-neutral-700 border-sky-400 dark:text-white dark:border-green-500 border-2 border-solid px-3 py-1 rounded"
                 >
                     Full
                 </button>
@@ -67,7 +67,7 @@ function ViewAllAccounts() {
                     onClick={() => {
                         setDisplayStyle("Semi");
                     }}
-                    className="text-neutral-700 border-sky-400 dark:border-green-500 border-2 border-solid px-3 py-1 rounded"
+                    className="text-neutral-700 border-sky-400 dark:text-white dark:border-green-500 border-2 border-solid px-3 py-1 rounded"
                 >
                     Semi
                 </button>
@@ -75,7 +75,7 @@ function ViewAllAccounts() {
                     onClick={() => {
                         setDisplayStyle("Contained");
                     }}
-                    className="text-neutral-700 border-sky-400 dark:border-green-500 border-2 border-solid px-3 py-1 rounded"
+                    className="text-neutral-700 border-sky-400 dark:text-white dark:border-green-500 border-2 border-solid px-3 py-1 rounded"
                 >
                     Contained
                 </button>
