@@ -52,7 +52,10 @@ function CreateAdmin() {
     })
 
     return (
-        <div>
+        <div className="w-1/2">
+            <div className="text-4xl text-white font-medium">
+                Admin Creation
+            </div>
             <ToastContainer />
             <Box component={ "form" } onSubmit={ formik.handleSubmit }>
                 <FormInputSingleLine
