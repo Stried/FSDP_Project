@@ -506,4 +506,14 @@ router.put("/resetPassword", async (req, res) => {
     }
 })
 
+router.get("/:username", async (req, res) => {
+    const username = req.params.username;
+
+    let findAccount = await UserAccount.findOne({
+        where: { username: username }
+    })
+
+    res.json(findAccount);
+})
+
 module.exports = router;

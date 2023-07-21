@@ -26,7 +26,6 @@ import Ecolife from "./pages/Ecolife";
 import PageNotFound from "./pages/PageNotFound";
 import UserCreateAccount from "./pages/Users/UserCreateAccount";
 import UserEnterAccount from "./pages/Users/UserEnterAccount";
-import UserDetailsPage from "./pages/Users/UserDetailsPage";
 import AdminPanelMain from "./pages/Users/AdminPanelMain";
 import UserChangePassword from "./pages/Users/UserChangePassword";
 import UserForgetPasswordEmail from "./pages/Users/UserForgetPasswordEmail";
@@ -50,6 +49,9 @@ import * as Constants from "./../src/components/CSS Constants/Constants";
 import UserContext from "./contexts/UserContext";
 import ViewAllAccounts from "./pages/Users/adminComponents/ViewAllAccounts";
 import CreateAdmin from "./pages/Users/adminComponents/CreateAdmin";
+import ViewOtherUser from "./pages/Users/ViewOtherUser";
+import ViewAccount from "./pages/Users/userComponents/ViewAccount";
+import Setting from "./pages/Users/userComponents/Setting";
 
 function App() {
     const [user, setUser] = useState(null);
@@ -87,7 +89,7 @@ function App() {
         <UserContext.Provider value={{ user, setUser }}>
             <div
                 id="root"
-                className="w-full h-screen overflow-x-hidden | bg-gradient-to-b from-zinc-900 to-black"
+                className="w-full h-screen overflow-x-hidden | bg-gradient-to-b dark:from-zinc-900 dark:to-black from-slate-200 to-white"
             >
                 <Router>
                     <div>
@@ -114,7 +116,11 @@ function App() {
                             />
                             <Route
                                 path={"/user/viewAccount"}
-                                element={<UserDetailsPage />}
+                                element={<ViewAccount />}
+                            />
+                            <Route 
+                                path={ "/user/viewAccount/settings" }
+                                element={ <Setting /> }
                             />
                             <Route
                                 path={"/user/updatePassword"}
@@ -135,6 +141,10 @@ function App() {
                                         <AdminPanelMain />
                                     </Protected>
                                 }
+                            />
+                            <Route 
+                                path={ "/user/:username" }
+                                element={ <ViewOtherUser /> }
                             />
                             <Route
                                 path={"/admin/viewAllUsers"}

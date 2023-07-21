@@ -18,7 +18,6 @@ import Ecolife from "../pages/Ecolife";
 import PageNotFound from "../pages/PageNotFound";
 import UserCreateAccount from "../pages/Users/UserCreateAccount";
 import UserEnterAccount from "../pages/Users/UserEnterAccount";
-import UserDetailsPage from "../pages/Users/UserDetailsPage";
 import AdminPanelMain from "../pages/Users/AdminPanelMain";
 import UserChangePassword from "../pages/Users/UserChangePassword";
 import UserForgetPasswordEmail from "../pages/Users/UserForgetPasswordEmail";

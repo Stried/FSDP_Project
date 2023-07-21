@@ -20,25 +20,24 @@ const DarkTheme = Constants.DarkTheme;
 
 function FormInputSingleLine(props) {
   return (
-    <ThemeProvider theme={DarkTheme}>
-      <CssTextField
-        className="border-green-400 border-5"
-        fullWidth
-        margin="normal"
-        autoComplete="off"
-        type={props.type}
-        label={props.name}
-        name={props.valueName}
-        inputProps={{ style: { color: "white" } }}
-        InputProps={{
-          endAdornment: props.endAdornment
-        }}
-        onChange={props.onChange}
-        value={props.value}
-        error={props.error}
-        helperText={props.helperText}
-      />
-    </ThemeProvider>
+      <ThemeProvider theme={DarkTheme}>
+          <CssTextField
+              fullWidth
+              margin="normal"
+              autoComplete="off"
+              type={props.type}
+              label={props.name}
+              name={props.valueName}
+              inputProps={{ style: { color: "grey" } }}
+              InputProps={{
+                  endAdornment: props.endAdornment,
+              }}
+              onChange={props.onChange}
+              value={props.value}
+              error={props.error}
+              helperText={props.helperText}
+          />
+      </ThemeProvider>
   );
 }
 
