@@ -7,6 +7,8 @@ import { Link, Routes, Route, useParams } from "react-router-dom";
 import UserContext from "../../contexts/UserContext";
 import http from '../../http';
 import AspectRatio from '@mui/joy/AspectRatio';
+import { AiOutlineUser } from 'react-icons/ai'
+
 
 function User(props) {
     const isUser = props.isUser
@@ -104,52 +106,32 @@ function StoreMain() {
                 </IconButton>
             </div>
             <br />
-            <div className="bg-zinc-800 text-white mx-5 p-5">
-                <div className="flex justify-center text-5xl pb-3">
-                    Vehicles
-                </div>
-                <Grid container spacing={2}>
-                    {
-                        storeList.map((store, i) => {
-                            return (
-                                <Grid item xs={4} className="mx-auto">
-                                    <div className="grid-cols-2 text-center border border-white bg-zinc-600 text-2xl">
-                                        <div className="pb-3">
-                                            {
-                                                store.carImageFile && (
-                                                    <AspectRatio>
-                                                        <Box component="img"
-                                                            src={`${import.meta.env.VITE_FILE_BASE_URL}${store.carImageFile}`}
-                                                            alt="store">
-                                                        </Box>
-                                                    </AspectRatio>
-                                                )
-                                            }
-                                        </div>
-                                        <div sx={{ whiteSpace: 'pre-wrap' }}>
-                                            {store.carPlateNo}
-                                        </div>
-                                        <div sx={{ whiteSpace: 'pre-wrap' }}>
-                                            {store.carBrand}, {store.carModel}
-                                        </div>
-                                        <div sx={{ whiteSpace: 'pre-wrap' }}>
-                                            ${store.carPrice.toLocaleString()}
-                                        </div>
-                                        <div sx={{ whiteSpace: 'pre-wrap' }}>
-                                            Sold By: {store.soldBy}
-                                        </div>
-                                        <div>
-                                            <Link>
-                                                <button className="border-2 rounded hover:border-black hover:bg-black font-semibold my-5 p-1 ">View More</button>
-                                            </Link>
-                                            {(user && (<AdminUpdate isAdminUpdate={user.adminNo} id={store.carPlateNo} />))}
-                                        </div>
-                                    </div>
-                                </Grid>
-                            );
-                        })
-                    }
-                </Grid>
+            <div className="grid grid-cols-4 mx-10 space-x-5">
+                {
+                    storeList.map((store, i) => {
+                        return (
+                            <div className="text-white shadow-lg shadow-zinc-700/60 py-2 hover:shadow-xl hover:shadow-zinc-700/60 hover:px-2 duration-300 hover:ease-in-out">
+                                <div className="p-5">
+                                    <p className="text-2xl font-medium">
+                                        {store.carBrand} {store.carModel}
+                                    </p>
+                                    <p className="text-xl">
+                                        $ {store.carPrice}
+                                    </p>
+                                    <p>Production: {store.carProductionDate}</p>
+                                    <p className="flex mt-3">
+                                        <AiOutlineUser className="my-auto" />{" "}
+                                        <span className="pl-1 text-green-400">
+                                            <a href="/user/MuelMuel">
+                                                {store.emailAccount}
+                                            </a>
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        );
+                    })
+                }
             </div>
             <Routes>
                 <Route path={"/StoreAddItem"} element={<StoreAddItem />} />

@@ -78,9 +78,9 @@ function ViewAccount() {
                     </Breadcrumb.Item>
                 </Breadcrumb>
                 <div id="userAccountDetails">
-                    <p className="text-3xl font-medium">
+                    <p className="text-3xl font-medium mb-10">
                         {user.fullName}'s Account Details
-                        <span className="flex space-x-3">
+                        <span className="flex space-x-3 mt-2">
                             <Badge
                                 color="success"
                                 size={"sm"}
@@ -98,7 +98,7 @@ function ViewAccount() {
                         </span>
                     </p>
                     <div className="my-3 flex flex-row">
-                        <div className="text-white mb-3 text-center basis-1/8 mr-10">
+                        <div className="text-white mb-3 text-center basis-1/6 mr-10">
                             {user &&
                                 user.imageFile !== "No image" && ( // Had to be non-nullable
                                     <Avatar
@@ -124,7 +124,7 @@ function ViewAccount() {
                                 Settings
                             </Button>
                         </div>
-                        <div className="basis-1/4 ml-6">
+                        <div className="basis-1/3 ml-6">
                             <div className="mr-12">
                                 <div
                                     id="nameSection"
