@@ -211,16 +211,6 @@ function ViewAllAccounts() {
                                                         </Modal.Body>
                                                         <Modal.Footer>
                                                             <p className="w-max float-right">
-                                                                <button
-                                                                    onClick={() =>
-                                                                        deleteUser(
-                                                                            `${user.id}`
-                                                                        )
-                                                                    }
-                                                                    className="px-3 py-2 bg-red-500 rounded font-medium"
-                                                                >
-                                                                    Delete
-                                                                </button>
                                                                 <span className="w-fit | bg-gradient-to-r from-green-400 to-emerald-600 text-transparent bg-clip-text | hover:ease-in-out duration-300 | italic font-semibold text-xl">
                                                                     Ecolife
                                                                 </span>
@@ -345,16 +335,6 @@ function ViewAllAccounts() {
                                                         </div>
                                                     </Modal.Body>
                                                     <Modal.Footer>
-                                                        <button
-                                                            onClick={() =>
-                                                                deleteUser(
-                                                                    `${user.id}`
-                                                                )
-                                                            }
-                                                            className="px-3 py-2 bg-red-500 rounded font-medium"
-                                                        >
-                                                            Delete
-                                                        </button>
                                                         <p className="w-fit | bg-gradient-to-r from-green-400 to-emerald-600 text-transparent bg-clip-text | hover:ease-in-out duration-300 | italic font-semibold text-xl">
                                                             Ecolife
                                                         </p>
@@ -441,16 +421,6 @@ function ViewAllAccounts() {
                                                         </div>
                                                     </Modal.Body>
                                                     <Modal.Footer>
-                                                        <button
-                                                            onClick={() =>
-                                                                deleteUser(
-                                                                    `${user.id}`
-                                                                )
-                                                            }
-                                                            className="px-3 py-2 bg-red-500 rounded font-medium"
-                                                        >
-                                                            Delete
-                                                        </button>
                                                         <p className="w-fit | bg-gradient-to-r from-green-400 to-emerald-600 text-transparent bg-clip-text | hover:ease-in-out duration-300 | italic font-semibold text-xl">
                                                             Ecolife
                                                         </p>
