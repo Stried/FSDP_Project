@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import AspectRatio from '@mui/joy/AspectRatio';
 import { Formik } from "formik";
-import { Breadcrumb } from "flowbite-react";
+import { Breadcrumb, Modal } from "flowbite-react";
 import { HiHome } from "react-icons/hi";
 
 import { ToastContainer, toast } from 'react-toastify';
@@ -30,6 +30,7 @@ function Setting() {
     const [ userInfo, setUserInfo ] = useState({
         id: ""
     })
+    const [openModal, setOpenModal] = useState("");
 
     const logout = () => {
         localStorage.clear();
@@ -94,11 +95,59 @@ function Setting() {
             </p>
             {/* Modal to be implemented */}
             <button
-                onClick={() => deleteUser()}
+                onClick={() => {
+                    setOpenModal("deleteModal");
+                }}
                 className="px-3 py-2 bg-red-500 hover:bg-red-600 hover:text-white rounded font-medium"
             >
                 Delete
             </button>
+            <Modal
+                dismissible
+                show={openModal === "deleteModal"}
+                onClose={() => setOpenModal(undefined)}
+            >
+                <Modal.Header>Account Deletion</Modal.Header>
+                <Modal.Body>
+                    <div className="space-y-6">
+                        <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                            Once your Ecolife Account is deleted, no changes can
+                            be made. All relevant information related to this
+                            account will be deleted. There will be no
+                            restoration of accounts.
+                        </p>
+                        <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                            <span className="text-red-500 font-medium">
+                                This account will be permanently deleted.
+                            </span>
+                            <br />
+                            If you wish to delete your account, click on{" "}
+                            <span className="text-red-500 font-medium">
+                                Delete.
+                            </span>
+                            <br />
+                            If you change your mind, click on{" "}
+                            <span className="text-sky-500 font-medium">
+                                Decline.
+                            </span>
+                        </p>
+                    </div>
+                </Modal.Body>
+                <Modal.Footer>
+                    <button
+                        onClick={() => deleteUser()}
+                        className="px-3 py-2 bg-red-500 hover:bg-red-600 hover:text-white rounded font-medium"
+                    >
+                        Delete
+                    </button>
+                    <button
+                        onClick={() => setOpenModal(undefined)}
+                        className="px-3 py-2 bg-sky-400 hover:bg-sky-600 hover:text-white rounded font-medium"
+                    >
+                        Decline
+                    </button>
+                </Modal.Footer>
+            </Modal>
 
             <p className="text-white text-3xl font-medium mt-10 mb-2">
                 Log out
