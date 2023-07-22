@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Box, Typography, Input, IconButton, Grid, Card, CardContent } from '@mui/material';
+import { Box, Typography, Input, IconButton, Grid, Card, CardContent, Paper } from '@mui/material';
 import { AccessTime, Search, Clear } from '@mui/icons-material';
 import StoreAddItem from "../Store/StoreAddItem";
 import StoreUpdateItem from "../Store/StoreUpdateItem";
 import { Link, Routes, Route, useParams } from "react-router-dom";
 import UserContext from "../../contexts/UserContext";
 import http from '../../http';
+import AspectRatio from '@mui/joy/AspectRatio';
 
 function User(props) {
     const isUser = props.isUser
@@ -22,19 +23,23 @@ function User(props) {
 
 function AdminUpdate(props) {
     const isAdminUpdate = props.isAdminUpdate;
+    const id = props.id
     if (isAdminUpdate) {
         return (
-            <button type='button' className='w-max | text-white hover:text-black | dark:hover:bg-gradient-to-r from-green-400 to-emerald-600 | border-white dark:border-green-500 border-solid border-2 rounded   hover:ease-in-out duration-300 | font-semibold text-xl | mx-4 mr-10 m-10 px-2 py-1 | float-right inline'>Update your vehicle here!</button>
+            <Link to={`/Store/StoreUpdateItem/${id}`} className="flex justify-center">
+                <button type='button' className='w-max | text-white hover:text-black | dark:hover:bg-gradient-to-b from-red-400 to-red-600 | border-white dark:border-red-800 border-solid border-2 rounded hover:ease-in-out duration-200 | font-semibold text-xl | mx-4 m-10 px-2 py-1 | float-right inline'>Update vehicle</button>
+            </Link>
         )
     }
 }
+
 
 function StoreMain() {
     const { user } = useContext(UserContext);
 
     const [storeList, setStoreList] = useState([]);
     useEffect(() => {
-        http.get('/store').then((res) => {
+        http.get('/store/viewStore').then((res) => {
             console.log(res.data);
             setStoreList(res.data);
         });
@@ -45,12 +50,12 @@ function StoreMain() {
         setSearch(e.target.value);
     };
     const getStore = () => {
-        http.get('/store').then((res) => {
+        http.get('/store/viewStore').then((res) => {
             setStoreList(res.data);
         });
     };
     const searchStore = () => {
-        http.get(`/store?search=${search}`).then((res) => {
+        http.get(`/store/viewStore?search=${search}`).then((res) => {
             setStoreList(res.data);
         });
     };
@@ -74,7 +79,15 @@ function StoreMain() {
         <Box>
             <div className=''>
                 <div className='text-white | text-3xl | m-10 | inline-flex'>Categories</div>
-                <div className='text-white | pl-10 | pt-1 | text-2xl | m-10 | inline-flex'>All</div>
+                <button className="text-white | text-2xl | mx-10">
+                    All
+                </button>
+                <button className="text-white | text-2xl | mx-10">
+                    Electric
+                </button>
+                <button className="text-white | text-2xl | mx-10">
+                    Hybrid
+                </button>
                 {(user && <User isUser={user.id} />)}
             </div>
             <div className="ml-7 flex">
@@ -91,70 +104,47 @@ function StoreMain() {
                 </IconButton>
             </div>
             <br />
-            <div>
-                <Grid container spacing={2} className="px-7">
+            <div className="bg-zinc-800 text-white mx-5 p-5">
+                <div className="flex justify-center text-5xl pb-3">
+                    Vehicles
+                </div>
+                <Grid container spacing={2}>
                     {
                         storeList.map((store, i) => {
                             return (
-                                <Grid item xs={12} md={6} lg={6} key={store.carPlateNo}>
-                                    <Card className="bg-black text-white">
-                                        <CardContent>
-                                            <Typography variant="h6" sx={{ mb: 1 }}>
-                                                Car Plate No: {store.carPlateNo}
-                                            </Typography>
-                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                                Car Description: {store.carDescription}
-                                            </Typography>
-                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                                Car Price: ${store.carPrice}
-                                            </Typography>
-                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                                Car Brand: {store.carBrand}
-                                            </Typography>
-                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                                Car Model: {store.carModel}
-                                            </Typography>
-                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                                Car Engine: {store.carEngine}
-                                            </Typography>
-                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                                Car Speed: {store.carSpeed} km/h
-                                            </Typography>
-                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                                Car Fuel Type: {store.carFuelType}
-                                            </Typography>
-                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                                Car Fuel Consume: {store.carFuelConsume} g/kwh
-                                            </Typography>
-                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                                Car Production Date: {store.carProductionDate}
-                                            </Typography>
-                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                                Car Body Type: {store.carBodyType}
-                                            </Typography>
-                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                                Car Color: {store.carColor}
-                                            </Typography>
-                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                                Car Seats: {store.carSeats}
-                                            </Typography>
-                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                                Car Length: {store.carLength}mm
-                                            </Typography>
-                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                                Car Width: {store.carWidth}mm
-                                            </Typography>
-                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                                Car Height: {store.carHeight}mm
-                                            </Typography>
-                                            <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                                Car Mods: {store.carMods}
-                                            </Typography>
-                                            <Link to={`/Store/StoreUpdateItem/${store.carPlateNo}`} className="inline-flex">
-                                                {(user && (<AdminUpdate isAdminUpdate={user.adminNo} />))}
+                                <Grid item xs={4} className="mx-auto">
+                                    <div className="grid-cols-2 text-center border border-white bg-zinc-600 text-2xl">
+                                        <div className="pb-3">
+                                            {
+                                                store.carImageFile && (
+                                                    <AspectRatio>
+                                                        <Box component="img"
+                                                            src={`${import.meta.env.VITE_FILE_BASE_URL}${store.carImageFile}`}
+                                                            alt="store">
+                                                        </Box>
+                                                    </AspectRatio>
+                                                )
+                                            }
+                                        </div>
+                                        <div sx={{ whiteSpace: 'pre-wrap' }}>
+                                            {store.carPlateNo}
+                                        </div>
+                                        <div sx={{ whiteSpace: 'pre-wrap' }}>
+                                            {store.carBrand}, {store.carModel}
+                                        </div>
+                                        <div sx={{ whiteSpace: 'pre-wrap' }}>
+                                            ${store.carPrice.toLocaleString()}
+                                        </div>
+                                        <div sx={{ whiteSpace: 'pre-wrap' }}>
+                                            Sold By: {store.soldBy}
+                                        </div>
+                                        <div>
+                                            <Link>
+                                                <button className="border-2 rounded hover:border-black hover:bg-black font-semibold my-5 p-1 ">View More</button>
                                             </Link>
-                                        </CardContent>
-                                    </Card>
+                                            {(user && (<AdminUpdate isAdminUpdate={user.adminNo} id={store.carPlateNo} />))}
+                                        </div>
+                                    </div>
                                 </Grid>
                             );
                         })

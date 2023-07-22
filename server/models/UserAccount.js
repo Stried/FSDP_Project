@@ -39,5 +39,12 @@ module.exports = (sequelize, DataTypes) => {
         });
     };
 
+    UserAccount.associate = (models) => {
+        UserAccount.hasMany(models.Store, {
+            foreignKey: "emailAccount",
+            onDelete: "cascade"
+        });
+    };
+    
     return UserAccount;
 }

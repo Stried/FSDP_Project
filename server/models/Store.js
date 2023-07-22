@@ -75,8 +75,24 @@ module.exports = (sequelize, DataTypes) => {
         carMods: { // It has 18 wheels, tank threads, and comes installed with a 125mm railcannon. Radio only plays "Majulah Singapura" on loop at max volume.
             type: DataTypes.TEXT,
             allowNull: false // add a placeholder such as "No Mods made"
+        },
+        soldBy: {
+            type: DataTypes.TEXT,
+            allowNull: false
+        },
+        carImageFile: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            defaultValue: ""
         }
     });
+
+    Store.associate = (models) => { // sold by who?
+        Store.belongsTo(models.UserAccount, {
+            foreignKey: "emailAccount",
+            as: "email"
+        });
+    };
 
     Store.associate = (models) => {
         Store.hasOne(models.TrialCar, {

@@ -7,24 +7,44 @@ import {
     IconButton,
     Checkbox,
 } from "@mui/material";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from "react-router-dom";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./../../App.css";
 import http from "../../http";
 import FormInputSingleLine from "./../../components/FormInputSingleLine";
-import FormInputMultiLine from "./../../components/FormInputSingleLine";
 import { Field, useFormik } from "formik";
 import * as yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { CheckBox } from "@mui/icons-material";
-import { Label } from "flowbite-react";
-
+import AspectRatio from '@mui/joy/AspectRatio';
 
 function StoreAddItem() {
     const navigate = useNavigate();
+    const [imageFile, setImageFile] = useState(null);
+
+    const onFileChange = (e) => {
+        let file = e.target.files[0];
+        if (file) {
+            if (file.size > 1024 * 1024) {
+                toast.error('Maximum file size is 1MB');
+                return;
+            }
+            let formData = new FormData();
+            formData.append('file', file);
+            http.post('/file/upload', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+                .then((res) => {
+                    setImageFile(res.data.filename);
+                })
+                .catch(function (error) {
+                    console.log(error.response);
+                });
+        }
+    };
+
     const formik = useFormik({
         initialValues: {
             carPlateNo: "",
@@ -65,7 +85,7 @@ function StoreAddItem() {
             carWidth: yup.number().integer().required("Width cannot be empty"),
             carHeight: yup.number().integer().required("Height cannot be empty"),
             isModified: yup.boolean(),
-            carMods: yup.string(),
+            carMods: yup.string()
         }),
         onSubmit: async (data) => {
             const formData = {
@@ -86,11 +106,14 @@ function StoreAddItem() {
                 carWidth: data.carWidth,
                 carHeight: data.carHeight,
                 isModified: data.isModified,
-                carMods: data.carMods.trim()
+                carMods: data.carMods.trim(),    
             }
-            
+            if (imageFile) {
+                    data.imageFile = imageFile;
+            }
+
             await http
-                .post("/store", formData)
+                .post("/store/createStoreItem", formData)
                 .then((res) => {
                     console.log(res.status);
                     navigate("/store/StoreMain");
@@ -111,217 +134,236 @@ function StoreAddItem() {
                     </h1>
                 </div>
             </Box>
-            <Box component={ "form" } onSubmit={ formik.handleSubmit }>
-                    <div className="pr-7">
-                        <div className="w-1/6 pr-5"> 
-                            <FormInputSingleLine 
-                                valueName="carPlateNo"
-                                name="Plate Number"
-                                type="text"
-                                value={formik.values.carPlateNo}
-                                onChange={formik.handleChange}
-                                error={formik.touched.carPlateNo && Boolean(formik.errors.carPlateNo)}
-                                helperText={formik.touched.carPlateNo && formik.errors.carPlateNo}
-                            />
-                        </div>
-                        <div className="w-5/6"> 
-                            <FormInputSingleLine
-                                valueName="carDescription"
-                                name="Description"
-                                type="text"
-                                value={formik.values.carDescription}
-                                onChange={formik.handleChange}
-                                error={formik.touched.carDescription && Boolean(formik.errors.carDescription)}
-                                helperText={formik.touched.carDescription && formik.errors.carDescription}
-                            />
-                        </div>
-                        <div className="w-1/5 pr-5"> 
-                            <FormInputSingleLine 
-                                valueName="carPrice"
-                                name="Price ($)"
-                                type="number"
-                                value={formik.values.carPrice}
-                                onChange={formik.handleChange}
-                                error={formik.touched.carPrice && Boolean(formik.errors.carPrice)}
-                                helperText={formik.touched.carPrice && formik.errors.carPrice}
-                            />
-                        </div>
-                        <div className="w-1/3 pr-5">
-                            <FormInputSingleLine 
-                                valueName="carBrand"
-                                name="Brand"
-                                type="text"
-                                value={formik.values.carBrand}
-                                onChange={formik.handleChange}
-                                error={formik.touched.carBrand && Boolean(formik.errors.carBrand)}
-                                helperText={formik.touched.carBrand && formik.errors.carBrand}
-                            />
-                        </div>
-                        <div className="w-1/3">
-                            <FormInputSingleLine
-                                valueName="carModel" 
-                                name="Model"
-                                type="text"
-                                value={formik.values.carModel}
-                                onChange={formik.handleChange}
-                                error={formik.touched.carModel && Boolean(formik.errors.carModel)}
-                                helperText={formik.touched.carModel && formik.errors.carModel}
-                            />
-                        </div>
-                        <div className="w-1/3"> 
-                            <FormInputSingleLine 
-                                valueName="carEngine"
-                                name="Engine"
-                                type="text"
-                                value={formik.values.carEngine}
-                                onChange={formik.handleChange}
-                                error={formik.touched.carEngine && Boolean(formik.errors.carEngine)}
-                                helperText={formik.touched.carEngine && formik.errors.carEngine}
-                            />
-                        </div>
-                        <div className="w-1/6"> 
-                            <FormInputSingleLine 
-                                valueName="carSpeed"
-                                name="Speed"
-                                type="number"
-                                value={formik.values.carSpeed}
-                                onChange={formik.handleChange}
-                                error={formik.touched.carSpeed && Boolean(formik.errors.carSpeed)}
-                                helperText={formik.touched.carSpeed && formik.errors.carSpeed}
-                            />
-                        </div>
-                        <div className="w-1/4 pr-5"> 
-                            <FormInputSingleLine 
-                                valueName="carFuelType"
-                                name="Fuel Type"
-                                type="text"
-                                value={formik.values.carFuelType}
-                                onChange={formik.handleChange}
-                                error={formik.touched.carFuelType && Boolean(formik.errors.carFuelType)}
-                                helperText={formik.touched.carFuelType && formik.errors.carFuelType }
-                            />
-                        </div>
-                        <div className="w-1/4"> 
-                            <FormInputSingleLine 
-                                valueName="carFuelConsume"
-                                name="Fuel Consumption"
-                                type="number"
-                                value={formik.values.carFuelConsume}
-                                onChange={formik.handleChange}
-                                error={formik.touched.carFuelConsume && Boolean(formik.errors.carFuelConsume)}
-                                helperText={formik.touched.carFuelConsume && formik.errors.carFuelConsume}
-                            />
-                        </div>
-                        <div className="w-1/5 pr-5"> 
-                            <FormInputSingleLine 
-                                valueName="carProductionDate"
-                                name="Production Date"
-                                type="date"
-                                value={formik.values.carProductionDate}
-                                onChange={formik.handleChange}
-                                error={formik.touched.carProductionDate && Boolean(formik.errors.carProductionDate)}
-                                helperText={formik.touched.carProductionDate && formik.errors.carProductionDate}
-                            />
-                        </div>
-                        <div className="w-1/5 pr-5"> 
-                            <FormInputSingleLine
-                                valueName="carBodyType"
-                                name="Body Type"
-                                type="text"
-                                value={formik.values.carBodyType}
-                                onChange={formik.handleChange}
-                                error={formik.touched.carBodyType && Boolean(formik.errors.carBodyType)}
-                                helperText={formik.touched.carBodyType && formik.errors.carBodyType}
-                            />
-                        </div>
-                        <div className="w-1/6 pr-5"> 
-                            <FormInputSingleLine 
-                                valueName="carColor"
-                                name="Color"
-                                type="text"
-                                value={formik.values.carColor}
-                                onChange={formik.handleChange}
-                                error={formik.touched.carColor && Boolean(formik.errors.carColor)}
-                                helperText={formik.touched.carColor && formik.errors.carColor}
-                            />
-                        </div>
-                        <div className="w-1/6"> 
-                            <FormInputSingleLine 
-                                valueName="carSeats"
-                                name="Seats"
-                                type="number"
-                                value={formik.values.carSeats}
-                                onChange={formik.handleChange}
-                                error={formik.touched.carSeats && Boolean(formik.errors.carSeats)}
-                                helperText={formik.touched.carSeats && formik.errors.carSeats}
-                            />
-                        </div>
-                        <div className="w-1/6 pr-5 inline-flex"> 
-                            <FormInputSingleLine 
-                                valueName="carLength"
-                                name="Length (mm)"
-                                type="number"
-                                value={formik.values.carLength}
-                                onChange={formik.handleChange}
-                                error={formik.touched.carLength && Boolean(formik.errors.carLength)}
-                                helperText={formik.touched.carLength && formik.errors.carLength}
-                            />
-                        </div>
-                        <div className="w-1/6 pr-5 inline-flex"> 
-                            <FormInputSingleLine 
-                                valueName="carWidth"
-                                name="Width (mm)"
-                                type="number"
-                                value={formik.values.carWidth}
-                                onChange={formik.handleChange}
-                                error={formik.touched.carWidth && Boolean(formik.errors.carWidth)}
-                                helperText={formik.touched.carWidth && formik.errors.carWidth}
-                            />
-                        </div>
-                        <div className="w-1/6 pr-5 inline-flex"> 
-                            <FormInputSingleLine 
-                                valueName="carHeight"
-                                name="Height (mm)"
-                                type="number"
-                                value={formik.values.carHeight}
-                                onChange={formik.handleChange}
-                                error={formik.touched.carHeight && Boolean(formik.errors.carHeight)}
-                                helperText={formik.touched.carHeight && formik.errors.carHeight}
-                            />
-                        </div>
-                        <br />
-                        <div className="w-1/6 text-white inline-flex mt-1">
-                            <Checkbox className="text-white -ml-3"
-                                value="Modified"
-                                name="isModified"
-                                type="checkbox"
-                                onChange={formik.handleChange}
-                            />
-                            <span className="text-xl text-white flex content-center mt-1.5">Modified</span>
-                        </div>                            
-                        <div className="w-1/2 pr-5"> 
-                            <FormInputSingleLine 
-                                valueName="carMods"
-                                name="Mods"
-                                type="text"
-                                value={formik.values.carMods}
-                                onChange={formik.handleChange}
-                                error={formik.touched.carMods && Boolean(formik.errors.carMods)}
-                                helperText={formik.touched.carMods && formik.errors.carMods}
-                            />
-                        </div>
-                        <div>
-                            <Button
-								variant="contained"
-								type="submit"
-								className="bg-green-400 text-black hover:bg-green-600 hover:text-white"							>
-                                Add
-                            </Button>
-                        </div>
+            <Box component={"form"} onSubmit={formik.handleSubmit}>
+                <div className="pr-7">
+                    <div className="w-1/6 pr-5">
+                        <FormInputSingleLine
+                            valueName="carPlateNo"
+                            name="Plate Number"
+                            type="text"
+                            value={formik.values.carPlateNo}
+                            onChange={formik.handleChange}
+                            error={formik.touched.carPlateNo && Boolean(formik.errors.carPlateNo)}
+                            helperText={formik.touched.carPlateNo && formik.errors.carPlateNo}
+                        />
                     </div>
+                    <div className="w-5/6">
+                        <FormInputSingleLine
+                            valueName="carDescription"
+                            name="Description"
+                            type="text"
+                            value={formik.values.carDescription}
+                            onChange={formik.handleChange}
+                            error={formik.touched.carDescription && Boolean(formik.errors.carDescription)}
+                            helperText={formik.touched.carDescription && formik.errors.carDescription}
+                        />
+                    </div>
+                    <div className="w-1/5 pr-5">
+                        <FormInputSingleLine
+                            valueName="carPrice"
+                            name="Price ($)"
+                            type="number"
+                            value={formik.values.carPrice}
+                            onChange={formik.handleChange}
+                            error={formik.touched.carPrice && Boolean(formik.errors.carPrice)}
+                            helperText={formik.touched.carPrice && formik.errors.carPrice}
+                        />
+                    </div>
+                    <div className="w-1/3 pr-5">
+                        <FormInputSingleLine
+                            valueName="carBrand"
+                            name="Brand"
+                            type="text"
+                            value={formik.values.carBrand}
+                            onChange={formik.handleChange}
+                            error={formik.touched.carBrand && Boolean(formik.errors.carBrand)}
+                            helperText={formik.touched.carBrand && formik.errors.carBrand}
+                        />
+                    </div>
+                    <div className="w-1/3">
+                        <FormInputSingleLine
+                            valueName="carModel"
+                            name="Model"
+                            type="text"
+                            value={formik.values.carModel}
+                            onChange={formik.handleChange}
+                            error={formik.touched.carModel && Boolean(formik.errors.carModel)}
+                            helperText={formik.touched.carModel && formik.errors.carModel}
+                        />
+                    </div>
+                    <div className="w-1/3">
+                        <FormInputSingleLine
+                            valueName="carEngine"
+                            name="Engine"
+                            type="text"
+                            value={formik.values.carEngine}
+                            onChange={formik.handleChange}
+                            error={formik.touched.carEngine && Boolean(formik.errors.carEngine)}
+                            helperText={formik.touched.carEngine && formik.errors.carEngine}
+                        />
+                    </div>
+                    <div className="w-1/6">
+                        <FormInputSingleLine
+                            valueName="carSpeed"
+                            name="Speed"
+                            type="number"
+                            value={formik.values.carSpeed}
+                            onChange={formik.handleChange}
+                            error={formik.touched.carSpeed && Boolean(formik.errors.carSpeed)}
+                            helperText={formik.touched.carSpeed && formik.errors.carSpeed}
+                        />
+                    </div>
+                    <div className="w-1/4 pr-5">
+                        <FormInputSingleLine
+                            valueName="carFuelType"
+                            name="Fuel Type"
+                            type="text"
+                            value={formik.values.carFuelType}
+                            onChange={formik.handleChange}
+                            error={formik.touched.carFuelType && Boolean(formik.errors.carFuelType)}
+                            helperText={formik.touched.carFuelType && formik.errors.carFuelType}
+                        />
+                    </div>
+                    <div className="w-1/4">
+                        <FormInputSingleLine
+                            valueName="carFuelConsume"
+                            name="Fuel Consumption"
+                            type="number"
+                            value={formik.values.carFuelConsume}
+                            onChange={formik.handleChange}
+                            error={formik.touched.carFuelConsume && Boolean(formik.errors.carFuelConsume)}
+                            helperText={formik.touched.carFuelConsume && formik.errors.carFuelConsume}
+                        />
+                    </div>
+                    <div className="w-1/5 pr-5">
+                        <FormInputSingleLine
+                            valueName="carProductionDate"
+                            name="Production Date"
+                            type="date"
+                            value={formik.values.carProductionDate}
+                            onChange={formik.handleChange}
+                            error={formik.touched.carProductionDate && Boolean(formik.errors.carProductionDate)}
+                            helperText={formik.touched.carProductionDate && formik.errors.carProductionDate}
+                        />
+                    </div>
+                    <div className="w-1/5 pr-5">
+                        <FormInputSingleLine
+                            valueName="carBodyType"
+                            name="Body Type"
+                            type="text"
+                            value={formik.values.carBodyType}
+                            onChange={formik.handleChange}
+                            error={formik.touched.carBodyType && Boolean(formik.errors.carBodyType)}
+                            helperText={formik.touched.carBodyType && formik.errors.carBodyType}
+                        />
+                    </div>
+                    <div className="w-1/6 pr-5">
+                        <FormInputSingleLine
+                            valueName="carColor"
+                            name="Color"
+                            type="text"
+                            value={formik.values.carColor}
+                            onChange={formik.handleChange}
+                            error={formik.touched.carColor && Boolean(formik.errors.carColor)}
+                            helperText={formik.touched.carColor && formik.errors.carColor}
+                        />
+                    </div>
+                    <div className="w-1/6">
+                        <FormInputSingleLine
+                            valueName="carSeats"
+                            name="Seats"
+                            type="number"
+                            value={formik.values.carSeats}
+                            onChange={formik.handleChange}
+                            error={formik.touched.carSeats && Boolean(formik.errors.carSeats)}
+                            helperText={formik.touched.carSeats && formik.errors.carSeats}
+                        />
+                    </div>
+                    <div className="w-1/6 pr-5 inline-flex">
+                        <FormInputSingleLine
+                            valueName="carLength"
+                            name="Length (mm)"
+                            type="number"
+                            value={formik.values.carLength}
+                            onChange={formik.handleChange}
+                            error={formik.touched.carLength && Boolean(formik.errors.carLength)}
+                            helperText={formik.touched.carLength && formik.errors.carLength}
+                        />
+                    </div>
+                    <div className="w-1/6 pr-5 inline-flex">
+                        <FormInputSingleLine
+                            valueName="carWidth"
+                            name="Width (mm)"
+                            type="number"
+                            value={formik.values.carWidth}
+                            onChange={formik.handleChange}
+                            error={formik.touched.carWidth && Boolean(formik.errors.carWidth)}
+                            helperText={formik.touched.carWidth && formik.errors.carWidth}
+                        />
+                    </div>
+                    <div className="w-1/6 pr-5 inline-flex">
+                        <FormInputSingleLine
+                            valueName="carHeight"
+                            name="Height (mm)"
+                            type="number"
+                            value={formik.values.carHeight}
+                            onChange={formik.handleChange}
+                            error={formik.touched.carHeight && Boolean(formik.errors.carHeight)}
+                            helperText={formik.touched.carHeight && formik.errors.carHeight}
+                        />
+                    </div>
+                    <br />
+                    <div className="w-1/6 text-white inline-flex mt-1">
+                        <Checkbox className="text-white -ml-3"
+                            value="Modified"
+                            name="isModified"
+                            type="checkbox"
+                            onChange={formik.handleChange}
+                        />
+                        <span className="text-xl text-white flex content-center mt-1.5">Modified</span>
+                    </div>
+                    <div className="w-1/2 pr-5">
+                        <FormInputSingleLine
+                            valueName="carMods"
+                            name="Mods"
+                            type="text"
+                            value={formik.values.carMods}
+                            onChange={formik.handleChange}
+                            error={formik.touched.carMods && Boolean(formik.errors.carMods)}
+                            helperText={formik.touched.carMods && formik.errors.carMods}
+                        />
+                    </div>
+                    <div>
+                        <Button
+                            variant="contained"
+                            component="label"
+                            className="bg-white text-black hover:bg-green-400 hover:text-white">
+                            Upload Image of the car
+                            <input hidden accept="image/*" multiple type="file" onChange={onFileChange} />
+                        </Button>
+                        {
+                            imageFile && (
+                                <AspectRatio sx={{ mt: 2 }}>
+                                    <Box component="img" alt="store"
+                                        src={`${import.meta.env.VITE_FILE_BASE_URL}${imageFile}`}>
+                                    </Box>
+                                </AspectRatio>
+                            )
+                        }
+                    </div>
+                    <div>
+                        <Button
+                            variant="contained"
+                            type="submit"
+                            className="bg-green-400 text-black hover:bg-green-600 hover:text-white"							>
+                            Add
+                        </Button>
+                    </div>
+                </div>
+                <ToastContainer />
             </Box>
         </Box>
-    )
+    );
 }
 
 export default StoreAddItem;

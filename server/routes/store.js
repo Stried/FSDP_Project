@@ -1,23 +1,20 @@
-// testing maybe later or tomorrow (probably tomorrow cuz I'm lazy now) - 12/6/2023, 6:37pm
-
 const express = require('express');
 const router = express.Router();
-const { Store, Sequelize } = require('../models'); 
+const { UserAccount, Store, Sequelize } = require('../models');
+const { validateToken } = require("../middlewares/auth");
 const yup = require("yup");
 
-router.post("/", async (req, res) => {
+router.post("/createStoreItem", validateToken, async (req, res) => {
     let data = req.body;
-
-    // Validate request body
     let validationSchema = yup.object().shape({
         carPlateNo: yup.string().trim().max(8).required(),
-        carDescription:  yup.string().trim().required(),
+        carDescription: yup.string().trim().required(),
         carPrice: yup.number().integer().required(),
         carBrand: yup.string().trim().required(),
         carModel: yup.string().trim().required(),
         carEngine: yup.string().trim().required(),
         carSpeed: yup.number().integer().required(),
-        carFuelType: yup.string().required(), 
+        carFuelType: yup.string().required(),
         carFuelConsume: yup.number().integer().required(),
         carProductionDate: yup.date().required(),
         carBodyType: yup.string().trim().required(),
@@ -27,8 +24,8 @@ router.post("/", async (req, res) => {
         carWidth: yup.number().integer().required(),
         carHeight: yup.number().integer().required(),
         isModified: yup.boolean().required(),
-        carMods: yup.string(),
-    }); 
+        carMods: yup.string()
+    });
     try {
         await validationSchema.validate(data,
             { abortEarly: false });
@@ -38,21 +35,26 @@ router.post("/", async (req, res) => {
         res.status(400).json({ errors: err.errors });
         return;
     }
-    
+
     data.carPlateNo = data.carPlateNo.trim();
     data.carDescription = data.carDescription.trim();
     data.carBrand = data.carBrand.trim();
     data.carModel = data.carModel.trim();
     data.carEngine = data.carEngine.trim();
     data.carFuelType = data.carFuelType.trim();
-    data.carBodyType= data.carBodyType.trim();
+    data.carBodyType = data.carBodyType.trim();
     data.carMods = data.carMods.trim();
 
+    data.emailAccount = req.user.emailAccount;
+    let user = await UserAccount.findByPk(data.emailAccount, { attributes: ['fullName'] });
+    let fullName = user.fullName;
+
+    data.soldBy = fullName;
     let result = await Store.create(data);
-    res.json(data);
+    res.json(result);
 });
 
-router.get("/", async (req, res) => {
+router.get("/viewStore", async (req, res) => {
     let condition = {};
     let search = req.query.search;
     if (search) {
@@ -73,7 +75,9 @@ router.get("/", async (req, res) => {
             { carLength: { [Sequelize.Op.like]: `%${search}%` } },
             { carWidth: { [Sequelize.Op.like]: `%${search}%` } },
             { carHeight: { [Sequelize.Op.like]: `%${search}%` } },
-            { carMods: { [Sequelize.Op.like]: `%${search}%` } }
+            { carMods: { [Sequelize.Op.like]: `%${search}%` } },
+            { emailAccount: { [Sequelize.Op.like]: `%${search}%` } },
+            { soldBy: { [Sequelize.Op.like]: `%${search}%` } }
         ];
     }
 
@@ -81,10 +85,10 @@ router.get("/", async (req, res) => {
         where: condition,
         order: [['carPlateNo', 'ASC']]
     });
-    res.json(list); 
+    res.json(list);
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/viewStoreItem/:id", async (req, res) => {
     let id = req.params.id;
     let store = await Store.findByPk(id);
     // Check id not found
@@ -95,7 +99,7 @@ router.get("/:id", async (req, res) => {
     res.json(store);
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/updateStoreItem/:id", validateToken, async (req, res) => {
     let id = req.params.id;
     // Check id not found
     let store = await Store.findByPk(id);
@@ -108,13 +112,13 @@ router.put("/:id", async (req, res) => {
     // Validate request body
     let validationSchema = yup.object().shape({
         carPlateNo: yup.string().trim().max(8).required(),
-        carDescription:  yup.string().trim().required(),
+        carDescription: yup.string().trim().required(),
         carPrice: yup.number().integer().required(),
         carBrand: yup.string().trim().required(),
         carModel: yup.string().trim().required(),
         carEngine: yup.string().trim().required(),
         carSpeed: yup.number().integer().required(),
-        carFuelType: yup.string().required(), 
+        carFuelType: yup.string().required(),
         carFuelConsume: yup.number().integer().required(),
         carProductionDate: yup.date().required(),
         carBodyType: yup.string().trim().required(),
@@ -124,8 +128,8 @@ router.put("/:id", async (req, res) => {
         carWidth: yup.number().integer().required(),
         carHeight: yup.number().integer().required(),
         isModified: yup.boolean().required(),
-        carMods: yup.string(), 
-    }); 
+        carMods: yup.string(),
+    });
     try {
         await validationSchema.validate(data,
             { abortEarly: false });
@@ -135,8 +139,14 @@ router.put("/:id", async (req, res) => {
         res.status(400).json({ errors: err.errors });
         return;
     }
+
+    data.emailAccount = req.user.emailAccount;
+    let user = await UserAccount.findByPk(data.emailAccount, { attributes: ['fullName'] });
+    let fullName = user.fullName;
+
+    data.soldBy = fullName;
     let num = await Store.update(data, {
-        where: { carPlateNo : id }
+        where: { carPlateNo: id }
     });
     if (num == 1) {
         res.json({
@@ -150,14 +160,14 @@ router.put("/:id", async (req, res) => {
     }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/deleteStoreItem/:id", async (req, res) => {
     let id = req.params.id;
     let num = await Store.destroy({
-        where: { carPlateNo : id }
+        where: { carPlateNo: id }
     })
     if (num == 1) {
         res.json({
-            message: "Store item was deleted successfully."
+            message: `Store item ${id} was deleted successfully.`
         });
     }
     else {

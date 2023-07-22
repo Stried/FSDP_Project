@@ -1,4 +1,5 @@
-import { Box, Button, TextField, Typography, InputAdornment, IconButton, Checkbox, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions 
+import {
+    Box, Button, TextField, Typography, InputAdornment, IconButton, Checkbox, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
@@ -41,10 +42,16 @@ function StoreUpdateItem() {
     });
 
     useEffect(() => {
-        http.get(`/store/${id}`).then((res) => {
+        http.get(`/store/viewStoreItem/${id}`).then((res) => {
             setStore(res.data);
         });
     }, []);
+
+    useEffect(() => {
+            window.scrollTo(0, 0); 
+    }, [useNavigate()]);
+
+
 
     const formik = useFormik({
         initialValues: store,
@@ -92,7 +99,7 @@ function StoreUpdateItem() {
             }
 
             http
-                .put(`/store/${id}`, formData)
+                .put(`/store/updateStoreItem/${id}`, formData)
                 .then((res) => {
                     console.log(res.status);
                     navigate("/store/StoreMain");
@@ -307,7 +314,7 @@ function StoreUpdateItem() {
                             helperText={formik.touched.carHeight && formik.errors.carHeight}
                         />
                     </div>
-                    <br/>
+                    <br />
                     <div className="w-1/6 text-white inline-flex mt-1">
                         <Checkbox className="text-white -ml-3"
                             value="Modified"
