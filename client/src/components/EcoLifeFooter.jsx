@@ -9,11 +9,13 @@ import { BsFacebook, BsGithub, BsInstagram, BsTwitter } from 'react-icons/bs';
 
 function EcoLifeFooter() {
     return (
-        <Footer >
-            <div className="w-full text-center bg-gradient-to-b from-black to-gray-900 p-10 border-soild border-t-2 border-gray-800">
+        <Footer>
+            <div className="w-full text-center bg-gradient-to-b dark:from-black dark:to-gray-900 from-white to-slate-100 p-10 border-soild border-t-2 border-gray-800">
                 <div className="w-full justify-between sm:flex sm:items-center sm:justify-between">
-                    <h1 className="w-fit | bg-gradient-to-r from-green-400 to-emerald-600 text-transparent bg-clip-text |
-                        hover:ease-in-out duration-300 | italic font-semibold text-4xl | ">
+                    <h1
+                        className="w-fit | bg-gradient-to-r dark:from-green-400 dark:to-emerald-600 from-sky-400 to-blue-500 text-transparent bg-clip-text |
+            hover:ease-in-out duration-300 | italic font-semibold text-4xl"
+                    >
                         Ecolife
                     </h1>
                     <div>
@@ -22,7 +24,6 @@ function EcoLifeFooter() {
                             <Footer.Link>Privacy Policy</Footer.Link>
                             <Footer.Link>Contact Us</Footer.Link>
                         </Footer.LinkGroup>
-                        
                     </div>
                 </div>
                 <Footer.Divider />
@@ -30,30 +31,30 @@ function EcoLifeFooter() {
                     <Footer.Copyright
                         by="Ecolife™"
                         href="#"
-                        year={ 2023 }
+                        year={2023}
                     />
                     <div className="mt-4 flex space-x-6 sm:mt-0 sm:justify-center">
                         <Footer.Icon
                             href="#"
-                            icon={ BsFacebook }
+                            icon={BsFacebook}
                         />
                         <Footer.Icon
                             href="#"
-                            icon={ BsInstagram }
+                            icon={BsInstagram}
                         />
                         <Footer.Icon
                             href="#"
-                            icon={ BsTwitter }
+                            icon={BsTwitter}
                         />
                         <Footer.Icon
                             href="#"
-                            icon={ BsGithub }
+                            icon={BsGithub}
                         />
                     </div>
                 </div>
             </div>
         </Footer>
-    )
+    );
 }
 
 export default EcoLifeFooter;

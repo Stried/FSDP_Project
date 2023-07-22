@@ -208,14 +208,13 @@ function ChangeAccountDetails() {
                             )
                         }
 
-                        <Typography className="opacity-80 text-sm text-red-500">* Please note that changing your details will require you to log in again.</Typography>
                         <Box className="w-1/4 py-1 mt-3">
                             <Button
                                 variant="contained"
                                 type="submit"
-                                className="bg-green-400 text-black hover:bg-green-600 hover:text-white"
+                                className="bg-sky-400 text-black hover:bg-sky-600 hover:text-white"
                             >
-                                Update Details
+                                Change Details
                             </Button>
                         </Box>
                     </Box>

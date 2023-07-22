@@ -72,7 +72,7 @@ function UserEnterAccount() {
 				<Box>
 					<Typography
 						variant="h4"
-						className="text-green-600 dark:text-green-400"
+						className="text-sky-500 dark:text-green-400"
 					>
 						Welcome Back!
 					</Typography>
@@ -103,7 +103,7 @@ function UserEnterAccount() {
 						endAdornment={
 							<InputAdornment position="end">
 								<IconButton
-									aria-label="toggle password visibility"
+                                    aria-label="toggle password visibility"
 									onClick={handleClickShowPassword}
 									onMouseDown={handleMouseDownPassword}
 									edge="end"
@@ -135,7 +135,7 @@ function UserEnterAccount() {
 							<Button
 								variant="contained"
 								type="submit"
-								className="bg-green-400 text-black hover:bg-green-600 hover:text-white"
+								className="dark:bg-green-400 bg-sky-400 text-black dark:hover:bg-green-600 hover:bg-sky-600 hover:text-white"
 							>
 								Log In
 							</Button>

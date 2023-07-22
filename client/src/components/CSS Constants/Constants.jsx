@@ -10,26 +10,29 @@ export const DarkTheme = createTheme({
 });
 
 export const CssTextField = styled(TextField)({
-  "& label.Mui-focused": {
-    color: "#028A0F",
-  },
-  "& .MuiInput-underline:after": {
-    borderBottomColor: "#028A0F",
-  },
-  "& .MuiOutlinedInput-root": {
-    "& fieldset": {
-        borderColor: "white",
-        borderWidth: "2px",
-        color: "black",
+    "& .MuiInputLabel-root": {
+        color: "gray",
     },
-    "&:hover fieldset": {
-      borderColor: "#028A0F",
+    "& label.Mui-focused": {
+        color: "gray",
     },
-    "&.Mui-focused fieldset": {
-        borderColor: "#028A0F",
-      },
-    input: {
-        color: "white",
-    }
-  },
+    "& .MuiInput-underline:after": {
+        borderBottomColor: "gray",
+    },
+    "& .MuiOutlinedInput-root": {
+        "& fieldset": {
+            borderColor: "gray",
+            borderWidth: "2px",
+            color: "gray",
+        },
+        "&:hover fieldset": {
+            borderColor: "gray",
+        },
+        "&.Mui-focused fieldset": {
+            borderColor: "gray",
+        },
+        "&input": {
+            color: "gray",
+        },
+    },
 });
