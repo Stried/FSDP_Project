@@ -1,24 +1,13 @@
 import { useState } from "react";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useFormik } from "formik";
+import http from "../../http";
 import * as yup from "yup";
-import {
-    Box,
-    Button,
-    Checkbox,
-    Switch,
-    Select,
-    FormControl,
-    FormGroup,
-    InputLabel,
-    MenuItem,
-    FormControlLabel,
-} from "@mui/material";
-import FormInputSingleLine from "./../../components/FormInputSingleLine";
+import { Box } from "@mui/material";
 
 function LocationsCreate() {
-    const [formData, setFormData] = useState({
+    const formInitialValues = useFormik({
         locationName: "",
         streetName: "",
         postalCode: "",
@@ -28,15 +17,11 @@ function LocationsCreate() {
         fastCharge: false,
         noOfChargers: "",
     });
-
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-        setFormData({ ...formData, [name]: value });
-    };
+    const [formData, setFormData] = useState(formInitialValues);
 
     const handleCheckboxChange = (event) => {
         const { name, checked } = event.target;
-        setFormData({ ...formData, [name]: checked });
+        formik.setFieldValue(name, checked);
     };
 
     const formik = useFormik({
@@ -78,7 +63,7 @@ function LocationsCreate() {
         onSubmit: async (data) => {
           console.log("peepee poopoo", data)
             try {
-                await http.post("/locations/createLocation", data);
+                await http.post("/locations/LocationsCreate", data);
                 navigate("/locations/LocationsMain");
             } catch (error) {
                 console.log(error);
@@ -95,6 +80,7 @@ function LocationsCreate() {
                         Add a charger location
                     </h1>
                     <form
+                        component={"form"}
                         onSubmit={formik.handleSubmit}
                         className="space-y-4"
                     >
@@ -252,7 +238,7 @@ function LocationsCreate() {
                                 type="checkbox"
                                 id="fastChargeToggle"
                                 name="fastCharge"
-                                checked={formData.fastCharge}
+                                checked={formik.values.fastCharge}
                                 onChange={handleCheckboxChange}
                                 className="form-checkbox h-3 w-3 text-blue-600"
                             />
