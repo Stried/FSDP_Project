@@ -3,7 +3,7 @@ const router = express.Router();
 const yup = require("yup");
 const { sequelize } = require("../models/");
 const { DataTypes } = require("sequelize");
-const { UserAccount, AdminAccount, Store, Sequelize } = require("../models/"); // imports the model name from models, must match waht is defined in the model
+const { UserAccount, AdminAccount, UserFollower, Store, Sequelize } = require("../models/"); // imports the model name from models, must match waht is defined in the model
 const bcrypt = require("bcrypt");
 const { sign, verify } = require("jsonwebtoken");
 const { validateToken } = require("../middlewares/auth");
@@ -56,7 +56,23 @@ router.post("/createAccount", async (req, res) => {
         where: { phoneNo: data.phoneNo },
     });
     if (userPhoneNo) {
-        res.status(400).json({ message: "Phone Number already exists" });
+        res.status(400).json({ message: "Phone Number already exists." });
+        return;
+    }
+
+    let userName = await UserAccount.findOne({
+        where: { userName: data.userName }
+    });
+    if (userName) {
+        res.status(400).json({ message: "Username already exists." })
+        return;
+    }
+
+    let fullName = await UserAccount.findOne({
+        where: { fullName: data.fullName }
+    });
+    if (fullName) {
+        res.status(400).json({ message: "Fullname already exists." })
         return;
     }
 
@@ -526,6 +542,35 @@ router.get("/viewAccount/carListing", validateToken, async (req, res) => {
         res.json(userListing);
     } catch (err) {
         console.log(err);
+    }
+})
+
+router.post("/follow/:username", validateToken, async (req, res) => {
+    let data = req.body;
+    let followUser = req.params.username;
+
+    let toFollow = await UserAccount.findOne({
+        where: { userName: followUser }
+    });
+
+    if (!toFollow) {
+        res.status(400).json({message: "No such user to follow."})
+    }
+
+    if (toFollow.emailAccount === req.user.emailAccount) {
+        res.status(400).json({ message: "You can't follow yourself." });
+        return;
+    }
+
+    data.followedUserEmail = toFollow.emailAccount;
+    data.emailAccount = req.user.emailAccount
+
+    try {
+        let result = await UserFollower.create(data);
+        res.json(result);
+    } catch (err) {
+        console.log(err);
+        throw err;
     }
 })
 
