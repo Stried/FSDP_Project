@@ -172,7 +172,6 @@ router.get("/viewAccount", validateToken, async (req, res) => {
         where: { emailAccount: req.user.emailAccount }
     });
     res.json(userAccount);
-    console.log(userAccount)
 
     if (!userAccount) {
         res.sendStatus(404);
@@ -538,7 +537,6 @@ router.get("/viewAccount/carListing", validateToken, async (req, res) => {
             where: { emailAccount: req.user.emailAccount }
         });
 
-        console.log(userListing)
         res.json(userListing);
     } catch (err) {
         console.log(err);
@@ -631,21 +629,47 @@ router.delete("/unfollow/:username", validateToken, async (req, res) => {
     }
 })
 
-router.get("/viewUser/allFollowers", validateToken, async (req, res) => {
+router.get("/viewAccount/allFollowers", validateToken, async (req, res) => {
     let allFollowers = await UserFollower.findAll({
         where: { followedUserEmail: req.user.emailAccount }
     });
 
     const emailAccounts = allFollowers.map((followers) => followers.emailAccount);
-    if (emailAccounts.length === 0) {
-        return res.json([])
-    }
 
     let allUsers = await UserAccount.findAll({
         where: { emailAccount: emailAccounts }
     });
 
-    res.json(allUsers);
+    try {
+        res.json(allUsers);
+    } catch (err) {
+        console.log("Followers failed loading.");
+        console.log(err);
+    }
+    
+})
+
+router.get("/viewAccount/allFollowers/:username", validateToken, async (req, res) => {
+    let theUser = await UserAccount.findOne({
+        where: { userName: req.params.username }
+    })
+
+    let allFollowers = await UserFollower.findAll({
+        where: { followedUserEmail: theUser.emailAccount }
+    });
+
+    const emailAccounts = allFollowers.map((followers) => followers.emailAccount);
+
+    let allUsers = await UserAccount.findAll({
+        where: { emailAccount: emailAccounts }
+    });
+
+    try {
+        res.json(allUsers);
+    } catch (err) {
+        console.log("Followers failed loading.");
+        console.log(err);
+    }
 })
 
 module.exports = router;
