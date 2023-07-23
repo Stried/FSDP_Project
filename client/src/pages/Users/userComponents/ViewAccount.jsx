@@ -40,7 +40,8 @@ function ViewAccount() {
         imageFile: "",
     });
 
-    const [userCarSalesListing, setUserCarSalesListing] = useState([]);
+    const [ userCarSalesListing, setUserCarSalesListing ] = useState([]);
+    const [ userFollowersList, setUserFollowersList ] = useState([]);
 
     const logout = () => {
         localStorage.clear();
@@ -76,6 +77,17 @@ function ViewAccount() {
                 setUserCarSalesListing(res.data);
                 console.log(res.data)
                 console.log("User Car Listing successfully logged.");
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
+    }, []);
+
+    useEffect(() => {
+        http.get("/user/viewAccount/allFollowers")
+            .then((res) => {
+                setUserFollowersList(res.data);
+                console.log("User followers successfully logged.")
             })
             .catch(function (err) {
                 console.log(err);
@@ -134,7 +146,8 @@ function ViewAccount() {
                                         color={"success"}
                                         size="xl"
                                     ></Avatar>
-                                )}
+                                )
+                            }
 
                             <div className="mt-6 text-center">
                                 <div
@@ -244,7 +257,7 @@ function ViewAccount() {
                                 ) : (
                                     <div>
                                         <p className="text-xl font-medium">
-                                            The user currently has no cars for
+                                            You currently has no cars for
                                             sale.
                                         </p>
                                     </div>
@@ -256,17 +269,56 @@ function ViewAccount() {
                             </div>
                             <div>
                                 <p className="text-xl font-medium mb-10">
-                                    The user currently has no trialed cars.
+                                    You currently has no trialed cars.
                                 </p>
                             </div>
 
                             <div className="text-2xl font-medium mb-2">
                                 Followers
                             </div>
-                            <div className="">
-                                <p className="text-xl font-medium mb-10">
-                                    You currently have no followers.
-                                </p>
+                            <div className="overflow-x-auto flex space-x-5 mb-10">
+                                {userFollowersList.length > 0 ? (
+                                    userFollowersList.map((followers, i) => {
+                                        return (
+                                            <div className="p-2 bg-slate-800 text-center rounded">
+                                                <a href={`/user/${followers.userName}`}>
+                                                    <div className="px-8">
+                                                        {followers &&
+                                                            followers.imageFile !==
+                                                                "No image" && ( // Had to be non-nullable
+                                                                <Avatar
+                                                                    className="py-2"
+                                                                    img={`${
+                                                                        import.meta
+                                                                            .env
+                                                                            .VITE_FILE_BASE_URL
+                                                                    }${
+                                                                        followers.imageFile
+                                                                    }`}
+                                                                    alt="Profile Picture"
+                                                                    rounded
+                                                                    bordered
+                                                                    color={
+                                                                        "success"
+                                                                    }
+                                                                    size="lg"
+                                                                ></Avatar>
+                                                            )}
+                                                    </div>
+                                                    <p className="px-8 py-4">
+                                                        {followers.userName}
+                                                    </p>
+                                                </a>
+                                            </div>
+                                        );
+                                    })
+                                ) : (
+                                    <div className="">
+                                        <p className="text-xl font-medium mb-10">
+                                            You currently have no followers.
+                                        </p>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>

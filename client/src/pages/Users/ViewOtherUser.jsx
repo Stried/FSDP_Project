@@ -26,6 +26,7 @@ function ViewOtherUser() {
 
     const [ otherUser, setOtherUser ] = useState(null);
     const [ userCarSalesListing, setUserCarSalesListing ] = useState([]);
+    const [ userFollowersList, setUserFollowersList ] = useState([]);
     const [ checkFollowed, setCheckFollowed ] = useState(null);
 
     useEffect(() => {
@@ -60,6 +61,17 @@ function ViewOtherUser() {
             .catch(function (err) {
                 console.log(err);
             })
+    }, []);
+
+    useEffect(() => {
+        http.get(`/user/viewAccount/allFollowers/${username}`)
+            .then((res) => {
+                setUserFollowersList(res.data);
+                console.log("User followers successfully logged.");
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
     }, []);
 
     function followUser() {
@@ -268,10 +280,65 @@ function ViewOtherUser() {
                                         Trialed Cars
                                     </div>
                                     <div>
-                                        <p className="text-xl font-medium">
+                                        <p className="text-xl font-medium mb-10">
                                             The user currently has no trialed
                                             cars.
                                         </p>
+                                    </div>
+
+                                    <div className="text-2xl font-medium mb-2">
+                                        Followers
+                                    </div>
+                                    <div className="overflow-x-auto flex space-x-5 mb-10">
+                                        {userFollowersList.length > 0 ? (
+                                            userFollowersList.map(
+                                                (followers, i) => {
+                                                    return (
+                                                        <div className="p-2 bg-slate-800 text-center rounded">
+                                                            <a
+                                                                href={`/user/${followers.userName}`}
+                                                            >
+                                                                <div className="px-8">
+                                                                    {followers &&
+                                                                        followers.imageFile !==
+                                                                            "No image" && ( // Had to be non-nullable
+                                                                            <Avatar
+                                                                                className="py-2"
+                                                                                img={`${
+                                                                                    import.meta
+                                                                                        .env
+                                                                                        .VITE_FILE_BASE_URL
+                                                                                }${
+                                                                                    followers.imageFile
+                                                                                }`}
+                                                                                alt="Profile Picture"
+                                                                                rounded
+                                                                                bordered
+                                                                                color={
+                                                                                    "success"
+                                                                                }
+                                                                                size="lg"
+                                                                            ></Avatar>
+                                                                        )}
+                                                                </div>
+                                                                <p className="px-8 py-4">
+                                                                    {
+                                                                        followers.userName
+                                                                    }
+                                                                </p>
+                                                            </a>
+                                                        </div>
+                                                    );
+                                                }
+                                            )
+                                        ) : (
+                                            <div className="">
+                                                <p className="text-xl font-medium mb-10">
+                                                    The user currently have no
+                                                    followers.
+                                                </p>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             </div>
