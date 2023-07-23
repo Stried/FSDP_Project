@@ -631,13 +631,21 @@ router.delete("/unfollow/:username", validateToken, async (req, res) => {
     }
 })
 
-router.get("/allFollowers", validateToken, async (req, res) => {
+router.get("/viewUser/allFollowers", validateToken, async (req, res) => {
     let allFollowers = await UserFollower.findAll({
         where: { followedUserEmail: req.user.emailAccount }
-    })
+    });
 
+    const emailAccounts = allFollowers.map((followers) => followers.emailAccount);
+    if (emailAccounts.length === 0) {
+        return res.json([])
+    }
 
-    // res.json(userFollowers);
+    let allUsers = await UserAccount.findAll({
+        where: { emailAccount: emailAccounts }
+    });
+
+    res.json(allUsers);
 })
 
 module.exports = router;
