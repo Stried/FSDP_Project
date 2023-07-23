@@ -255,8 +255,17 @@ function ViewAccount() {
                                 Trialed Cars
                             </div>
                             <div>
-                                <p className="text-xl font-medium">
+                                <p className="text-xl font-medium mb-10">
                                     The user currently has no trialed cars.
+                                </p>
+                            </div>
+
+                            <div className="text-2xl font-medium mb-2">
+                                Followers
+                            </div>
+                            <div className="">
+                                <p className="text-xl font-medium mb-10">
+                                    You currently have no followers.
                                 </p>
                             </div>
                         </div>

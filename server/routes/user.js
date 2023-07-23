@@ -545,6 +545,41 @@ router.get("/viewAccount/carListing", validateToken, async (req, res) => {
     }
 })
 
+router.get("/viewAccount/carListing/:username", async (req, res) => {
+    try {
+        let findAccount = await UserAccount.findOne({
+            where: { userName: req.params.username }
+        })
+
+        let userListing = await Store.findAll({
+            where: { emailAccount: findAccount.emailAccount }
+        });
+
+        console.log(userListing)
+        res.json(userListing);
+    } catch (err) {
+        console.log(err);
+    }
+})
+
+router.get("/follow/:username", validateToken, async (req, res) => {
+    let checkFollowUser = req.params.username;
+
+    let checkFollowUserDetails = await UserAccount.findOne({
+        where: { userName: checkFollowUser }
+    })
+
+    let checkFollow = await UserFollower.findOne({
+        where: [ { followedUserEmail: checkFollowUserDetails.emailAccount }, { emailAccount: req.user.emailAccount } ]
+    })
+
+    if (checkFollow) {
+        res.json("Followed");
+    } else {
+        res.json(null);
+    }
+})
+
 router.post("/follow/:username", validateToken, async (req, res) => {
     let data = req.body;
     let followUser = req.params.username;
@@ -572,6 +607,37 @@ router.post("/follow/:username", validateToken, async (req, res) => {
         console.log(err);
         throw err;
     }
+})
+
+router.delete("/unfollow/:username", validateToken, async (req, res) => {
+    let unfollowUser = req.params.username;
+    
+    let toUnfollow = await UserAccount.findOne({
+        where: { userName: unfollowUser }
+    });
+
+    let removeFollow = await UserFollower.destroy({
+        where: [ { followedUserEmail: toUnfollow.emailAccount }, { emailAccount: req.user.emailAccount } ]
+    });
+
+    if (removeFollow == 1) {
+        res.json({
+            message: "User was successfully deleted.",
+        });
+    } else {
+        res.status(400).json({
+            message: `Cannot delete user with id ${user}`,
+        });
+    }
+})
+
+router.get("/allFollowers", validateToken, async (req, res) => {
+    let allFollowers = await UserFollower.findAll({
+        where: { followedUserEmail: req.user.emailAccount }
+    })
+
+
+    // res.json(userFollowers);
 })
 
 module.exports = router;

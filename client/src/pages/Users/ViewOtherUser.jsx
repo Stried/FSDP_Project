@@ -6,6 +6,7 @@ import FormInputMultiLine from "./../../components/FormInputMultiLine";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { Accordion, Avatar, Badge, Breadcrumb } from "flowbite-react";
 import { HiHome } from "react-icons/hi";
+import { AiOutlineUser } from "react-icons/ai";
 import {
     BrowserRouter as Router,
     Routes,
@@ -24,6 +25,8 @@ function ViewOtherUser() {
     console.log(username)
 
     const [ otherUser, setOtherUser ] = useState(null);
+    const [ userCarSalesListing, setUserCarSalesListing ] = useState([]);
+    const [ checkFollowed, setCheckFollowed ] = useState(null);
 
     useEffect(() => {
         http.get(`/user/${username}`)
@@ -38,6 +41,47 @@ function ViewOtherUser() {
             });
     }, []);
 
+    useEffect(() => {
+        http.get(`/user/viewAccount/carListing/${username}`)
+            .then((res) => {
+                setUserCarSalesListing(res.data);
+                console.log("User Car Listing successfully logged.");
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
+    }, []);
+
+    useEffect(() => {
+        http.get(`/user/follow/${username}`)
+            .then((res) => {
+                setCheckFollowed(res.data);
+            })
+            .catch(function (err) {
+                console.log(err);
+            })
+    }, []);
+
+    function followUser() {
+        http.post(`/user/follow/${username}`)
+            .then((res) => {
+                setCheckFollowed("Followed")
+            })
+            .catch(function (err) {
+                console.log(err);
+        })
+    }
+
+    function unfollowUser() {
+        http.delete(`/user/unfollow/${username}`)
+            .then((res) => {
+                setCheckFollowed(null);
+            })
+            .catch(function (err) {
+                console.log(err);
+        })
+    }
+
     return (
         <div className="">
             {otherUser && (
@@ -51,7 +95,7 @@ function ViewOtherUser() {
                                 <p>Home</p>
                             </Breadcrumb.Item>
                             <Breadcrumb.Item href="/user/viewAccount">
-                                {otherUser.userName}'s Account
+                                My Account
                             </Breadcrumb.Item>
                         </Breadcrumb>
                         <div id="userAccountDetails">
@@ -75,7 +119,10 @@ function ViewOtherUser() {
                                 </span>
                             </p>
                             <div className="my-3 flex flex-row">
-                                <div className="text-white mb-3 text-center basis-1/6 mr-10">
+                                <div
+                                    id="userInfo"
+                                    className="text-white mb-3 basis-1/6 mr-10 bg-slate-800 p-5 rounded-md"
+                                >
                                     {otherUser &&
                                         otherUser.imageFile !== "No image" && ( // Had to be non-nullable
                                             <Avatar
@@ -91,82 +138,141 @@ function ViewOtherUser() {
                                                 size="xl"
                                             ></Avatar>
                                         )}
-                                </div>
-                                <div className="basis-1/3 ml-6">
-                                    <div className="mr-12">
+
+                                    <div className="mt-6 text-center">
                                         <div
-                                            id="nameSection"
-                                            className="flex"
+                                            id="fullName"
+                                            className="mb-3"
                                         >
-                                            <div
-                                                id="fullName"
-                                                className="mb-3"
-                                            >
-                                                <h1 className="dark:text-green-400 text-sky-500 font-medium text-2xl">
-                                                    Full Name
-                                                </h1>
-                                                <p className="text-2xl font-medium italic">
-                                                    {otherUser.fullName}
-                                                </p>
-                                            </div>
-                                            <div
-                                                id="userName"
-                                                className="mb-3 ml-5"
-                                            >
-                                                <h1 className="dark:text-green-400 text-sky-500 font-medium text-2xl">
-                                                    Username
-                                                </h1>
-                                                <p className="text-2xl font-medium italic">
-                                                    {otherUser.userName}
-                                                </p>
-                                            </div>
+                                            <h1 className="dark:text-green-400 text-sky-500 font-medium text-xl">
+                                                Full Name
+                                            </h1>
+                                            <p className="text-xl font-medium italic">
+                                                {otherUser.fullName}
+                                            </p>
                                         </div>
+                                        <div
+                                            id="userName"
+                                            className="mb-3"
+                                        >
+                                            <h1 className="dark:text-green-400 text-sky-500 font-medium text-xl">
+                                                Username
+                                            </h1>
+                                            <p className="text-xl font-medium italic">
+                                                {otherUser.userName}
+                                            </p>
+                                        </div>
+                                        <div
+                                            id="emailAccount"
+                                            className="my-3"
+                                        >
+                                            <h1 className="dark:text-green-400 text-sky-500 font-medium text-xl">
+                                                Email Account
+                                            </h1>
+                                            <p className="text-xl font-medium italic">
+                                                {otherUser.emailAccount}
+                                            </p>
+                                        </div>
+                                        <div
+                                            id="phoneNo"
+                                            className="my-3"
+                                        >
+                                            <h1 className="dark:text-green-400 text-sky-500 font-medium text-xl">
+                                                Phone Number
+                                            </h1>
+                                            <p className="text-xl font-medium italic">
+                                                {otherUser.phoneNo}
+                                            </p>
+                                        </div>
+                                        {!checkFollowed && (
+                                            <Button
+                                                className="bg-sky-500 text-white rounded px-2 py-1 mt-4 mb-10 text-md 
+                        font-medium border-transparent border-2 border-solid hover:border-blue-500 
+                        hover:border-2 hover:border-solid hover:transition-ease-in-out duration-300"
+                                                onClick={() => followUser()}
+                                            >
+                                                Follow
+                                            </Button>
+                                        )}
+                                        {checkFollowed && (
+                                            <Button
+                                                className="bg-sky-500 text-white rounded px-2 py-1 mt-4 mb-10 text-md 
+                        font-medium border-transparent border-2 border-solid hover:border-blue-500 
+                        hover:border-2 hover:border-solid hover:transition-ease-in-out duration-300"
+                                                onClick={() => unfollowUser()}
+                                            >
+                                                Followed
+                                            </Button>
+                                        )}
+                                    </div>
+                                </div>
+
+                                <div className="basis-4/6 ml-10">
+                                    <div className="">
+                                        <p className="text-2xl font-medium mb-2">
+                                            Car Sales Listing
+                                        </p>
+                                    </div>
+                                    <div className="overflow-x-auto flex space-x-5 mb-10">
+                                        {userCarSalesListing.length > 0 ? (
+                                            userCarSalesListing.map(
+                                                (userListing, i) => {
+                                                    return (
+                                                        <div className="bg-slate-800">
+                                                            <div className="p-5">
+                                                                <p className="text-xl">
+                                                                    {
+                                                                        userListing.carBrand
+                                                                    }{" "}
+                                                                    {
+                                                                        userListing.carModel
+                                                                    }
+                                                                </p>
+                                                                <p>
+                                                                    ${" "}
+                                                                    {
+                                                                        userListing.carPrice
+                                                                    }
+                                                                </p>
+                                                                <p>
+                                                                    Production:{" "}
+                                                                    {
+                                                                        userListing.carProductionDate
+                                                                    }
+                                                                </p>
+                                                                <div className="my-6" />
+                                                                <p className="flex">
+                                                                    <AiOutlineUser className="my-auto" />{" "}
+                                                                    <span className="ml-1 text-green-500">
+                                                                        {
+                                                                            userListing.emailAccount
+                                                                        }
+                                                                    </span>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    );
+                                                }
+                                            )
+                                        ) : (
+                                            <div>
+                                                <p className="text-xl font-medium">
+                                                    The user currently has no
+                                                    cars for sale.
+                                                </p>
+                                            </div>
+                                        )}
                                     </div>
 
-                                    <div
-                                        id="emailAccount"
-                                        className="my-3"
-                                    >
-                                        <h1 className="dark:text-green-400 text-sky-500 font-medium text-2xl">
-                                            Email Account
-                                        </h1>
-                                        <p className="text-2xl font-medium italic">
-                                            {otherUser.emailAccount}
+                                    <div className="text-2xl font-medium mb-2">
+                                        Trialed Cars
+                                    </div>
+                                    <div>
+                                        <p className="text-xl font-medium">
+                                            The user currently has no trialed
+                                            cars.
                                         </p>
                                     </div>
-                                    <div
-                                        id="phoneNo"
-                                        className="my-3"
-                                    >
-                                        <h1 className="dark:text-green-400 text-sky-500 font-medium text-2xl">
-                                            Phone Number
-                                        </h1>
-                                        <p className="text-2xl font-medium italic">
-                                            {otherUser.phoneNo}
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="basis-4/6">
-                                    <Accordion>
-                                        <Accordion.Panel>
-                                            <Accordion.Title>
-                                                Car Sales Listings
-                                            </Accordion.Title>
-                                            <Accordion.Content>
-                                                The user currently has no cars
-                                                for sale.
-                                            </Accordion.Content>
-                                        </Accordion.Panel>
-                                        <Accordion.Panel>
-                                            <Accordion.Title>
-                                                Trialed Cars
-                                            </Accordion.Title>
-                                            <Accordion.Content>
-                                                The user currently has trialed
-                                                no cars.
-                                            </Accordion.Content>
-                                        </Accordion.Panel>
-                                    </Accordion>
                                 </div>
                             </div>
                         </div>
