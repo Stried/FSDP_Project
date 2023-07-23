@@ -32,7 +32,7 @@ TrialReceipt.associate = (models) => {
 };
 
 TrialReceipt.associate = (models)=>{
-    TrialReceipt.hasOne(models.TrialCar, {
+    TrialReceipt.belongsTo(models.TrialCar, {
         foreignKey:"id",
         onDelete:"cascade"
     })

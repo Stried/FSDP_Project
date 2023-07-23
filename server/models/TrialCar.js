@@ -24,6 +24,11 @@ module.exports = (sequelize, DataTypes) => {
              as: "carplate"
          });
      };
-
+     TrialCar.associate = (models) => {
+        TrialCar.hasMany(models.TrialReceipt, {
+            foreignKey: "id",
+            onDelete:"cascade"
+        });
+    };
     return TrialCar;
 }
