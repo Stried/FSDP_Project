@@ -10,30 +10,37 @@ import "./../../../App.css";
 import http from "../../../http";
 
 import {
-    Box, Button, TextField,
-    Typography, InputAdornment, IconButton
+    Box,
+    Button,
+    TextField,
+    Typography,
+    InputAdornment,
+    IconButton,
 } from "@mui/material";
-import AspectRatio from '@mui/joy/AspectRatio';
+import AspectRatio from "@mui/joy/AspectRatio";
 import { Formik } from "formik";
 import { Accordion, Avatar, Badge, Breadcrumb } from "flowbite-react";
 import { HiHome } from "react-icons/hi";
+import { AiOutlineUser } from "react-icons/ai";
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import UserContext from "../../../contexts/UserContext";
 
 function ViewAccount() {
     const navigate = useNavigate();
     const { userInfo } = useContext(UserContext);
 
-    const [ user, setUser ] = useState({
+    const [user, setUser] = useState({
         fullName: "",
         userName: "",
         emailAccount: "",
         phoneNo: "",
         id: "",
-        imageFile: ""
-    })
+        imageFile: "",
+    });
+
+    const [userCarSalesListing, setUserCarSalesListing] = useState([]);
 
     const logout = () => {
         localStorage.clear();
@@ -46,22 +53,34 @@ function ViewAccount() {
                 localStorage.setItem("userImageFile", `${user.imageFile}`);
                 user.imageFile = localStorage.getItem("userImageFile");
             }
-        }, [ user ]);
+        }, [user]);
     } catch (err) {
         console.log(err);
         user.imageFile = localStorage.getItem("userImageFile");
     }
 
-    useEffect(() => {   
+    useEffect(() => {
         http.get("/user/viewAccount")
             .then((res) => {
                 setUser(res.data);
-                console.log("User Info successfully logged.")
+                console.log("User Info successfully logged.");
             })
             .catch(function (err) {
                 console.log(err);
+            });
+    }, []);
+
+    useEffect(() => {
+        http.get("/user/viewAccount/carListing")
+            .then((res) => {
+                setUserCarSalesListing(res.data);
+                console.log(res.data)
+                console.log("User Car Listing successfully logged.");
             })
-    }, [])
+            .catch(function (err) {
+                console.log(err);
+            });
+    }, []);
 
     return (
         <div className="dark:text-white text-neutral-600">
@@ -98,7 +117,10 @@ function ViewAccount() {
                         </span>
                     </p>
                     <div className="my-3 flex flex-row">
-                        <div className="text-white mb-3 text-center basis-1/6 mr-10">
+                        <div
+                            id="userInfo"
+                            className="text-white mb-3 basis-1/6 mr-10 bg-slate-800 p-5 rounded-md"
+                        >
                             {user &&
                                 user.imageFile !== "No image" && ( // Had to be non-nullable
                                     <Avatar
@@ -113,90 +135,130 @@ function ViewAccount() {
                                         size="xl"
                                     ></Avatar>
                                 )}
-                            <Button
-                                className="bg-sky-500 text-white rounded px-2 py-1 mt-4 mb-10 text-md 
+
+                            <div className="mt-6 text-center">
+                                <div
+                                    id="fullName"
+                                    className="mb-3"
+                                >
+                                    <h1 className="dark:text-green-400 text-sky-500 font-medium text-xl">
+                                        Full Name
+                                    </h1>
+                                    <p className="text-xl font-medium italic">
+                                        {user.fullName}
+                                    </p>
+                                </div>
+                                <div
+                                    id="userName"
+                                    className="mb-3"
+                                >
+                                    <h1 className="dark:text-green-400 text-sky-500 font-medium text-xl">
+                                        Username
+                                    </h1>
+                                    <p className="text-xl font-medium italic">
+                                        {user.userName}
+                                    </p>
+                                </div>
+                                <div
+                                    id="emailAccount"
+                                    className="my-3"
+                                >
+                                    <h1 className="dark:text-green-400 text-sky-500 font-medium text-xl">
+                                        Email Account
+                                    </h1>
+                                    <p className="text-xl font-medium italic">
+                                        {user.emailAccount}
+                                    </p>
+                                </div>
+                                <div
+                                    id="phoneNo"
+                                    className="my-3"
+                                >
+                                    <h1 className="dark:text-green-400 text-sky-500 font-medium text-xl">
+                                        Phone Number
+                                    </h1>
+                                    <p className="text-xl font-medium italic">
+                                        {user.phoneNo}
+                                    </p>
+                                </div>
+                                <Button
+                                    className="bg-sky-500 text-white rounded px-2 py-1 mt-4 mb-10 text-md 
                         font-medium border-transparent border-2 border-solid hover:border-blue-500 
                         hover:border-2 hover:border-solid hover:transition-ease-in-out duration-300"
-                                onClick={() =>
-                                    navigate("/user/viewAccount/settings")
-                                }
-                            >
-                                Settings
-                            </Button>
-                        </div>
-                        <div className="basis-1/3 ml-6">
-                            <div className="mr-12">
-                                <div
-                                    id="nameSection"
-                                    className="flex"
+                                    onClick={() =>
+                                        navigate("/user/viewAccount/settings")
+                                    }
                                 >
-                                    <div
-                                        id="fullName"
-                                        className="mb-3"
-                                    >
-                                        <h1 className="dark:text-green-400 text-sky-500 font-medium text-2xl">
-                                            Full Name
-                                        </h1>
-                                        <p className="text-2xl font-medium italic">
-                                            {user.fullName}
+                                    Settings
+                                </Button>
+                            </div>
+                        </div>
+
+                        <div className="basis-4/6 ml-10">
+                            <div className="">
+                                <p className="text-2xl font-medium mb-2">
+                                    Car Sales Listing
+                                </p>
+                            </div>
+                            <div className="overflow-x-auto flex space-x-5 mb-10">
+                                {userCarSalesListing.length > 0 ? (
+                                    userCarSalesListing.map(
+                                        (userListing, i) => {
+                                            return (
+                                                <div className="bg-slate-800">
+                                                    <div className="p-5">
+                                                        <p className="text-xl">
+                                                            {
+                                                                userListing.carBrand
+                                                            }{" "}
+                                                            {
+                                                                userListing.carModel
+                                                            }
+                                                        </p>
+                                                        <p>
+                                                            ${" "}
+                                                            {
+                                                                userListing.carPrice
+                                                            }
+                                                        </p>
+                                                        <p>
+                                                            Production:{" "}
+                                                            {
+                                                                userListing.carProductionDate
+                                                            }
+                                                        </p>
+                                                        <div className="my-6" />
+                                                        <p className="flex">
+                                                            <AiOutlineUser className="my-auto" />{" "}
+                                                            <span className="ml-1 text-green-500">
+                                                                {
+                                                                    userListing.emailAccount
+                                                                }
+                                                            </span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            );
+                                        }
+                                    )
+                                ) : (
+                                    <div>
+                                        <p className="text-xl font-medium">
+                                            The user currently has no cars for
+                                            sale.
                                         </p>
                                     </div>
-                                    <div
-                                        id="userName"
-                                        className="mb-3 ml-5"
-                                    >
-                                        <h1 className="dark:text-green-400 text-sky-500 font-medium text-2xl">
-                                            Username
-                                        </h1>
-                                        <p className="text-2xl font-medium italic">
-                                            {user.userName}
-                                        </p>
-                                    </div>
-                                </div>
+                                )}
                             </div>
 
-                            <div
-                                id="emailAccount"
-                                className="my-3"
-                            >
-                                <h1 className="dark:text-green-400 text-sky-500 font-medium text-2xl">
-                                    Email Account
-                                </h1>
-                                <p className="text-2xl font-medium italic">
-                                    {user.emailAccount}
+                            <div className="text-2xl font-medium mb-2">
+                                Trialed Cars
+                            </div>
+                            <div>
+                                <p className="text-xl font-medium">
+                                    The user currently has no trialed cars.
                                 </p>
                             </div>
-                            <div
-                                id="phoneNo"
-                                className="my-3"
-                            >
-                                <h1 className="dark:text-green-400 text-sky-500 font-medium text-2xl">
-                                    Phone Number
-                                </h1>
-                                <p className="text-2xl font-medium italic">
-                                    {user.phoneNo}
-                                </p>
-                            </div>
-                        </div>
-                        <div className="basis-4/6">
-                            <Accordion>
-                                <Accordion.Panel>
-                                    <Accordion.Title>
-                                        Car Sales Listings
-                                    </Accordion.Title>
-                                    <Accordion.Content>
-                                        The user currently has no cars for sale.
-                                    </Accordion.Content>
-                                </Accordion.Panel>
-                                <Accordion.Panel>
-                                    <Accordion.Title>
-                                        Trialed Cars
-                                    </Accordion.Title>
-                                    <Accordion.Content>
-                                        The user currently has trialed no cars.
-                                    </Accordion.Content>
-                                </Accordion.Panel>
-                            </Accordion>
                         </div>
                     </div>
                 </div>
@@ -205,4 +267,4 @@ function ViewAccount() {
     );
 }
 
-export default ViewAccount
+export default ViewAccount;

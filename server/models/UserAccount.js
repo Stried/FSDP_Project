@@ -42,7 +42,14 @@ module.exports = (sequelize, DataTypes) => {
     UserAccount.associate = (models) => {
         UserAccount.hasMany(models.Store, {
             foreignKey: "emailAccount",
-            onDelete: "cascade"
+            onDelete: "cascade",
+            as: "sellers"
+        });
+
+        UserAccount.hasMany(models.UserFollower, {
+            foreignKey: "emailAccount",
+            onDelete: "cascade",
+            as: "followers"
         });
     };
     

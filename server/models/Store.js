@@ -87,10 +87,10 @@ module.exports = (sequelize, DataTypes) => {
         }
     });
 
-    Store.associate = (models) => { // sold by who?
+    Store.associate = (models) => { // sold by who? WHY DID U STOP WORKING
         Store.belongsTo(models.UserAccount, {
             foreignKey: "emailAccount",
-            as: "email"
+            as: "sellers"
         });
     };
 

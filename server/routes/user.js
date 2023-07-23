@@ -3,7 +3,7 @@ const router = express.Router();
 const yup = require("yup");
 const { sequelize } = require("../models/");
 const { DataTypes } = require("sequelize");
-const { UserAccount, AdminAccount, Sequelize } = require("../models/"); // imports the model name from models, must match waht is defined in the model
+const { UserAccount, AdminAccount, Store, Sequelize } = require("../models/"); // imports the model name from models, must match waht is defined in the model
 const bcrypt = require("bcrypt");
 const { sign, verify } = require("jsonwebtoken");
 const { validateToken } = require("../middlewares/auth");
@@ -514,6 +514,19 @@ router.get("/:username", async (req, res) => {
     })
 
     res.json(findAccount);
+})
+
+router.get("/viewAccount/carListing", validateToken, async (req, res) => {
+    try {
+        let userListing = await Store.findAll({
+            where: { emailAccount: req.user.emailAccount }
+        });
+
+        console.log(userListing)
+        res.json(userListing);
+    } catch (err) {
+        console.log(err);
+    }
 })
 
 module.exports = router;
