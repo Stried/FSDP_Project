@@ -30,6 +30,7 @@ import AdminPanelMain from "./pages/Users/AdminPanelMain";
 import UserChangePassword from "./pages/Users/UserChangePassword";
 import UserForgetPasswordEmail from "./pages/Users/UserForgetPasswordEmail";
 import UserForgetPasswordReset from "./pages/Users/UserForgetPasswordReset";
+import TalkJSTest from "./pages/Users/TalkJSTest";
 
 import LocationsMain from "./pages/Locations/LocationsMain";
 import LocationsCreate from "./pages/Locations/LocationsCreate";
@@ -52,6 +53,7 @@ import CreateAdmin from "./pages/Users/adminComponents/CreateAdmin";
 import ViewOtherUser from "./pages/Users/ViewOtherUser";
 import ViewAccount from "./pages/Users/userComponents/ViewAccount";
 import Setting from "./pages/Users/userComponents/Setting";
+import SupportHelpDesk from "./pages/Users/SupportHelpDesk";
 
 function App() {
     const [user, setUser] = useState(null);
@@ -118,9 +120,9 @@ function App() {
                                 path={"/user/viewAccount"}
                                 element={<ViewAccount />}
                             />
-                            <Route 
-                                path={ "/user/viewAccount/settings" }
-                                element={ <Setting /> }
+                            <Route
+                                path={"/user/viewAccount/settings"}
+                                element={<Setting />}
                             />
                             <Route
                                 path={"/user/updatePassword"}
@@ -142,9 +144,9 @@ function App() {
                                     </Protected>
                                 }
                             />
-                            <Route 
-                                path={ "/user/:username" }
-                                element={ <ViewOtherUser /> }
+                            <Route
+                                path={"/user/:username"}
+                                element={<ViewOtherUser />}
                             />
                             <Route
                                 path={"/admin/viewAllUsers"}
@@ -161,6 +163,10 @@ function App() {
                                         <CreateAdmin />
                                     </Protected>
                                 }
+                            />
+                            <Route
+                                path={"/user/chat"}
+                                element={<TalkJSTest />}
                             />
                             <Route
                                 path={"/locations/LocationsMain"}
@@ -218,6 +224,11 @@ function App() {
                             />
                         </Routes>
                     </div>
+                    {user && (
+                        <div className="fixed">
+                            <SupportHelpDesk />
+                        </div>
+                    )}
                     <div className="mt-10">
                         <EcoLifeFooter />
                     </div>
