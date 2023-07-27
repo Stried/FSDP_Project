@@ -115,6 +115,9 @@ const SideNav = ({ isOpen }) => {
                             </ul>
                             { accordionOpen && (
                                 <div>
+
+
+
                                                                         <a
                                         href="/Trials/trialAdmin/TrialsCarAdd"
                                         className="flex items-center pl-16 p-2 text-gray-900 rounded-lg dark:text-white dark:hover:text-black dark:hover:bg-green-400 transition duration-200 "
@@ -348,32 +351,26 @@ const App = () => {
 
     const navigate = useNavigate();
     const formik = useFormik({
+
+        //is this where i set the null value?
         initialValues: {
-            carPlateNo: "",
-            address: "",
+            dateOfTrial: "",
+            trialReport: "",
+            modelName: "",
+            faultResolve:"", 
         },
         validationSchema: yup.object().shape({
-            carPlateNo: yup
-                .string()
-                .trim()
-                .min(3, "Name must be Minimum 3 Characters.")
-                .max(100, "Name must be Maximum 100 Characters")
+            dateOfTrial: yup
+                .date()
                 .required("Name is required."),
-            address: yup
-                .string()
-                .trim()
-                .min(3, "address must be Minimum 3 Characters.")
-                .max(100, "address must be Maximum 100 Characters")
-                .required("Address is required"),
         }),
         onSubmit: async (data) => {
             const formData = {
-                carPlateNo: (data.carPlateNo = data.carPlateNo.trim()),
-                address: (data.address = data.address.trim()),
+                dateOfTrial: (data.dateOfTrial = data.dateOfTrial.trim()),
             };
 
             await http
-                .post("/trials/createTrialCar", formData)
+                .post("/trials/createTrialReceipt/:id", formData)
                 .then((res) => {
   
                     // navigate("/TrialsCarAdminPage");
@@ -432,11 +429,11 @@ const App = () => {
                         <thead class="text-xs text-gray-700 uppercase bg-green-400 dark:bg-green-500 dark:text-black">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
-                                    Car plate No.
+                                    Receipt ID
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     <div class="flex items-center">
-                                        Car Model
+                                        Date of Trial
                                         <a href="#">
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
@@ -452,7 +449,7 @@ const App = () => {
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     <div class="flex items-center">
-                                        Car Brand
+                                        Model Name
                                         <a href="#">
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
@@ -468,7 +465,7 @@ const App = () => {
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     <div class="flex items-center">
-                                        Car Address
+                                        Fault
                                         <a href="#">
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"

@@ -31,7 +31,7 @@ function StoreAddItem() {
             }
             let formData = new FormData();
             formData.append('file', file);
-            http.post('/file/upload', formData, {
+            http.post('/file/storeUpload', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -87,33 +87,20 @@ function StoreAddItem() {
             isModified: yup.boolean(),
             carMods: yup.string()
         }),
-        onSubmit: async (data) => {
-            const formData = {
-                carPlateNo: data.carPlateNo.trim(),
-                carDescription: data.carDescription.trim(),
-                carPrice: data.carPrice,
-                carBrand: data.carBrand.trim(),
-                carModel: data.carModel.trim(),
-                carEngine: data.carEngine.trim(),
-                carSpeed: data.carSpeed,
-                carFuelType: data.carFuelType.trim(),
-                carFuelConsume: data.carFuelConsume,
-                carProductionDate: data.carProductionDate,
-                carBodyType: data.carBodyType.trim(),
-                carColor: data.carColor.trim(),
-                carSeats: data.carSeats,
-                carLength: data.carLength,
-                carWidth: data.carWidth,
-                carHeight: data.carHeight,
-                isModified: data.isModified,
-                carMods: data.carMods.trim(),    
-            }
+        onSubmit: (data) => {
             if (imageFile) {
-                    data.imageFile = imageFile;
+                data.carImageFile = imageFile;
             }
-
-            await http
-                .post("/store/createStoreItem", formData)
+            data.carPlateNo.trim(),
+            data.carDescription.trim(),
+            data.carBrand.trim(),
+            data.carModel.trim(),
+            data.carEngine.trim(),
+            data.carFuelType.trim(),
+            data.carBodyType.trim(),
+            data.carColor.trim(),
+            data.carMods.trim(),
+            http.post("/store/createStoreItem", data)
                 .then((res) => {
                     console.log(res.status);
                     navigate("/store/StoreMain");
@@ -345,7 +332,7 @@ function StoreAddItem() {
                             imageFile && (
                                 <AspectRatio sx={{ mt: 2 }}>
                                     <Box component="img" alt="store"
-                                        src={`${import.meta.env.VITE_FILE_BASE_URL}${imageFile}`}>
+                                        src={`${import.meta.env.VITE_FILE_BASE_URL_STORE}${imageFile}`}>
                                     </Box>
                                 </AspectRatio>
                             )

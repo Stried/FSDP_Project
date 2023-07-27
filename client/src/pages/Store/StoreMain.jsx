@@ -128,7 +128,7 @@ function StoreMain() {
                                         {store.carBrand} {store.carModel}
                                     </p>
                                     <p className="text-xl">
-                                        $ {store.carPrice}
+                                        ${store.carPrice}
                                     </p>
                                     <p>Production: {store.carProductionDate}</p>
                                     <p className="flex pt-3 pb-2">

@@ -51,29 +51,6 @@ router.post("/createTrialCar", async (req, res) => {
 
 });
 
-router.post("/createTrialReceipt/:id", async (req, res) => {
-    let data = req.body;
-    let validationSchema = yup.object().shape({
-        dateOfTrial: yup.date().required(),
-        modelName:yup.trim().required(),
-
-    });
-    try {
-        await validationSchema.validate(data,
-            { abortEarly: false, strict: true });
-    }
-    catch (err) {
-        console.error(err);
-        res.status(400).json({ errors: err.errors });
-        return;
-    }
-    data.dateOfTrial = data.dateOfTrial.trim();
-    data.modelName = data.dateOfTrial.trim();
-    let result = await TrialReceipt.create(data);
-    res.json(result);
-
-});
-
 router.get("/viewTrialCar", async (req, res) => {
     const leTrialCar = await TrialCar.findAll({
         where: { },
@@ -162,7 +139,41 @@ router.delete("/:carPlateNo", async (req, res) => {
     }
 });
 
-router.get("/viewTrialReceipt", validateToken, async (req, res) => {
+router.post("/createTrialReceipt/:id", async (req, res) => {
+    const trialCar = req.params.id;
+    const TheTrialCar = await TrialCar.findOne({
+        where: {carPlateNo:trialCar},
+    })
+    let data = req.body;
+    let validationSchema = yup.object().shape({
+        dateOfTrial: yup.date().required(),
+        modelName:yup.trim().required(),
+
+    });
+    try {
+        await validationSchema.validate(data,
+            { abortEarly: false, strict: true });
+    }
+    catch (err) {
+        console.error(err);
+        res.status(400).json({ errors: err.errors });
+        return;
+    }
+    data.dateOfTrial = data.dateOfTrial.trim();
+    data.modelName = data.modelName.trim();
+
+    let carPlateCheck = await TrialCar.findByPk(data.carPlateNo);
+    if (!carPlateCheck) {
+        res.status(400).json({ message: "Trial Car does not exist!" })
+        return;
+    }
+
+    let result = await TrialReceipt.create(data);
+    res.json(result);
+
+});
+
+router.get("/viewUserTrialReceipt", validateToken, async (req, res) => {
     const userInfo = req.user;
     const userTrialReceipt = await TrialReceipt.findAll({
         where: { emailAccount: userInfo.emailAccount },
@@ -186,7 +197,7 @@ router.get("/viewAllTrialReceipt", validateToken, async (req, res) => {
             { trialReceiptId: { [ Sequelize.Op.like ]: `%${search}%` } },
             { dateOfTrial: { [ Sequelize.Op.like ]: `%${search}%` } },
             { modelName: { [ Sequelize.Op.like ]: `%${search}%` } },
-            { carPlateNo: { [ Sequelize.Op.like ]: `%${search}` } },
+            { carPlateNo: { [ Sequelize.Op.like ]: `%${search}%` } },
         ]
     }
 
@@ -213,12 +224,14 @@ router.put("/viewAllTrialReceipt/changeDetails/:id", validateToken, async (req, 
         res.status(404).json("Page Is Not Found.");
         return;
     }
+
     let data = req.body;
     let validationSchema = yup.object().shape({
         dateOfTrial: yup.date().required(),
         trialReport: yup.string().trim().min(5).max(1000),
         faultResolve: yup.boolean().required(),
     });
+    
     try {
         await validationSchema.validate(data, { abortEarly: false });
     } catch (err) {
@@ -241,6 +254,23 @@ router.put("/viewAllTrialReceipt/changeDetails/:id", validateToken, async (req, 
         });
     }
 
+});
+
+router.delete("/:receiptID", async (req, res) => {
+    let receiptID = req.params.receiptID;
+    let num = await TrialReceipt.destroy({
+        where: { trialReceiptId: receiptID }
+    })
+    if (num == 1) {
+        res.json({
+            message: "trial receipt was deleted successfully."
+        });
+    }
+    else {
+        res.status(400).json({
+            message: `Cannot delete trial receipt with ID ${receiptID}.`
+        });
+    }
 });
 
 module.exports = router
