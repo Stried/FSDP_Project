@@ -340,15 +340,6 @@ const App = () => {
         setArrowClose(!arrowClose);
     };
 
-    const editTrialCar = (id) => {
-        navigate(`/Trials/trialAdmin/TrialsCarAdminUpdate/${id}`);
-    }
-
-    const options = [
-        { value: "serangoon", label: "serangoon" },
-        { value: "hougang", label: "hougang" },
-    ];
-
     const navigate = useNavigate();
     const formik = useFormik({
 

@@ -317,12 +317,7 @@ const App = () => {
             setTrialCarList(res.data);
         });
     };
-    const deleteTrialCar = (carPlateNo) => {
-        http.delete(`/trials/${carPlateNo}`).then((res) => {
-            console.log(res.data);
-            window.location.reload();
-        });
-    };
+
     useEffect(() => {
         getTrialCar();
     }, []);
@@ -350,7 +345,6 @@ const App = () => {
         validationSchema: yup.object().shape({
             dateOfTrial: yup
                 .date()
-                .trim()
                 .required("Date of trial is required"),
         }),
         onSubmit: async (data) => {
@@ -418,7 +412,6 @@ const App = () => {
                     
         <Box
           component={"form"}
-          sx={{}}
           onSubmit={formik.handleSubmit}
           className="mx-7 ml-16"
         >

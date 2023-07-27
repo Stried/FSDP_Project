@@ -337,15 +337,6 @@ const App = () => {
         setArrowClose(!arrowClose);
     };
 
-    const editTrialCar = (id) => {
-        navigate(`/Trials/trialAdmin/TrialsCarAdminUpdate/${id}`);
-    }
-
-    const options = [
-        { value: "serangoon", label: "serangoon" },
-        { value: "hougang", label: "hougang" },
-    ];
-
     const navigate = useNavigate();
     const formik = useFormik({
         initialValues: {
@@ -500,13 +491,12 @@ const App = () => {
                                         </th>
                                         <td class="px-6 py-4">{ trialCar.name }</td>
                                         <td class="px-6 py-4">{ trialCar.carBrand }</td>
-                                        <td class="px-6 py-4">{ trialCar.address }</td>
+                                        <td class="px-6 py-4">Details</td>
                                         <td class="pr-0 py-4 text-right">
-                                            <Link to={ `/Trials/trialUsers/TrialsReceiptCreation/${trialCar.carPlateNo}` } className="bg-green-400 p-2 px-5 rounded-md text-black hover:bg-green-600 hover:text-white ">
+                                            <Link to={ `/Trials/trialUsers/TrialsReceiptCreation/${trialCar.name}` } className="bg-green-400 p-2 px-5 rounded-md text-black hover:bg-green-600 hover:text-white ">
                                                 Create Receipt
                                             </Link>
                                         </td>
-
                                     </tr>
                                 );
                             }) }

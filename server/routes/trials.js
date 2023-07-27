@@ -140,19 +140,18 @@ router.delete("/:carPlateNo", async (req, res) => {
 });
 
 router.post("/createTrialReceipt/:id", async (req, res) => {
-    const trialCar = req.params.id;
+    const modelName = req.params.id;
     const TheTrialCar = await TrialCar.findOne({
-        where: {carPlateNo:trialCar},
+        where: {name:modelName},
     })
     let data = req.body;
     let validationSchema = yup.object().shape({
         dateOfTrial: yup.date().required(),
-        modelName:yup.trim().required(),
 
     });
     try {
         await validationSchema.validate(data,
-            { abortEarly: false, strict: true });
+            { abortEarly: false, strict: false });
     }
     catch (err) {
         console.error(err);
@@ -160,13 +159,8 @@ router.post("/createTrialReceipt/:id", async (req, res) => {
         return;
     }
     data.dateOfTrial = data.dateOfTrial.trim();
-    data.modelName = data.modelName.trim();
+    data.modelName = modelName;
 
-    let carPlateCheck = await TrialCar.findByPk(data.carPlateNo);
-    if (!carPlateCheck) {
-        res.status(400).json({ message: "Trial Car does not exist!" })
-        return;
-    }
 
     let result = await TrialReceipt.create(data);
     res.json(result);
