@@ -78,19 +78,19 @@ function Setting() {
 
             <ChangeAccountDetails />
 
-            <p className="text-white text-3xl font-medium mt-6 mb-2">
+            <p className="text-slate-300 text-3xl font-medium mt-6 mb-2">
                 Update Password
             </p>
             <Link
                 to={"/user/updatePassword"}
                 className="mb-5"
             >
-                <button className="bg-sky-400 text-black hover:bg-sky-600 hover:text-white font-medium px-3 py-2 rounded">
+                <button className="bg-sky-400 text-black hover:bg-sky-600 hover:text-slate-300 font-medium px-3 py-2 rounded">
                     Change Password
                 </button>
             </Link>
 
-            <p className="text-white text-3xl font-medium mt-10 mb-2">
+            <p className="text-slate-300 text-3xl font-medium mt-10 mb-2">
                 Delete Account
             </p>
             {/* Modal to be implemented */}
@@ -98,7 +98,7 @@ function Setting() {
                 onClick={() => {
                     setOpenModal("deleteModal");
                 }}
-                className="px-3 py-2 bg-red-500 hover:bg-red-600 hover:text-white rounded font-medium"
+                className="px-3 py-2 bg-red-500 hover:bg-red-600 hover:text-slate-300 rounded font-medium"
             >
                 Delete
             </button>

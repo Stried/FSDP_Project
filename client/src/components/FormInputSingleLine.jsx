@@ -17,14 +17,15 @@ function FormInputSingleLine(props) {
               type={props.type}
               label={props.name}
               name={props.valueName}
-              inputProps={{ style: { color: "grey" } }}
+              inputProps={{ style: { color: "lightgray" } }}
               InputProps={{
                   endAdornment: props.endAdornment,
               }}
               onChange={props.onChange}
               value={props.value}
               error={props.error}
-              helperText={props.helperText}
+              helperText={ props.helperText }
+              className="bg-black/40"
           />
       </ThemeProvider>
   );

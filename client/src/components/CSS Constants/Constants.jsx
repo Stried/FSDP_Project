@@ -11,28 +11,28 @@ export const DarkTheme = createTheme({
 
 export const CssTextField = styled(TextField)({
     "& .MuiInputLabel-root": {
-        color: "gray",
+        color: "lightgray",
     },
     "& label.Mui-focused": {
-        color: "gray",
+        color: "lightgray",
     },
     "& .MuiInput-underline:after": {
-        borderBottomColor: "gray",
+        borderBottomColor: "lightgray",
     },
     "& .MuiOutlinedInput-root": {
         "& fieldset": {
-            borderColor: "gray",
+            borderColor: "lightgray",
             borderWidth: "2px",
-            color: "gray",
+            color: "lightgray",
         },
         "&:hover fieldset": {
-            borderColor: "gray",
+            borderColor: "lightgray",
         },
         "&.Mui-focused fieldset": {
-            borderColor: "gray",
+            borderColor: "lightgray",
         },
         "&input": {
-            color: "gray",
+            color: "lightgray",
         },
     },
 });

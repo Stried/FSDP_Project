@@ -144,48 +144,57 @@ function ChangeAccountDetails() {
     });
 
     return (
-        <div className="text-white">
-            { user && (
-                <div>
+        <div className="text-slate-300">
+            {user && (
+                <div className=" bg-slate-900 w-fit border-slate-300 border-2 border-solid py-5 px-6 rounded-lg">
                     <h1 className="text-3xl font-medium">
                         Change User Details
                     </h1>
-                    <Box component={ "form" } onSubmit={ formik.handleSubmit } className="w-2/3">
+                    <Box
+                        component={"form"}
+                        onSubmit={formik.handleSubmit}
+                        className="w-2/3"
+                    >
                         <FormInputSingleLine
                             name="Full Name"
                             valueName="fullName"
                             type="text"
-                            onChange={ formik.handleChange }
-                            initialValues={ user.fullName }
-                            value={ formik.values.fullName }
+                            onChange={formik.handleChange}
+                            initialValues={user.fullName}
+                            value={formik.values.fullName}
                             error={
-                                formik.touched.fullName && Boolean(formik.errors.fullName)
+                                formik.touched.fullName &&
+                                Boolean(formik.errors.fullName)
                             }
                             helperText={
-                                formik.touched.fullName && formik.errors.fullName
+                                formik.touched.fullName &&
+                                formik.errors.fullName
                             }
                         />
                         <FormInputSingleLine
                             name="Username"
                             valueName="userName"
                             type="text"
-                            onChange={ formik.handleChange }
-                            value={ formik.values.userName }
+                            onChange={formik.handleChange}
+                            value={formik.values.userName}
                             error={
-                                formik.touched.userName && Boolean(formik.errors.userName)
+                                formik.touched.userName &&
+                                Boolean(formik.errors.userName)
                             }
                             helperText={
-                                formik.touched.userName && formik.errors.userName
+                                formik.touched.userName &&
+                                formik.errors.userName
                             }
                         />
                         <FormInputSingleLine
                             name="Phone Number"
                             valueName="phoneNo"
                             type="text"
-                            onChange={ formik.handleChange }
-                            value={ formik.values.phoneNo }
+                            onChange={formik.handleChange}
+                            value={formik.values.phoneNo}
                             error={
-                                formik.touched.phoneNo && Boolean(formik.errors.phoneNo)
+                                formik.touched.phoneNo &&
+                                Boolean(formik.errors.phoneNo)
                             }
                             helperText={
                                 formik.touched.phoneNo && formik.errors.phoneNo
@@ -193,20 +202,31 @@ function ChangeAccountDetails() {
                         />
 
                         <div className="my-3">
-                            <Button component="label" className="bg-green-500 text-white px-2 py-1 rounded text-xl border-transparent border-2 border-solid hover:border-green-500 hover:border-2 hover:border-solid font-medium hover:transition-ease-in-out duration-300">
+                            <Button
+                                component="label"
+                                className="bg-green-500 text-slate-300 px-2 py-1 rounded text-xl border-transparent border-2 border-solid hover:border-green-500 hover:border-2 hover:border-solid font-medium hover:transition-ease-in-out duration-300"
+                            >
                                 Add/Change Profile Image
-                                <input hidden accept="image/*" multiple type="file" onChange={ onFileChange } />
+                                <input
+                                    hidden
+                                    accept="image/*"
+                                    multiple
+                                    type="file"
+                                    onChange={onFileChange}
+                                />
                             </Button>
                         </div>
-                        {
-                            imageFile && (
-                                <AspectRatio sx={ { mt: 2 } }>
-                                    <Box component="img" alt="tutorial"
-                                        src={ `${import.meta.env.VITE_FILE_BASE_URL}${imageFile}` }>
-                                    </Box>
-                                </AspectRatio>
-                            )
-                        }
+                        {imageFile && (
+                            <AspectRatio sx={{ mt: 2 }}>
+                                <Box
+                                    component="img"
+                                    alt="tutorial"
+                                    src={`${
+                                        import.meta.env.VITE_FILE_BASE_URL
+                                    }${imageFile}`}
+                                ></Box>
+                            </AspectRatio>
+                        )}
 
                         <Box className="w-1/4 py-1 mt-3">
                             <Button
@@ -220,10 +240,9 @@ function ChangeAccountDetails() {
                     </Box>
                     <ToastContainer />
                 </div>
-            ) }
-
+            )}
         </div>
-    )
+    );
 }
 
 export default ChangeAccountDetails

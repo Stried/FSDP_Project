@@ -4,31 +4,39 @@ import "react-toastify/dist/ReactToastify.css";
 import { useFormik } from "formik";
 import http from "../../http";
 import * as yup from "yup";
-import { Box } from "@mui/material";
+import { Box, RadioGroup, Radio, FormControl, FormLabel, FormControlLabel, FormGroup, Checkbox } from "@mui/material";
+import { Input } from "postcss";
+import { useNavigate } from "react-router-dom";
+import FormInputSingleLine from "../../components/FormInputSingleLine";
 
 function LocationsCreate() {
-    const formInitialValues = useFormik({
-        locationName: "",
-        streetName: "",
-        postalCode: "",
-        LatAxis: "",
-        LongAxis: "",
-        region: "",
-        fastCharge: false,
-        noOfChargers: "",
-    });
-    const [formData, setFormData] = useState(formInitialValues);
+    const navigate = useNavigate();
 
     const handleCheckboxChange = (event) => {
         const { name, checked } = event.target;
-        formik.setFieldValue(name, checked);
+        formik.setFieldValue('fastCharge', checked);
+    };
+
+    const [value, setValue] = useState("North");
+
+    const handleChange = (event) => {
+        setValue(event.target.value);
     };
 
     const formik = useFormik({
-        initialValues: formData,
+        initialValues: {
+            locationName: "",
+            streetName: "",
+            postalCode: "",
+            LatAxis: "",
+            LongAxis: "",
+            region: "",
+            fastCharge: false,
+            noOfChargers: "",
+        },
         validationSchema: yup.object().shape({
-            latAxis: yup.number().required("Please specify the Latitude."),
-            longAxis: yup.number().required("Please specify the Longitude."),
+            LatAxis: yup.number().required("Please specify the Latitude."),
+            LongAxis: yup.number().required("Please specify the Longitude."),
             locationName: yup
                 .string()
                 .trim()
@@ -61,10 +69,17 @@ function LocationsCreate() {
                 ),
         }),
         onSubmit: async (data) => {
-          console.log("peepee poopoo", data)
+            console.log(data);
             try {
-                await http.post("/locations/LocationsCreate", data);
-                navigate("/locations/LocationsMain");
+                await http
+                    .post("/locations/LocationsCreate", data)
+                    .then((res) => {
+                        console.log(res.status);
+                        navigate("/locations/LocationsMain");
+                    })
+                    .catch(function (err) {
+                        console.log(err);
+                    });
             } catch (error) {
                 console.log(error);
                 toast.error(`${error.response.data.message}`);
@@ -79,183 +94,147 @@ function LocationsCreate() {
                     <h1 className="text-green-400 text-3xl font-medium mb-4">
                         Add a charger location
                     </h1>
-                    <form
+                    <Box
                         component={"form"}
                         onSubmit={formik.handleSubmit}
                         className="space-y-4"
                     >
                         <div>
-                            <label
-                                htmlFor="locationNameInput"
-                                className="text-white"
-                            >
-                                Location Name
-                            </label>
-                            <input
+                            <FormInputSingleLine
+                                name="Location Name"
+                                valueName="locationName"
                                 type="text"
-                                id="locationNameInput"
-                                name="locationName"
-                                placeholder="Hougang Mall"
-                                required
-                                className="bg-gray-800 text-gray-300 rounded-lg py-2 px-3 w-full"
+                                onChange={formik.handleChange}
                                 value={formik.values.locationName}
-                                onChange={formik.handleChange}
+                                error={
+                                    formik.touched.locationName &&
+                                    Boolean(formik.errors.locationName)
+                                }
+                                helperText={
+                                    formik.touched.locationName &&
+                                    formik.errors.locationName
+                                }
                             />
-                            {formik.touched.locationName &&
-                                formik.errors.locationName && (
-                                    <div className="text-red-500">
-                                        {formik.errors.locationName}
-                                    </div>
-                                )}
                         </div>
                         <div>
-                            <label
-                                htmlFor="streetNameInput"
-                                className="text-white"
-                            >
-                                Street Name
-                            </label>
-                            <input
+                            <FormInputSingleLine
+                                name="Street Name"
+                                valueName="streetName"
                                 type="text"
-                                id="streetNameInput"
-                                name="streetName"
-                                placeholder="90 Hougang Ave 10"
-                                required
-                                className="bg-gray-800 text-gray-300 rounded-lg py-2 px-3 w-full"
+                                onChange={formik.handleChange}
                                 value={formik.values.streetName}
-                                onChange={formik.handleChange}
+                                error={
+                                    formik.touched.streetName &&
+                                    Boolean(formik.errors.streetName)
+                                }
+                                helperText={
+                                    formik.touched.streetName &&
+                                    formik.errors.streetName
+                                }
                             />
-                            {formik.touched.streetName &&
-                                formik.errors.streetName && (
-                                    <div className="text-red-500">
-                                        {formik.errors.streetName}
-                                    </div>
-                                )}
                         </div>
                         <div>
-                            <label
-                                htmlFor="postalCodeInput"
-                                className="text-white"
-                            >
-                                Postal Code
-                            </label>
-                            <input
+                            <FormInputSingleLine
+                                name="Postal Code"
+                                valueName="postalCode"
                                 type="text"
-                                id="postalCodeInput"
-                                name="postalCode"
-                                placeholder="538766"
-                                required
-                                className="bg-gray-800 text-gray-300 rounded-lg py-2 px-3 w-full"
-                                value={formik.values.postalCode}
                                 onChange={formik.handleChange}
+                                value={formik.values.postalCode}
+                                error={
+                                    formik.touched.postalCode &&
+                                    Boolean(formik.errors.postalCode)
+                                }
+                                helperText={
+                                    formik.touched.postalCode &&
+                                    formik.errors.postalCode
+                                }
                             />
-                            {formik.touched.postalCode &&
-                                formik.errors.postalCode && (
-                                    <div className="text-red-500">
-                                        {formik.errors.postalCode}
-                                    </div>
-                                )}
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                             <div>
-                                <label
-                                    htmlFor="latAxisInput"
-                                    className="text-white"
-                                >
-                                    Latitude
-                                </label>
-                                <input
+                                <FormInputSingleLine
+                                    name="Latitude"
+                                    valueName="LatAxis"
                                     type="text"
-                                    id="latAxisInput"
-                                    name="LatAxis"
-                                    placeholder="1.373554718211368"
-                                    required
-                                    className="bg-gray-800 text-gray-300 rounded-lg py-2 px-3 w-full"
-                                    value={formik.values.LatAxis}
                                     onChange={formik.handleChange}
+                                    value={formik.values.LatAxis}
+                                    error={
+                                        formik.touched.phoneNo &&
+                                        Boolean(formik.errors.LatAxis)
+                                    }
+                                    helperText={
+                                        formik.touched.LatAxis &&
+                                        formik.errors.LatAxis
+                                    }
                                 />
-                                {formik.touched.LatAxis &&
-                                    formik.errors.LatAxis && (
-                                        <div className="text-red-500">
-                                            {formik.errors.LatAxis}
-                                        </div>
-                                    )}
                             </div>
                             <div>
-                                <label
-                                    htmlFor="lngAxisInput"
-                                    className="text-white"
-                                >
-                                    Longitude
-                                </label>
-                                <input
+                                <FormInputSingleLine
+                                    name="Longtitude"
+                                    valueName="LongAxis"
                                     type="text"
-                                    id="lngAxisInput"
-                                    name="LongAxis"
-                                    placeholder="103.89370104229617"
-                                    required
-                                    className="bg-gray-800 text-gray-300 rounded-lg py-2 px-3 w-full"
-                                    value={formik.values.LongAxis}
                                     onChange={formik.handleChange}
+                                    value={formik.values.LongAxis}
+                                    error={
+                                        formik.touched.LongAxis &&
+                                        Boolean(formik.errors.LongAxis)
+                                    }
+                                    helperText={
+                                        formik.touched.LongAxis &&
+                                        formik.errors.LongAxis
+                                    }
                                 />
-                                {formik.touched.LongAxis &&
-                                    formik.errors.LongAxis && (
-                                        <div className="text-red-500">
-                                            {formik.errors.LongAxis}
-                                        </div>
-                                    )}
                             </div>
                         </div>
                         <div>
-                            <label
-                                htmlFor="regionInput"
-                                className="text-white"
-                            >
-                                Region
-                            </label>
-                            <select
-                                id="regionInput"
-                                name="region"
-                                required
-                                className="bg-gray-800 text-gray-300 rounded-lg py-2 px-3 w-full"
-                                value={formik.values.region}
-                                onChange={formik.handleChange}
-                            >
-                                <option value="">Select region</option>
-                                <option value="North">North</option>
-                                <option value="South">South</option>
-                                <option value="East">East</option>
-                                <option value="West">West</option>
-                            </select>
-                            {formik.touched.region && formik.errors.region && (
-                                <div className="text-red-500">
-                                    {formik.errors.region}
-                                </div>
-                            )}
+                            <FormControl className="text-white">
+                                <FormLabel
+                                    id="demo-controlled-radio-buttons-group"
+                                    className="text-white"
+                                >
+                                    Region
+                                </FormLabel>
+                                <RadioGroup
+                                    aria-labelledby="demo-controlled-radio-buttons-group"
+                                    name="controlled-radio-buttons-group"
+                                    value={value}
+                                    onChange={handleChange}
+                                >
+                                    <FormControlLabel
+                                        value="North"
+                                        control={<Radio />}
+                                        label="North"
+                                    />
+                                    <FormControlLabel
+                                        value="South"
+                                        control={<Radio />}
+                                        label="South"
+                                    />
+                                </RadioGroup>
+                            </FormControl>
                         </div>
                         <div className="flex items-center pl-1">
-                            <input
-                                type="checkbox"
-                                id="fastChargeToggle"
-                                name="fastCharge"
-                                checked={formik.values.fastCharge}
-                                onChange={handleCheckboxChange}
-                                className="form-checkbox h-3 w-3 text-blue-600"
-                            />
-                            <label
-                                htmlFor="fastChargeToggle"
-                                className="text-white pl-3"
-                            >
-                                FastCharge Capable?
-                            </label>
+                            <FormGroup>
+                                <FormControlLabel
+                                    required
+                                    control={<Checkbox defaultChecked />}
+                                    label="FastCharge Capable"
+                                    sx={{
+                                        color: "white",
+                                        "&.Mui-checked": {
+                                            color: "white",
+                                        },
+                                    }}
+                                />
+                            </FormGroup>
                         </div>
                         <button
                             type="submit"
-                            className="bg-blue-500 text-white py-2 px-4 rounded-lg"
+                            className="bg-blue-500 hover:bg-blue-400 cursor-pointer text-white py-2 px-4 rounded-lg"
                         >
                             Submit
                         </button>
-                    </form>
+                    </Box>
                 </div>
             </div>
         </Box>
