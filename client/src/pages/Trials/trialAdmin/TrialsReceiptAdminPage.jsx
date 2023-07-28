@@ -20,20 +20,20 @@ import * as yup from "yup";
 
 const App = () => {
     const [ isOpen, setIsOpen ] = useState(false);
-    const [ trialCarList, setTrialCarList ] = useState([]);
-    const getTrialCar = () => {
-        http.get("/trials/viewTrialCar").then((res) => {
-            setTrialCarList(res.data);
+    const [ trialReceiptList, setTrialReceiptList ] = useState([]);
+    const getTrialReceipt = () => {
+        http.get("/trials/viewAllTrialReceipt").then((res) => {
+            setTrialReceiptList(res.data);
         });
     };
-    const deleteTrialCar = (carPlateNo) => {
-        http.delete(`/trials/${carPlateNo}`).then((res) => {
+    const deleteTrialReceipt = (trialReceiptId) => {
+        http.delete(`/trials/${trialReceiptId}`).then((res) => {
             console.log(res.data);
             window.location.reload();
         });
     };
     useEffect(() => {
-        getTrialCar();
+        getTrialReceipt();
     }, []);
 
     const toggleNav = () => {
@@ -69,8 +69,7 @@ const App = () => {
             await http
                 .post("/trials/createTrialReceipt/:id", formData)
                 .then((res) => {
-  
-                    // navigate("/TrialsCarAdminPage");
+
                     window.location.reload()
                 })
                 .catch(function (err) {
@@ -149,26 +148,25 @@ const App = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            { trialCarList.map((trialCar, i) => {
+                            { trialReceiptList.map((trialReceipt, i) => {
                                 return (
                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                         <th
                                             scope="row"
                                             class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                                         >
-                                            { trialCar.carPlateNo }
+                                            { trialReceipt.modelName }
                                         </th>
-                                        <td class="px-6 py-4">{ trialCar.name }</td>
-                                        <td class="px-6 py-4">{ trialCar.carBrand }</td>
-                                        <td class="px-6 py-4">{ trialCar.address }</td>
+                                        <td class="px-6 py-4">{ trialReceipt.dateOfTrial }</td>
+                                        <td class="px-6 py-4">{ trialReceipt.faultResolve }</td>
                                         <td class="pr-0 py-4 text-right">
-                                            <Link to={ `/Trials/trialAdmin/TrialsCarAdminUpdate/${trialCar.carPlateNo}` } className="bg-green-400 p-2 px-5 rounded-md text-black hover:bg-green-600 hover:text-white ">
-                                                Update Address
+                                            <Link to={ `/Trials/trialAdmin/TrialsCarAdminUpdate/${trialReceipt.trialReceiptId}` } className="bg-green-400 p-2 px-5 rounded-md text-black hover:bg-green-600 hover:text-white ">
+                                                Update Receipt
                                             </Link>
                                         </td>
                                         <td class="pl-0 pr-4 py-4 text-right">
                                             <a
-                                                onClick={ () => deleteTrialCar(`${trialCar.carPlateNo}`) }
+                                                onClick={ () => deleteTrialReceipt(`${trialReceipt.trialReceiptId}`) }
                                                 href="#"
                                                 className="bg-red-400 p-2 px-5 rounded-md text-black hover:bg-red-600 hover:text-white "
                                             >

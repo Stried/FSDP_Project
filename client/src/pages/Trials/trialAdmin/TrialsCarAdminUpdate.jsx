@@ -32,12 +32,6 @@ function TrialsCarAdminUpdate() {
     ];
 
 
-    const toggleNav = () => {
-        setIsOpen(!isOpen);
-    };
-
-
-
     const [selectedTrialCar, setSelectedTrialCar] = useState({
         id: "",
         address: "",
@@ -73,8 +67,6 @@ function TrialsCarAdminUpdate() {
                 address: data.address.trim(),
 
             }
-
-
             http
                 .put(`trials/updateTrialCar/changeDetails/${carPlateNo}`, formData)
                 .then((res) => {

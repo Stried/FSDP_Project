@@ -34,6 +34,7 @@ TrialReceipt.associate = (models) => {
 TrialReceipt.associate = (models)=>{
     TrialReceipt.belongsTo(models.TrialCar, {
         foreignKey:"id",
+        allowNull:true,
         onDelete:"cascade"
     })
 };

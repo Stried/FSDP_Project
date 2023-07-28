@@ -139,10 +139,10 @@ router.delete("/:carPlateNo", async (req, res) => {
     }
 });
 
-router.post("/createTrialReceipt/:id", async (req, res) => {
-    const modelName = req.params.id;
+router.post("/createTrialReceipt/:model", async (req, res) => {
+    const model = req.params.model;
     const TheTrialCar = await TrialCar.findOne({
-        where: {name:modelName},
+        where: {name:model},
     })
     let data = req.body;
     let validationSchema = yup.object().shape({
@@ -158,9 +158,18 @@ router.post("/createTrialReceipt/:id", async (req, res) => {
         res.status(400).json({ errors: err.errors });
         return;
     }
-    data.dateOfTrial = data.dateOfTrial.trim();
-    data.modelName = modelName;
 
+    let dateandcarcheck = await TrialReceipt.findOne({
+        where: [{ dateOfTrial: data.dateOfTrial }, {model: data.modelName} ]
+    });
+    if (dateandcarcheck) {
+        res.status(400).json({ message: "Trial Car already booked!" })
+        return;
+    }
+    console.log(data.dateOfTrial)
+    console.log(data.modelName)
+    data.dateOfTrial = data.dateOfTrial;
+    data.modelName = modelName;
 
     let result = await TrialReceipt.create(data);
     res.json(result);

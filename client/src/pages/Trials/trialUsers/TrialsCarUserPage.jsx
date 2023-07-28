@@ -17,8 +17,6 @@ import FormInputSingleLine from "../../../components/FormInputSingleLine";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-
-
 const App = () => {
     const [ trialCarList, setTrialCarList ] = useState([]);
     const getTrialCar = () => {
@@ -31,137 +29,43 @@ const App = () => {
         getTrialCar();
     }, []);
 
-
-    const formik = useFormik({
-        initialValues: {
-            carPlateNo: "",
-            address: "",
-        },
-        validationSchema: yup.object().shape({
-            carPlateNo: yup
-                .string()
-                .trim()
-                .min(3, "Name must be Minimum 3 Characters.")
-                .max(100, "Name must be Maximum 100 Characters")
-                .required("Name is required."),
-            address: yup
-                .string()
-                .trim()
-                .min(3, "address must be Minimum 3 Characters.")
-                .max(100, "address must be Maximum 100 Characters")
-                .required("Address is required"),
-        }),
-        onSubmit: async (data) => {
-            const formData = {
-                carPlateNo: (data.carPlateNo = data.carPlateNo.trim()),
-                address: (data.address = data.address.trim()),
-            };
-
-            await http
-                .post("/trials/createTrialCar", formData)
-                .then((res) => {
-  
-                    // navigate("/TrialsCarAdminPage");
-                    window.location.reload()
-                })
-                .catch(function (err) {
-                    console.log(err);
-                    toast.error(`${err.response.data.message}`);
-                });
-        },
-    });
-
     return (
         <div className="relative min-h-screen">
-
-
-
                 <h1 className="text-center text-5xl text-green-400">Trial Car User Page</h1>
                 <br></br>
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg mx-7 ml-16">
-                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                        <thead class="text-xs text-gray-700 uppercase bg-green-400 dark:bg-green-500 dark:text-black">
-                            <tr>
-                                <th scope="col" class="px-6 py-3">
-                                    Car plate No.
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    <div class="flex items-center">
-                                        Car Model
-                                        <a href="#">
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                class="w-3 h-3 ml-1"
-                                                aria-hidden="true"
-                                                fill="currentColor"
-                                                viewBox="0 0 320 512"
-                                            >
-                                                <path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z" />
-                                            </svg>
-                                        </a>
-                                    </div>
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    <div class="flex items-center">
-                                        Car Brand
-                                        <a href="#">
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                class="w-3 h-3 ml-1"
-                                                aria-hidden="true"
-                                                fill="currentColor"
-                                                viewBox="0 0 320 512"
-                                            >
-                                                <path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z" />
-                                            </svg>
-                                        </a>
-                                    </div>
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    <div class="flex items-center">
-                                        Car Address
-                                        <a href="#">
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                class="w-3 h-3 ml-1"
-                                                aria-hidden="true"
-                                                fill="currentColor"
-                                                viewBox="0 0 320 512"
-                                            >
-                                                <path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z" />
-                                            </svg>
-                                        </a>
-                                    </div>
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    <span class="sr-only">Edit</span>
-                                </th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            { trialCarList.map((trialCar, i) => {
-                                return (
-                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                        <th
-                                            scope="row"
-                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                                        >
-                                            { trialCar.carPlateNo }
-                                        </th>
-                                        <td class="px-6 py-4">{ trialCar.name }</td>
-                                        <td class="px-6 py-4">{ trialCar.carBrand }</td>
-                                        <td class="px-6 py-4">Details</td>
-                                        <td class="pr-0 py-4 text-right">
-                                            <Link to={ `/Trials/trialUsers/TrialsReceiptCreation/${trialCar.name}` } className="bg-green-400 p-2 px-5 rounded-md text-black hover:bg-green-600 hover:text-white ">
-                                                Create Receipt
+something something something , but too afraid?
+<div class="flex flex-wrap w-100 h-100">
+{trialCarList.map((trialCar, i) => {
+                                return (                                
+<div class="p-5 w-96">
+    <div class="max-w-sm bg-white border  transition duration-300  border-gray-200 rounded-sm dark:bg-gray-800 hover:shadow-green-500 shadow-3xl ease-out dark:border-gray-700">
+    <a href="#">
+        <img class="rounded-t-sm" src="/docs/images/blog/image-1.jpg" alt="" />
+    </a>
+    <div class="p-5">
+        <a href="#">
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Model: {trialCar.name}</h5>
+        </a>
+        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Brand: {trialCar.carBrand} 
+        <br/>
+        Address: {trialCar.address}
+        </p>
+
+        <Link
+         to={ `/Trials/trialUsers/TrialsReceiptCreation/${trialCar.name}`} 
+         className="bg-green-400 p-2 px-5 rounded-md text-black hover:bg-green-600 hover:text-white ">
+                                                View Details
                                             </Link>
-                                        </td>
-                                    </tr>
+                  
+    </div>
+</div>
+</div>
                                 );
-                            }) }
-                        </tbody>
-                    </table>
+                            })}
+
+
+</div>
             </div>
             <ToastContainer />
         </div>

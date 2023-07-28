@@ -96,7 +96,7 @@ function EcoLifeAppBar() {
                     </Dropdown>
                 </div>
 
-                <Link to="/Trials/trialAdmin/TrialsCarAdminPage">
+                <Link to="/Trials/trialUsers/TrialsCarUserPage">
                     <h1
                         className="w-max | hover:text-green-500 | hover:ease-in-out duration-300
                     font-medium text-xl | mx-5 my-2"

@@ -10,7 +10,7 @@ import {
 } from "react-router-dom";
 import * as React from "react";
 ("use client");
-
+import { useParams } from "react-router-dom";
 import http from "../../../http";
 import { ToastContainer, toast } from "react-toastify";
 import FormInputSingleLine from "../../../components/FormInputSingleLine";
@@ -19,30 +19,12 @@ import * as yup from "yup";
 
 
 const App = () => {
-    const [ isOpen, setIsOpen ] = useState(false);
-    const [ trialCarList, setTrialCarList ] = useState([]);
-    const getTrialCar = () => {
-        http.get("/trials/viewTrialCar").then((res) => {
-            setTrialCarList(res.data);
-        });
-    };
-
-    useEffect(() => {
-        getTrialCar();
-    }, []);
-
-    const toggleNav = () => {
-        setIsOpen(!isOpen);
-    };
-
-
-
-
+    const { Themodel } = useParams();
     const formik = useFormik({
         initialValues: {
             dateOfTrial:"",
             trialReport:"",
-            modelName:"",
+            modelName:Themodel,
             faultResolve:true,
         },
         validationSchema: yup.object().shape({
@@ -52,22 +34,21 @@ const App = () => {
         }),
         onSubmit: async (data) => {
             const formData = {
-                carPlateNo: (data.carPlateNo = data.carPlateNo.trim()),
-                address: (data.address = data.address.trim()),
+                dateOfTrial: (data.dateOfTrial = data.dateOfTrial).trim(),
             };
 
             await http
-                .post("/createTrialReceipt/${id}", formData)
+                .post(`trials/createTrialReceipt/${Themodel}`, formData)
                 .then((res) => {
-  
+                  console.log("The trial car is " + Themodel);
                     // navigate("/TrialsCarAdminPage");
                     window.location.reload()
                 })
                 .catch(function (err) {
                     console.log(err);
-                    toast.error(`${err.response.data.message}`);
+                    toast.error(`${err.response.data.message}`)
                 });
-        },
+        }
     });
 
     return (
@@ -95,8 +76,8 @@ const App = () => {
           />
 <br></br>
 
-          {formik.errors.address ? (
-            <div classnames="error">{formik.errors.address}</div>
+          {formik.errors.modelName ? (
+            <div classnames="error">{formik.errors.modelName}</div>
           ) : null}
           <br></br>
           <Button
@@ -104,7 +85,7 @@ const App = () => {
             type="submit"
             className="bg-green-400 text-black hover:bg-green-600 hover:text-white"
           >
-            Create
+            Book
           </Button>
         </Box>
             <ToastContainer />
