@@ -54,6 +54,7 @@ import ViewOtherUser from "./pages/Users/ViewOtherUser";
 import ViewAccount from "./pages/Users/userComponents/ViewAccount";
 import Setting from "./pages/Users/userComponents/Setting";
 import SupportHelpDesk from "./pages/Users/SupportHelpDesk";
+import CreateLocations from "./pages/Locations/CreateLocations";
 
 function App() {
     const [user, setUser] = useState(null);
@@ -174,7 +175,7 @@ function App() {
                             />
                             <Route
                                 path={"/locations/createLocation"}
-                                element={<LocationsCreate />}
+                                element={<CreateLocations />}
                             />
                             <Route
                                 path={"/Store/StoreMain"}

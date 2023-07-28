@@ -20,6 +20,7 @@ router.post("/createLocation", validateToken, async (req, res) => {
         await validationSchema.validate(data, { abortEarly: false });
     } catch (err) {
         console.error(err);
+        console.log("Demons are taking over.")
         res.status(400).json({ errors: err.errors });
         return;
     }
@@ -49,6 +50,7 @@ router.post("/createLocation", validateToken, async (req, res) => {
         where: { postalCode: data.postalCode }
     });
     if (isLocation) {
+        console.log("Location Postal Code already exists")
         res.status(400).json({ message: "Location's Postal Code already exists!" });
         return;
     };
@@ -57,6 +59,7 @@ router.post("/createLocation", validateToken, async (req, res) => {
         where: { locationName: data.locationName }
     });
     if (isLocName) {
+        console.log("Location Name already exists")
         res.status(400).json({ message: "Location's Name already exists!" });
         return;
     };
@@ -65,6 +68,7 @@ router.post("/createLocation", validateToken, async (req, res) => {
         where: { streetName: data.streetName }
     });
     if (isStreetName) {
+        console.log("Street Name already exists")
         res.status(400).json({ message: "Location's Street Name already exists!" });
         return;
     };
