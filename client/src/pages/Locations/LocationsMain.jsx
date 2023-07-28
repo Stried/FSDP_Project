@@ -52,12 +52,6 @@ function LocationsMain() {
                         <h2 className="text-xl font-semibold mb-2">
                             Charger 1 - Hougang
                         </h2>
-                        <Button
-                            className = "text-xs px-2 py-1"
-                            onClick={() => props.setOpenModal("form-elements")}
-                        >
-                            Toggle modal
-                        </Button>
                         <Modal
                             show={props.openModal === "form-elements"}
                             size="md"
@@ -66,62 +60,112 @@ function LocationsMain() {
                         >
                             <Modal.Header />
                             <Modal.Body>
-                                <div className="space-y-6">
+                                <div className="space-y-4">
                                     <h3 className="text-xl font-medium text-gray-900 dark:text-white">
-                                        Sign in to our platform
+                                        Edit Location
                                     </h3>
                                     <div>
-                                        <div className="mb-2 block">
+                                        <div className="block">
                                             <Label
-                                                htmlFor="email"
-                                                value="Your email"
+                                                htmlFor="locationName"
+                                                value="Location Name"
                                             />
                                         </div>
                                         <TextInput
-                                            id="email"
-                                            placeholder="name@company.com"
+                                            id="locationName"
+                                            placeholder="Hougang Mall"
                                             required
                                         />
                                     </div>
                                     <div>
-                                        <div className="mb-2 block">
+                                        <div className="block">
                                             <Label
-                                                htmlFor="password"
-                                                value="Your password"
+                                                htmlFor="streetName"
+                                                value="Street Name"
                                             />
                                         </div>
                                         <TextInput
-                                            id="password"
-                                            type="password"
+                                            id="streetName"
+                                            placeholder="Hougang Street Ave 1"
+                                            required
+                                        />
+                                    </div>
+                                    <div>
+                                        <div className="block">
+                                            <Label
+                                                htmlFor="postalCode"
+                                                value="Postal Code"
+                                            />
+                                        </div>
+                                        <TextInput
+                                            id="postalCode"
+                                            placeholder="686731"
+                                            required
+                                        />
+                                    </div>
+                                    <div class="flex">
+                                        <div class="flex flex-col">
+                                            <div class="block">
+                                                <Label htmlFor="latAxis" value="Latitude" />
+                                            </div>
+                                            <div class="flex">
+                                                <TextInput id="latAxis" placeholder="1.100312981279" required />
+                                            </div>
+                                        </div>
+                                        <div class="flex flex-col ml-2">
+                                            <div class="block">
+                                                <Label htmlFor="longAxis" value="Longitude" />
+                                            </div>
+                                            <div class="flex">
+                                                <TextInput id="longAxis" placeholder="1.23612981029344" required />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div className="block">
+                                            <Label
+                                                htmlFor="region"
+                                                value="Region"
+                                            />
+                                        </div>
+                                        <select id="Region" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500'
+                                     focus:border-blue-500 block w-full p-3 dark:bg-gray-700 dark:border-gray-600
+                                      dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                        <option selected>Choose a region</option>
+                                        <option value="N">North</option>
+                                        <option value="S">South</option>
+                                        <option value="E">East</option>
+                                        <option value="W">West</option>
+                                    </select>
+                                    </div>
+                                    <div>
+                                        <div className="block">
+                                            <Label
+                                                htmlFor="noOfChargers"
+                                                value="Number of Chargers"
+                                            />
+                                        </div>
+                                        <TextInput
+                                            id="noOfChargers"
+                                            placeholder="3"
                                             required
                                         />
                                     </div>
                                     <div className="flex justify-between">
-                                        <div className="flex items-center gap-2">
-                                            <Checkbox id="remember" />
-                                            <Label htmlFor="remember">
-                                                Remember me
+                                        <div className="flex items-center gap-2 pl-1 pt-2">
+                                            <Checkbox id="fastChargeToggle" />
+                                            <Label
+                                                className="pl-1"
+                                                htmlFor="fastChargeToggle">
+                                                FastCharge Capable?
                                             </Label>
                                         </div>
-                                        <a
-                                            href="/modal"
-                                            className="text-sm text-cyan-700 hover:underline dark:text-cyan-500"
-                                        >
-                                            Lost Password?
-                                        </a>
                                     </div>
-                                    <div className="w-full">
-                                        <Button>Log in to your account</Button>
+                                    
+                                    <div className="w-full pt-5">
+                                        <Button>Update Details</Button>
                                     </div>
-                                    <div className="flex justify-between text-sm font-medium text-gray-500 dark:text-gray-300">
-                                        Not registered?&nbsp;
-                                        <a
-                                            href="/modal"
-                                            className="text-cyan-700 hover:underline dark:text-cyan-500"
-                                        >
-                                            Create account
-                                        </a>
-                                    </div>
+                                    
                                 </div>
                             </Modal.Body>
                         </Modal>
@@ -142,6 +186,12 @@ function LocationsMain() {
                                     anchor={[1.3759366, 103.878986]}
                                 />
                             </Map>
+                            <Button
+                                className="text-xs"
+                                onClick={() => props.setOpenModal("form-elements")}
+                            >
+                                Edit
+                            </Button>
                         </div>
                     </div>
 
