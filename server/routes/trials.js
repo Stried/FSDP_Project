@@ -160,17 +160,18 @@ router.post("/createTrialReceipt/:model", async (req, res) => {
     }
 
     let dateandcarcheck = await TrialReceipt.findOne({
-        where: [{ dateOfTrial: data.dateOfTrial }, {model: data.modelName} ]
+        where: [{ dateOfTrial: data.dateOfTrial }, {modelName: model} ]
     });
     if (dateandcarcheck) {
         res.status(400).json({ message: "Trial Car already booked!" })
         return;
     }
+
+    data.dateOfTrial = data.dateOfTrial;
+    data.modelName = model;
     console.log(data.dateOfTrial)
     console.log(data.modelName)
-    data.dateOfTrial = data.dateOfTrial;
-    data.modelName = modelName;
-
+    
     let result = await TrialReceipt.create(data);
     res.json(result);
 
