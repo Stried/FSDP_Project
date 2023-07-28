@@ -19,7 +19,6 @@ import * as yup from "yup";
 
 
 const App = () => {
-    const [ isOpen, setIsOpen ] = useState(false);
     const [ trialReceiptList, setTrialReceiptList ] = useState([]);
     const getTrialReceipt = () => {
         http.get("/trials/viewAllTrialReceipt").then((res) => {
@@ -36,55 +35,10 @@ const App = () => {
         getTrialReceipt();
     }, []);
 
-    const toggleNav = () => {
-        setIsOpen(!isOpen);
-    };
-
-    const [ arrowClose, setArrowClose ] = useState(false);
-
-    const toggleArrowSidebar = () => {
-        setArrowClose(!arrowClose);
-    };
-
-    const navigate = useNavigate();
-    const formik = useFormik({
-
-        //is this where i set the null value?
-        initialValues: {
-            dateOfTrial: "",
-            trialReport: "",
-            modelName: "",
-            faultResolve:"", 
-        },
-        validationSchema: yup.object().shape({
-            dateOfTrial: yup
-                .date()
-                .required("Name is required."),
-        }),
-        onSubmit: async (data) => {
-            const formData = {
-                dateOfTrial: (data.dateOfTrial = data.dateOfTrial.trim()),
-            };
-
-            await http
-                .post("/trials/createTrialReceipt/:id", formData)
-                .then((res) => {
-
-                    window.location.reload()
-                })
-                .catch(function (err) {
-                    console.log(err);
-                    toast.error(`${err.response.data.message}`);
-                });
-        },
-    });
-
     return (
         <div className="relative min-h-screen">
 
-
-
-                <h1 className="text-center text-5xl text-green-400">Trial Car Records</h1>
+                <h1 className="text-center text-5xl text-green-400">Trial Receipt Records</h1>
                 <br></br>
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg mx-7 ml-16">
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -160,9 +114,7 @@ const App = () => {
                                         <td class="px-6 py-4">{ trialReceipt.dateOfTrial }</td>
                                         <td class="px-6 py-4">{ trialReceipt.faultResolve }</td>
                                         <td class="pr-0 py-4 text-right">
-                                            <Link to={ `/Trials/trialAdmin/TrialsCarAdminUpdate/${trialReceipt.trialReceiptId}` } className="bg-green-400 p-2 px-5 rounded-md text-black hover:bg-green-600 hover:text-white ">
                                                 Update Receipt
-                                            </Link>
                                         </td>
                                         <td class="pl-0 pr-4 py-4 text-right">
                                             <a
