@@ -19,12 +19,12 @@ import * as yup from "yup";
 
 
 const App = () => {
-    const { Themodel } = useParams();
+    const { model } = useParams();
     const formik = useFormik({
         initialValues: {
             dateOfTrial:"",
             trialReport:"",
-            modelName:Themodel,
+            modelName:model,
             faultResolve:true,
         },
         validationSchema: yup.object().shape({
@@ -38,9 +38,9 @@ const App = () => {
             };
 
             await http
-                .post(`trials/createTrialReceipt/${Themodel}`, formData)
+                .post(`trials/createTrialReceipt/${model}`, formData)
                 .then((res) => {
-                  console.log("The trial car is " + Themodel);
+                  console.log("The trial car is " + model);
                     // navigate("/TrialsCarAdminPage");
                     window.location.reload()
                 })

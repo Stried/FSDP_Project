@@ -72,9 +72,9 @@ function CreateLocations() {
                 .integer()
                 .positive("Postal code cannot be negative.")
                 .required("Postal Code is required."),
-            region: yup.string().trim().oneOf(["N", "S", "E", "W"]).required(),
-            fastCharge: yup.boolean().required(),
-            noOfChargers: yup.number().integer().positive().required(),
+            region: yup.string().trim().oneOf(["N", "S", "E", "W"], "Please enter N, S, E, W").required(),
+            fastCharge: yup.boolean().oneOf([true, false], "True or False only").required(),
+            noOfChargers: yup.number().integer().positive("Number of charger must be more than 0").required(),
             LatAxis: yup.number().required(),
             LongAxis: yup.number().required(),
         }),
@@ -83,7 +83,7 @@ function CreateLocations() {
             data.streetName = data.streetName.trim();
 
             await http
-                .post("/locations/createLocations", data)
+                .post("/locations/createLocation", data)
                 .then((res) => {
                     console.log(res.status);
                     navigate("/locations/LocationsMain");
@@ -137,18 +137,90 @@ function CreateLocations() {
                         }
                     />
                     <FormInputSingleLine
-                        name="Street Name"
-                        valueName="streetName"
-                        type="text"
+                        name="Postal Code"
+                        valueName="postalCode"
+                        type="number"
                         onChange={formik.handleChange}
-                        value={formik.values.streetName}
+                        value={formik.values.postalCode}
                         error={
-                            formik.touched.streetName &&
-                            Boolean(formik.errors.streetName)
+                            formik.touched.postalCode &&
+                            Boolean(formik.errors.postalCode)
                         }
                         helperText={
-                            formik.touched.streetName &&
-                            formik.errors.streetName
+                            formik.touched.postalCode &&
+                            formik.errors.postalCode
+                        }
+                    />
+                    <FormInputSingleLine
+                        name="Latitude"
+                        valueName="LatAxis"
+                        type="text"
+                        onChange={formik.handleChange}
+                        value={formik.values.LatAxis}
+                        error={
+                            formik.touched.LatAxis &&
+                            Boolean(formik.errors.LatAxis)
+                        }
+                        helperText={
+                            formik.touched.LatAxis && formik.errors.LatAxis
+                        }
+                    />
+                    <FormInputSingleLine
+                        name="Longtitude"
+                        valueName="LongAxis"
+                        type="text"
+                        onChange={formik.handleChange}
+                        value={formik.values.LongAxis}
+                        error={
+                            formik.touched.LongAxis &&
+                            Boolean(formik.errors.LongAxis)
+                        }
+                        helperText={
+                            formik.touched.LongAxis && formik.errors.LongAxis
+                        }
+                    />
+                    <FormInputSingleLine
+                        name="Region"
+                        valueName="region"
+                        type="text"
+                        onChange={formik.handleChange}
+                        value={formik.values.region}
+                        error={
+                            formik.touched.region &&
+                            Boolean(formik.errors.region)
+                        }
+                        helperText={
+                            formik.touched.region && formik.errors.region
+                        }
+                    />
+                    <FormInputSingleLine
+                        name="FastCharge"
+                        valueName="fastCharge"
+                        type="boolean"
+                        onChange={formik.handleChange}
+                        value={formik.values.fastCharge}
+                        error={
+                            formik.touched.fastCharge &&
+                            Boolean(formik.errors.fastCharge)
+                        }
+                        helperText={
+                            formik.touched.fastCharge &&
+                            formik.errors.fastCharge
+                        }
+                    />
+                    <FormInputSingleLine
+                        name="Number Of Chargers"
+                        valueName="noOfChargers"
+                        type="number"
+                        onChange={formik.handleChange}
+                        value={formik.values.noOfChargers}
+                        error={
+                            formik.touched.noOfChargers &&
+                            Boolean(formik.errors.noOfChargers)
+                        }
+                        helperText={
+                            formik.touched.noOfChargers &&
+                            formik.errors.noOfChargers
                         }
                     />
 
