@@ -26,9 +26,13 @@ const App = () => {
         });
     };
     const deleteTrialReceipt = (trialReceiptId) => {
-        http.delete(`/trials/${trialReceiptId}`).then((res) => {
+        http.delete(`/trials/trialreceipt/${trialReceiptId}`).then((res) => {
             console.log(res.data);
             window.location.reload();
+        })
+        .catch(function (err) {
+            console.log(err)
+            toast.error(`${err.response.data.message}`);
         });
     };
     useEffect(() => {
@@ -65,22 +69,6 @@ const App = () => {
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     <div class="flex items-center">
-                                        Model Name
-                                        <a href="#">
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                class="w-3 h-3 ml-1"
-                                                aria-hidden="true"
-                                                fill="currentColor"
-                                                viewBox="0 0 320 512"
-                                            >
-                                                <path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z" />
-                                            </svg>
-                                        </a>
-                                    </div>
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    <div class="flex items-center">
                                         Fault
                                         <a href="#">
                                             <svg
@@ -98,7 +86,7 @@ const App = () => {
                                 <th scope="col" class="px-6 py-3">
                                     <span class="sr-only">Edit</span>
                                 </th>
-                                <th></th>
+                                    <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -114,7 +102,12 @@ const App = () => {
                                         <td class="px-6 py-4">{ trialReceipt.dateOfTrial }</td>
                                         <td class="px-6 py-4">{ trialReceipt.faultResolve }</td>
                                         <td class="pr-0 py-4 text-right">
-                                                Update Receipt
+                                        <Link
+                                                to={`/Trials/trialAdmin/TrialsReceiptReportPage/${trialReceipt.trialReceiptId}`}
+                                                className="bg-green-400 p-2 px-5 rounded-md text-black hover:bg-green-600 hover:text-white "
+                                            >
+                                                Update Address
+                                            </Link>
                                         </td>
                                         <td class="pl-0 pr-4 py-4 text-right">
                                             <a

@@ -42,6 +42,7 @@ import TrialsReceiptCreate from "./pages/Trials/trialUsers/TrialsReceiptCreation
 import TrialsCarDetails from "./pages/Trials/trialAdmin/TrialsCarDetailedPage";
 import TrialsCarUserPage from "./pages/Trials/trialUsers/TrialsCarUserPage";
 import TrialsReceiptAdminPage from "./pages/Trials/trialAdmin/TrialsReceiptAdminPage";
+import TrialsReceiptReportPage from "./pages/Trials/trialAdmin/TrialsReceiptReportPage";
 import StoreMain from "./pages/Store/StoreMain";
 import StoreAddItem from "./pages/Store/StoreAddItem";
 import StoreUpdateItem from "./pages/Store/StoreUpdateItem";
@@ -225,6 +226,13 @@ function App() {
                                 }
                                 element={<TrialsReceiptAdminPage />}
                             />
+                                                        <Route
+                                path={
+                                    "/Trials/trialAdmin/TrialsReceiptReportPage/:id"
+                                }
+                                element={<TrialsReceiptReportPage />}
+                            />
+                            
                             <Route
                                 path={"*"}
                                 element={<PageNotFound />}
