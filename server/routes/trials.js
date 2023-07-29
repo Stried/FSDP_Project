@@ -62,7 +62,7 @@ router.get("/viewTrialCar", async (req, res) => {
 router.get("/viewTrialCar/:id", async (req, res) => {
     const trialCar = req.params.id;
     const leTrialCar = await Store.findOne({
-        where: {carPlateNo: trialCar},
+        where: {carModel: trialCar},
     })
     if (leTrialCar) {
         // Check if the trial car exists
@@ -75,7 +75,7 @@ router.get("/viewTrialCar/:id", async (req, res) => {
 router.get("/viewSpecificTrialCar/:id", async(req, res) => {
     const trialCar = req.params.id
     const TheTrialCar = await TrialCar.findOne({
-        where: {carPlateNo:trialCar},
+        where: {name:trialCar},
     })
     res.json(TheTrialCar)
 });
