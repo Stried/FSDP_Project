@@ -19,6 +19,7 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import http from "../../http";
 import { ToastContainer, toast } from "react-toastify";
+import UserChatRoom from "./UserChatRoom";
 
 function ViewOtherUser() {
     const { username } = useParams();
@@ -216,6 +217,9 @@ function ViewOtherUser() {
                                                 Followed
                                             </Button>
                                         )}
+                                        <UserChatRoom
+                                            otherUserAccount={`${otherUser.userName}`}
+                                        />
                                     </div>
                                 </div>
 
