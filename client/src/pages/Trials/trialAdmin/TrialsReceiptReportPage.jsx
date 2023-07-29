@@ -25,11 +25,11 @@ function TrialsReceiptUpdate() {
     let { id } = useParams();
 
     const [selectedTrialReceipt, setSelectedTrialReceipt] = useState({
-        trialReceiptId: id,
+        trialReceiptId: "",
         dateOfTrial: "",
         trialReport: "",
         modelName: "",
-        faultResolve: ""
+        faultResolve: true
     });
 
     useEffect(() => {
@@ -57,7 +57,6 @@ function TrialsReceiptUpdate() {
         onSubmit: (data) => {
             const formData = {
                 trialReport: data.trialReport.trim(),
-
             }
             http
                 .put(`trials/viewAllTrialReceipt/changeDetails/${id}`, formData)
@@ -93,7 +92,7 @@ function TrialsReceiptUpdate() {
                                 name="Trial Report"
                                 value={formik.values.trialReport}
                                 valueName="trialReport"
-                                onChange={(value) => formik.setFieldValue("trialReport", value.value)}
+                                onChange={formik.handleChange}
                                 type="text"
                                 error={
                                     formik.touched.trialReport && Boolean(formik.errors.trialReport)

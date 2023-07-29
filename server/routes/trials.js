@@ -169,9 +169,10 @@ router.post("/createTrialReceipt/:model", async (req, res) => {
 
     data.dateOfTrial = data.dateOfTrial;
     data.modelName = model;
+    data.trialReport = "Empty";
     console.log(data.dateOfTrial)
     console.log(data.modelName)
-    
+    console.log(data.trialReport)
     let result = await TrialReceipt.create(data);
     res.json(result);
 
@@ -224,15 +225,8 @@ router.get("/viewSpecificTrialReceipt/:id", async(req, res) => {
 
 router.put("/viewAllTrialReceipt/changeDetails/:id", validateToken, async (req, res) => {
     let receipt = req.params.id;
-    let userInfo = {
-        id: req.user.id,
-        fullName: req.user.fullName,
-        userName: req.user.userName,
-        emailAccount: req.user.emailAccount,
-        phoneNo: req.user.phoneNo
-    };
 
-    if (!userInfo.adminNo) {
+    if (!req.user.adminNo) {
         console.log("Page Not Found!");
         res.status(404).json("Page Is Not Found.");
         return;
@@ -240,9 +234,8 @@ router.put("/viewAllTrialReceipt/changeDetails/:id", validateToken, async (req, 
 
     let data = req.body;
     let validationSchema = yup.object().shape({
-        dateOfTrial: yup.date().required(),
         trialReport: yup.string().trim().min(5).max(1000),
-        faultResolve: yup.boolean().required(),
+        faultResolve: yup.boolean(),
     });
     
     try {
