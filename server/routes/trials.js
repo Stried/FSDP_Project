@@ -163,7 +163,7 @@ router.post("/createTrialReceipt/:model", async (req, res) => {
         where: [{ dateOfTrial: data.dateOfTrial }, {modelName: model} ]
     });
     if (dateandcarcheck) {
-        res.status(400).json({ message: "Trial Car already booked!" })
+        res.status(400).json({ message: "Trial Car already booked at that time!" })
         return;
     }
 
@@ -213,6 +213,15 @@ router.get("/viewAllTrialReceipt", validateToken, async (req, res) => {
     res.json(allReceipts);
 
 });
+
+router.get("/viewSpecificTrialReceipt/:id", async(req, res) => {
+    const trialReceipt = req.params.id
+    const TheTrialReceipt = await TrialReceipt.findOne({
+        where: {trialReceiptId:trialReceipt},
+    })
+    res.json(TheTrialReceipt)
+});
+
 router.put("/viewAllTrialReceipt/changeDetails/:id", validateToken, async (req, res) => {
     let receipt = req.params.id;
     let userInfo = {
@@ -260,10 +269,10 @@ router.put("/viewAllTrialReceipt/changeDetails/:id", validateToken, async (req, 
 
 });
 
-router.delete("/:receiptID", async (req, res) => {
-    let receiptID = req.params.receiptID;
+router.delete("/trialreceipt/:trialReceiptId", async (req, res) => {
+    let thereceiptID = req.params.trialReceiptId;
     let num = await TrialReceipt.destroy({
-        where: { trialReceiptId: receiptID }
+        where: { trialReceiptId: thereceiptID }
     })
     if (num == 1) {
         res.json({
@@ -272,9 +281,10 @@ router.delete("/:receiptID", async (req, res) => {
     }
     else {
         res.status(400).json({
-            message: `Cannot delete trial receipt with ID ${receiptID}.`
+            message: `Cannot delete trial receipt with ID ${thereceiptID}.`
         });
     }
+    
 });
 
 module.exports = router

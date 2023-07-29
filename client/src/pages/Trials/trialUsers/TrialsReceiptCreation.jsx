@@ -19,6 +19,9 @@ import * as yup from "yup";
 
 
 const App = () => {
+
+  const navigate = useNavigate();
+
     const { model } = useParams();
     const formik = useFormik({
         initialValues: {
@@ -42,7 +45,7 @@ const App = () => {
                 .then((res) => {
                   console.log("The trial car is " + model);
                     // navigate("/TrialsCarAdminPage");
-                    window.location.reload()
+                    navigate("/Trials/trialUsers/TrialsCarUserPage");
                 })
                 .catch(function (err) {
                     console.log(err);
@@ -54,10 +57,8 @@ const App = () => {
     return (
         <div className="relative min-h-screen">
 
-
                 <h1 className="text-center text-5xl text-green-400">Create Trial Receipt</h1>
                 <br></br>
-
                     
         <Box
           component={"form"}

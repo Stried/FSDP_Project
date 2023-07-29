@@ -19,7 +19,6 @@ import * as yup from "yup";
 
 
 const App = () => {
-    const [isOpen, setIsOpen] = useState(false);
     const [trialCarList, setTrialCarList] = useState([]);
     const getTrialCar = () => {
         http.get("/trials/viewTrialCar").then((res) => {

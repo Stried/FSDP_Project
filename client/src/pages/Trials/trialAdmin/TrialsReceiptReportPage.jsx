@@ -18,34 +18,26 @@ import CustomSelectCars from "./CustomSelectCars";
 
 
 
-function TrialsCarAdminUpdate() {
-
-
+function TrialsReceiptUpdate() {
+    
     const navigate = useNavigate();
 
-    let { carPlateNo } = useParams();
+    let { id } = useParams();
 
-    const options = [
-        { value: "serangoon", label: "serangoon" },
-        { value: "hougang", label: "hougang" },
-    ];
-
-
-    const [selectedTrialCar, setSelectedTrialCar] = useState({
-        id: "",
-        address: "",
-        carPlateNo: carPlateNo,
-        name: "",
-        carBrand: ""
+    const [selectedTrialReceipt, setSelectedTrialReceipt] = useState({
+        trialReceiptId: id,
+        dateOfTrial: "",
+        trialReport: "",
+        modelName: "",
+        faultResolve: ""
     });
 
     useEffect(() => {
-        http.get(`/trials/viewSpecificTrialCar/${carPlateNo}`)
+        http.get(`/trials/viewSpecificTrialReceipt/${id}`)
             .then((res) => {
                 console.log(res.data)
-                setSelectedTrialCar(res.data);
-                console.log("The trial car is " + carPlateNo);
-                console.log("The address is: "+ res.data.address)
+            
+                setSelectedTrialReceipt(res.data);
                 window.location.reload;
             })
             .catch(function (err) {
@@ -56,21 +48,22 @@ function TrialsCarAdminUpdate() {
 
 
     const formik = useFormik({
-        initialValues: selectedTrialCar,
+        initialValues: selectedTrialReceipt,
         enableReinitialize: true,
         validationSchema: yup.object().shape({
-            address: yup.string().trim().max(100).required("Address cannot be empty"),
+            trialReport: yup.string().trim().max(1000).required("Trial Report cannot be empty"),
+
         }),
         onSubmit: (data) => {
             const formData = {
-                address: data.address.trim(),
+                trialReport: data.trialReport.trim(),
 
             }
             http
-                .put(`trials/updateTrialCar/changeDetails/${carPlateNo}`, formData)
+                .put(`trials/viewAllTrialReceipt/changeDetails/${id}`, formData)
                 .then((res) => {
                     console.log(res.status);
-                    navigate("/Trials/trialAdmin/TrialsCarAdminPage");
+                    navigate("/Trials/trialAdmin/TrialsReceiptAdminPage");
                 })
                 .catch(function (err) {
                     console.log(err);
@@ -86,7 +79,7 @@ function TrialsCarAdminUpdate() {
                     <Box>
                         <div className="text-white">
                             <h1 className="text-green-500 text-3xl pb-3 font-medium italic">
-                                Update values for Trial Car
+                                Update values for Trial Receipt
                             </h1>
                         </div>
                     </Box>
@@ -95,12 +88,17 @@ function TrialsCarAdminUpdate() {
 
                             <br />
 
-                            <label>Address</label>
-                            <CustomSelectCars
-                                value={formik.values.address}
-                                onChange={(value) => formik.setFieldValue("address", value.value)}
-                                classnames={"input"}
-                                options={options}
+                            <label>Trial Report</label>
+                            <FormInputSingleLine
+                                name="Trial Report"
+                                value={formik.values.trialReport}
+                                valueName="trialReport"
+                                onChange={(value) => formik.setFieldValue("trialReport", value.value)}
+                                type="text"
+                                error={
+                                    formik.touched.trialReport && Boolean(formik.errors.trialReport)
+                                  }
+                                  helperText={formik.touched.trialReport && formik.errors.trialReport}
                             />
                             <br></br>
                             <div>
@@ -108,7 +106,7 @@ function TrialsCarAdminUpdate() {
                                     variant="contained"
                                     type="submit"
                                     className="bg-green-400 text-black hover:bg-green-600 hover:text-white"							>
-                                    Update
+                                    Upload Report
                                 </Button>
                             </div>
                         </div>
@@ -119,4 +117,4 @@ function TrialsCarAdminUpdate() {
     )
 }
 
-export default TrialsCarAdminUpdate;
+export default TrialsReceiptUpdate;

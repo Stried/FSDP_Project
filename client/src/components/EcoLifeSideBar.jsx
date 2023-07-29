@@ -203,7 +203,7 @@ const SideNav = ({ isOpen }) => {
                                         View Trials
                                     </a>
                                     <a
-                                        href="/Trials/trialAdmin/TrialReceiptAdminPage"
+                                        href="/Trials/trialAdmin/TrialsReceiptAdminPage"
                                         className="flex items-center pl-16 p-2 text-gray-900 rounded-lg dark:text-white dark:hover:text-black dark:hover:bg-green-400 transition duration-200 "
                                     >
                                         View Receipts
