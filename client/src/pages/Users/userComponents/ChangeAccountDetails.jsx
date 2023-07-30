@@ -135,7 +135,7 @@ function ChangeAccountDetails() {
             http
                 .put("/user/viewAccount/changeDetails", data)
                 .then((res) => {
-                    navigate("/")
+                    navigate("/user/viewAccount")
                 })
                 .catch(function (err) {
                     toast.error(`${err.response.data.message}`);

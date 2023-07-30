@@ -221,6 +221,32 @@ router.put("/viewAccount/changeDetails", validateToken, async (req, res) => {
     data.emailAccount = data.emailAccount.trim();
     data.password = req.user.password
 
+    let currentUser = await UserAccount.findByPk(req.user.emailAccount);
+
+    let checkUsername = await UserAccount.findOne({
+        where: { userName: data.userName }
+    });
+    if (checkUsername && data.userName != currentUser.userName) {
+        res.status(400).json({ message: "Username already exists." })
+        return;
+    }
+
+    let checkUserPhone = await UserAccount.findOne({
+        where: { phoneNo: data.phoneNo }
+    });
+    if (checkUserPhone && data.phoneNo !== currentUser.phoneNo) {
+        res.status(400).json({ message: "Phone Number already exists." });
+        return;
+    };
+
+    let checkUserEmail = await UserAccount.findOne({
+        where: { emailAccount: data.emailAccount }
+    });
+    if (checkUserEmail && data.emailAccount !== currentUser.emailAccount) {
+        res.status(400).json({ message: "Email Account already exists." });
+        return;
+    };
+
     let userAccount = await UserAccount.update(data, {
         where: { emailAccount: req.user.emailAccount },
     });
