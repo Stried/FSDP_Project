@@ -1,6 +1,9 @@
 import {
     Box,
     Button,
+    RadioGroup,
+    FormControlLabel,
+    Radio,
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
@@ -15,7 +18,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { CheckBox } from "@mui/icons-material";
 import CustomSelectCars from "./CustomSelectCars";
-
 
 
 function TrialsReceiptUpdate() {
@@ -57,6 +59,7 @@ function TrialsReceiptUpdate() {
         onSubmit: (data) => {
             const formData = {
                 trialReport: data.trialReport.trim(),
+                faultResolve: data.faultResolve
             }
             http
                 .put(`trials/viewAllTrialReceipt/changeDetails/${id}`, formData)
@@ -99,6 +102,22 @@ function TrialsReceiptUpdate() {
                                   }
                                   helperText={formik.touched.trialReport && formik.errors.trialReport}
                             />
+                                                        <RadioGroup
+                                name="faultResolve"
+                                value={formik.values.faultResolve.toString()} // Convert boolean to string
+                                onChange={formik.handleChange}
+                            >
+                                <FormControlLabel
+                                    value="true"
+                                    control={<Radio />}
+                                    label="Resolved"
+                                />
+                                <FormControlLabel
+                                    value="false"
+                                    control={<Radio />}
+                                    label="Unresolved"
+                                />
+                            </RadioGroup>
                             <br></br>
                             <div>
                                 <Button

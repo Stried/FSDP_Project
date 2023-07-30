@@ -91,6 +91,9 @@ const App = () => {
                         </thead>
                         <tbody>
                             { trialReceiptList.map((trialReceipt, i) => {
+                                const isReportEmpty = trialReceipt.trialReport.toLowerCase() === "empty";
+                                const isFaultResolved = Boolean(trialReceipt.faultResolve); // Assuming the `fault` attribute is a boolean
+                                console.log(isFaultResolved)
                                 return (
                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                         <th
@@ -100,13 +103,13 @@ const App = () => {
                                             { trialReceipt.modelName }
                                         </th>
                                         <td class="px-6 py-4">{ trialReceipt.dateOfTrial }</td>
-                                        <td class="px-6 py-4">{ trialReceipt.faultResolve }</td>
+                                        <td class="px-6 py-4">{isFaultResolved ? "resolved" : "unresolved"}</td>
                                         <td class="pr-0 py-4 text-right">
                                         <Link
-                                                to={`/Trials/trialAdmin/TrialsReceiptReportPage/${trialReceipt.trialReceiptId}`}
-                                                className="bg-green-400 p-2 px-5 rounded-md text-black hover:bg-green-600 hover:text-white "
+                                    to={`/Trials/trialAdmin/TrialsReceiptReportPage/${trialReceipt.trialReceiptId}`}
+                                    className={`bg-green-400 p-2 px-5 rounded-md text-black hover:bg-green-600 hover:text-white `}
                                             >
-                                                Update Address
+                                                {isReportEmpty ? "Write Report" : "Read Report"}
                                             </Link>
                                         </td>
                                         <td class="pl-0 pr-4 py-4 text-right">

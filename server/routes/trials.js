@@ -28,7 +28,7 @@ router.post("/createTrialCar", async (req, res) => {
         res.status(400).json({ message: "Carplate Number not found!" })
         return;
     }
-
+    
     let carPlateRepeatCheck = await TrialCar.findOne({
         where: { carPlateNo: data.carPlateNo }
     });
@@ -41,6 +41,13 @@ router.post("/createTrialCar", async (req, res) => {
         let carModel = await Store.findByPk(data.carPlateNo);
         data.name = carModel.carModel
         data.carBrand = carModel.carBrand; // carSpeed = carModel.carSpeed
+        let modelCheck= await TrialCar.findOne({
+            where: {name: data.name}
+        });
+        if (modelCheck){
+            res.status(400).json({message: `Trial Car Model "${data.name}" already exists! `})
+            return;
+        }
     } catch (err) {
         console.log(err);
         return;

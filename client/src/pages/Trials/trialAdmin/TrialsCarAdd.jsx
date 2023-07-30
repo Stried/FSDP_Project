@@ -21,18 +21,6 @@ import CustomSelectCars from "./CustomSelectCars";
 
 const App = () => {
   
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleNav = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const [arrowClose, setArrowClose] = useState(false);
-
-  const toggleArrowSidebar = () => {
-    setArrowClose(!arrowClose);
-  };
-
   const options = [
     { value: "serangoon", label: "serangoon" },
     { value: "hougang", label: "hougang" },
@@ -70,7 +58,7 @@ const App = () => {
         .post("/trials/createTrialCar", formData)
         .then((res) => {
           console.log(res.status);
-          navigate("/TrialsCarAdminPage");
+          navigate("/Trials/trialAdmin/TrialsCarAdminPage");
         })
         .catch(function (err) {
           console.log(err);

@@ -14,6 +14,8 @@ import { useParams } from "react-router-dom";
 import http from "../../../http";
 import { ToastContainer, toast } from "react-toastify";
 import FormInputSingleLine from "../../../components/FormInputSingleLine";
+import DatePicker from "react-datepicker";
+import 'react-datepicker/dist/react-datepicker.css'
 import { useFormik } from "formik";
 import * as yup from "yup";
 
@@ -23,11 +25,13 @@ const App = () => {
   const navigate = useNavigate();
 
     const { model } = useParams();
-
+    const [date, setDate] = useState(new Date());
     const [trialCarEntry, setTrialCarEntry] = useState({
       address:""
   })
-
+  const currentDate = new Date();
+  const minDate = new Date(currentDate.getTime() + 7 * 24 * 60 * 60 * 1000); // Adding seven days in milliseconds
+  
   const [ trialCar, setTrialCar ] = useState({
       carPlateNo: "",
       carDescription: "",
@@ -76,7 +80,7 @@ const App = () => {
         }),
         onSubmit: async (data) => {
             const formData = {
-                dateOfTrial: (data.dateOfTrial = data.dateOfTrial).trim(),
+                dateOfTrial: data.dateOfTrial,
             };
 
             await http
@@ -99,7 +103,7 @@ const App = () => {
 <div className="relative min-h-screen text-white">
            
            <h1 className="text-center text-5xl text-green-400">
-               Trial Car Records
+
            </h1>
            <br></br>
            <div class="relative overflow-x-auto shadow-md sm:rounded-lg mx-7 ml-16 flex">
@@ -166,31 +170,31 @@ const App = () => {
                        </div>
                        
                    </div>
-
-                   
                </Grid>
 
            </div>
+
        <ToastContainer />
    </div>
                 <h1 className="text-center text-5xl text-green-400">Create Trial Receipt</h1>
                 <br></br>
-                    
+                <label >Date</label>
         <Box
           component={"form"}
           onSubmit={formik.handleSubmit}
           className="mx-7 ml-16"
         >
-          <label >Date</label>
-          <FormInputSingleLine
-            name="Date of Trial"
-            valueName="dateOfTrial"
-            type="date"
-            value={formik.values.dateOfTrial}
-            onChange={formik.handleChange}
-            error={formik.touched.dateOfTrial && Boolean(formik.errors.dateOfTrial)}
-            helperText={formik.touched.dateOfTrial && formik.errors.dateOfTrial}
+                 <DatePicker
+            selected={formik.values.dateOfTrial}
+            onChange={(date) => formik.setFieldValue("dateOfTrial", date)}
+            showPopperArrow={false} 
+            minDate={minDate}
           />
+          {formik.errors.dateOfTrial ? (
+            <div className="text-red-600">{formik.errors.dateOfTrial}</div>
+          ) : null}
+
+
 <br></br>
 
           {formik.errors.modelName ? (
