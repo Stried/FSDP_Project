@@ -13,29 +13,6 @@ import {
 import http from "./../http";
 import { Accordion, Dropdown } from "flowbite-react";
 
-// Pages Import
-import Ecolife from "../pages/Ecolife";
-import PageNotFound from "../pages/PageNotFound";
-import UserCreateAccount from "../pages/Users/UserCreateAccount";
-import UserEnterAccount from "../pages/Users/UserEnterAccount";
-import AdminPanelMain from "../pages/Users/AdminPanelMain";
-import UserChangePassword from "../pages/Users/UserChangePassword";
-import UserForgetPasswordEmail from "../pages/Users/UserForgetPasswordEmail";
-import UserForgetPasswordReset from "../pages/Users/UserForgetPasswordReset";
-
-import LocationsMain from "../pages/Locations/LocationsMain";
-import LocationsCreate from "../pages/Locations/LocationsCreate";
-
-import TrialsAddPage from "../pages/Trials/trialAdmin/TrialsCarAdd";
-import TrialsAdminPage from "../pages/Trials/trialAdmin/TrialsCarAdminPage";
-import TrialsUpdatePage from "../pages/Trials/trialAdmin/TrialsCarAdminUpdate";
-import TrialsReceiptCreate from "../pages/Trials/trialUsers/TrialsReceiptCreation";
-import TrialsCarDetails from "../pages/Trials/trialAdmin/TrialsCarDetailedPage";
-import TrialsCarUserPage from "../pages/Trials/trialUsers/TrialsCarUserPage";
-
-import StoreMain from "../pages/Store/StoreMain";
-import StoreAddItem from "../pages/Store/StoreAddItem";
-import StoreUpdateItem from "../pages/Store/StoreUpdateItem";
 
 import UserContext from "../contexts/UserContext";
 

@@ -24,12 +24,12 @@ import EcoLifeSideBar from "./components/EcoLifeSideBar";
 
 import Ecolife from "./pages/Ecolife";
 import PageNotFound from "./pages/PageNotFound";
-import UserCreateAccount from "./pages/Users/UserCreateAccount";
-import UserEnterAccount from "./pages/Users/UserEnterAccount";
+import UserCreateAccount from "./pages/Users/userAccounts/UserCreateAccount";
+import UserEnterAccount from "./pages/Users/userAccounts/UserEnterAccount";
 import AdminPanelMain from "./pages/Users/AdminPanelMain";
-import UserChangePassword from "./pages/Users/UserChangePassword";
-import UserForgetPasswordEmail from "./pages/Users/UserForgetPasswordEmail";
-import UserForgetPasswordReset from "./pages/Users/UserForgetPasswordReset";
+import UserChangePassword from "./pages/Users/userAccounts/UserChangePassword";
+import UserForgetPasswordEmail from "./pages/Users/userAccounts/UserForgetPasswordEmail";
+import UserForgetPasswordReset from "./pages/Users/userAccounts/UserForgetPasswordReset";
 import TalkJSTest from "./pages/Users/TalkJSTest";
 
 import LocationsMain from "./pages/Locations/LocationsMain";
@@ -51,7 +51,7 @@ import * as Constants from "./../src/components/CSS Constants/Constants";
 import UserContext from "./contexts/UserContext";
 import ViewAllAccounts from "./pages/Users/adminComponents/ViewAllAccounts";
 import CreateAdmin from "./pages/Users/adminComponents/CreateAdmin";
-import ViewOtherUser from "./pages/Users/ViewOtherUser";
+import ViewOtherUser from "./pages/Users/userAccounts/ViewOtherUser";
 import ViewAccount from "./pages/Users/userComponents/ViewAccount";
 import Setting from "./pages/Users/userComponents/Setting";
 import SupportHelpDesk from "./pages/Users/SupportHelpDesk";
@@ -77,11 +77,9 @@ function App() {
     }
 
     const Protected = ({ isAdminCheck, children }) => {
-        isAdminCheck = user.adminNo;
         if (!isAdminCheck) {
-            console.log(isAdminCheck);
             console.log("Failed");
-            return <Navigate to={"/404"} />;
+            return <Navigate to={window.location} />;
         }
 
         return children;
@@ -141,7 +139,7 @@ function App() {
                             <Route
                                 path={"/user/adminPanel"}
                                 element={
-                                    <Protected>
+                                    <Protected isAdminCheck={isAdminCheck}>
                                         <AdminPanelMain />
                                     </Protected>
                                 }
@@ -153,7 +151,7 @@ function App() {
                             <Route
                                 path={"/admin/viewAllUsers"}
                                 element={
-                                    <Protected>
+                                    <Protected isAdminCheck={isAdminCheck}>
                                         <ViewAllAccounts />
                                     </Protected>
                                 }
@@ -161,7 +159,7 @@ function App() {
                             <Route
                                 path={"/admin/createAdmin"}
                                 element={
-                                    <Protected>
+                                    <Protected isAdminCheck={isAdminCheck}>
                                         <CreateAdmin />
                                     </Protected>
                                 }
@@ -226,13 +224,13 @@ function App() {
                                 }
                                 element={<TrialsReceiptAdminPage />}
                             />
-                                                        <Route
+                            <Route
                                 path={
                                     "/Trials/trialAdmin/TrialsReceiptReportPage/:id"
                                 }
                                 element={<TrialsReceiptReportPage />}
                             />
-                            
+
                             <Route
                                 path={"*"}
                                 element={<PageNotFound />}

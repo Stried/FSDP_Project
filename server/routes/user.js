@@ -363,6 +363,91 @@ router.get("/adminPanel", validateToken, async (req, res) => {
     res.json(allUsers);
 })
 
+router.put("/admin/updateUser/:id", validateToken, async (req, res) => {
+    let data = req.body;
+    let id = req.params.id
+
+    if (req.user.adminNo) {
+        let validationSchema = yup.object().shape({
+            fullName: yup.string().trim().min(3).max(100).required(),
+            userName: yup.string().trim().min(3).max(50).required(),
+            phoneNo: yup.number().min(80000000).max(99999999).required(),
+            emailAccount: yup.string().email().required(),
+        });
+        try {
+            await validationSchema.validate(data, { abortEarly: false });
+        } catch (err) {
+            console.error(err);
+            res.status(400).json({ errors: err.errors });
+            return;
+        }
+
+        let checkUsername = await UserAccount.findOne({
+            where: { userName: data.userName }
+        });
+        if (checkUsername) {
+            res.status(400).json({ message: "Username already exists." })
+            return;
+        }
+
+        let checkUserPhone = await UserAccount.findOne({
+            where: { phoneNo: data.phoneNo }
+        });
+        if (checkUserPhone) {
+            res.status(400).json({ message: "Phone Number already exists." });
+            return;
+        };
+
+        let checkUserEmail = await UserAccount.findOne({
+            where: { emailAccount: data.emailAccount }
+        });
+        if (checkUserEmail) {
+            res.status(400).json({ message: "Email Account already exists." });
+            return;
+        };
+
+        let updateUser = await UserAccount.update(data, {
+            where: { id: id }
+        });
+
+        if (updateUser == 1) {
+            res.json({ message: "User successfully updated." });
+        } else {
+            res.status(400).json({ message: "User update failed." });
+        }
+    } else {
+        res.status(401).json({message: "Unknown route."})
+    }
+
+
+})
+
+router.delete("/admin/deleteUser/:id", validateToken, async (req, res) => {
+    // let data = req.body;
+    let id = req.params.id;
+
+    // let admin = await UserAccount.findOne({
+    //     where: { emailAccount: req.user.emailAccount }
+    // })
+
+    // let checkPassword = await bcrypt.compare(data.password, admin.password);
+    // if (!checkPassword) {
+    //     res.status(400).json({ message: "Wrong password. Please try again." });
+    //     return;
+    // };
+
+    let deleteAccount = await UserAccount.destroy({
+        where: { id: id }
+    });
+    if (deleteAccount == 1) {
+        res.json({message: "User successfully deleted."})
+    } else {
+        res.status(400).json({ message: "User deletion failed." });
+        return;
+    }
+
+})
+
 router.put("/updatePassword", validateToken, async (req, res) => {
     let data = req.body;
     console.log(data)

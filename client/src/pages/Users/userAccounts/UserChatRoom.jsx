@@ -1,6 +1,6 @@
 import Talk from "talkjs";
 import { useEffect, useRef, useState } from "react";
-import http from "../../http";
+import http from "../../../http";
 
 const UserChatRoom = ({otherUserAccount}) => {
     const [ user, setUser ] = useState(null);
@@ -83,7 +83,7 @@ const UserChatRoom = ({otherUserAccount}) => {
 
             return () => session.destroy();
         }
-    }, [ talkLoaded, user ]);
+    }, [ talkLoaded, user, otherUserAcc ]);
 
 
 

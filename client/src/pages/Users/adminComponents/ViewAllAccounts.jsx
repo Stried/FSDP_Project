@@ -5,6 +5,8 @@ import React, { useEffect, useState } from "react";
 import http from "../../../http";
 import { Dropdown, Button, Modal } from 'flowbite-react';
 import { Link, useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function ViewAllAccounts() {
     const navigate = useNavigate();
@@ -17,9 +19,14 @@ function ViewAllAccounts() {
     };
 
     const deleteUser = (userID) => {
-        http.delete(`/user/deleteUser/${userID}`).then((res) => {
+        http.delete(`/user/admin/deleteUser/${userID}`).then((res) => {
             console.log(res.data);
-            window.location.reload();
+            getUsers()
+            setOpenModal("")
+        })
+            .catch(function (err) {
+                console.log(err);
+                toast.error(`${err.response.data.message}`);
         })
     }
 
@@ -32,6 +39,7 @@ function ViewAllAccounts() {
     const searchUsers = () => {
         http.get(`/user/adminPanel?search=${search}`).then((res) => {
             setUserList(res.data);
+            
         })
     }
     const onSearchKeyDown = (e) => {
@@ -86,6 +94,16 @@ function ViewAllAccounts() {
                     </span>
                 </p>
             </nav>
+            <div className="mx-4 float-right">
+                <button
+                    onClick={() => {
+                        getUsers();
+                    } }
+                    className='text-green-400 hover:text-white hover:transition-ease-in-out duration-200'
+                >
+                    Refresh Users
+                </button>
+            </div>
             <div className="dark:text-white text-black text-lg font-medium mx-4">
                 <input
                     value={search}
@@ -109,6 +127,8 @@ function ViewAllAccounts() {
                     <Clear />
                 </IconButton>
             </div>
+
+            <ToastContainer />
             {displayStyle === "Contained" && (
                 <Box className="h-96 overflow-auto">
                     <div className="text-white mx-2 grid grid-cols-4 columns-4">
@@ -207,6 +227,21 @@ function ViewAllAccounts() {
                                                                         user.phoneNo
                                                                     }
                                                                 </p>
+                                                            </div>
+                                                            <div className="flex-row flex-1 space-x-4 font-medium">
+                                                                <button className="px-3 py-2 bg-blue-400 hover:border-blue-500 hover:bg-transparent hover:text-white border-2 border-transparent hover:transition-ease-in-out duration-200 rounded-lg ">
+                                                                    Edit
+                                                                </button>
+                                                                <button
+                                                                    onClick={() =>
+                                                                        deleteUser(
+                                                                            user.id
+                                                                        )
+                                                                    }
+                                                                    className="px-3 py-2 bg-red-400 hover:border-red-500 hover:bg-transparent hover:text-white border-2 border-transparent hover:transition-ease-in-out duration-200 rounded-lg "
+                                                                >
+                                                                    Delete
+                                                                </button>
                                                             </div>
                                                         </Modal.Body>
                                                         <Modal.Footer>
