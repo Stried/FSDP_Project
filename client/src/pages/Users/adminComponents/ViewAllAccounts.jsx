@@ -1,17 +1,31 @@
-import { Box, Typography, Grid, Card, CardContent, Input, IconButton } from '@mui/material';
-import { AccountCircle, AccessTime, Search, Clear, Edit } from '@mui/icons-material';
+import {
+    Box,
+    Typography,
+    Grid,
+    Card,
+    CardContent,
+    Input,
+    IconButton,
+} from "@mui/material";
+import {
+    AccountCircle,
+    AccessTime,
+    Search,
+    Clear,
+    Edit,
+} from "@mui/icons-material";
 import UserContext from "../../../contexts/UserContext";
 import React, { useEffect, useState } from "react";
 import http from "../../../http";
-import { Dropdown, Button, Modal } from 'flowbite-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Dropdown, Button, Modal } from "flowbite-react";
+import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function ViewAllAccounts() {
     const navigate = useNavigate();
 
-    const [ userList, setUserList ] = useState([]);
+    const [userList, setUserList] = useState([]);
     const getUsers = () => {
         http.get("/user/adminPanel").then((res) => {
             setUserList(res.data);
@@ -19,33 +33,37 @@ function ViewAllAccounts() {
     };
 
     const deleteUser = (userID) => {
-        http.delete(`/user/admin/deleteUser/${userID}`).then((res) => {
-            console.log(res.data);
-            getUsers()
-            setOpenModal("")
-        })
+        http.delete(`/user/admin/deleteUser/${userID}`)
+            .then((res) => {
+                console.log(res.data);
+                getUsers();
+                setOpenModal("");
+            })
             .catch(function (err) {
                 console.log(err);
                 toast.error(`${err.response.data.message}`);
-        })
-    }
+            });
+    };
 
-    const [ displayStyle, setDisplayStyle ] = useState("Full");
+    const editUser = (userName) => {
+        navigate(`/admin/editUser/${userName}`);
+    };
 
-    const [ search, setSearch ] = useState("");
+    const [displayStyle, setDisplayStyle] = useState("Full");
+
+    const [search, setSearch] = useState("");
     const onSearchChange = (e) => {
         setSearch(e.target.value);
-    }
+    };
     const searchUsers = () => {
         http.get(`/user/adminPanel?search=${search}`).then((res) => {
             setUserList(res.data);
-            
-        })
-    }
+        });
+    };
     const onSearchKeyDown = (e) => {
         if (e.key === "Enter") {
             searchUsers();
-        };
+        }
     };
     const onClickSearch = () => {
         searchUsers();
@@ -53,12 +71,12 @@ function ViewAllAccounts() {
     const onClickClear = () => {
         setSearch("");
         getUsers();
-    }
+    };
     useEffect(() => {
         getUsers();
     }, []);
 
-    const [ openModal, setOpenModal ] = useState("");
+    const [openModal, setOpenModal] = useState("");
 
     return (
         <Box>
@@ -98,8 +116,8 @@ function ViewAllAccounts() {
                 <button
                     onClick={() => {
                         getUsers();
-                    } }
-                    className='text-green-400 hover:text-white hover:transition-ease-in-out duration-200'
+                    }}
+                    className="text-green-400 hover:text-white hover:transition-ease-in-out duration-200"
                 >
                     Refresh Users
                 </button>
@@ -229,7 +247,14 @@ function ViewAllAccounts() {
                                                                 </p>
                                                             </div>
                                                             <div className="flex-row flex-1 space-x-4 font-medium">
-                                                                <button className="px-3 py-2 bg-blue-400 hover:border-blue-500 hover:bg-transparent hover:text-white border-2 border-transparent hover:transition-ease-in-out duration-200 rounded-lg ">
+                                                                <button
+                                                                    onClick={() => {
+                                                                        editUser(
+                                                                            user.userName
+                                                                        );
+                                                                    }}
+                                                                    className="px-3 py-2 bg-blue-400 hover:border-blue-500 hover:bg-transparent hover:text-white border-2 border-transparent hover:transition-ease-in-out duration-200 rounded-lg "
+                                                                >
                                                                     Edit
                                                                 </button>
                                                                 <button
@@ -368,6 +393,28 @@ function ViewAllAccounts() {
                                                                 {user.phoneNo}
                                                             </p>
                                                         </div>
+                                                        <div className="flex-row flex-1 space-x-4 font-medium">
+                                                            <button
+                                                                onClick={() => {
+                                                                    editUser(
+                                                                        user.userName
+                                                                    );
+                                                                }}
+                                                                className="px-3 py-2 bg-blue-400 hover:border-blue-500 hover:bg-transparent hover:text-white border-2 border-transparent hover:transition-ease-in-out duration-200 rounded-lg "
+                                                            >
+                                                                Edit
+                                                            </button>
+                                                            <button
+                                                                onClick={() =>
+                                                                    deleteUser(
+                                                                        user.id
+                                                                    )
+                                                                }
+                                                                className="px-3 py-2 bg-red-400 hover:border-red-500 hover:bg-transparent hover:text-white border-2 border-transparent hover:transition-ease-in-out duration-200 rounded-lg "
+                                                            >
+                                                                Delete
+                                                            </button>
+                                                        </div>
                                                     </Modal.Body>
                                                     <Modal.Footer>
                                                         <p className="w-fit | bg-gradient-to-r from-green-400 to-emerald-600 text-transparent bg-clip-text | hover:ease-in-out duration-300 | italic font-semibold text-xl">
@@ -453,6 +500,28 @@ function ViewAllAccounts() {
                                                                 </span>
                                                                 {user.phoneNo}
                                                             </p>
+                                                        </div>
+                                                        <div className="flex-row flex-1 space-x-4 font-medium">
+                                                            <button
+                                                                onClick={() => {
+                                                                    editUser(
+                                                                        user.userName
+                                                                    );
+                                                                }}
+                                                                className="px-3 py-2 bg-blue-400 hover:border-blue-500 hover:bg-transparent hover:text-white border-2 border-transparent hover:transition-ease-in-out duration-200 rounded-lg "
+                                                            >
+                                                                Edit
+                                                            </button>
+                                                            <button
+                                                                onClick={() =>
+                                                                    deleteUser(
+                                                                        user.id
+                                                                    )
+                                                                }
+                                                                className="px-3 py-2 bg-red-400 hover:border-red-500 hover:bg-transparent hover:text-white border-2 border-transparent hover:transition-ease-in-out duration-200 rounded-lg "
+                                                            >
+                                                                Delete
+                                                            </button>
                                                         </div>
                                                     </Modal.Body>
                                                     <Modal.Footer>

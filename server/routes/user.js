@@ -367,6 +367,10 @@ router.put("/admin/updateUser/:id", validateToken, async (req, res) => {
     let data = req.body;
     let id = req.params.id
 
+    let currentUser = await UserAccount.findOne({
+        where: { id: id }
+    })
+
     if (req.user.adminNo) {
         let validationSchema = yup.object().shape({
             fullName: yup.string().trim().min(3).max(100).required(),
@@ -385,7 +389,7 @@ router.put("/admin/updateUser/:id", validateToken, async (req, res) => {
         let checkUsername = await UserAccount.findOne({
             where: { userName: data.userName }
         });
-        if (checkUsername) {
+        if (checkUsername && data.userName != currentUser.userName) {
             res.status(400).json({ message: "Username already exists." })
             return;
         }
@@ -393,7 +397,7 @@ router.put("/admin/updateUser/:id", validateToken, async (req, res) => {
         let checkUserPhone = await UserAccount.findOne({
             where: { phoneNo: data.phoneNo }
         });
-        if (checkUserPhone) {
+        if (checkUserPhone && data.phoneNo !== currentUser.phoneNo) {
             res.status(400).json({ message: "Phone Number already exists." });
             return;
         };
@@ -401,7 +405,7 @@ router.put("/admin/updateUser/:id", validateToken, async (req, res) => {
         let checkUserEmail = await UserAccount.findOne({
             where: { emailAccount: data.emailAccount }
         });
-        if (checkUserEmail) {
+        if (checkUserEmail && data.emailAccount !== currentUser.emailAccount) {
             res.status(400).json({ message: "Email Account already exists." });
             return;
         };

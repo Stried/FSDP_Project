@@ -31,6 +31,14 @@ import UserChangePassword from "./pages/Users/userAccounts/UserChangePassword";
 import UserForgetPasswordEmail from "./pages/Users/userAccounts/UserForgetPasswordEmail";
 import UserForgetPasswordReset from "./pages/Users/userAccounts/UserForgetPasswordReset";
 import TalkJSTest from "./pages/Users/TalkJSTest";
+import UserContext from "./contexts/UserContext";
+import ViewAllAccounts from "./pages/Users/adminComponents/ViewAllAccounts";
+import CreateAdmin from "./pages/Users/adminComponents/CreateAdmin";
+import ViewOtherUser from "./pages/Users/userAccounts/ViewOtherUser";
+import ViewAccount from "./pages/Users/userComponents/ViewAccount";
+import Setting from "./pages/Users/userComponents/Setting";
+import SupportHelpDesk from "./pages/Users/SupportHelpDesk";
+import CreateLocations from "./pages/Locations/CreateLocations";
 
 import LocationsMain from "./pages/Locations/LocationsMain";
 import LocationsCreate from "./pages/Locations/LocationsCreate";
@@ -46,16 +54,7 @@ import TrialsReceiptReportPage from "./pages/Trials/trialAdmin/TrialsReceiptRepo
 import StoreMain from "./pages/Store/StoreMain";
 import StoreAddItem from "./pages/Store/StoreAddItem";
 import StoreUpdateItem from "./pages/Store/StoreUpdateItem";
-
-import * as Constants from "./../src/components/CSS Constants/Constants";
-import UserContext from "./contexts/UserContext";
-import ViewAllAccounts from "./pages/Users/adminComponents/ViewAllAccounts";
-import CreateAdmin from "./pages/Users/adminComponents/CreateAdmin";
-import ViewOtherUser from "./pages/Users/userAccounts/ViewOtherUser";
-import ViewAccount from "./pages/Users/userComponents/ViewAccount";
-import Setting from "./pages/Users/userComponents/Setting";
-import SupportHelpDesk from "./pages/Users/SupportHelpDesk";
-import CreateLocations from "./pages/Locations/CreateLocations";
+import AdminEditUser from "./pages/Users/adminComponents/AdminEditUser";
 
 function App() {
     const [user, setUser] = useState(null);
@@ -77,9 +76,11 @@ function App() {
     }
 
     const Protected = ({ isAdminCheck, children }) => {
-        if (!isAdminCheck) {
+        let testCheck = isAdminCheck;
+        if (!testCheck) {
+            console.log(testCheck)
             console.log("Failed");
-            return <Navigate to={window.location} />;
+            return <Navigate to={"/404"} />;
         }
 
         return children;
@@ -153,6 +154,14 @@ function App() {
                                 element={
                                     <Protected isAdminCheck={isAdminCheck}>
                                         <ViewAllAccounts />
+                                    </Protected>
+                                }
+                            />
+                            <Route
+                                path={"/admin/editUser/:username"}
+                                element={
+                                    <Protected isAdminCheck={isAdminCheck}>
+                                        <AdminEditUser />
                                     </Protected>
                                 }
                             />

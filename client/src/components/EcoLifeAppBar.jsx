@@ -9,22 +9,6 @@ import http from "./../http";
 import { Dropdown } from "flowbite-react";
 import UserContext from "../contexts/UserContext";
 
-function AdminPanel(props) {
-    const isAdmin = props.isAdmin;
-    if (isAdmin) {
-        return (
-            <Link to="/user/adminPanel">
-                <h1
-                    className="w-max | hover:text-green-500 | hover:ease-in-out duration-300
-                      font-medium text-xl | mx-5 my-2"
-                >
-                    Admin Panel
-                </h1>
-            </Link>
-        )
-    }
-}
-
 function LocationsAdmin(props) {
     const isAdmin = props.isAdmin;
     if (isAdmin) {
@@ -104,12 +88,6 @@ function EcoLifeAppBar() {
                         Trial Runs
                     </h1>
                 </Link>
-
-                {user && (
-                    <div onClick={() => setIsAdminCheck(user.adminNo)}>
-                        <AdminPanel isAdmin={user.adminNo} />
-                    </div>
-                )}
             </div>
 
             <div
