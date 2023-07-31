@@ -71,7 +71,7 @@ const App = () => {
             dateOfTrial:"",
             trialReport:"",
             modelName:model,
-            faultResolve:true,
+            faultResolve:"Resolved",
         },
         validationSchema: yup.object().shape({
             dateOfTrial: yup

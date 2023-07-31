@@ -104,16 +104,16 @@ function TrialsReceiptUpdate() {
                             />
                                                         <RadioGroup
                                 name="faultResolve"
-                                value={formik.values.faultResolve.toString()} // Convert boolean to string
+                                value={formik.values.faultResolve} // Convert boolean to string
                                 onChange={formik.handleChange}
                             >
                                 <FormControlLabel
-                                    value="true"
+                                    value="Resolved"
                                     control={<Radio />}
                                     label="Resolved"
                                 />
                                 <FormControlLabel
-                                    value="false"
+                                    value="Unresolved"
                                     control={<Radio />}
                                     label="Unresolved"
                                 />

@@ -93,7 +93,7 @@ const App = () => {
                             <br />
                             <div className="text-xl font-medium float-left">
                                 Location:
-                                {trialCarEntry.address}
+                                {trialCar.address}
                             </div>
                             <br />
                             <div>

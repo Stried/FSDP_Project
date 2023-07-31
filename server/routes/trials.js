@@ -59,9 +59,22 @@ router.post("/createTrialCar", async (req, res) => {
 });
 
 router.get("/viewTrialCar", async (req, res) => {
+    const condition = {};
+    let search = req.query.search;
+    if (search) {
+        condition[ Sequelize.Op.or ] = [
+            { name: { [ Sequelize.Op.like ]: `%${search}%` } },
+            { address: { [ Sequelize.Op.like ]: `%${search}%` } },
+            { carBrand: { [ Sequelize.Op.like ]: `%${search}%` } },
+            { carPlateNo: { [ Sequelize.Op.like ]: `%${search}%` } },
+        ]
+    }
+
     const leTrialCar = await TrialCar.findAll({
-        where: { },
+        where: condition,
+        order: [ [ 'createdAt', 'DESC' ] ],
     })
+
 
     res.json(leTrialCar);
 });
@@ -78,6 +91,7 @@ router.get("/viewTrialCar/:id", async (req, res) => {
         res.status(404).json({ error: "Trial car not found" });
       }
 });
+
 
 router.get("/viewSpecificTrialCar/:id", async(req, res) => {
     const trialCar = req.params.id
@@ -151,6 +165,7 @@ router.post("/createTrialReceipt/:model", async (req, res) => {
     const TheTrialCar = await TrialCar.findOne({
         where: {name:model},
     })
+
     let data = req.body;
     let validationSchema = yup.object().shape({
         dateOfTrial: yup.date().required(),
@@ -177,9 +192,8 @@ router.post("/createTrialReceipt/:model", async (req, res) => {
     data.dateOfTrial = data.dateOfTrial;
     data.modelName = model;
     data.trialReport = "Empty";
-    console.log(data.dateOfTrial)
-    console.log(data.modelName)
-    console.log(data.trialReport)
+    data.faultResolve = "Resolved"
+
     let result = await TrialReceipt.create(data);
     res.json(result);
 
@@ -209,7 +223,6 @@ router.get("/viewAllTrialReceipt", validateToken, async (req, res) => {
             { trialReceiptId: { [ Sequelize.Op.like ]: `%${search}%` } },
             { dateOfTrial: { [ Sequelize.Op.like ]: `%${search}%` } },
             { modelName: { [ Sequelize.Op.like ]: `%${search}%` } },
-            { carPlateNo: { [ Sequelize.Op.like ]: `%${search}%` } },
         ]
     }
 
@@ -242,7 +255,7 @@ router.put("/viewAllTrialReceipt/changeDetails/:id", validateToken, async (req, 
     let data = req.body;
     let validationSchema = yup.object().shape({
         trialReport: yup.string().trim().min(5).max(1000),
-        faultResolve: yup.boolean(),
+        faultResolve: yup.string(),
     });
     
     try {

@@ -19,10 +19,10 @@ modelName:{
     allowNull:false
 },
 faultResolve:{
-    type:DataTypes.BOOLEAN,
+    type:DataTypes.STRING,
     allowNull:false,
     defaultValue:true
-}
+},
 });
 TrialReceipt.associate = (models) => {
     TrialReceipt.hasOne(models.UserAccount, {
