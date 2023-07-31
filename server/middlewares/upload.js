@@ -26,7 +26,7 @@ const storeStorage = multer.diskStorage({
 });
 
 const storeUpload = multer({
-    storage: storeStorage, // don't know how this manage to work but ok
+    storeStorage: storeStorage, // don't know how this manage to work but ok
     limits: { fileSize: 1024 * 1024 }
 }).single('file');
 

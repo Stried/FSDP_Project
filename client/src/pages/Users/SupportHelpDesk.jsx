@@ -14,8 +14,6 @@ function SupportHelpDesk() {
         http.get("/user/viewAccount")
             .then((res) => {
                 setUser(res.data);
-                console.log(res.data);
-                console.log(user);
                 console.log("User Info successfully logged.");
             })
             .catch(function (err) {
