@@ -124,6 +124,9 @@ function StoreMain() {
                                     </div>
                                 </div>
                                 <div className="pt-3 pl-2 w-4/5">
+                                    <img src={`${import.meta.env.VITE_FILE_BASE_URL_STORE
+                                                }${store.carImageFile}`}
+                                        className="w-2/3" />
                                     <p className="text-2xl font-medium">
                                         {store.carBrand} {store.carModel}
                                     </p>
