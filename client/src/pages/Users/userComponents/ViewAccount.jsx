@@ -42,7 +42,7 @@ function ViewAccount() {
 
     const [ userCarSalesListing, setUserCarSalesListing ] = useState([]);
     const [ userFollowersList, setUserFollowersList ] = useState([]);
-
+    const [ userReceiptList, setUserReceiptList ] = useState([]);
     const logout = () => {
         localStorage.clear();
         window.location = "/";
@@ -59,6 +59,17 @@ function ViewAccount() {
         console.log(err);
         user.imageFile = localStorage.getItem("userImageFile");
     }
+
+    useEffect(() => {
+        http.get("/trials/viewUserTrialReceipt")
+            .then((res) => {
+                setUserReceiptList(res.data);
+                console.log("User Receipts successfully logged.");
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
+    }, []);
 
     useEffect(() => {
         http.get("/user/viewAccount")
@@ -267,10 +278,49 @@ function ViewAccount() {
                             <div className="text-2xl font-medium mb-2">
                                 Trialed Cars
                             </div>
-                            <div>
-                                <p className="text-xl font-medium mb-10">
-                                    You currently has no trialed cars.
-                                </p>
+                            <div className="overflow-x-auto flex space-x-5 mb-10">
+                                {userReceiptList.length > 0 ? (
+                                    userReceiptList.map(
+                                        (userListing, i) => {
+                                            return (
+                                                <div className="bg-slate-800">
+                                                    <div className="p-5">
+                                                        <p className="text-xl">
+                                                            {
+                                                                userListing.trialReceiptId
+                                                            }
+                                                            Model Name: {" "}
+                                                            {
+                                                                userListing.modelName
+                                                            }
+                                                        </p>
+                                                        <p>
+                                                            Date of Trial{" "}
+                                                            {
+                                                                userListing.dateOfTrial
+                                                            }
+                                                        </p>
+                                                        <div className="my-6" />
+                                                        <p className="flex">
+                                                            <AiOutlineUser className="my-auto" />{" "}
+                                                            <span className="ml-1 text-green-500">
+                                                                {
+                                                                    userListing.emailAccount
+                                                                }
+                                                            </span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            );
+                                        }
+                                    )
+                                ) : (
+                                    <div>
+                                        <p className="text-xl font-medium">
+                                            You currently have no receipts listed
+                                        </p>
+                                    </div>
+                                )}
                             </div>
 
                             <div className="text-2xl font-medium mb-2">

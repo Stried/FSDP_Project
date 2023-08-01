@@ -190,7 +190,7 @@ const App = () => {
             <tbody>
               {trialReceiptList.map((trialReceipt, i) => {
                 const isReportEmpty =
-                  trialReceipt.trialReport.toLowerCase() === "empty";
+                  trialReceipt.trialReport === "";
                 return (
                   <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                     <th

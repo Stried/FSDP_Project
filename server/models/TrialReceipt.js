@@ -21,8 +21,11 @@ modelName:{
 faultResolve:{
     type:DataTypes.STRING,
     allowNull:false,
-    defaultValue:true
 },
+emailAccount:{
+    type:DataTypes.STRING,
+    allowNull:false,
+}
 });
 TrialReceipt.associate = (models) => {
     TrialReceipt.hasOne(models.UserAccount, {

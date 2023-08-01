@@ -160,7 +160,7 @@ router.delete("/:carPlateNo", async (req, res) => {
     }
 });
 
-router.post("/createTrialReceipt/:model", async (req, res) => {
+router.post("/createTrialReceipt/:model", validateToken, async (req, res) => {
     const model = req.params.model;
     const TheTrialCar = await TrialCar.findOne({
         where: {name:model},
@@ -191,8 +191,9 @@ router.post("/createTrialReceipt/:model", async (req, res) => {
 
     data.dateOfTrial = data.dateOfTrial;
     data.modelName = model;
-    data.trialReport = "Empty";
-    data.faultResolve = "Resolved"
+    data.trialReport = "";
+    data.faultResolve = "Resolved";
+    data.emailAccount = req.user.emailAccount;
 
     let result = await TrialReceipt.create(data);
     res.json(result);

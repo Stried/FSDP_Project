@@ -171,19 +171,19 @@ const SideNav = ({ isOpen }) => {
                                         href="/Trials/trialAdmin/TrialsCarAdd"
                                         className="flex items-center pl-16 p-2 text-gray-900 rounded-lg dark:text-white dark:hover:text-black dark:hover:bg-green-400 transition duration-200 "
                                     >
-                                        Add Trials
+                                        Add Trial Car
                                     </a>
                                     <a
                                         href="/Trials/trialAdmin/TrialsCarAdminPage"
                                         className="flex items-center pl-16 p-2 text-gray-900 rounded-lg dark:text-white dark:hover:text-black dark:hover:bg-green-400 transition duration-200 "
                                     >
-                                        View Trials
+                                        View Trial Cars
                                     </a>
                                     <a
                                         href="/Trials/trialAdmin/TrialsReceiptAdminPage"
                                         className="flex items-center pl-16 p-2 text-gray-900 rounded-lg dark:text-white dark:hover:text-black dark:hover:bg-green-400 transition duration-200 "
                                     >
-                                        View Receipts
+                                        View Trial Receipts
                                     </a>
                                 </div>
                             )}
