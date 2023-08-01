@@ -92,7 +92,7 @@ function App() {
         <UserContext.Provider value={{ user, setUser }}>
             <div
                 id="root"
-                className="w-full h-screen overflow-x-hidden | bg-gradient-to-b dark:from-zinc-900 dark:to-black from-slate-200 to-white"
+                className="w-full min-h-screen overflow-x-hidden | bg-gradient-to-b dark:from-zinc-900 dark:to-black from-slate-200 to-white"
             >
                 <Router>
                     <div>
@@ -103,7 +103,7 @@ function App() {
                         <EcoLifeSideBar />
                     </div>
 
-                    <div className="px-12">
+                    <div className="px-12 min-h-screen">
                         <Routes>
                             <Route
                                 path={"/"}
@@ -251,7 +251,7 @@ function App() {
                             <SupportHelpDesk />
                         </div>
                     )}
-                    <div className="mt-10">
+                    <div className="mt-auto">
                         <EcoLifeFooter />
                     </div>
                 </Router>

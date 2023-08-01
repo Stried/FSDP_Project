@@ -20,8 +20,17 @@ import {
 import AspectRatio from "@mui/joy/AspectRatio";
 import { Formik } from "formik";
 import { Accordion, Avatar, Badge, Breadcrumb } from "flowbite-react";
-import { HiHome } from "react-icons/hi";
+import {
+    HiHome,
+    HiAdjustments,
+    HiClipboardList,
+    HiUserCircle,
+    HiUser,
+} from "react-icons/hi";
+import { BiSolidBadgeDollar, BiReceipt } from "react-icons/bi";
+import { MdDashboard } from "react-icons/md";
 import { AiOutlineUser } from "react-icons/ai";
+import { Tabs } from "flowbite-react";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -40,9 +49,9 @@ function ViewAccount() {
         imageFile: "",
     });
 
-    const [ userCarSalesListing, setUserCarSalesListing ] = useState([]);
-    const [ userFollowersList, setUserFollowersList ] = useState([]);
-    const [ userReceiptList, setUserReceiptList ] = useState([]);
+    const [userCarSalesListing, setUserCarSalesListing] = useState([]);
+    const [userFollowersList, setUserFollowersList] = useState([]);
+    const [userReceiptList, setUserReceiptList] = useState([]);
     const logout = () => {
         localStorage.clear();
         window.location = "/";
@@ -86,7 +95,7 @@ function ViewAccount() {
         http.get("/user/viewAccount/carListing")
             .then((res) => {
                 setUserCarSalesListing(res.data);
-                console.log(res.data)
+                console.log(res.data);
                 console.log("User Car Listing successfully logged.");
             })
             .catch(function (err) {
@@ -98,7 +107,7 @@ function ViewAccount() {
         http.get("/user/viewAccount/allFollowers")
             .then((res) => {
                 setUserFollowersList(res.data);
-                console.log("User followers successfully logged.")
+                console.log("User followers successfully logged.");
             })
             .catch(function (err) {
                 console.log(err);
@@ -139,7 +148,7 @@ function ViewAccount() {
                             </Badge>
                         </span>
                     </p>
-                    <div className="my-3 flex flex-row">
+                    <div className="my-3 flex flex-row h-fit">
                         <div
                             id="userInfo"
                             className="text-white mb-3 basis-1/6 mr-10 bg-slate-800 p-5 rounded-md"
@@ -157,8 +166,7 @@ function ViewAccount() {
                                         color={"success"}
                                         size="xl"
                                     ></Avatar>
-                                )
-                            }
+                                )}
 
                             <div className="mt-6 text-center">
                                 <div
@@ -218,13 +226,191 @@ function ViewAccount() {
                             </div>
                         </div>
 
-                        <div className="basis-4/6 ml-10">
+                        <div className="basis-4/6 ml-10 h-full">
+                            <Tabs.Group
+                                aria-label="Tabs with underline"
+                                style="underline"
+                            >
+                                <Tabs.Item
+                                    active
+                                    icon={BiSolidBadgeDollar}
+                                    title="Car Sales Listing"
+                                >
+                                    <div className="grid grid-cols-3 ">
+                                        {userCarSalesListing.length > 0 ? (
+                                            userCarSalesListing.map(
+                                                (userListing, i) => {
+                                                    return (
+                                                        <div className="bg-slate-800 mr-2 mb-2">
+                                                            <div className="p-5">
+                                                                <p className="text-xl">
+                                                                    {
+                                                                        userListing.carBrand
+                                                                    }{" "}
+                                                                    {
+                                                                        userListing.carModel
+                                                                    }
+                                                                </p>
+                                                                <p>
+                                                                    ${" "}
+                                                                    {
+                                                                        userListing.carPrice
+                                                                    }
+                                                                </p>
+                                                                <p>
+                                                                    Production:{" "}
+                                                                    {
+                                                                        userListing.carProductionDate
+                                                                    }
+                                                                </p>
+                                                                <div className="my-6" />
+                                                                <p className="flex">
+                                                                    <AiOutlineUser className="my-auto" />{" "}
+                                                                    <span className="ml-1 text-green-500">
+                                                                        {
+                                                                            userListing.emailAccount
+                                                                        }
+                                                                    </span>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    );
+                                                }
+                                            )
+                                        ) : (
+                                            <div>
+                                                <p className="text-xl font-medium">
+                                                    You currently has no cars
+                                                    for sale.
+                                                </p>
+                                            </div>
+                                        )}
+                                    </div>
+                                </Tabs.Item>
+                                <Tabs.Item
+                                    icon={BiReceipt}
+                                    title="Receipt"
+                                >
+                                    <div className="grid grid-cols-3">
+                                        {userReceiptList.length > 0 ? (
+                                            userReceiptList.map(
+                                                (userListing, i) => {
+                                                    return (
+                                                        <div className="bg-slate-800 mr-2 mb-2">
+                                                            <div className="p-5">
+                                                                <p className="text-xs text-white/60 mb-4">
+                                                                    {
+                                                                        userListing.trialReceiptId
+                                                                    }
+                                                                </p>
+                                                                <p className="text-xl font-medium">
+                                                                    Model Name:{" "}
+                                                                    <span className="text-green-400">
+                                                                        {
+                                                                            userListing.modelName
+                                                                        }
+                                                                    </span>
+                                                                </p>
+                                                                <p className="text-xl mt-3">
+                                                                    Date of
+                                                                    Trial:{" "}
+                                                                    <br />
+                                                                    <span className="text-green-400">
+                                                                        {
+                                                                            userListing.dateOfTrial
+                                                                        }
+                                                                    </span>
+                                                                </p>
+                                                                <div className="my-6" />
+                                                                <p className="flex">
+                                                                    <AiOutlineUser className="my-auto" />{" "}
+                                                                    <span className="ml-1 text-green-500">
+                                                                        {
+                                                                            userListing.emailAccount
+                                                                        }
+                                                                    </span>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    );
+                                                }
+                                            )
+                                        ) : (
+                                            <div>
+                                                <p className="text-xl font-medium">
+                                                    You currently have no
+                                                    receipts listed
+                                                </p>
+                                            </div>
+                                        )}
+                                    </div>
+                                </Tabs.Item>
+                                <Tabs.Item
+                                    icon={HiUserCircle}
+                                    title="Followers"
+                                >
+                                    <div className="grid grid-cols-3">
+                                        {userFollowersList.length > 0 ? (
+                                            userFollowersList.map(
+                                                (followers, i) => {
+                                                    return (
+                                                        <div className="p-2 bg-slate-800 text-center rounded">
+                                                            <a
+                                                                href={`/user/${followers.userName}`}
+                                                            >
+                                                                <div className="px-8">
+                                                                    {followers &&
+                                                                        followers.imageFile !==
+                                                                            "No image" && ( // Had to be non-nullable
+                                                                            <Avatar
+                                                                                className="py-2"
+                                                                                img={`${
+                                                                                    import.meta
+                                                                                        .env
+                                                                                        .VITE_FILE_BASE_URL
+                                                                                }${
+                                                                                    followers.imageFile
+                                                                                }`}
+                                                                                alt="Profile Picture"
+                                                                                rounded
+                                                                                bordered
+                                                                                color={
+                                                                                    "success"
+                                                                                }
+                                                                                size="lg"
+                                                                            ></Avatar>
+                                                                        )}
+                                                                </div>
+                                                                <p className="px-8 py-4">
+                                                                    {
+                                                                        followers.userName
+                                                                    }
+                                                                </p>
+                                                            </a>
+                                                        </div>
+                                                    );
+                                                }
+                                            )
+                                        ) : (
+                                            <div className="">
+                                                <p className="text-xl font-medium mb-10">
+                                                    You currently have no
+                                                    followers.
+                                                </p>
+                                            </div>
+                                        )}
+                                    </div>
+                                </Tabs.Item>
+                            </Tabs.Group>
+                        </div>
+
+                        {/* <div className="basis-4/6 ml-10">
                             <div className="">
                                 <p className="text-2xl font-medium mb-2">
                                     Car Sales Listing
                                 </p>
                             </div>
-                            <div className="overflow-x-auto flex space-x-5 mb-10">
+                            <div className="w-2/3 overflow-x-auto space-x-5 flex flex-row mb-10 mr-10 pb-3 pr-10">
                                 {userCarSalesListing.length > 0 ? (
                                     userCarSalesListing.map(
                                         (userListing, i) => {
@@ -268,8 +454,7 @@ function ViewAccount() {
                                 ) : (
                                     <div>
                                         <p className="text-xl font-medium">
-                                            You currently has no cars for
-                                            sale.
+                                            You currently has no cars for sale.
                                         </p>
                                     </div>
                                 )}
@@ -278,46 +463,51 @@ function ViewAccount() {
                             <div className="text-2xl font-medium mb-2">
                                 Trialed Cars
                             </div>
-                            <div className="overflow-x-auto flex space-x-5 mb-10">
+                            <div className="w-2/3 overflow-x-auto space-x-5 flex flex-row mb-10 mr-10 pb-3 pr-10">
                                 {userReceiptList.length > 0 ? (
-                                    userReceiptList.map(
-                                        (userListing, i) => {
-                                            return (
-                                                <div className="bg-slate-800">
-                                                    <div className="p-5">
-                                                        <p className="text-xl">
-                                                            {
-                                                                userListing.trialReceiptId
-                                                            }
-                                                            Model Name: {" "}
+                                    userReceiptList.map((userListing, i) => {
+                                        return (
+                                            <div className="bg-slate-800">
+                                                <div className="p-5">
+                                                    <p className="text-xs text-white/60 mb-4">
+                                                        {
+                                                            userListing.trialReceiptId
+                                                        }
+                                                    </p>
+                                                    <p className="text-xl font-medium">
+                                                        Model Name:{" "}
+                                                        <span className="text-green-400">
                                                             {
                                                                 userListing.modelName
                                                             }
-                                                        </p>
-                                                        <p>
-                                                            Date of Trial{" "}
+                                                        </span>
+                                                    </p>
+                                                    <p className="text-xl mt-3">
+                                                        Date of Trial:{" "} <br />
+                                                        <span className="text-green-400">
                                                             {
                                                                 userListing.dateOfTrial
                                                             }
-                                                        </p>
-                                                        <div className="my-6" />
-                                                        <p className="flex">
-                                                            <AiOutlineUser className="my-auto" />{" "}
-                                                            <span className="ml-1 text-green-500">
-                                                                {
-                                                                    userListing.emailAccount
-                                                                }
-                                                            </span>
-                                                        </p>
-                                                    </div>
+                                                        </span>
+                                                    </p>
+                                                    <div className="my-6" />
+                                                    <p className="flex">
+                                                        <AiOutlineUser className="my-auto" />{" "}
+                                                        <span className="ml-1 text-green-500">
+                                                            {
+                                                                userListing.emailAccount
+                                                            }
+                                                        </span>
+                                                    </p>
                                                 </div>
-                                            );
-                                        }
-                                    )
+                                            </div>
+                                        );
+                                    })
                                 ) : (
                                     <div>
                                         <p className="text-xl font-medium">
-                                            You currently have no receipts listed
+                                            You currently have no receipts
+                                            listed
                                         </p>
                                     </div>
                                 )}
@@ -326,12 +516,14 @@ function ViewAccount() {
                             <div className="text-2xl font-medium mb-2">
                                 Followers
                             </div>
-                            <div className="overflow-x-auto flex space-x-5 mb-10">
+                            <div className="w-2/3 overflow-x-auto space-x-5 flex flex-row mb-10 mr-10 pb-3 pr-10">
                                 {userFollowersList.length > 0 ? (
                                     userFollowersList.map((followers, i) => {
                                         return (
                                             <div className="p-2 bg-slate-800 text-center rounded">
-                                                <a href={`/user/${followers.userName}`}>
+                                                <a
+                                                    href={`/user/${followers.userName}`}
+                                                >
                                                     <div className="px-8">
                                                         {followers &&
                                                             followers.imageFile !==
@@ -370,7 +562,7 @@ function ViewAccount() {
                                     </div>
                                 )}
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>

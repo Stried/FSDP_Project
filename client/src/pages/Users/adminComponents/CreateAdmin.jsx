@@ -53,7 +53,7 @@ function CreateAdmin() {
 
     return (
         <div className="w-1/2">
-            <div className="text-4xl text-white font-medium">
+            <div className="text-4xl mt-12 text-white font-medium">
                 Admin Creation
             </div>
             <ToastContainer />

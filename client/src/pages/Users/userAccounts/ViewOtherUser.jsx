@@ -227,7 +227,7 @@ function ViewOtherUser() {
                                             Car Sales Listing
                                         </p>
                                     </div>
-                                    <div className="overflow-x-auto flex space-x-5 mb-10">
+                                    <div className="w-1/2 overflow-x-auto space-x-5 flex flex-row mb-10 mr-10 pb-3 pr-10">
                                         {userCarSalesListing.length > 0 ? (
                                             userCarSalesListing.map(
                                                 (userListing, i) => {
@@ -279,19 +279,9 @@ function ViewOtherUser() {
                                     </div>
 
                                     <div className="text-2xl font-medium mb-2">
-                                        Trialed Cars
-                                    </div>
-                                    <div>
-                                        <p className="text-xl font-medium mb-10">
-                                            The user currently has no trialed
-                                            cars.
-                                        </p>
-                                    </div>
-
-                                    <div className="text-2xl font-medium mb-2">
                                         Followers
                                     </div>
-                                    <div className="overflow-x-auto flex space-x-5 mb-10">
+                                    <div className="w-1/2 overflow-x-auto space-x-5 flex flex-row mb-10 mr-10 pb-3 pr-10">
                                         {userFollowersList.length > 0 ? (
                                             userFollowersList.map(
                                                 (followers, i) => {

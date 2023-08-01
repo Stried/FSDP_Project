@@ -61,6 +61,7 @@ function Ecolife() {
                             </p>
                         </div>
                         <p className="py-3 font-medium text-lg w-2/3">
+                            
                             <span>
                                 Here at Ecolife, customers are able to trial the
                                 latest cars for a small fee.
@@ -71,6 +72,7 @@ function Ecolife() {
                                 content to see if the car suits your needs.
                             </span>
                         </p>
+                        
                         <button className="flex hover:translate-x-6 transition ease-in-out duration-300 mt-4">
                             <span className="text-xl">Find Out More </span>
                             <svg
@@ -84,6 +86,7 @@ function Ecolife() {
                                 />
                             </svg>
                         </button>
+                        
                     </div>
                     <div className="row-span-2 p-5 mb-2 rounded-lg bg-white/70">
                         <p className="text-lg">Store</p>
@@ -156,7 +159,8 @@ function Ecolife() {
                         Join our Membership today.
                     </p>
                     <p className="mx-auto text-lg font-light w-1/2">
-                        Get discounts when charging your vehicles and updates for the latest deals.
+                        Get discounts when charging your vehicles and updates
+                        for the latest deals.
                     </p>
                     <button className="mt-4">
                         <span className="hover:tracking-wider text-xl text-green-400 hover:transition-ease-in-out duration-300 ">
