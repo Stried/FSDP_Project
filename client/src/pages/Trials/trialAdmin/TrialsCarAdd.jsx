@@ -18,7 +18,6 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import CustomSelectCars from "./CustomSelectCars";
 
-
 const App = () => {
   
   const options = [
@@ -27,6 +26,11 @@ const App = () => {
     { value: "sengkang", label: "sengkang" },
     { value: "test", label: "test" },
   ];
+
+  const handleGoBack = () => {
+    window.history.back();
+  };
+
 
   const navigate = useNavigate();
   const formik = useFormik({
@@ -112,7 +116,15 @@ const App = () => {
           </Button>
         </Box>
 
+        <Button href="/Trials/trialAdmin/TrialsCarAdminPage" className=" mt-64 dark:bg-gray-800 text-white hover:bg-green-600 hover:text-white"
+        style={{left:"93%"}}
+        
+        >
+            Back
+        </Button>
+
       <ToastContainer />
+      
     </div>
   );
 };

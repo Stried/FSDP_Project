@@ -79,10 +79,30 @@ router.get("/viewTrialCar", async (req, res) => {
     res.json(leTrialCar);
 });
 
+router.get("/userview/viewTrialCar", async (req, res) => {
+    const condition = {};
+    let search = req.query.search;
+    if (search) {
+        condition[ Sequelize.Op.or ] = [
+            { name: { [ Sequelize.Op.like ]: `%${search}%` } },
+            { address: { [ Sequelize.Op.like ]: `%${search}%` } },
+            { carBrand: { [ Sequelize.Op.like ]: `%${search}%` } },
+        ]
+    }
+
+    const leTrialCar = await TrialCar.findAll({
+        where: condition,
+        order: [ [ 'createdAt', 'DESC' ] ],
+    })
+
+
+    res.json(leTrialCar);
+});
+
 router.get("/viewTrialCar/:id", async (req, res) => {
     const trialCar = req.params.id;
     const leTrialCar = await Store.findOne({
-        where: {carModel: trialCar},
+        where: {carPlateNo: trialCar},
     })
     if (leTrialCar) {
         // Check if the trial car exists
@@ -96,7 +116,7 @@ router.get("/viewTrialCar/:id", async (req, res) => {
 router.get("/viewSpecificTrialCar/:id", async(req, res) => {
     const trialCar = req.params.id
     const TheTrialCar = await TrialCar.findOne({
-        where: {name:trialCar},
+        where: {CarPlateNo:trialCar},
     })
     res.json(TheTrialCar)
 });
@@ -163,7 +183,7 @@ router.delete("/:carPlateNo", async (req, res) => {
 router.post("/createTrialReceipt/:model", validateToken, async (req, res) => {
     const model = req.params.model;
     const TheTrialCar = await TrialCar.findOne({
-        where: {name:model},
+        where: {carPlateNo:model},
     })
 
     let data = req.body;
@@ -182,7 +202,7 @@ router.post("/createTrialReceipt/:model", validateToken, async (req, res) => {
     }
 
     let dateandcarcheck = await TrialReceipt.findOne({
-        where: [{ dateOfTrial: data.dateOfTrial }, {modelName: model} ]
+        where: [{ dateOfTrial: data.dateOfTrial }, {modelName: TheTrialCar.name} ]
     });
     if (dateandcarcheck) {
         res.status(400).json({ message: "Trial Car already booked at that time!" })
@@ -190,7 +210,7 @@ router.post("/createTrialReceipt/:model", validateToken, async (req, res) => {
     }
 
     data.dateOfTrial = data.dateOfTrial;
-    data.modelName = model;
+    data.modelName = TheTrialCar.name;
     data.trialReport = "";
     data.faultResolve = "Resolved";
     data.emailAccount = req.user.emailAccount;
@@ -255,7 +275,7 @@ router.put("/viewAllTrialReceipt/changeDetails/:id", validateToken, async (req, 
 
     let data = req.body;
     let validationSchema = yup.object().shape({
-        trialReport: yup.string().trim().min(5).max(1000),
+        trialReport: yup.string().trim().max(1000),
         faultResolve: yup.string(),
     });
     

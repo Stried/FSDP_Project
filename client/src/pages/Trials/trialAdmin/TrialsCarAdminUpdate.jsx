@@ -114,7 +114,12 @@ function TrialsCarAdminUpdate() {
                         </div>
                     </Box>
                 </Box>
-
+                <Button href="/Trials/trialAdmin/TrialsCarAdminPage" className=" mt-64 dark:bg-gray-800 text-white hover:bg-green-600 hover:text-white"
+        style={{left:"93%"}}
+        
+        >
+            Back
+        </Button>
         </div>
     )
 }
