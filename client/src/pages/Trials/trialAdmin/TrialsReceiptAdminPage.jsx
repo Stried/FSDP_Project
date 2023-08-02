@@ -9,6 +9,7 @@ import {
   Link,
   useNavigate,
 } from "react-router-dom";
+import { format } from 'date-fns';
 import * as React from "react";
 ("use client");
 
@@ -37,6 +38,7 @@ const App = () => {
         toast.error(`${err.response.data.message}`);
       });
   };
+
 
   const [sortField, setSortField] = useState("carPlateNo"); // Default sort field is "carPlateNo"
   const [sortDirection, setSortDirection] = useState("asc"); // Default sort direction is "asc"
@@ -189,6 +191,9 @@ const App = () => {
             </thead>
             <tbody>
               {trialReceiptList.map((trialReceipt, i) => {
+                              const formattedDate = format(new Date(trialReceipt.dateOfTrial), 'yyyy-MM-dd');
+                              const formattedTime = format(new Date(trialReceipt.dateOfTrial), 'ha');
+                
                 const isReportEmpty =
                   trialReceipt.trialReport === "";
                 return (
@@ -200,7 +205,7 @@ const App = () => {
                     >
                       {trialReceipt.modelName}
                     </th>
-                    <td class="px-6 py-4">{trialReceipt.dateOfTrial}</td>
+                    <td class="px-6 py-4">{formattedDate} : {formattedTime}</td>
                     <td class="px-6 py-4">
                       {trialReceipt.faultResolve}
                     </td>

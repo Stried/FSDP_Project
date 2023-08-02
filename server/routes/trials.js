@@ -41,6 +41,7 @@ router.post("/createTrialCar", async (req, res) => {
         let carModel = await Store.findByPk(data.carPlateNo);
         data.name = carModel.carModel
         data.carBrand = carModel.carBrand; // carSpeed = carModel.carSpeed
+        data.carImageFile = carModel.carImageFile
         let modelCheck= await TrialCar.findOne({
             where: {name: data.name}
         });
@@ -188,8 +189,9 @@ router.post("/createTrialReceipt/:model", validateToken, async (req, res) => {
 
     let data = req.body;
     let validationSchema = yup.object().shape({
-        dateOfTrial: yup.date().required(),
-
+        dateOfTrial: yup.date().required().transform((value, originalValue) => {
+            return originalValue ? new Date(originalValue) : value;
+        }).typeError("Invalid date format. Please provide a valid date in YYYY-MM-DD HH:mm:ss format."),
     });
     try {
         await validationSchema.validate(data,

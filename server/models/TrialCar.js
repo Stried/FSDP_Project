@@ -16,6 +16,11 @@ module.exports = (sequelize, DataTypes) => {
         address:{
             type:DataTypes.STRING,
             allowNull:false
+        },
+        carImageFile: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            defaultValue: ""
         }
     });
      TrialCar.associate = (models) => {

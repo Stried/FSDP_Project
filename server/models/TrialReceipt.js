@@ -6,7 +6,7 @@ trialReceiptId:{
     primaryKey:true,
 },
 dateOfTrial:{
-    type:DataTypes.DATEONLY,
+    type:DataTypes.DATE,
     allowNull:false
 },
 trialReport:{
