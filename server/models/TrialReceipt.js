@@ -29,7 +29,8 @@ trialStatus:{
 emailAccount:{
     type:DataTypes.STRING,
     allowNull:false,
-}
+},
+
 });
 TrialReceipt.associate = (models) => {
     TrialReceipt.hasOne(models.UserAccount, {

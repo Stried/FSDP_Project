@@ -234,6 +234,31 @@ router.get("/viewUserTrialReceipt", validateToken, async (req, res) => {
     res.json(userTrialReceipt);
 });
 
+router.get("/viewTrialCarReceipt/:model", validateToken, async (req, res) => {
+    try {
+      const trialReceiptModel = req.params.model; // Use 'model' instead of 'id'
+      const thetrialcar = await TrialCar.findOne({
+        where: { carPlateNo: trialReceiptModel },
+      });
+  
+      if (!thetrialcar) {
+        // If no matching TrialCar is found, return a 404 response or an appropriate error status
+        return res.status(404).json({ message: "TrialCar not found" });
+      }
+  
+      const userTrialReceipt = await TrialReceipt.findAll({
+        where: { modelName: thetrialcar.name },
+        order: [['createdAt', 'DESC']],
+      });
+  
+      res.json(userTrialReceipt);
+    } catch (error) {
+      console.error(error);
+      // Handle any unexpected errors and return an error response
+      res.status(500).json({ message: "Server Error" });
+    }
+  });
+
 router.get("/viewAllTrialReceipt", validateToken, async (req, res) => {
     if (!req.user.adminNo) {
         console.log("Page Not Found!");
