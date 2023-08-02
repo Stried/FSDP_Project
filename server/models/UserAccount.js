@@ -1,3 +1,4 @@
+console.time("User Database")
 module.exports = (sequelize, DataTypes) => {
     const UserAccount = sequelize.define("UserAccount", { // model name
         id: {
@@ -55,3 +56,4 @@ module.exports = (sequelize, DataTypes) => {
     
     return UserAccount;
 }
+console.timeEnd("User Database")

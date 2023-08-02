@@ -8,9 +8,18 @@ const validateToken = (req, res, next) => {
             throw new Error("An error has occured.")
         }
 
-        const payload = verify(accessToken, process.env.APP_SECRET);
-        req.user = payload;
-        return next();
+        try {
+            const payload = verify(accessToken, process.env.APP_SECRET);
+
+            req.user = payload;
+            return next();
+            
+        } catch (err) {
+            console.log("Invalid Token Found!")
+            res.sendStatus(404);
+        }
+        
+
     } catch (err) {
         return res.sendStatus(401);
     }

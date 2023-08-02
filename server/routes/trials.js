@@ -1,3 +1,4 @@
+console.time("Trial Routes")
 const express = require("express");
 const router = express.Router();
 const yup = require("yup");
@@ -322,3 +323,4 @@ router.delete("/trialreceipt/:trialReceiptId", async (req, res) => {
 });
 
 module.exports = router
+console.timeEnd("Trial Routes")

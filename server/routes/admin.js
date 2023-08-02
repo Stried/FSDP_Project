@@ -1,3 +1,4 @@
+console.time("Admin Routes")
 const express = require("express");
 const router = express.Router();
 const yup = require("yup");
@@ -27,3 +28,4 @@ router.get("/adminPanel", validateToken, async (req, res) => {
 }) 
 
 module.exports = router;
+console.timeEnd("Admin Routes")
