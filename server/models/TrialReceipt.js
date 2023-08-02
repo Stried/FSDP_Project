@@ -22,6 +22,10 @@ faultResolve:{
     type:DataTypes.STRING,
     allowNull:false,
 },
+trialStatus:{
+    type:DataTypes.STRING,
+    allowNull:false
+},
 emailAccount:{
     type:DataTypes.STRING,
     allowNull:false,

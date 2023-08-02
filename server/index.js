@@ -1,8 +1,8 @@
 const express = require("express");
 const cors = require('cors');
 require("dotenv").config();
-
 const app = express();
+const updateReceipt = require("./updateReceipt");
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -45,3 +45,6 @@ db.sequelize.sync({ alter: true }).then(() => { // remove if using SQLite
 .catch(error => {
   console.log(error)
 })
+
+
+

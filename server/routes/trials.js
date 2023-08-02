@@ -215,7 +215,9 @@ router.post("/createTrialReceipt/:model", validateToken, async (req, res) => {
     data.modelName = TheTrialCar.name;
     data.trialReport = "";
     data.faultResolve = "Resolved";
+    data.trialStatus = "Booked";
     data.emailAccount = req.user.emailAccount;
+
 
     let result = await TrialReceipt.create(data);
     res.json(result);
