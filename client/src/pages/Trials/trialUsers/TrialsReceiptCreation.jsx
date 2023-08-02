@@ -18,9 +18,12 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useFormik } from "formik";
 import * as yup from "yup";
-
+import setHours from "date-fns/setHours";
+import setMinutes from "date-fns/setMinutes";
 const App = () => {
   const navigate = useNavigate();
+
+
 
   const { model } = useParams();
   const [date, setDate] = useState(new Date());
@@ -30,11 +33,13 @@ const App = () => {
   const currentDate = new Date();
   const minDate = new Date(currentDate.getTime() + 7 * 24 * 60 * 60 * 1000); // Adding seven days in milliseconds
 
+
+
   const MyContainer = ({ className="bg-black", children }) => {
     return (
-      <div style={{ padding: "2px", background: "", color: "red" }}>
+      <div style={{ padding: "2px", background: "", color: "black" }}>
         <calendarContainer className={className}>
-          <div style={{ position: "relative", color:"red"}}>{children}</div>
+          <div style={{ position: "relative", color:"black"}}>{children}</div>
         </calendarContainer>
       </div>
     );
@@ -86,9 +91,10 @@ const App = () => {
     validationSchema: yup.object().shape({
       dateOfTrial: yup.date().required("Date of trial is required"),
     }),
+    
     onSubmit: async (data) => {
       const formData = {
-        dateOfTrial: data.dateOfTrial,
+        dateOfTrial: data.dateOfTrial.toISOString(),
       };
 
       await http
@@ -218,6 +224,17 @@ const App = () => {
             minDate={minDate}
             withPortal
             calendarContainer={MyContainer}
+            calendarClassName=" border-green-500 "
+            showTimeSelect
+            timeIntervals={120}
+            dateFormat="MMMM d, yyyy h:mm aa"
+            isClearable={true}
+            excludeTimes={[
+              setHours(setMinutes(new Date(), 0), 0),
+              setHours(setMinutes(new Date(), 0), 2),
+              setHours(setMinutes(new Date(), 0), 4),
+              setHours(setMinutes(new Date(), 0), 6),
+            ]}
           />
           {formik.errors.dateOfTrial ? (
             <div className="text-red-600">{formik.errors.dateOfTrial}</div>

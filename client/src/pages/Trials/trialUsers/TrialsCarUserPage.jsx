@@ -1,5 +1,5 @@
 import { Box, IconButton } from "@mui/material";
-import {Search,Clear} from "@mui/icons-material";
+import { Search, Clear } from "@mui/icons-material";
 import { useState, useEffect, useContext } from "react";
 import {
   BrowserRouter as Router,
@@ -27,7 +27,6 @@ const App = () => {
     getTrialCar();
   }, []);
 
-  
   const fadeInProps = useSpring({
     from: { opacity: 0 },
     to: { opacity: 1 },
@@ -63,7 +62,7 @@ const App = () => {
         Trial Car User Page
       </h1>
       <Box>
-      <div className="dark:text-white text-black text-lg font-medium mx-4">
+        <div className="dark:text-white text-black text-lg font-medium mx-4">
           <input
             value={search}
             placeholder="Search"
@@ -92,32 +91,36 @@ const App = () => {
         <div class="flex flex-wrap w-100 h-100">
           {trialCarList.map((trialCar, i) => {
             return (
-                <animated.div style={fadeInProps} key={i} className="p-5 w-96">
-              <div class="p-5 w-96">
-                <div class="max-w-sm bg-white border  transition duration-300  border-gray-200 rounded-sm dark:bg-gray-800 hover:shadow-green-500 shadow-3xl ease-out dark:border-gray-700">
-                  <a href="#">
-                  </a>
-                  <div class="p-5">
-                    <a href="#">
-                      <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                        Model: {trialCar.name}
-                      </h5>
-                    </a>
-                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                      Brand: {trialCar.carBrand}
-                      <br />
-                      Address: {trialCar.address}
-                    </p>
+              <animated.div style={fadeInProps} key={i} className="p-5 w-96">
+                <div class="p-5 w-96">
+                  <div class="max-w-sm bg-white border  transition duration-300  border-gray-200 rounded-md dark:bg-gray-800 hover:shadow-green-500 shadow-3xl ease-out dark:border-gray-700">
+                    <img
+                      src={`${import.meta.env.VITE_FILE_BASE_URL_STORE}${
+                        trialCar.carImageFile
+                      }`}
+                      className=" w-full h-30"
+                    />
+                    <div class="p-5">
+                      <a href="#">
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                          Model: {trialCar.name}
+                        </h5>
+                      </a>
+                      <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                        Brand: {trialCar.carBrand}
+                        <br />
+                        Address: {trialCar.address}
+                      </p>
 
-                    <Link
-                      to={`/Trials/trialUsers/TrialsReceiptCreation/${trialCar.carPlateNo}`}
-                      className="bg-green-400 p-2 px-5 rounded-md text-black hover:bg-green-600 hover:text-white "
-                    >
-                      View Details
-                    </Link>
+                      <Link
+                        to={`/Trials/trialUsers/TrialsReceiptCreation/${trialCar.carPlateNo}`}
+                        className="bg-green-400 p-2 px-5 rounded-md text-black hover:bg-green-600 hover:text-white "
+                      >
+                        View Details
+                      </Link>
+                    </div>
                   </div>
                 </div>
-              </div>
               </animated.div>
             );
           })}

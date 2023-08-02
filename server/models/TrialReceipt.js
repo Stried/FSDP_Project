@@ -6,7 +6,7 @@ trialReceiptId:{
     primaryKey:true,
 },
 dateOfTrial:{
-    type:DataTypes.DATEONLY,
+    type:DataTypes.DATE,
     allowNull:false
 },
 trialReport:{
@@ -21,6 +21,10 @@ modelName:{
 faultResolve:{
     type:DataTypes.STRING,
     allowNull:false,
+},
+trialStatus:{
+    type:DataTypes.STRING,
+    allowNull:false
 },
 emailAccount:{
     type:DataTypes.STRING,
