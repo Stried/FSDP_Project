@@ -1,3 +1,4 @@
+console.time("File Route (Car Image)")
 const express = require('express')
 const router = express.Router();
 const { validateToken } = require('../middlewares/auth');
@@ -12,3 +13,4 @@ router.post('/storeUpload', validateToken, storeUpload, (req, res) => {
 });
 
 module.exports = router;
+console.timeEnd("File Route (Car Image)")

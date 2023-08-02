@@ -1,3 +1,4 @@
+console.time("User Routes")
 const express = require("express");
 const router = express.Router();
 const yup = require("yup");
@@ -548,15 +549,12 @@ router.post("/forgetPassword", async (req, res) => {
         res.status(400).json({ message: "Email account not found!" });
     }
 
-    const otpUser = otpGenerator.generate(6, { upperCaseAlphabets: false, lowerCaseAlphabets: false, specialChars: false })
-
     let user = {
-        emailAccount: findAccount.emailAccount,
-        otpUser: await bcrypt.hash(otpUser, 10)
+        emailAccount: findAccount.emailAccount
     }
 
     tempToken = sign(user, process.env.APP_SECRET);
-    let content = `Hey there! It seems you have forgotten your password!\nPlease click this link http://localhost:3000/user/resetPassword?token=${tempToken} !\nYour OTP is ${otpUser}`
+    let content = `Hey there! It seems you have forgotten your password!\nPlease click this link http://localhost:3000/user/resetPassword?token=${tempToken} !`
 
     let emailContent = {
         from: 'ecolife.userTest@gmail.com',
@@ -582,16 +580,11 @@ router.put("/resetPassword", async (req, res) => {
     let data = req.body;
     let token = req.query.token;
     let userEmail = "";
-    let otpUser = "";
 
     console.log(data)
     try {
         const checkToken = verify(token, process.env.APP_SECRET);
         userEmail = checkToken.emailAccount;
-        otpUser = checkToken.otpUser;
-
-        console.log(userEmail);
-        console.log(otpUser)
     } catch (err) {
         console.log(err);
         res.json(400).status({ message: "An error has occured." })
@@ -608,16 +601,9 @@ router.put("/resetPassword", async (req, res) => {
         return;
     }
 
-    console.log(typeof data.otpUser)
-    if (bcrypt.compare(String(data.otpUser), String(otpUser)) == false) {
-        console.log("OTP does not match!");
-        res.status(400).json({ message: "OTP does not match!" });
-    }
-
     data.password = await bcrypt.hash(data.password, 10);
 
     console.log(userEmail);
-    console.log(otpUser);
     let userAccount = await UserAccount.update(data, {
         where: {emailAccount: userEmail}
     })
@@ -788,3 +774,4 @@ router.get("/viewAccount/allFollowers/:username", validateToken, async (req, res
 })
 
 module.exports = router;
+console.timeEnd("User Routes")

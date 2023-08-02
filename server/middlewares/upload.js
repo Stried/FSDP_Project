@@ -1,7 +1,10 @@
+console.time("Upload dependencies")
 const multer = require('multer');
 const { nanoid } = require('nanoid');
 const path = require('path');
+console.timeEnd("Upload dependencies")
 
+console.time("Upload Body")
 const storage = multer.diskStorage({
     destination: (req, file, callback) => {
         callback(null, './public/uploads/');
@@ -31,3 +34,4 @@ const storeUpload = multer({
 }).single('file');
 
 module.exports = { upload, storeUpload };
+console.timeEnd("Upload Body")

@@ -1,3 +1,4 @@
+console.time("Location Routes")
 const express = require('express')
 const router = express.Router();
 const yup = require("yup");
@@ -196,3 +197,4 @@ router.delete("/deleteLocation/:id", validateToken, async (req, res) => {
 
 
 module.exports = router;
+console.timeEnd("Location Routes")

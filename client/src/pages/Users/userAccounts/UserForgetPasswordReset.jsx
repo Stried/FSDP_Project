@@ -105,18 +105,6 @@ function UserForgetPasswordReset() {
                     }
                 />
 
-                <FormInputSingleLine
-                    name="One Time Password (OTP)"
-                    valueName="otpUser"
-                    type={"number"}
-                    onChange={formik.handleChange}
-                    value={formik.values.otpUser}
-                    error={
-                        formik.touched.otpUser && Boolean(formik.errors.otpUser)
-                    }
-                    helperText={formik.touched.otpUser && formik.errors.otpUser}
-                />
-
                 <ToastContainer />
 
                 <Button

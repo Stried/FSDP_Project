@@ -31,7 +31,7 @@ import { Map, Marker } from "pigeon-maps";
 
 function LocationsMain() {
     const color = `hsl(0, 100%, 50%)`;
-    const [openModal, setOpenModal] = useState("")
+    const [openModal, setOpenModal] = useState("");
     const EditLocationRef = useRef < HTMLInputElement > null;
     const props = { openModal, setOpenModal, EditLocationRef };
 
@@ -52,123 +52,6 @@ function LocationsMain() {
                         <h2 className="text-xl font-semibold mb-2">
                             Charger 1 - Hougang
                         </h2>
-                        <Modal
-                            show={props.openModal === "form-elements"}
-                            size="md"
-                            popup
-                            onClose={() => props.setOpenModal(undefined)}
-                        >
-                            <Modal.Header />
-                            <Modal.Body>
-                                <div className="space-y-4">
-                                    <h3 className="text-xl font-medium text-gray-900 dark:text-white">
-                                        Edit Location
-                                    </h3>
-                                    <div>
-                                        <div className="block">
-                                            <Label
-                                                htmlFor="locationName"
-                                                value="Location Name"
-                                            />
-                                        </div>
-                                        <TextInput
-                                            id="locationName"
-                                            placeholder="Hougang Mall"
-                                            required
-                                        />
-                                    </div>
-                                    <div>
-                                        <div className="block">
-                                            <Label
-                                                htmlFor="streetName"
-                                                value="Street Name"
-                                            />
-                                        </div>
-                                        <TextInput
-                                            id="streetName"
-                                            placeholder="Hougang Street Ave 1"
-                                            required
-                                        />
-                                    </div>
-                                    <div>
-                                        <div className="block">
-                                            <Label
-                                                htmlFor="postalCode"
-                                                value="Postal Code"
-                                            />
-                                        </div>
-                                        <TextInput
-                                            id="postalCode"
-                                            placeholder="686731"
-                                            required
-                                        />
-                                    </div>
-                                    <div class="flex">
-                                        <div class="flex flex-col">
-                                            <div class="block">
-                                                <Label htmlFor="latAxis" value="Latitude" />
-                                            </div>
-                                            <div class="flex">
-                                                <TextInput id="latAxis" placeholder="1.100312981279" required />
-                                            </div>
-                                        </div>
-                                        <div class="flex flex-col ml-2">
-                                            <div class="block">
-                                                <Label htmlFor="longAxis" value="Longitude" />
-                                            </div>
-                                            <div class="flex">
-                                                <TextInput id="longAxis" placeholder="1.23612981029344" required />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div className="block">
-                                            <Label
-                                                htmlFor="region"
-                                                value="Region"
-                                            />
-                                        </div>
-                                        <select id="Region" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500'
-                                     focus:border-blue-500 block w-full p-3 dark:bg-gray-700 dark:border-gray-600
-                                      dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                        <option selected>Choose a region</option>
-                                        <option value="N">North</option>
-                                        <option value="S">South</option>
-                                        <option value="E">East</option>
-                                        <option value="W">West</option>
-                                    </select>
-                                    </div>
-                                    <div>
-                                        <div className="block">
-                                            <Label
-                                                htmlFor="noOfChargers"
-                                                value="Number of Chargers"
-                                            />
-                                        </div>
-                                        <TextInput
-                                            id="noOfChargers"
-                                            placeholder="3"
-                                            required
-                                        />
-                                    </div>
-                                    <div className="flex justify-between">
-                                        <div className="flex items-center gap-2 pl-1 pt-2">
-                                            <Checkbox id="fastChargeToggle" />
-                                            <Label
-                                                className="pl-1"
-                                                htmlFor="fastChargeToggle">
-                                                FastCharge Capable?
-                                            </Label>
-                                        </div>
-                                    </div>
-                                    
-                                    <div className="w-full pt-5">
-                                        <Button>Update Details</Button>
-                                    </div>
-                                    
-                                </div>
-                            </Modal.Body>
-                        </Modal>
                         <p className="text-wrap">
                             Lorem ipsum dolor sit amet, consectetur adipiscing
                             elit, sed do eiusmod tempor incididunt ut labore et
@@ -188,7 +71,9 @@ function LocationsMain() {
                             </Map>
                             <Button
                                 className="text-xs"
-                                onClick={() => props.setOpenModal("form-elements")}
+                                onClick={() =>
+                                    props.setOpenModal("form-elements")
+                                }
                             >
                                 Edit
                             </Button>
@@ -392,7 +277,140 @@ function LocationsMain() {
                     </div>
                 </div>
             </div>
+            <Modal
+                show={props.openModal === "form-elements"}
+                size="md"
+                popup
+                onClose={() => props.setOpenModal(undefined)}
+            >
+                <Modal.Header />
+                <Modal.Body>
+                    <div className="space-y-4">
+                        <h3 className="text-xl font-medium text-gray-900 dark:text-white">
+                            Edit Location
+                        </h3>
+                        <div>
+                            <div className="block">
+                                <Label
+                                    htmlFor="locationName"
+                                    value="Location Name"
+                                />
+                            </div>
+                            <TextInput
+                                id="locationName"
+                                placeholder="Hougang Mall"
+                                required
+                            />
+                        </div>
+                        <div>
+                            <div className="block">
+                                <Label
+                                    htmlFor="streetName"
+                                    value="Street Name"
+                                />
+                            </div>
+                            <TextInput
+                                id="streetName"
+                                placeholder="Hougang Street Ave 1"
+                                required
+                            />
+                        </div>
+                        <div>
+                            <div className="block">
+                                <Label
+                                    htmlFor="postalCode"
+                                    value="Postal Code"
+                                />
+                            </div>
+                            <TextInput
+                                id="postalCode"
+                                placeholder="686731"
+                                required
+                            />
+                        </div>
+                        <div class="flex">
+                            <div class="flex flex-col">
+                                <div class="block">
+                                    <Label
+                                        htmlFor="latAxis"
+                                        value="Latitude"
+                                    />
+                                </div>
+                                <div class="flex">
+                                    <TextInput
+                                        id="latAxis"
+                                        placeholder="1.100312981279"
+                                        required
+                                    />
+                                </div>
+                            </div>
+                            <div class="flex flex-col ml-2">
+                                <div class="block">
+                                    <Label
+                                        htmlFor="longAxis"
+                                        value="Longitude"
+                                    />
+                                </div>
+                                <div class="flex">
+                                    <TextInput
+                                        id="longAxis"
+                                        placeholder="1.23612981029344"
+                                        required
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div className="block">
+                                <Label
+                                    htmlFor="region"
+                                    value="Region"
+                                />
+                            </div>
+                            <select
+                                id="Region"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500'
+                                     focus:border-blue-500 block w-full p-3 dark:bg-gray-700 dark:border-gray-600
+                                      dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            >
+                                <option selected>Choose a region</option>
+                                <option value="N">North</option>
+                                <option value="S">South</option>
+                                <option value="E">East</option>
+                                <option value="W">West</option>
+                            </select>
+                        </div>
+                        <div>
+                            <div className="block">
+                                <Label
+                                    htmlFor="noOfChargers"
+                                    value="Number of Chargers"
+                                />
+                            </div>
+                            <TextInput
+                                id="noOfChargers"
+                                placeholder="3"
+                                required
+                            />
+                        </div>
+                        <div className="flex justify-between">
+                            <div className="flex items-center gap-2 pl-1 pt-2">
+                                <Checkbox id="fastChargeToggle" />
+                                <Label
+                                    className="pl-1"
+                                    htmlFor="fastChargeToggle"
+                                >
+                                    FastCharge Capable?
+                                </Label>
+                            </div>
+                        </div>
 
+                        <div className="w-full pt-5">
+                            <Button>Update Details</Button>
+                        </div>
+                    </div>
+                </Modal.Body>
+            </Modal>
             {/* <div id="map">
                 <div ref={ mapContainer } className="map-container" />
             </div> */}

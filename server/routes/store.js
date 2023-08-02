@@ -1,3 +1,4 @@
+console.time("Store Routes")
 const express = require('express');
 const router = express.Router();
 const { UserAccount, Store, Sequelize } = require('../models');
@@ -178,3 +179,4 @@ router.delete("/deleteStoreItem/:id", async (req, res) => {
 });
 
 module.exports = router;
+console.timeEnd("Store Routes")

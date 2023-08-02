@@ -1,5 +1,5 @@
 const { DataTypes } = require("sequelize");
-const { sequelize } = require(".");
+// const { sequelize } = require(".");
 
 module.exports = (sequelize, DataTypes) => {
     const AdminAccount = sequelize.define("AdminAccount", {

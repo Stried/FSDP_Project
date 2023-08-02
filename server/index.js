@@ -1,23 +1,23 @@
 const express = require("express");
 const cors = require('cors');
 require("dotenv").config();
+console.time("App dependencies")
 const app = express();
 const updateReceipt = require("./updateReceipt");
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static('public'));
+console.timeEnd("App dependencies")
 
 let port = process.env.APP_PORT;
 
+console.time("App route")
 app.get("/", (req, res) => {
     res.send("Welcome to EcoLife.");
 })
 
 // Routes
-const allRoutes = require('./routes/ecolife');
-app.use("/", allRoutes);
-
 const userRoute = require("./routes/user");
 app.use("/user", userRoute);
 
@@ -35,9 +35,11 @@ app.use("/locations", locationRoute);
 
 const trialRoute = require("./routes/trials");
 app.use("/trials", trialRoute)
+console.timeEnd("App route")
 
-const db = require("./models");
-db.sequelize.sync({ alter: true }).then(() => { // remove if using SQLite
+console.time("Sequelize")
+const { sequelize } = require("./models");
+sequelize.sync({ alter: true }).then(() => { // remove if using SQLite
     app.listen(port, () => {
       console.log(`Server running on http://localhost:${port}`);
     });
@@ -48,3 +50,4 @@ db.sequelize.sync({ alter: true }).then(() => { // remove if using SQLite
 
 
 
+console.timeEnd("Sequelize")
