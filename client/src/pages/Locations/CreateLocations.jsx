@@ -53,6 +53,7 @@ function CreateLocations() {
             streetName: "",
             postalCode: 0,
             coordinates: "",
+            description: "",
             region: "",
             fastCharge: false,
             noOfChargers: 0,
@@ -74,7 +75,8 @@ function CreateLocations() {
             region: yup.string().trim().oneOf(["N", "S", "E", "W"], "Please enter N, S, E, W").required(),
             fastCharge: yup.boolean().oneOf([true, false], "True or False only").required(),
             noOfChargers: yup.number().integer().positive("Number of charger must be more than 0").required(),
-            coordinates: yup.number().required()
+            coordinates: yup.string().trim().required(),
+            description: yup.string().trim().required()
         }),
         onSubmit: async (data) => {
             data.locationName = data.locationName.trim();
@@ -205,6 +207,21 @@ function CreateLocations() {
                         helperText={
                             formik.touched.noOfChargers &&
                             formik.errors.noOfChargers
+                        }
+                    />
+                    <FormInputSingleLine
+                        name="Description"
+                        valueName="description"
+                        type="textarea"
+                        onChange={formik.handleChange}
+                        value={formik.values.description}
+                        error={
+                            formik.touched.description &&
+                            Boolean(formik.errors.description)
+                        }
+                        helperText={
+                            formik.touched.description &&
+                            formik.errors.description
                         }
                     />
 
