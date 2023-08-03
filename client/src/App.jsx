@@ -54,6 +54,7 @@ import TrialsReceiptReportPage from "./pages/Trials/trialAdmin/TrialsReceiptRepo
 import StoreMain from "./pages/Store/StoreMain";
 import StoreAddItem from "./pages/Store/StoreAddItem";
 import StoreUpdateItem from "./pages/Store/StoreUpdateItem";
+import StoreSpecific from "./pages/Store/StoreSpecific";
 import AdminEditUser from "./pages/Users/adminComponents/AdminEditUser";
 import InvalidToken from "./pages/Users/InvalidToken";
 
@@ -201,6 +202,10 @@ function App() {
                             <Route
                                 path={"/Store/StoreUpdateItem/:id"}
                                 element={<StoreUpdateItem />}
+                            />
+                            <Route
+                                path={"/Store/StoreSpecific/:id"}
+                                element={<StoreSpecific />}
                             />
                             <Route
                                 path={"/Trials/trialAdmin/TrialsCarAdminPage"}
