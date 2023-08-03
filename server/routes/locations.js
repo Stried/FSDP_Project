@@ -8,8 +8,7 @@ const { Locations } = require("../models/");
 router.post("/createLocation", validateToken, async (req, res) => {
     let data = req.body;
     let validationSchema = yup.object().shape({
-        LatAxis: yup.number().required("Please specify the Latitute."),
-        LongAxis: yup.number().required("Please specify the Longitude."),
+        coordinates: yup.string().required("Please specify the Latitude and Longitude."),
         locationName: yup.string().trim().required("Please provide a location name."),
         streetName: yup.string().trim().required("Please provide a street name."),
         postalCode: yup.number().positive().integer().required("Please input a valid Postal Code."),
@@ -26,8 +25,10 @@ router.post("/createLocation", validateToken, async (req, res) => {
         return;
     }
     
-    data.LatAxis = data.LatAxis;
-    data.LongAxis = data.LongAxis;
+    let coordinates = data.coordinates.trim().split(',');
+
+    data.LatAxis = coordinates[0];
+    data.LongAxis = coordinates[1];
     data.locationName = data.locationName.trim();
     data.streetName = data.streetName.trim();
     data.postalCode = data.postalCode;

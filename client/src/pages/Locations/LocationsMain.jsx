@@ -41,17 +41,49 @@ function LocationsMain() {
         http.get("locations/LocationsMain").then((res) => {
             setLocationList(res.data);
         });
-    },[])
+    }, [])
 
     return (
         <Box>
-            {locationList.map((location, key) =>{
-                return(
-                    <div className='text-black'>
-                        {location.streetName}
-                    </div>
-                )
-            })}
+            <div className="max-w-3xl mx-auto grid grid-cols-2 gap-4">
+                {locationList.map((location, key) => {
+                    return (
+                        <div className='text-black'>
+                            <div className="bg-gray-200 p-4 rounded-lg mb-4">
+                                <h2 className="text-xl font-semibold mb-2">
+                                    Charger 1 - {location.locationName}
+                                </h2>
+                                <p className="text-wrap">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing
+                                    elit, sed do eiusmod tempor incididunt ut labore et
+                                    dolore magna aliqua.
+                                </p>
+                                <div className="mx-auto pt-2">
+                                    <Map
+                                        height={300}
+                                        defaultCenter={[location.latAxis, location.longAxis]}
+                                        defaultZoom={17}
+                                    >
+                                        <Marker
+                                            width={40}
+                                            color={color}
+                                            anchor={[1.3759366, 103.878986]}
+                                        />
+                                    </Map>
+                                    <Button
+                                        className="text-xs"
+                                        onClick={() =>
+                                            props.setOpenModal("form-elements")
+                                        }
+                                    >
+                                        Edit
+                                    </Button>
+                                </div>
+                            </div>
+                        </div>
+                    )
+                })}
+            </div>
             <div className="flex flex-col items-center">
                 <h1 className="text-4xl font-bold mt-8 mb-6 text-white">
                     Locations
