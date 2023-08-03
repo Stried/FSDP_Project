@@ -1,10 +1,6 @@
 import {
     Box,
     Button,
-    TextField,
-    Typography,
-    InputAdornment,
-    IconButton,
     Checkbox,
 } from "@mui/material";
 import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from "react-router-dom";
@@ -17,6 +13,10 @@ import * as yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AspectRatio from '@mui/joy/AspectRatio';
+import FormDateField from "../../components/FormDateField";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+
 
 function StoreAddItem() {
     const navigate = useNavigate();
@@ -57,7 +57,7 @@ function StoreAddItem() {
             carFuelType: "",
             carFuelType: "",
             carFuelConsume: "",
-            carProductionDate: "",
+            carProductionDate: new Date(),
             carBodyType: "",
             carColor: "",
             carSeats: "",
@@ -92,23 +92,23 @@ function StoreAddItem() {
                 data.carImageFile = imageFile;
             }
             data.carPlateNo.trim(),
-            data.carDescription.trim(),
-            data.carBrand.trim(),
-            data.carModel.trim(),
-            data.carEngine.trim(),
-            data.carFuelType.trim(),
-            data.carBodyType.trim(),
-            data.carColor.trim(),
-            data.carMods.trim(),
-            http.post("/store/createStoreItem", data)
-                .then((res) => {
-                    console.log(res.status);
-                    navigate("/store/StoreMain");
-                })
-                .catch(function (err) {
-                    console.log(err);
-                    toast.error(`${err.response.data.message}`)
-                });
+                data.carDescription.trim(),
+                data.carBrand.trim(),
+                data.carModel.trim(),
+                data.carEngine.trim(),
+                data.carFuelType.trim(),
+                data.carBodyType.trim(),
+                data.carColor.trim(),
+                data.carMods.trim(),
+                http.post("/store/createStoreItem", data)
+                    .then((res) => {
+                        console.log(res.status);
+                        navigate("/store/StoreMain");
+                    })
+                    .catch(function (err) {
+                        console.log(err);
+                        toast.error(`${err.response.data.message}`)
+                    });
         }
     });
 
@@ -222,7 +222,7 @@ function StoreAddItem() {
                             helperText={formik.touched.carFuelConsume && formik.errors.carFuelConsume}
                         />
                     </div>
-                    <div className="w-1/5 pr-5">
+                    <div className="w-1/6 pr-5">
                         <FormInputSingleLine
                             valueName="carProductionDate"
                             name="Production Date"
