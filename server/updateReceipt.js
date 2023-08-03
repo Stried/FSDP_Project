@@ -1,20 +1,16 @@
-const { Op } = require("sequelize");
+const Sequelize = require('sequelize');
 const cron = require("node-cron");
 const {TrialReceipt} = require("./models/"); 
 
 
 async function updateTrialStatus() {
   try {
-  
-    const currentTime = new Date();
 
 
     const trialReceiptsToUpdate = await TrialReceipt.findAll({
-      where: {
-        dateOfTrial: {
-          [Op.lte]: currentTime,
-        },
-      },
+      where: Sequelize.literal(
+        'DATE_ADD(dateOfTrial, INTERVAL 2 HOUR) <= NOW()'
+      ),
     });
 
 
