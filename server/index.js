@@ -1,7 +1,8 @@
+console.time("App dependencies")
 const express = require("express");
 const cors = require('cors');
 require("dotenv").config();
-console.time("App dependencies")
+
 const app = express();
 const updateReceipt = require("./updateReceipt");
 app.use(cors());
