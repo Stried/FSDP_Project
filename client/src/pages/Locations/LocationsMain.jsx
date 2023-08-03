@@ -30,13 +30,28 @@ import UserContext from "./../../contexts/UserContext";
 import { Map, Marker } from "pigeon-maps";
 
 function LocationsMain() {
+    const navigate = useNavigate();
     const color = `hsl(0, 100%, 50%)`;
     const [openModal, setOpenModal] = useState("");
     const EditLocationRef = useRef < HTMLInputElement > null;
     const props = { openModal, setOpenModal, EditLocationRef };
+    const [locationList, setLocationList] = useState([]);
+
+    useEffect(() => {
+        http.get("locations/LocationsMain").then((res) => {
+            setLocationList(res.data);
+        });
+    },[])
 
     return (
         <Box>
+            {locationList.map((location, key) =>{
+                return(
+                    <div className='text-black'>
+                        {location.streetName}
+                    </div>
+                )
+            })}
             <div className="flex flex-col items-center">
                 <h1 className="text-4xl font-bold mt-8 mb-6 text-white">
                     Locations
