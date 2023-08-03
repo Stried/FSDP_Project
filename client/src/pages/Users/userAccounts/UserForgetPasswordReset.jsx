@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import "./../../../App.css";
 import FormInputSingleLine from "./../../../components/FormInputSingleLine";
 import {
@@ -36,6 +36,18 @@ function UserForgetPasswordReset() {
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
+
+    useEffect(() => {
+        http.get(`/user/resetPassword?token=${token}`)
+            .then((res) => {
+                console.log(res.status);
+            })
+            .catch(function (err) {
+                console.log(err);
+                toast.error(`${err.response.data.message}`);
+                navigate("/resetPassword/invalidToken");
+            });
+    });
 
     const navigate = useNavigate();
     const formik = useFormik({

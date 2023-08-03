@@ -55,6 +55,7 @@ import StoreMain from "./pages/Store/StoreMain";
 import StoreAddItem from "./pages/Store/StoreAddItem";
 import StoreUpdateItem from "./pages/Store/StoreUpdateItem";
 import AdminEditUser from "./pages/Users/adminComponents/AdminEditUser";
+import InvalidToken from "./pages/Users/InvalidToken";
 
 function App() {
     const [user, setUser] = useState(null);
@@ -78,7 +79,7 @@ function App() {
     const Protected = ({ isAdminCheck, children }) => {
         let testCheck = isAdminCheck;
         if (!testCheck) {
-            console.log(testCheck)
+            console.log(testCheck);
             console.log("Failed");
             return <Navigate to={"/404"} />;
         }
@@ -172,6 +173,10 @@ function App() {
                                         <CreateAdmin />
                                     </Protected>
                                 }
+                            />
+                            <Route
+                                path={"/resetPassword/invalidToken"}
+                                element={<InvalidToken />}
                             />
                             <Route
                                 path={"/user/chat"}

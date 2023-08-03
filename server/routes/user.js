@@ -576,6 +576,20 @@ router.post("/forgetPassword", async (req, res) => {
     // generate a OTP?
 })
 
+router.get("/resetPassword", async (req, res) => {
+    let token = req.query.token;
+
+    try {
+        let verifyToken = verify(token, process.env.APP_SECRET);
+    } catch (err) {
+        res.status(400).json({ message: "Invalid Token." });
+        return;
+    }
+
+    console.log("Success")
+    res.json(token);
+})
+
 router.put("/resetPassword", async (req, res) => {
     let data = req.body;
     let token = req.query.token;
