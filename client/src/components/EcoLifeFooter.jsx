@@ -20,6 +20,7 @@ function EcoLifeFooter() {
                     </h1>
                     <div>
                         <Footer.LinkGroup>
+                            <Footer.Link href="/documentations">Documentations</Footer.Link>
                             <Footer.Link>About</Footer.Link>
                             <Footer.Link>Privacy Policy</Footer.Link>
                             <Footer.Link>Contact Us</Footer.Link>

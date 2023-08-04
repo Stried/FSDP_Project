@@ -57,6 +57,7 @@ import StoreUpdateItem from "./pages/Store/StoreUpdateItem";
 import StoreSpecific from "./pages/Store/StoreSpecific";
 import AdminEditUser from "./pages/Users/adminComponents/AdminEditUser";
 import InvalidToken from "./pages/Users/InvalidToken";
+import Documentations from "./Documentation";
 
 function App() {
     const [user, setUser] = useState(null);
@@ -110,6 +111,10 @@ function App() {
                             <Route
                                 path={"/"}
                                 element={<Ecolife />}
+                            />
+                            <Route
+                                path={"/documentations"}
+                                element={<Documentations />}
                             />
                             <Route
                                 path={"/user/createAccount"}
