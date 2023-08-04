@@ -35,6 +35,10 @@ module.exports = (sequelize, DataTypes) => {
         noOfChargers: { // 4, 8, 12, etc.
             type: DataTypes.INTEGER,
             allowNull: false
+        },
+        description: { // Mangoes are cooooooooooooooooool
+            type: DataTypes.STRING,
+            allowNull: false
         }
     })
 

@@ -8,14 +8,14 @@ const { Locations } = require("../models/");
 router.post("/createLocation", validateToken, async (req, res) => {
     let data = req.body;
     let validationSchema = yup.object().shape({
-        LatAxis: yup.number().required("Please specify the Latitute."),
-        LongAxis: yup.number().required("Please specify the Longitude."),
+        coordinates: yup.string().required("Please specify the Latitude and Longitude."),
         locationName: yup.string().trim().required("Please provide a location name."),
         streetName: yup.string().trim().required("Please provide a street name."),
         postalCode: yup.number().positive().integer().required("Please input a valid Postal Code."),
         region: yup.string().trim().oneOf(["N", "S", "E", "W"]).required("Please specify a valid region."),
         fastCharge: yup.boolean().required("Please specify if the charger is capable of FastCharge."),
-        noOfChargers: yup.number().positive().integer().required("Please specify the number of chargers in the location.")
+        noOfChargers: yup.number().positive().integer().required("Please specify the number of chargers in the location."),
+        description: yup.string().trim().required("Provide a fitting description of the area.")
     });
     try {
         await validationSchema.validate(data, { abortEarly: false });
@@ -26,25 +26,29 @@ router.post("/createLocation", validateToken, async (req, res) => {
         return;
     }
     
-    data.LatAxis = data.LatAxis;
-    data.LongAxis = data.LongAxis;
+    let coordinates = data.coordinates.trim().split(',');
+
     data.locationName = data.locationName.trim();
     data.streetName = data.streetName.trim();
     data.postalCode = data.postalCode;
     data.region = data.region.trim();
+    data.LatAxis = coordinates[0];
+    data.LongAxis = coordinates[1];
     data.fastCharge = data.fastCharge;
     data.noOfChargers = data.noOfChargers;
+    data.description = data.description;
 
 
     locationInfo = {
-        LatAxis: data.LatAxis,
-        LongAxis: data.LongAxis, 
         locationName: data.locationName,
         streetName: data.streetName,
         postalCode: data.postalCode,
         region: data.region,
+        LatAxis: data.LatAxis,
+        LongAxis: data.LongAxis, 
         fastCharge: data.fastCharge,
-        noOfChargers: data.noOfChargers
+        noOfChargers: data.noOfChargers,
+        description: data.description
     }
 
     let isLocation = await Locations.findOne({
@@ -106,14 +110,15 @@ router.put("/updateLocation/:id", validateToken, async (req, res) => {
     let data = req.body;
     let enteredPostalCode = req.params.id;
     let validationSchema = yup.object().shape({
-        LatAxis: yup.number().required("Please specify the Latitute."),
-        LongAxis: yup.number().required("Please specify the Longitude."),
         locationName: yup.string().trim().required("Please provide a location name."),
         streetName: yup.string().trim().required("Please provide a street name."),
         postalCode: yup.number().positive().integer().required("Please input a valid Postal Code."),
         region: yup.string().trim().oneOf([ "N", "S", "E", "W" ]).required("Please specify a valid region."),
+        LatAxis: yup.number().required("Please specify the Latitute."),
+        LongAxis: yup.number().required("Please specify the Longitude."),
         fastCharge: yup.boolean().required("Please specify if the charger is capable of FastCharge."),
-        noOfChargers: yup.number().positive().integer().required("Please specify the number of chargers in the location.")
+        noOfChargers: yup.number().positive().integer().required("Please specify the number of chargers in the location."),
+        description: yup.string().trim().required("Provide a fitting description of the area.")
     });
     try {
         await validationSchema.validate(data, { abortEarly: false });
@@ -123,14 +128,15 @@ router.put("/updateLocation/:id", validateToken, async (req, res) => {
         return;
     }
 
-    data.LatAxis = data.LatAxis;
-    data.LongAxis = data.LongAxis;
     data.locationName = data.locationName.trim();
     data.streetName = data.streetName.trim();
     data.postalCode = data.postalCode;
     data.region = data.region.trim();
+    data.LatAxis = data.LatAxis;
+    data.LongAxis = data.LongAxis;
     data.fastCharge = data.fastCharge;
     data.noOfChargers = data.noOfChargers;
+    data.description = data.description.trim();
 
     let locationInfo = {
         LatAxis: data.LatAxis,
@@ -140,7 +146,8 @@ router.put("/updateLocation/:id", validateToken, async (req, res) => {
         postalCode: data.postalCode,
         region: data.region,
         fastCharge: data.fastCharge,
-        noOfChargers: data.noOfChargers
+        noOfChargers: data.noOfChargers,
+        description: data.description
     }
 
 

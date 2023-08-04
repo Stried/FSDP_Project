@@ -1,27 +1,23 @@
-const { Op } = require("sequelize");
+const Sequelize = require('sequelize');
 const cron = require("node-cron");
-const {TrialReceipt} = require("./models/"); // Import the TrialReceipt model
+const {TrialReceipt} = require("./models/"); 
 
-// Function to update trialStatus
+
 async function updateTrialStatus() {
   try {
-    // Get the current time
-    const currentTime = new Date();
 
-    // Find all records where the dateOfTrial is before or equal to the current time
+
     const trialReceiptsToUpdate = await TrialReceipt.findAll({
-      where: {
-        dateOfTrial: {
-          [Op.lte]: currentTime,
-        },
-      },
+      where: Sequelize.literal(
+        'DATE_ADD(dateOfTrial, INTERVAL 2 HOUR) <= NOW()'
+      ),
     });
 
-    // Update the trialStatus for each matched record
+
     for (const trialReceipt of trialReceiptsToUpdate) {
-      // Perform your logic here to update the trialStatus based on your requirements
-      trialReceipt.trialStatus = "Finished"; // Replace "UPDATED_STATUS" with the desired status value
-      await trialReceipt.save(); // Save the updated record back to the database
+
+      trialReceipt.trialStatus = "Finished"; 
+      await trialReceipt.save(); 
     }
 
     console.log("TrialStatus update successful!");
@@ -30,9 +26,9 @@ async function updateTrialStatus() {
   }
 }
 
-const cronSchedule = "* * * * *"; // This cron expression represents "every minute"
+const cronSchedule = "* * * * *"; 
 
-// Schedule the function to run periodically
+
 cron.schedule(cronSchedule, () => {
   updateTrialStatus();
 });

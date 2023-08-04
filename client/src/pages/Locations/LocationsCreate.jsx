@@ -52,15 +52,13 @@ function LocationsCreate() {
             locationName: "",
             streetName: "",
             postalCode: "",
-            LatAxis: "",
-            LongAxis: "",
+            Coordinates: "",
             region: "",
             fastCharge: false,
             noOfChargers: "",
         },
         validationSchema: yup.object().shape({
-            LatAxis: yup.number().required("Please specify the Latitude."),
-            LongAxis: yup.number().required("Please specify the Longitude."),
+            Coordinates: yup.number().required("Please specify latitude and longitude."),
             locationName: yup
                 .string()
                 .trim()
@@ -111,7 +109,7 @@ function LocationsCreate() {
                 })
                 .catch(function (err) {
                     console.log(err);
-                    toast.error(`${err.response.data.message}`);
+                    // toast.error(`${err.response.data.message}`);
                 });
         }
     });
@@ -173,31 +171,17 @@ function LocationsCreate() {
                         }
                     />
                     <FormInputSingleLine
-                        name="Latitude"
-                        valueName="LatAxis"
+                        name="Coordinates"
+                        valueName="Coordinates"
                         type="text"
                         onChange={formik.handleChange}
-                        value={formik.values.LatAxis}
+                        value={formik.values.Coordinates}
                         error={
-                            formik.touched.LatAxis &&
-                            Boolean(formik.errors.LatAxis)
+                            formik.touched.Coordinates &&
+                            Boolean(formik.errors.Coordinates)
                         }
                         helperText={
-                            formik.touched.LatAxis && formik.errors.LatAxis
-                        }
-                    />
-                    <FormInputSingleLine
-                        name="Longtitude"
-                        valueName="LongAxis"
-                        type="text"
-                        onChange={formik.handleChange}
-                        value={formik.values.LongAxis}
-                        error={
-                            formik.touched.LongAxis &&
-                            Boolean(formik.errors.LongAxis)
-                        }
-                        helperText={
-                            formik.touched.LongAxis && formik.errors.LongAxis
+                            formik.touched.Coordinates && formik.errors.Coordinates
                         }
                     />
                     <FormControl className="text-white">

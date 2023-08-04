@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Box, Typography, Input, IconButton, Grid, Card, CardContent, Paper } from '@mui/material';
-import { AccessTime, Search, Clear } from '@mui/icons-material';
+import { Box, Input, IconButton } from '@mui/material';
+import { Search, Clear } from '@mui/icons-material';
 import StoreAddItem from "../Store/StoreAddItem";
 import StoreUpdateItem from "../Store/StoreUpdateItem";
+import StoreSpecific from "../Store/StoreSpecific";
 import { Link, Routes, Route, useParams } from "react-router-dom";
 import UserContext from "../../contexts/UserContext";
 import http from '../../http';
-import AspectRatio from '@mui/joy/AspectRatio';
 import { AiOutlineUser } from 'react-icons/ai'
 
 
@@ -22,19 +22,6 @@ function User(props) {
         )
     }
 }
-
-function AdminUpdate(props) {
-    const isAdminUpdate = props.isAdminUpdate;
-    const id = props.id
-    if (isAdminUpdate) {
-        return (
-            <Link to={`/Store/StoreUpdateItem/${id}`} className="flex justify-center">
-                <button type='button' className='w-max | text-white hover:text-black | dark:hover:bg-gradient-to-b from-red-400 to-red-600 | border-white dark:border-red-800 border-solid border-2 rounded hover:ease-in-out duration-200 | font-semibold text-xl | mx-4 m-10 px-2 py-1 | float-right inline'>Update vehicle</button>
-            </Link>
-        )
-    }
-}
-
 
 function StoreMain() {
     const { user } = useContext(UserContext);
@@ -106,32 +93,35 @@ function StoreMain() {
                 </IconButton>
             </div>
             <br />
-            <div className="grid grid-cols-3 mx-10 space-x-5">
+            <div className="grid grid-cols-3 mx-10 gap-x-5 mb-10">
                 {
                     storeList.map((store, i) => {
                         return (
                             <div className="text-white shadow-lg shadow-zinc-700/60 pt-2 pl-2 group hover:shadow-xl hover:shadow-zinc-700/60 hover:pl-4 duration-300 hover:ease-in-out">
-                                <div className="h-full float-right z-10 bg-gradient-to-r from-white/0 from-20% to-gray-400 hidden group-hover:inline w-5/12">
-                                    <div className="h-full translate-y-1/3 translate-x-2/3">
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            height="3em"
-                                            viewBox="0 0 512 512"
-                                            className="text-gray-800"
-                                        >
-                                            <path d="M470.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 256 265.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160zm-352 160l160-160c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L210.7 256 73.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0z" />
-                                        </svg>
-                                    </div>
-                                </div>
+                                <Link to={`/Store/StoreSpecific/${store.carPlateNo}`}>
+                                    <button className="h-full float-right z-10 bg-gradient-to-r from-white/0 from-20% to-gray-400 hidden group-hover:inline w-5/12">
+                                        <div className="h-full translate-y-1/3 translate-x-2/3">
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="3em"
+                                                viewBox="0 0 512 512"
+                                                className="text-gray-800"
+                                            >
+                                                <path d="M470.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 256 265.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160zm-352 160l160-160c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L210.7 256 73.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0z" />
+                                            </svg>
+                                        </div>
+                                    </button>
+                                </Link>
+
                                 <div className="pt-3 pl-2 w-4/5">
                                     <img src={`${import.meta.env.VITE_FILE_BASE_URL_STORE
-                                                }${store.carImageFile}`}
-                                        className="w-2/3" />
-                                    <p className="text-2xl font-medium">
+                                    }${store.carImageFile}`}
+                                        className="w-44 h-36 border rounded"/>
+                                    <p className="text-2xl font-medium pt-5">
                                         {store.carBrand} {store.carModel}
                                     </p>
                                     <p className="text-xl">
-                                        ${store.carPrice}
+                                        ${store.carPrice.toLocaleString()}
                                     </p>
                                     <p>Production: {store.carProductionDate}</p>
                                     <p className="flex pt-3 pb-2">
@@ -149,8 +139,9 @@ function StoreMain() {
                 }
             </div>
             <Routes>
-                <Route path={"/StoreAddItem"} element={<StoreAddItem />} />
-                <Route path={"/StoreUpdateItem/:id"} element={<StoreUpdateItem />} />
+                <Route path={"/StoreAddItem"} element={<StoreAddItem/>} />
+                <Route path={"/StoreUpdateItem/:id"} element={<StoreUpdateItem/>} />
+                <Route path={"/StoreSpecific/:id"} element={<StoreSpecific/>} />
             </Routes>
         </Box>
     )

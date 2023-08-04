@@ -46,14 +46,14 @@ function CreateLocations() {
         setValue(event.target.value);
     };
 
-    // values: locationName, streetName, postalCode, LatAxis, LongAxis, region, fastCharge, noOfChargers
+    // values: locationName, streetName, postalCode, coordinates, region, fastCharge, noOfChargers
     const formik = useFormik({
         initialValues: {
             locationName: "",
             streetName: "",
             postalCode: 0,
-            LatAxis: "",
-            LongAxis: "",
+            coordinates: "",
+            description: "",
             region: "",
             fastCharge: false,
             noOfChargers: 0,
@@ -75,8 +75,8 @@ function CreateLocations() {
             region: yup.string().trim().oneOf(["N", "S", "E", "W"], "Please enter N, S, E, W").required(),
             fastCharge: yup.boolean().oneOf([true, false], "True or False only").required(),
             noOfChargers: yup.number().integer().positive("Number of charger must be more than 0").required(),
-            LatAxis: yup.number().required(),
-            LongAxis: yup.number().required(),
+            coordinates: yup.string().trim().required(),
+            description: yup.string().trim().required()
         }),
         onSubmit: async (data) => {
             data.locationName = data.locationName.trim();
@@ -152,31 +152,17 @@ function CreateLocations() {
                         }
                     />
                     <FormInputSingleLine
-                        name="Latitude"
-                        valueName="LatAxis"
+                        name="Coordinates"
+                        valueName="coordinates"
                         type="text"
                         onChange={formik.handleChange}
-                        value={formik.values.LatAxis}
+                        value={formik.values.coordinates}
                         error={
-                            formik.touched.LatAxis &&
-                            Boolean(formik.errors.LatAxis)
+                            formik.touched.coordinates &&
+                            Boolean(formik.errors.coordinates)
                         }
                         helperText={
-                            formik.touched.LatAxis && formik.errors.LatAxis
-                        }
-                    />
-                    <FormInputSingleLine
-                        name="Longtitude"
-                        valueName="LongAxis"
-                        type="text"
-                        onChange={formik.handleChange}
-                        value={formik.values.LongAxis}
-                        error={
-                            formik.touched.LongAxis &&
-                            Boolean(formik.errors.LongAxis)
-                        }
-                        helperText={
-                            formik.touched.LongAxis && formik.errors.LongAxis
+                            formik.touched.coordinates && formik.errors.coordinates
                         }
                     />
                     <FormInputSingleLine
@@ -221,6 +207,21 @@ function CreateLocations() {
                         helperText={
                             formik.touched.noOfChargers &&
                             formik.errors.noOfChargers
+                        }
+                    />
+                    <FormInputSingleLine
+                        name="Description"
+                        valueName="description"
+                        type="textarea"
+                        onChange={formik.handleChange}
+                        value={formik.values.description}
+                        error={
+                            formik.touched.description &&
+                            Boolean(formik.errors.description)
+                        }
+                        helperText={
+                            formik.touched.description &&
+                            formik.errors.description
                         }
                     />
 
