@@ -7,6 +7,7 @@ import "./../App.css";
 import { BrowserRouter as Router, Routes, Route, Link, Navigate } from "react-router-dom";
 import http from "./../http";
 import { Dropdown } from "flowbite-react";
+import {BsChatDots} from "react-icons/bs"
 import UserContext from "../contexts/UserContext";
 
 function LocationsAdmin(props) {
@@ -89,6 +90,23 @@ function EcoLifeAppBar() {
                     </h1>
                 </Link>
             </div>
+
+            {user && (
+                <div className="my-auto">
+                    <Link
+                        to={"/user/chat"}
+                        className="flex my-auto float-right"
+                    >
+                        <BsChatDots className="my-auto" />{" "}
+                        <span
+                            className="w-max | hover:text-green-500 | hover:ease-in-out duration-300
+                    font-medium text-xl | mr-5 ml-2 my-2"
+                        >
+                            Chat
+                        </span>
+                    </Link>
+                </div>
+            )}
 
             <div
                 name="loginButton"

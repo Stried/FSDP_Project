@@ -1,27 +1,37 @@
 import Talk from "talkjs";
 import { useEffect, useRef, useState } from "react";
+import http from "../../http";
+import { Spinner } from "flowbite-react";
 
 function MyChatComponent() {
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        http.get("/user/viewAccount")
+            .then((res) => {
+                setUser(res.data);
+                console.log("User Info successfully logged.");
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
+    }, []);
+
     // wait for talkjs to load
     const chatboxEl = useRef();
     const [talkLoaded, markTalkLoaded] = useState(false);
     Talk.ready.then(() => markTalkLoaded(true));
 
     useEffect(() => {
-        if (talkLoaded) {
+        if (talkLoaded && user) {
             // safe to use the SDK here
             const currentUser = new Talk.User({
-                id: "1",
-                name: "Henry Mill",
-                email: "henrymill@example.com",
-                welcomeMessage: "Hello!",
-                role: "default",
-            });
-
-            const otherUser = new Talk.User({
-                id: "2",
-                name: "Jessica Wells",
-                email: "jessicawells@example.com",
+                id: user.id,
+                name: user.userName,
+                email: user.emailAccount,
+                photoUrl: `${import.meta.env.VITE_FILE_BASE_URL}${
+                    user.imageFile
+                }`,
                 welcomeMessage: "Hello!",
                 role: "default",
             });
@@ -31,20 +41,24 @@ function MyChatComponent() {
                 me: currentUser,
             });
 
-            const conversationId = Talk.oneOnOneId(currentUser, otherUser);
-            const conversation = session.getOrCreateConversation(conversationId);
-            conversation.setParticipant(currentUser);
-            conversation.setParticipant(otherUser);
-
             const chatbox = session.createInbox();
-            chatbox.select(conversation);
-            chatbox.mount(chatboxEl.current)
+            // chatbox.select(conversation);
+            chatbox.mount(document.getElementById("chatboxEl"));
 
             return () => session.destroy();
         }
-    }, [ talkLoaded ]);
-    
-    return <div ref={chatboxEl} className="h-screen" />
+    }, [talkLoaded, user]);
+
+    return (
+        <div className="h-screen">
+            
+                <div
+                    id="chatboxEl"
+                    className="h-3/4 mx-auto max-w-screen"
+                />
+            
+        </div>
+    );
 }
 
 export default MyChatComponent;

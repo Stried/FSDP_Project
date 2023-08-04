@@ -663,6 +663,10 @@ router.get("/viewAccount/carListing/:username", async (req, res) => {
         let findAccount = await UserAccount.findOne({
             where: { userName: req.params.username }
         })
+        if (!findAccount) {
+            res.sendStatus(404);
+            return;
+        }
 
         let userListing = await Store.findAll({
             where: { emailAccount: findAccount.emailAccount }
@@ -681,6 +685,10 @@ router.get("/follow/:username", validateToken, async (req, res) => {
     let checkFollowUserDetails = await UserAccount.findOne({
         where: { userName: checkFollowUser }
     })
+    if (!checkFollowUserDetails) {
+        res.sendStatus(404);
+        return;
+    }
 
     let checkFollow = await UserFollower.findOne({
         where: [ { followedUserEmail: checkFollowUserDetails.emailAccount }, { emailAccount: req.user.emailAccount } ]
@@ -768,6 +776,10 @@ router.get("/viewAccount/allFollowers/:username", validateToken, async (req, res
     let theUser = await UserAccount.findOne({
         where: { userName: req.params.username }
     })
+    if (!theUser) {
+        res.sendStatus(404);
+        return;
+    }
 
     let allFollowers = await UserFollower.findAll({
         where: { followedUserEmail: theUser.emailAccount }

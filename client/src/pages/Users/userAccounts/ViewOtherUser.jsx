@@ -3,8 +3,17 @@ import { useState, useEffect } from "react";
 import "./../../../App.css";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { Accordion, Avatar, Badge, Breadcrumb } from "flowbite-react";
-import { HiHome } from "react-icons/hi";
+import {
+    HiHome,
+    HiAdjustments,
+    HiClipboardList,
+    HiUserCircle,
+    HiUser,
+} from "react-icons/hi";
+import { BiSolidBadgeDollar, BiReceipt } from "react-icons/bi";
+import { MdDashboard } from "react-icons/md";
 import { AiOutlineUser } from "react-icons/ai";
+import { Tabs } from "flowbite-react";
 import {
     BrowserRouter as Router,
     Routes,
@@ -20,6 +29,7 @@ import { ToastContainer, toast } from "react-toastify";
 import UserChatRoom from "./UserChatRoom";
 
 function ViewOtherUser() {
+    const navigate = useNavigate();
     const { username } = useParams();
     console.log(username)
 
@@ -38,6 +48,7 @@ function ViewOtherUser() {
             })
             .catch(function (err) {
                 console.log(err);
+                navigate("/404")
             });
     }, []);
 
@@ -49,6 +60,7 @@ function ViewOtherUser() {
             })
             .catch(function (err) {
                 console.log(err);
+                navigate("/404");
             });
     }, []);
 
@@ -59,6 +71,7 @@ function ViewOtherUser() {
             })
             .catch(function (err) {
                 console.log(err);
+                navigate("/404");
             })
     }, []);
 
@@ -70,6 +83,7 @@ function ViewOtherUser() {
             })
             .catch(function (err) {
                 console.log(err);
+                navigate("/404");
             });
     }, []);
 
@@ -77,6 +91,7 @@ function ViewOtherUser() {
         http.post(`/user/follow/${username}`)
             .then((res) => {
                 setCheckFollowed("Followed")
+                window.location.reload();
             })
             .catch(function (err) {
                 console.log(err);
@@ -87,6 +102,7 @@ function ViewOtherUser() {
         http.delete(`/user/unfollow/${username}`)
             .then((res) => {
                 setCheckFollowed(null);
+                window.location.reload();
             })
             .catch(function (err) {
                 console.log(err);
@@ -222,17 +238,21 @@ function ViewOtherUser() {
                                 </div>
 
                                 <div className="basis-4/6 ml-10">
-                                    <div className="">
-                                        <p className="text-2xl font-medium mb-2">
-                                            Car Sales Listing
-                                        </p>
-                                    </div>
-                                    <div className="w-1/2 overflow-x-auto space-x-5 flex flex-row mb-10 mr-10 pb-3 pr-10">
+                                    <Tabs.Group
+                                aria-label="Tabs with underline"
+                                style="underline"
+                            >
+                                <Tabs.Item
+                                    active
+                                    icon={BiSolidBadgeDollar}
+                                    title="Car Sales Listing"
+                                >
+                                    <div className="grid grid-cols-3 ">
                                         {userCarSalesListing.length > 0 ? (
                                             userCarSalesListing.map(
                                                 (userListing, i) => {
                                                     return (
-                                                        <div className="bg-slate-800">
+                                                        <div className="bg-slate-800 mr-2 mb-2">
                                                             <div className="p-5">
                                                                 <p className="text-xl">
                                                                     {
@@ -271,22 +291,23 @@ function ViewOtherUser() {
                                         ) : (
                                             <div>
                                                 <p className="text-xl font-medium">
-                                                    The user currently has no
-                                                    cars for sale.
+                                                    You currently has no cars
+                                                    for sale.
                                                 </p>
                                             </div>
                                         )}
                                     </div>
-
-                                    <div className="text-2xl font-medium mb-2">
-                                        Followers
-                                    </div>
-                                    <div className="w-1/2 overflow-x-auto space-x-5 flex flex-row mb-10 mr-10 pb-3 pr-10">
+                                </Tabs.Item>
+                                <Tabs.Item
+                                    icon={HiUserCircle}
+                                    title="Followers"
+                                >
+                                    <div className="grid grid-cols-3">
                                         {userFollowersList.length > 0 ? (
                                             userFollowersList.map(
                                                 (followers, i) => {
                                                     return (
-                                                        <div className="p-2 bg-slate-800 text-center rounded">
+                                                        <div className="p-2 mr-2 mb-2 bg-slate-800 text-center rounded">
                                                             <a
                                                                 href={`/user/${followers.userName}`}
                                                             >
@@ -326,13 +347,15 @@ function ViewOtherUser() {
                                         ) : (
                                             <div className="">
                                                 <p className="text-xl font-medium mb-10">
-                                                    The user currently have no
+                                                    You currently have no
                                                     followers.
                                                 </p>
                                             </div>
                                         )}
                                     </div>
-                                </div>
+                                </Tabs.Item>
+                            </Tabs.Group>
+                        </div>
                             </div>
                         </div>
                     </div>
