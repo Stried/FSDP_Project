@@ -7,7 +7,8 @@ import "./../App.css";
 import { BrowserRouter as Router, Routes, Route, Link, Navigate } from "react-router-dom";
 import http from "./../http";
 import { Dropdown } from "flowbite-react";
-import {BsChatDots} from "react-icons/bs"
+import { BiSolidLeaf } from "react-icons/bi";
+import { BsChatDots } from "react-icons/bs";
 import UserContext from "../contexts/UserContext";
 
 function LocationsAdmin(props) {
@@ -47,9 +48,10 @@ function EcoLifeAppBar() {
                 <Link to={"/"}>
                     <h1
                         className="w-fit | bg-gradient-to-r dark:from-green-400 dark:to-emerald-600 from-sky-400 to-blue-500 text-transparent bg-clip-text |
-            hover:ease-in-out duration-300 | italic font-semibold text-4xl | mx-4 my-2"
+            hover:ease-in-out duration-300 | italic font-semibold text-4xl | mx-4 my-2 flex"
                     >
-                        Ecolife
+                        <BiSolidLeaf className="text-green-400" />{" "}
+                        <span className="my-auto">Ecolife</span>
                     </h1>
                 </Link>
             </div>

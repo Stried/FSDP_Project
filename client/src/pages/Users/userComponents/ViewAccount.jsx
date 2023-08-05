@@ -27,9 +27,10 @@ import {
     HiUserCircle,
     HiUser,
 } from "react-icons/hi";
-import { BiSolidBadgeDollar, BiReceipt } from "react-icons/bi";
+import { BiSolidBadgeDollar, BiReceipt, BiDollar } from "react-icons/bi";
 import { MdDashboard } from "react-icons/md";
-import { AiOutlineUser } from "react-icons/ai";
+import { AiOutlineUser, AiFillCar, AiFillDollarCircle } from "react-icons/ai";
+import { BsCalendarDate } from "react-icons/bs";
 import { Tabs } from "flowbite-react";
 
 import { ToastContainer, toast } from "react-toastify";
@@ -241,37 +242,64 @@ function ViewAccount() {
                                             userCarSalesListing.map(
                                                 (userListing, i) => {
                                                     return (
-                                                        <div className="bg-slate-800 mr-2 mb-2">
+                                                        <div
+                                                            onClick={() =>
+                                                                navigate(
+                                                                    `/Store/StoreSpecific/${userListing.carPlateNo}`
+                                                                )
+                                                            }
+                                                            className="bg-slate-800 mr-2 mb-2 rounded border-transparent border-solid border-2 hover:border-green-400 hover:transition-ease-in-out duration-300"
+                                                        >
                                                             <div className="p-5">
-                                                                <p className="text-xl">
-                                                                    {
-                                                                        userListing.carBrand
-                                                                    }{" "}
-                                                                    {
-                                                                        userListing.carModel
-                                                                    }
-                                                                </p>
-                                                                <p>
-                                                                    ${" "}
-                                                                    {
-                                                                        userListing.carPrice
-                                                                    }
-                                                                </p>
-                                                                <p>
-                                                                    Production:{" "}
-                                                                    {
-                                                                        userListing.carProductionDate
-                                                                    }
-                                                                </p>
-                                                                <div className="my-6" />
-                                                                <p className="flex">
-                                                                    <AiOutlineUser className="my-auto" />{" "}
-                                                                    <span className="ml-1 text-green-500">
-                                                                        {
-                                                                            userListing.emailAccount
-                                                                        }
-                                                                    </span>
-                                                                </p>
+                                                                <img
+                                                                    src={`${
+                                                                        import.meta
+                                                                            .env
+                                                                            .VITE_FILE_BASE_URL_STORE
+                                                                    }${
+                                                                        userListing.carImageFile
+                                                                    }`}
+                                                                    className="mb-3"
+                                                                    alt="car image"
+                                                                />
+                                                                <div className="bg-black/40 p-3">
+                                                                    <p className="text-xl flex">
+                                                                        <AiFillCar className="my-auto" />{" "}
+                                                                        <span className="my-auto ml-2">
+                                                                            {
+                                                                                userListing.carBrand
+                                                                            }{" "}
+                                                                            {
+                                                                                userListing.carModel
+                                                                            }
+                                                                        </span>
+                                                                    </p>
+                                                                    <p className="flex">
+                                                                        <BiDollar className="my-auto " />{" "}
+                                                                        <span className="ml-3">
+                                                                            {
+                                                                                userListing.carPrice
+                                                                            }
+                                                                        </span>
+                                                                    </p>
+                                                                    <p className="flex">
+                                                                        <BsCalendarDate className="my-auto" />{" "}
+                                                                        <span className="ml-3">
+                                                                            {
+                                                                                userListing.carProductionDate
+                                                                            }
+                                                                        </span>
+                                                                    </p>
+                                                                    <div className="my-6" />
+                                                                    <p className="flex">
+                                                                        <AiOutlineUser className="my-auto" />{" "}
+                                                                        <span className="ml-1 text-green-500">
+                                                                            {
+                                                                                userListing.emailAccount
+                                                                            }
+                                                                        </span>
+                                                                    </p>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     );
