@@ -10,7 +10,7 @@ import {
 } from "react-router-dom";
 import * as React from "react";
 ("use client");
-
+import DefaultImage from '../../../../DefaultImage';
 import http from "../../../http";
 import { ToastContainer, toast } from "react-toastify";
 import { useSpring, animated } from "react-spring";
@@ -94,12 +94,14 @@ const App = () => {
               <animated.div style={fadeInProps} key={i} className="p-5 w-96">
                 <div class="p-5 w-96">
                   <div class="max-w-sm bg-white border  transition duration-300  border-gray-200 rounded-md dark:bg-gray-800 hover:shadow-green-500 shadow-3xl ease-out dark:border-gray-700">
-                    <img
+
+                    <DefaultImage className="object-contain h-48 w-96"
                       src={`${import.meta.env.VITE_FILE_BASE_URL_STORE}${
                         trialCar.carImageFile
                       }`}
-                      className=" w-full h-30"
+                      
                     />
+
                     <div class="p-5">
                       <a href="#">
                         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">

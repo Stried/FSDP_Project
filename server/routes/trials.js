@@ -218,7 +218,7 @@ router.post("/createTrialReceipt/:model", validateToken, async (req, res) => {
     data.faultResolve = "Resolved";
     data.trialStatus = "Booked";
     data.emailAccount = req.user.emailAccount;
-
+    data.ratings=0;
 
     let result = await TrialReceipt.create(data);
     res.json(result);
@@ -328,6 +328,39 @@ router.put("/viewAllTrialReceipt/changeDetails/:id", validateToken, async (req, 
     } else {
         res.status(400).json({
             message: `could not update Receipt with id ${receipt}`,
+        });
+    }
+
+});
+
+
+router.put("/viewSpecificTrialReceipt/addRating/:id", validateToken, async (req, res) => {
+    let receipt = req.params.id;
+
+    let data = req.body;
+    let validationSchema = yup.object().shape({
+        ratings: yup.number().required(),
+    });
+    
+    try {
+        await validationSchema.validate(data, { abortEarly: false });
+    } catch (err) {
+        console.error(err);
+        res.status(400).json({ errors: err.errors });
+        return;
+    }
+
+    let trialReceipt = await TrialReceipt.update(data, {
+        where: { trialReceiptId: receipt },
+    });
+
+    if (trialReceipt == 1) {
+        res.json({
+            message: "Rating has been successfuly given.",
+        });
+    } else {
+        res.status(400).json({
+            message: `could not give rating to Receipt with id ${receipt}`,
         });
     }
 

@@ -14,3 +14,6 @@ body {
 input[type=checkbox] {
   transform: scale(1.5);
 }
+button.disabled {
+  cursor: not-allowed;
+}

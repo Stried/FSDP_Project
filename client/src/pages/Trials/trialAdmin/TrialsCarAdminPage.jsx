@@ -1,5 +1,5 @@
 import { Box, IconButton } from "@mui/material";
-import {Search,Clear} from "@mui/icons-material";
+import { Search, Clear } from "@mui/icons-material";
 import { useState, useEffect, useContext } from "react";
 import {
   BrowserRouter as Router,
@@ -10,19 +10,16 @@ import {
 } from "react-router-dom";
 import * as React from "react";
 ("use client");
-
+import { Modal } from "flowbite-react";
 import http from "./../../../http";
 import { ToastContainer, toast } from "react-toastify";
-
-
 
 const App = () => {
   const [trialCarList, setTrialCarList] = useState([]);
 
-
   const [sortField, setSortField] = useState("carPlateNo"); // Default sort field is "carPlateNo"
   const [sortDirection, setSortDirection] = useState("asc"); // Default sort direction is "asc"
-
+  const [openModals, setOpenModals] = useState([]);
   const sortTrialCars = (field, direction) => {
     const sortedList = [...trialCarList];
     sortedList.sort((a, b) => {
@@ -35,6 +32,14 @@ const App = () => {
     setTrialCarList(sortedList);
   };
 
+  const toggleModal = (index) => {
+    setOpenModals((prevOpenModals) => {
+      const updatedModals = [...prevOpenModals];
+      updatedModals[index] = !updatedModals[index];
+      return updatedModals;
+    });
+  };
+
   const onSortChange = (field) => {
     const newDirection = sortDirection === "asc" ? "desc" : "asc";
     setSortField(field);
@@ -45,7 +50,7 @@ const App = () => {
   const onUnsortClick = () => {
     setSortField("carPlateNo");
     setSortDirection("asc");
-    getTrialCar(); 
+    getTrialCar();
   };
 
   const getTrialCar = () => {
@@ -126,7 +131,10 @@ const App = () => {
                   Car plate No.
                 </th>
                 <th scope="col" class="px-6 py-3">
-                  <div onClick={() => onSortChange("name")} class="flex items-center">
+                  <div
+                    onClick={() => onSortChange("name")}
+                    class="flex items-center"
+                  >
                     Car Model
                     <a href="#">
                       <svg
@@ -142,7 +150,10 @@ const App = () => {
                   </div>
                 </th>
                 <th scope="col" class="px-6 py-3">
-                  <div onClick={() => onSortChange("carBrand")} class="flex items-center">
+                  <div
+                    onClick={() => onSortChange("carBrand")}
+                    class="flex items-center"
+                  >
                     Car Brand
                     <a href="#">
                       <svg
@@ -152,13 +163,16 @@ const App = () => {
                         fill="currentColor"
                         viewBox="0 0 320 512"
                       >
-                        
                         <path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z" />
                       </svg>
                     </a>
                   </div>
                 </th>
-                <th scope="col" onClick={() => onSortChange("address")} class="px-6 py-3">
+                <th
+                  scope="col"
+                  onClick={() => onSortChange("address")}
+                  class="px-6 py-3"
+                >
                   <div class="flex items-center">
                     Outlet Address
                     <a href="#">
@@ -178,7 +192,41 @@ const App = () => {
                   <span class="sr-only">Edit</span>
                 </th>
                 <th></th>
-                <th className="pl-20"><div onClick={onUnsortClick} className="w-5 h-5 cursor-pointer"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M12 2.99988C16.9706 2.99988 21 7.02931 21 11.9999C21 16.9704 16.9706 20.9999 12 20.9999C7.02944 20.9999 3 16.9704 3 11.9999C3 9.17261 4.30367 6.64983 6.34267 4.99988" stroke="#292929" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M3 4.49988H7V8.49988" stroke="#292929" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></g></svg></div></th>
+                <th className="pl-20">
+                  <div
+                    onClick={onUnsortClick}
+                    className="w-5 h-5 cursor-pointer"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                      <g
+                        id="SVGRepo_tracerCarrier"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      ></g>
+                      <g id="SVGRepo_iconCarrier">
+                        <path
+                          d="M12 2.99988C16.9706 2.99988 21 7.02931 21 11.9999C21 16.9704 16.9706 20.9999 12 20.9999C7.02944 20.9999 3 16.9704 3 11.9999C3 9.17261 4.30367 6.64983 6.34267 4.99988"
+                          stroke="#292929"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                        ></path>
+                        <path
+                          d="M3 4.49988H7V8.49988"
+                          stroke="#292929"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                        ></path>
+                      </g>
+                    </svg>
+                  </div>
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -213,12 +261,47 @@ const App = () => {
                     </td>
                     <td class="pl-0 pr-4 py-4 text-right">
                       <a
-                        onClick={() => deleteTrialCar(`${trialCar.carPlateNo}`)}
+                        onClick={() => {
+                          toggleModal(i);
+                        }}
                         href="#"
                         className="bg-red-400 p-2 px-5 rounded-md text-black hover:bg-red-600 hover:text-white "
                       >
                         Delete
                       </a>
+                      <Modal
+                        dismissible
+                        show={openModals[i] === true}
+                        onClose={() => toggleModal(i)}
+                      >
+                        <Modal.Header>Trial Car Deletion</Modal.Header>
+                        <Modal.Body>
+                          <div className="space-y-6">
+                            <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                              Are you sure you want to delete the trial car
+                              with:{" "}
+                              <div>Carplate number: {trialCar.carPlateNo}</div>{" "}
+                              <div>Model: {trialCar.name}</div>
+                            </p>
+                          </div>
+                        </Modal.Body>
+                        <Modal.Footer>
+                          <button
+                            onClick={() =>
+                              deleteTrialCar(`${trialCar.carPlateNo}`)
+                            }
+                            className="px-3 py-2 bg-red-500 hover:bg-red-600 hover:text-white rounded font-medium"
+                          >
+                            Delete
+                          </button>
+                          <button
+                            onClick={() => setOpenModal(undefined)}
+                            className="px-3 py-2 bg-sky-400 hover:bg-sky-600 hover:text-white rounded font-medium"
+                          >
+                            Cancel
+                          </button>
+                        </Modal.Footer>
+                      </Modal>
                     </td>
                   </tr>
                 );

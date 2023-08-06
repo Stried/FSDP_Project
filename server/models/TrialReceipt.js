@@ -28,7 +28,11 @@ trialStatus:{
 },
 emailAccount:{
     type:DataTypes.STRING,
-    allowNull:false,
+    allowNull:false
+},
+ratings:{
+    type:DataTypes.FLOAT,
+    allowNull:true
 },
 
 });
