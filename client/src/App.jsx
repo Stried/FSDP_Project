@@ -42,7 +42,7 @@ import CreateLocations from "./pages/Locations/CreateLocations";
 
 import LocationsMain from "./pages/Locations/LocationsMain";
 import LocationsCreate from "./pages/Locations/LocationsCreate";
-
+import TrialsData from "./pages/Trials/trialUsers/TrialsData";
 import TrialsAddPage from "./pages/Trials/trialAdmin/TrialsCarAdd";
 import TrialsAdminPage from "./pages/Trials/trialAdmin/TrialsCarAdminPage";
 import TrialsUpdatePage from "./pages/Trials/trialAdmin/TrialsCarAdminUpdate";
@@ -254,7 +254,12 @@ function App() {
                                 }
                                 element={<TrialsReceiptReportPage />}
                             />
-
+                            <Route
+                                path={
+                                    "/Trials/trialAdmin/TrialsData"
+                                }
+                                element={<TrialsData />}
+                            />
                             <Route
                                 path={"*"}
                                 element={<PageNotFound />}
