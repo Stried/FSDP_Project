@@ -7,39 +7,34 @@ var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 const App = () => {
   const calculateAverageRating = (receiptList) => {
     const modelRatings = {};
-  
+    
     receiptList.forEach((trialReceipt) => {
       const modelName = trialReceipt.modelName;
       const rating = trialReceipt.ratings;
-
-      console.log("Model:", modelName);
-  console.log("Rating:", rating);
   
-      if (rating !== null) {
+      if (rating !== null && rating!==0) {
         if (!modelRatings[modelName]) {
           modelRatings[modelName] = {
             totalRating: 0,
             count: 0,
           };
         }
-  
+    
         modelRatings[modelName].totalRating += rating;
         modelRatings[modelName].count++;
       }
     });
   
-    console.log("Model Ratings:", modelRatings); 
-
-    const result = {};
+    const averageRatingsArray = [];
     for (const modelName in modelRatings) {
       const { totalRating, count } = modelRatings[modelName];
       const averageRating = count > 0 ? totalRating / count : 0;
-      console.log("Average Rating:", modelName, averageRating);
-      result[modelName] = averageRating;
+      averageRatingsArray.push({ modelName, averageRating });
     }
   
-    return result;
+    return averageRatingsArray;
   };
+  
 
   const [trialReceiptList, setTrialReceiptList] = useState([]);
 
@@ -49,26 +44,36 @@ const App = () => {
     });
   };
 
+
   useEffect(() => {
     getTrialReceipt();
   }, []);
 
   const averageRatings = calculateAverageRating(trialReceiptList);
 
+  const sortedTop5 = averageRatings
+  .sort((a, b) => b.averageRating - a.averageRating)
+  .slice(0, 5);
+
   const chartOptions = {
     title: {
       text: "Top 5 Average Rated Trial Cars",
       fontColor: "#22c55e",
+      fontFamily: "Arial", 
     },
     backgroundColor: "#1F2937",
     dataPointWidth: 130,
         axisX: {
       titleFontColor: "#666", // X-axis title color
-      labelFontColor: "#FFFFFF"  // X-axis labels color
+      labelFontColor: "#FFFFFF",  // X-axis labels color
+      fontFamily: "Arial", 
     },
     axisY: {
       titleFontColor: "#666", // Y-axis title color
-      labelFontColor: "#FFFFFF"  // Y-axis labels color
+      labelFontColor: "#FFFFFF",  // Y-axis labels color
+      fontFamily: "Arial", 
+      minimum: 0, 
+      maximum: 5, 
     },
     legend: {
       fontColor: "#666" // Legend text color
@@ -77,7 +82,7 @@ const App = () => {
       {
         type: "column",
         
-        dataPoints: Object.entries(averageRatings).map(([modelName, averageRating]) => ({
+        dataPoints: sortedTop5.map(({ modelName, averageRating }) => ({
           label: modelName,
           y: averageRating
         }))
@@ -88,9 +93,9 @@ const App = () => {
  
   
   return (
-    <div className="relative min-h-screen">
+    <div className="flex justify-center min-h-screen">
       <br />
-      <div>
+      <div className="chart-container w-11/12 mt-10">
       <CanvasJSChart options={chartOptions} />
     </div>
     </div>

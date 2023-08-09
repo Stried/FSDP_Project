@@ -29,3 +29,4 @@ function LocationsMain() {
         <h1>Kill Myself</h1>
     )
 }
+export default LocationsMain;

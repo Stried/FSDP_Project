@@ -235,16 +235,28 @@ router.get("/viewUserTrialReceipt", validateToken, async (req, res) => {
     res.json(userTrialReceipt);
 });
 
-router.get("/viewTrialCarReceipt/:model", validateToken, async (req, res) => {
+router.get("/getSpecificTrialCarDates/:carPlateNo", async (req, res) => {
+    const trialReceiptcarPlateNo = req.params.carPlateNo;
+    const trialCar= await TrialCar.findOne({
+        where: {carPlateNo: trialReceiptcarPlateNo}
+    });
+    const TrialReceipts = await TrialReceipt.findAll({
+        attributes: ['dateOfTrial'],
+        where: { modelName: trialCar.name },
+    });
+
+    res.json(TrialReceipts);
+});
+
+router.get("/viewTrialCarReceipt/:carPlateNo", validateToken, async (req, res) => {
     try {
-      const trialReceiptModel = req.params.model; // Use 'model' instead of 'id'
+      const trialReceiptcarPlateNo = req.params.carPlateNo;
       const thetrialcar = await TrialCar.findOne({
-        where: { carPlateNo: trialReceiptModel },
+        where: { carPlateNo: trialReceiptcarPlateNo },
       });
   
       if (!thetrialcar) {
-        // If no matching TrialCar is found, return a 404 response or an appropriate error status
-        return res.status(404).json({ message: "TrialCar not found" });
+        return res.status(404).json({ message: "Trial Car not found" });
       }
   
       const userTrialReceipt = await TrialReceipt.findAll({
@@ -255,7 +267,6 @@ router.get("/viewTrialCarReceipt/:model", validateToken, async (req, res) => {
       res.json(userTrialReceipt);
     } catch (error) {
       console.error(error);
-      // Handle any unexpected errors and return an error response
       res.status(500).json({ message: "Server Error" });
     }
   });

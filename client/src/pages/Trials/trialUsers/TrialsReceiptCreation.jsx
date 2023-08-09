@@ -18,8 +18,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import setHours from "date-fns/setHours";
-import setMinutes from "date-fns/setMinutes";
+import { addDays, setHours, setMinutes } from "date-fns";
 const App = () => {
   const navigate = useNavigate();
 
@@ -74,6 +73,8 @@ const App = () => {
     });
   }, []);
 
+  
+
   useEffect(() => {
     http.get(`/trials/viewSpecificTrialCar/${model}`).then((res) => {
       setTrialCarEntry(res.data);
@@ -93,6 +94,15 @@ const App = () => {
     }),
     
     onSubmit: async (data) => {
+
+      const selectedDate = data.dateOfTrial;
+
+      const selectedHours = selectedDate.getHours();
+      if (selectedHours >= 0 && selectedHours < 8) {
+        toast.error("Trials cannot be booked between 12am and 7:59am.");
+        return;
+      }
+
       const formData = {
         dateOfTrial: data.dateOfTrial.toISOString(),
       };
@@ -216,26 +226,24 @@ const App = () => {
       >
         <div>
           <DatePicker
-            className="p-2 border rounded-lg text-white bg-black focus:outline-none focus:ring focus:border-green-500"
-            placeholderText="Select a date"
-            selected={formik.values.dateOfTrial}
-            onChange={(date) => formik.setFieldValue("dateOfTrial", date)}
-            showPopperArrow={false}
-            minDate={minDate}
-            withPortal
-            calendarContainer={MyContainer}
-            calendarClassName=" border-green-500 "
-            showTimeSelect
-            timeIntervals={120}
-            dateFormat="MMMM d, yyyy h:mm aa"
-            isClearable={true}
-            excludeTimes={[
-              setHours(setMinutes(new Date(), 0), 0),
-              setHours(setMinutes(new Date(), 0), 2),
-              setHours(setMinutes(new Date(), 0), 4),
-              setHours(setMinutes(new Date(), 0), 6),
-            ]}
-          />
+  className="p-2 border rounded-lg text-white bg-black focus:outline-none focus:ring focus:border-green-500"
+  placeholderText="Select a date"
+  selected={formik.values.dateOfTrial || setHours(setMinutes(addDays(new Date(), 7), 0), 8)} 
+  onChange={(date) => formik.setFieldValue("dateOfTrial", date)}
+  showPopperArrow={false}
+  minDate={minDate}
+  withPortal
+  calendarClassName="border-green-500"
+  showTimeSelect
+  timeIntervals={120}
+  dateFormat="MMMM d, yyyy h:mm aa"
+  excludeTimes={[
+    setHours(setMinutes(new Date(), 0), 0),
+    setHours(setMinutes(new Date(), 0), 2),
+    setHours(setMinutes(new Date(), 0), 4),
+    setHours(setMinutes(new Date(), 0), 6),
+  ]}
+/>
           {formik.errors.dateOfTrial ? (
             <div className="text-red-600">{formik.errors.dateOfTrial}</div>
           ) : null}
