@@ -19,7 +19,7 @@ import {
     Link,
     useNavigate,
 } from "react-router-dom";
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useContext } from "react";
 import { Button, Modal, Checkbox, Label, TextInput } from "flowbite-react";
 import http from "./../../http";
 import "./../../App.css";
@@ -29,7 +29,28 @@ import UserContext from "./../../contexts/UserContext";
 
 import { Map, Marker } from "pigeon-maps";
 
+
+function IsAdmin(props) {
+    const isAdmin = props.isAdmin
+    const id = props.id
+    if (isAdmin) {
+        return (
+            <Link to={`/Location/EditLocation/${id}`}>
+                <Button
+                    className="text-xs"
+                    onClick={() =>
+                        navigate()
+                    }
+                >
+                    Edit
+                </Button>
+            </Link>
+        )
+    }
+}
+
 function LocationsMain() {
+    const { user } = useContext(UserContext); 
     const navigate = useNavigate();
     const color = `hsl(0, 100%, 50%)`;
     const [openModal, setOpenModal] = useState("");
@@ -76,14 +97,7 @@ function LocationsMain() {
                                             anchor={[location.LatAxis, location.LongAxis]}
                                         />
                                     </Map>
-                                    <Button
-                                        className="text-xs"
-                                        onClick={() =>
-                                            navigate()
-                                        }
-                                    >
-                                        Edit
-                                    </Button>
+                                    {(user && <IsAdmin isAdmin={user.adminNo} />)}
                                 </div>
                             </div>
                         </div>
