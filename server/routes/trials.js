@@ -286,6 +286,19 @@ router.get("/viewAllTrialReceipt", validateToken, async (req, res) => {
 
 });
 
+router.get("/getAllTrialReceiptRatings", validateToken, async (req, res) => {
+
+    const allReceipts = await TrialReceipt.findAll({
+        where: {
+            ratings: {
+                [Sequelize.Op.not]: null
+            }
+        }
+    });
+
+    res.json(allReceipts);
+});
+
 router.get("/viewSpecificTrialReceipt/:id", async(req, res) => {
     const trialReceipt = req.params.id
     const TheTrialReceipt = await TrialReceipt.findOne({

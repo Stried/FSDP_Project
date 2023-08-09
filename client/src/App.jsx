@@ -256,7 +256,7 @@ function App() {
                             />
                             <Route
                                 path={
-                                    "/Trials/trialAdmin/TrialsData"
+                                    "/Trials/trialUsers/TrialsData"
                                 }
                                 element={<TrialsData />}
                             />
