@@ -19,7 +19,7 @@ import {
     Link,
     useNavigate,
 } from "react-router-dom";
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useContext } from "react";
 import { Button, Modal, Checkbox, Label, TextInput } from "flowbite-react";
 import http from "./../../http";
 import "./../../App.css";
@@ -29,7 +29,28 @@ import UserContext from "./../../contexts/UserContext";
 
 import { Map, Marker } from "pigeon-maps";
 
+
+function IsAdmin(props) {
+    const isAdmin = props.isAdmin
+    const id = props.id
+    if (isAdmin) {
+        return (
+            <Link to={`/Location/EditLocation/${id}`}>
+                <Button
+                    className="text-xs"
+                    onClick={() =>
+                        navigate()
+                    }
+                >
+                    Edit
+                </Button>
+            </Link>
+        )
+    }
+}
+
 function LocationsMain() {
+    const { user } = useContext(UserContext); 
     const navigate = useNavigate();
     const color = `hsl(0, 100%, 50%)`;
     const [openModal, setOpenModal] = useState("");
@@ -44,8 +65,8 @@ function LocationsMain() {
     }, [])
 
     return (
-        <Box className="flex flex-col items-center">
-            <h1 className="text-4xl font-bold mt-8 mb-6 text-white">
+        <Box className="mx-10 items-center">
+            <h1 className="text-4xl font-bold mt-8 mb-6 text-white text-center">
                 Locations
             </h1>
             <div className="mb-4 flex justify-center items-center">
@@ -53,7 +74,7 @@ function LocationsMain() {
                     <Button className="">Add Charger</Button>
                 </Link>
             </div>
-            <div className="max-w-3xl mx-auto grid grid-cols-2 gap-4">
+            <div className="max-w-screen mx-auto grid grid-cols-2 gap-4">
                 {locationList.map((location, key) => {
                     return (
                         <div className='text-black'>
@@ -76,14 +97,7 @@ function LocationsMain() {
                                             anchor={[location.LatAxis, location.LongAxis]}
                                         />
                                     </Map>
-                                    <Button
-                                        className="text-xs"
-                                        onClick={() =>
-                                            navigate()
-                                        }
-                                    >
-                                        Edit
-                                    </Button>
+                                    {(user && <IsAdmin isAdmin={user.adminNo} />)}
                                 </div>
                             </div>
                         </div>

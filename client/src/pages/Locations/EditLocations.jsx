@@ -24,9 +24,11 @@ import { Button, Modal, Checkbox, Label, TextInput } from "flowbite-react";
 import http from "./../../http";
 import "./../../App.css";
 
-function LocationsMain() {
+function EditLocations() {
     return(
         <h1>Kill Myself</h1>
     )
 }
-export default LocationsMain;
+
+
+export default EditLocations;
