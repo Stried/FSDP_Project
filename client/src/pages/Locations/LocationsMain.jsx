@@ -44,8 +44,8 @@ function LocationsMain() {
     }, [])
 
     return (
-        <Box className="flex flex-col items-center">
-            <h1 className="text-4xl font-bold mt-8 mb-6 text-white">
+        <Box className="mx-10 items-center">
+            <h1 className="text-4xl font-bold mt-8 mb-6 text-white text-center">
                 Locations
             </h1>
             <div className="mb-4 flex justify-center items-center">
@@ -53,7 +53,7 @@ function LocationsMain() {
                     <Button className="">Add Charger</Button>
                 </Link>
             </div>
-            <div className="max-w-3xl mx-auto grid grid-cols-2 gap-4">
+            <div className="max-w-screen mx-auto grid grid-cols-2 gap-4">
                 {locationList.map((location, key) => {
                     return (
                         <div className='text-black'>
