@@ -49,6 +49,20 @@ function IsAdmin(props) {
     }
 }
 
+function AddCharger(props) {
+    const isAdmin = props.isAdmin
+    const id = props.id
+    if (isAdmin) {
+        return (
+            <Link to={`/Location/CreateLocation/${id}`}>
+                <Link to="/locations/createLocation">
+                    <Button className="">Add Charger</Button>
+                </Link>
+            </Link>
+        )
+    }
+}
+
 function LocationsMain() {
     const { user } = useContext(UserContext); 
     const navigate = useNavigate();
@@ -70,9 +84,7 @@ function LocationsMain() {
                 Locations
             </h1>
             <div className="mb-4 flex justify-center items-center">
-                <Link to="/locations/createLocation">
-                    <Button className="">Add Charger</Button>
-                </Link>
+                {(user && <AddCharger isAdmin={user.adminNo} />)}
             </div>
             <div className="max-w-3xl mx-auto grid grid-cols-2 gap-4">
                 {locationList.map((location, key) => {
