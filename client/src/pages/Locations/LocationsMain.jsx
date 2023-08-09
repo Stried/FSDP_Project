@@ -1,50 +1,30 @@
-import {
-    Container,
-    AppBar,
-    Toolbar,
-    Typography,
-    CssBaseline,
-    Box,
-    Grid,
-    CardContent,
-    Input,
-    IconButton,
-    Card,
-} from "@mui/material";
-import { Search, Clear } from "@mui/icons-material";
+import { Box } from "@mui/material";
 import {
     BrowserRouter as Router,
-    Routes,
-    Route,
     Link,
     useNavigate,
 } from "react-router-dom";
 import React, { useRef, useEffect, useState, useContext } from "react";
-import { Button, Modal, Checkbox, Label, TextInput } from "flowbite-react";
+import { Button } from "flowbite-react";
 import http from "./../../http";
 import "./../../App.css";
-
-import * as Constants from "./../../../src/components/CSS Constants/Constants";
 import UserContext from "./../../contexts/UserContext";
-
 import { Map, Marker } from "pigeon-maps";
 
-
-function IsAdmin(props) {
+function EditCharger(props) {
+    const navigate = useNavigate()
     const isAdmin = props.isAdmin
-    const id = props.id
+    const id = props.postalCode
     if (isAdmin) {
         return (
-            <Link to={`/Location/EditLocation/${id}`}>
-                <Button
-                    className="text-xs"
-                    onClick={() =>
-                        navigate()
-                    }
-                >
-                    Edit
-                </Button>
-            </Link>
+            <Button
+                className="text-xs"
+                onClick={() =>
+                    navigate(`/locations/editLocations/${id}`)
+                }
+            >
+                Edit
+            </Button>
         )
     }
 }
@@ -54,7 +34,7 @@ function AddCharger(props) {
     const id = props.id
     if (isAdmin) {
         return (
-            <Link to={`/Location/CreateLocation/${id}`}>
+            <Link to={`/Location/CreateLocation/`}>
                 <Link to="/locations/createLocation">
                     <Button className="">Add Charger</Button>
                 </Link>
@@ -64,7 +44,7 @@ function AddCharger(props) {
 }
 
 function LocationsMain() {
-    const { user } = useContext(UserContext); 
+    const { user } = useContext(UserContext);
     const navigate = useNavigate();
     const color = `hsl(0, 100%, 50%)`;
     const [openModal, setOpenModal] = useState("");
@@ -109,7 +89,7 @@ function LocationsMain() {
                                             anchor={[location.LatAxis, location.LongAxis]}
                                         />
                                     </Map>
-                                    {(user && <IsAdmin isAdmin={user.adminNo} />)}
+                                    {(user && <EditCharger isAdmin={user.adminNo} postalCode={location.postalCode} />)}
                                 </div>
                             </div>
                         </div>
