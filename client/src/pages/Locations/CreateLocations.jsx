@@ -31,9 +31,18 @@ import { useFormik } from "formik";
 import http from "../../http";
 import { ToastContainer, toast } from "react-toastify";
 import UserContext from "../../contexts/UserContext";
+import Select from 'react-select';
 
 function CreateLocations() {
     const navigate = useNavigate();
+
+    const options = [
+        { value: "N", label: "North" },
+        { value: "S", label: "South" },
+        { value: "E", label: "East" },
+        {value: "W", label: "West"},
+    ];
+    const defaultOption = options[0];
 
     const handleCheckboxChange = (event) => {
         const { name, checked } = event.target;
@@ -162,10 +171,11 @@ function CreateLocations() {
                             Boolean(formik.errors.coordinates)
                         }
                         helperText={
-                            formik.touched.coordinates && formik.errors.coordinates
+                            formik.touched.coordinates &&
+                            formik.errors.coordinates
                         }
                     />
-                    <FormInputSingleLine
+                    {/* <FormInputSingleLine
                         name="Region"
                         valueName="region"
                         type="text"
@@ -178,22 +188,27 @@ function CreateLocations() {
                         helperText={
                             formik.touched.region && formik.errors.region
                         }
-                    />
-                    <FormInputSingleLine
-                        name="FastCharge"
-                        valueName="fastCharge"
-                        type="boolean"
+                    /> */}
+                    <Select
+                        className=""
+                        name="region"
+                        options={options}
+                        value={formik.values.region}
                         onChange={formik.handleChange}
-                        value={formik.values.fastCharge}
-                        error={
-                            formik.touched.fastCharge &&
-                            Boolean(formik.errors.fastCharge)
-                        }
-                        helperText={
-                            formik.touched.fastCharge &&
-                            formik.errors.fastCharge
-                        }
+                        placeholder="Select an option"
                     />
+                    <div className="flex">
+                        <Checkbox
+                           className="text-white -ml-3" 
+                            value="fastCharge"
+                            name="fastCharge"
+                            type="checkbox"
+                            onChange={formik.handleChange}
+                        />
+                        <span className="text-xl text-white flex content-center mt-1.5">
+                            Fast Charge
+                        </span>
+                    </div>
                     <FormInputSingleLine
                         name="Number Of Chargers"
                         valueName="noOfChargers"

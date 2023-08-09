@@ -126,7 +126,7 @@ function EcoLifeAppBar() {
                 {!user && (
                     <>
                         <Link to="/user/login">
-                            <h1 className="w-max font-semibold text-xl | mx-4 mt-1 px-2 py-1 | float-right | dark:text-green-500 text-sky-500 | border-2 border-solid dark:border-green-500 border-sky-500 rounded">
+                            <h1 className="w-max font-semibold text-xl | mx-4 mt-1 px-2 py-1 | float-right | dark:text-white text-sky-500 | border-2 border-solid dark:border-green-500 border-sky-500 rounded">
                                 Log In
                             </h1>
                         </Link>
