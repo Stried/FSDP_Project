@@ -1,56 +1,50 @@
-import {
-    Container,
-    AppBar,
-    Toolbar,
-    Typography,
-    CssBaseline,
-    Box,
-    Grid,
-    CardContent,
-    Input,
-    IconButton,
-    Card,
-} from "@mui/material";
-import { Search, Clear } from "@mui/icons-material";
+import { Box } from "@mui/material";
 import {
     BrowserRouter as Router,
-    Routes,
-    Route,
     Link,
     useNavigate,
 } from "react-router-dom";
 import React, { useRef, useEffect, useState, useContext } from "react";
-import { Button, Modal, Checkbox, Label, TextInput } from "flowbite-react";
+import { Button } from "flowbite-react";
 import http from "./../../http";
 import "./../../App.css";
-
-import * as Constants from "./../../../src/components/CSS Constants/Constants";
 import UserContext from "./../../contexts/UserContext";
-
 import { Map, Marker } from "pigeon-maps";
 
+function EditCharger(props) {
+    const navigate = useNavigate()
+    const isAdmin = props.isAdmin
+    const id = props.postalCode
+    if (isAdmin) {
+        return (
+            <Button
+                className="text-xs"
+                onClick={() =>
+                    navigate(`/locations/editLocations/${id}`)
+                }
+            >
+                Edit
+            </Button>
+        )
+    }
+}
 
-function IsAdmin(props) {
+function AddCharger(props) {
     const isAdmin = props.isAdmin
     const id = props.id
     if (isAdmin) {
         return (
-            <Link to={`/Location/EditLocation/${id}`}>
-                <Button
-                    className="text-xs"
-                    onClick={() =>
-                        navigate()
-                    }
-                >
-                    Edit
-                </Button>
+            <Link to={`/Location/CreateLocation/`}>
+                <Link to="/locations/createLocation">
+                    <Button className="">Add Charger</Button>
+                </Link>
             </Link>
         )
     }
 }
 
 function LocationsMain() {
-    const { user } = useContext(UserContext); 
+    const { user } = useContext(UserContext);
     const navigate = useNavigate();
     const color = `hsl(0, 100%, 50%)`;
     const [openModal, setOpenModal] = useState("");
@@ -70,9 +64,7 @@ function LocationsMain() {
                 Locations
             </h1>
             <div className="mb-4 flex justify-center items-center">
-                <Link to="/locations/createLocation">
-                    <Button className="">Add Charger</Button>
-                </Link>
+                {(user && <AddCharger isAdmin={user.adminNo} />)}
             </div>
             <div className="max-w-screen mx-auto grid grid-cols-2 gap-4">
                 {locationList.map((location, key) => {
@@ -97,7 +89,7 @@ function LocationsMain() {
                                             anchor={[location.LatAxis, location.LongAxis]}
                                         />
                                     </Map>
-                                    {(user && <IsAdmin isAdmin={user.adminNo} />)}
+                                    {(user && <EditCharger isAdmin={user.adminNo} postalCode={location.postalCode} />)}
                                 </div>
                             </div>
                         </div>

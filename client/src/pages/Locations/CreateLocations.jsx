@@ -44,6 +44,10 @@ function CreateLocations() {
     ];
     const defaultOption = options[0];
 
+    const handleRegionChange = (selectedOption) => {
+        formik.setFieldValue("region", selectedOption.value);
+    };
+
     const handleCheckboxChange = (event) => {
         const { name, checked } = event.target;
         formik.setFieldValue("fastCharge", checked);
@@ -114,7 +118,7 @@ function CreateLocations() {
                     component="form"
                     onSubmit={formik.handleSubmit}
                 >
-                    {/* // values: locationName, streetName, postalCode, LatAxis, LongAxis, region, fastCharge, noOfChargers */}
+                    {/* // values: locationName, streetName, postalCode, LatAxis, LongAxis, region, fastCharge, noOfChargers, description */}
                     <FormInputSingleLine
                         name="Location Name"
                         valueName="locationName"
@@ -175,29 +179,15 @@ function CreateLocations() {
                             formik.errors.coordinates
                         }
                     />
-                    {/* <FormInputSingleLine
-                        name="Region"
-                        valueName="region"
-                        type="text"
-                        onChange={formik.handleChange}
-                        value={formik.values.region}
-                        error={
-                            formik.touched.region &&
-                            Boolean(formik.errors.region)
-                        }
-                        helperText={
-                            formik.touched.region && formik.errors.region
-                        }
-                    /> */}
                     <Select
-                        className=""
+                        className="mt-4 bg-gray-400"
                         name="region"
                         options={options}
-                        value={formik.values.region}
-                        onChange={formik.handleChange}
-                        placeholder="Select an option"
+                        value={options.find(option => option.value === formik.values.region)}
+                        onChange={handleRegionChange}
+                        placeholder="Select a region"
                     />
-                    <div className="flex">
+                    <div className="flex mt-4">
                         <Checkbox
                            className="text-white -ml-3" 
                             value="fastCharge"
@@ -205,7 +195,7 @@ function CreateLocations() {
                             type="checkbox"
                             onChange={formik.handleChange}
                         />
-                        <span className="text-xl text-white flex content-center mt-1.5">
+                        <span className="text-xl text-white flex content-center mt-2">
                             Fast Charge
                         </span>
                     </div>
@@ -243,7 +233,7 @@ function CreateLocations() {
                     <Button
                         variant="contained"
                         type="submit"
-                        className="bg-green-400 text-black hover:bg-green-600 hover:text-white"
+                        className="bg-green-400 text-black hover:bg-green-600 hover:text-white mt-4"
                     >
                         Add Location
                     </Button>

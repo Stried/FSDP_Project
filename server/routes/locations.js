@@ -106,6 +106,16 @@ router.get("/LocationsMain", async (req, res) => {
     res.json(locations)
 })
 
+router.get("/editLocation/:id", validateToken, async (req, res) => {
+    let id = req.params.id;
+    let locations = await Locations.findOne({
+        where: {
+            postalCode: id
+        }
+    })
+    res.json(locations) 
+});
+
 router.put("/updateLocation/:id", validateToken, async (req, res) => {
     let data = req.body;
     let enteredPostalCode = req.params.id;
@@ -114,8 +124,7 @@ router.put("/updateLocation/:id", validateToken, async (req, res) => {
         streetName: yup.string().trim().required("Please provide a street name."),
         postalCode: yup.number().positive().integer().required("Please input a valid Postal Code."),
         region: yup.string().trim().oneOf([ "N", "S", "E", "W" ]).required("Please specify a valid region."),
-        LatAxis: yup.number().required("Please specify the Latitute."),
-        LongAxis: yup.number().required("Please specify the Longitude."),
+        coordinates: yup.string().trim().required(),
         fastCharge: yup.boolean().required("Please specify if the charger is capable of FastCharge."),
         noOfChargers: yup.number().positive().integer().required("Please specify the number of chargers in the location."),
         description: yup.string().trim().required("Provide a fitting description of the area.")
@@ -128,12 +137,14 @@ router.put("/updateLocation/:id", validateToken, async (req, res) => {
         return;
     }
 
+    let coordinates = data.coordinates.trim().split(',');
+
     data.locationName = data.locationName.trim();
     data.streetName = data.streetName.trim();
     data.postalCode = data.postalCode;
     data.region = data.region.trim();
-    data.LatAxis = data.LatAxis;
-    data.LongAxis = data.LongAxis;
+    data.LatAxis = coordinates[0];
+    data.LongAxis = coordinates[1];
     data.fastCharge = data.fastCharge;
     data.noOfChargers = data.noOfChargers;
     data.description = data.description.trim();
@@ -173,7 +184,7 @@ router.delete("/deleteLocation/:id", validateToken, async (req, res) => {
 
     if (req.user.adminNo == null) {
         res.status(401).json({
-            warning: ["Unauthorized action detected.", "Actions, logged.", "Address, triangulated."]
+            warning: ["Unauthorized action detected."]
         });
         return;
     }
