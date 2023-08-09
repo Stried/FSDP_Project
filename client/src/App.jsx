@@ -41,7 +41,6 @@ import SupportHelpDesk from "./pages/Users/SupportHelpDesk";
 
 import LocationsMain from "./pages/Locations/LocationsMain";
 import CreateLocations from "./pages/Locations/CreateLocations";
-import EditLocations from "./pages/Locations/EditLocations";
 
 import TrialsData from "./pages/Trials/trialUsers/TrialsData";
 import TrialsAddPage from "./pages/Trials/trialAdmin/TrialsCarAdd";
@@ -196,10 +195,6 @@ function App() {
                             <Route
                                 path={"/locations/createLocation"}
                                 element={<CreateLocations />}
-                            />
-                            <Route
-                                path={"locations/editLocation"}
-                                element={<EditLocations />}
                             />
                             <Route
                                 path={"/Store/StoreMain"}
