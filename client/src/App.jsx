@@ -38,10 +38,11 @@ import ViewOtherUser from "./pages/Users/userAccounts/ViewOtherUser";
 import ViewAccount from "./pages/Users/userComponents/ViewAccount";
 import Setting from "./pages/Users/userComponents/Setting";
 import SupportHelpDesk from "./pages/Users/SupportHelpDesk";
-import CreateLocations from "./pages/Locations/CreateLocations";
 
 import LocationsMain from "./pages/Locations/LocationsMain";
-import LocationsCreate from "./pages/Locations/LocationsCreate";
+import CreateLocations from "./pages/Locations/CreateLocations";
+import EditLocations from "./pages/Locations/EditLocations";
+
 import TrialsData from "./pages/Trials/trialUsers/TrialsData";
 import TrialsAddPage from "./pages/Trials/trialAdmin/TrialsCarAdd";
 import TrialsAdminPage from "./pages/Trials/trialAdmin/TrialsCarAdminPage";
@@ -195,6 +196,10 @@ function App() {
                             <Route
                                 path={"/locations/createLocation"}
                                 element={<CreateLocations />}
+                            />
+                            <Route
+                                path={"locations/editLocation"}
+                                element={<EditLocations />}
                             />
                             <Route
                                 path={"/Store/StoreMain"}
