@@ -228,7 +228,7 @@ const App = () => {
           <DatePicker
   className="p-2 border rounded-lg text-white bg-black focus:outline-none focus:ring focus:border-green-500"
   placeholderText="Select a date"
-  selected={formik.values.dateOfTrial || setHours(setMinutes(addDays(new Date(), 7), 0), 8)} 
+selected={formik.values.dateOfTrial} 
   onChange={(date) => formik.setFieldValue("dateOfTrial", date)}
   showPopperArrow={false}
   minDate={minDate}
