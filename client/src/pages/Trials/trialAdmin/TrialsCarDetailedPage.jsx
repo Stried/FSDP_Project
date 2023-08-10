@@ -76,7 +76,18 @@ const App = () => {
       settrialReceiptEntries(res.data);
     });
   };
-
+  const deleteTrialReceipt = (trialReceiptId) => {
+    http
+      .delete(`/trials/trialreceipt/${trialReceiptId}`)
+      .then((res) => {
+        console.log(res.data);
+        window.location.reload();
+      })
+      .catch(function (err) {
+        console.log(err);
+        toast.error(`${err.response.data.message}`);
+      });
+  };
 
 
 
