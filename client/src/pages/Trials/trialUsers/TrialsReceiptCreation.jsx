@@ -15,14 +15,12 @@ import http from "../../../http";
 import { ToastContainer, toast } from "react-toastify";
 import FormInputSingleLine from "../../../components/FormInputSingleLine";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import "./TrialsDatepicker.css";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { addDays, setHours, setMinutes } from "date-fns";
 const App = () => {
   const navigate = useNavigate();
-
-
 
   const { model } = useParams();
   const [date, setDate] = useState(new Date());
@@ -32,19 +30,15 @@ const App = () => {
   const currentDate = new Date();
   const minDate = new Date(currentDate.getTime() + 7 * 24 * 60 * 60 * 1000); // Adding seven days in milliseconds
 
-
-
-  const MyContainer = ({ className="bg-black", children }) => {
+  const MyContainer = ({ className = "bg-black", children }) => {
     return (
       <div style={{ padding: "2px", background: "", color: "black" }}>
         <calendarContainer className={className}>
-          <div style={{ position: "relative", color:"black"}}>{children}</div>
+          <div style={{ position: "relative", color: "black" }}>{children}</div>
         </calendarContainer>
       </div>
     );
   };
-
-
 
   const [trialCar, setTrialCar] = useState({
     carPlateNo: "",
@@ -73,8 +67,6 @@ const App = () => {
     });
   }, []);
 
-  
-
   useEffect(() => {
     http.get(`/trials/viewSpecificTrialCar/${model}`).then((res) => {
       setTrialCarEntry(res.data);
@@ -92,9 +84,8 @@ const App = () => {
     validationSchema: yup.object().shape({
       dateOfTrial: yup.date().required("Date of trial is required"),
     }),
-    
-    onSubmit: async (data) => {
 
+    onSubmit: async (data) => {
       const selectedDate = data.dateOfTrial;
 
       const selectedHours = selectedDate.getHours();
@@ -226,24 +217,24 @@ const App = () => {
       >
         <div>
           <DatePicker
-  className="p-2 border rounded-lg text-white bg-black focus:outline-none focus:ring focus:border-green-500"
-  placeholderText="Select a date"
-selected={formik.values.dateOfTrial} 
-  onChange={(date) => formik.setFieldValue("dateOfTrial", date)}
-  showPopperArrow={false}
-  minDate={minDate}
-  withPortal
-  calendarClassName="border-green-500"
-  showTimeSelect
-  timeIntervals={120}
-  dateFormat="MMMM d, yyyy h:mm aa"
-  excludeTimes={[
-    setHours(setMinutes(new Date(), 0), 0),
-    setHours(setMinutes(new Date(), 0), 2),
-    setHours(setMinutes(new Date(), 0), 4),
-    setHours(setMinutes(new Date(), 0), 6),
-  ]}
-/>
+            className="p-2 border rounded-lg text-white bg-black focus:outline-none focus:ring focus:border-green-500"
+            placeholderText="Select a date"
+            selected={formik.values.dateOfTrial}
+            onChange={(date) => formik.setFieldValue("dateOfTrial", date)}
+            showPopperArrow={false}
+            minDate={minDate}
+            withPortal
+            calendarClassName="border-green-500"
+            showTimeSelect
+            timeIntervals={120}
+            dateFormat="MMMM d, yyyy h:mm aa"
+            excludeTimes={[
+              setHours(setMinutes(new Date(), 0), 0),
+              setHours(setMinutes(new Date(), 0), 2),
+              setHours(setMinutes(new Date(), 0), 4),
+              setHours(setMinutes(new Date(), 0), 6),
+            ]}
+          />
           {formik.errors.dateOfTrial ? (
             <div className="text-red-600">{formik.errors.dateOfTrial}</div>
           ) : null}
@@ -263,12 +254,13 @@ selected={formik.values.dateOfTrial}
           Book
         </Button>
       </Box>
-      <Button href="/Trials/trialUsers/TrialsCarUserPage" className=" mt-64 dark:bg-gray-800 text-white hover:bg-green-600 hover:text-white"
-        style={{left:"93%"}}
-        
-        >
-            Back
-        </Button>
+      <Button
+        href="/Trials/trialUsers/TrialsCarUserPage"
+        className=" mt-64 dark:bg-gray-800 text-white hover:bg-green-600 hover:text-white"
+        style={{ left: "93%" }}
+      >
+        Back
+      </Button>
       <ToastContainer />
     </div>
   );
