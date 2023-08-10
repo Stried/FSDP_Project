@@ -18,7 +18,7 @@ import DatePicker from "react-datepicker";
 import "./TrialsDatepicker.css";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { addDays, setHours, setMinutes } from "date-fns";
+import { setHours, setMinutes } from "date-fns";
 const App = () => {
   const navigate = useNavigate();
 
@@ -112,6 +112,8 @@ const App = () => {
     },
   });
 
+
+  
   return (
     <div className="relative min-h-screen">
       <div className="relative min-h-screen text-white">
@@ -130,8 +132,6 @@ const App = () => {
                 Location:
                 {trialCarEntry.address}
               </div>
-              <br />
-              <div>INSERT IMAGE HERE</div>
               <br />
               Image of car:
               <div className="w-80 h-80">

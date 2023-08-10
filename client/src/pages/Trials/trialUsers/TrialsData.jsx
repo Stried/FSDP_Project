@@ -94,11 +94,15 @@ const App = () => {
   
   return (
     <div className="flex justify-center min-h-screen">
-      <br />
-      <div className="chart-container w-11/12 mt-10">
-      <CanvasJSChart options={chartOptions} />
+    <br />
+    <div className="chart-container w-11/12 mt-10">
+      {trialReceiptList.length === 0 ? (
+        <p className="text-center text-gray-500">No data available to display.</p>
+      ) : (
+        <CanvasJSChart options={chartOptions} />
+      )}
     </div>
-    </div>
+  </div>
   );
 };
 

@@ -19,11 +19,15 @@ import {
   useParams,
 } from "react-router-dom";
 import * as React from "react";
-import { format } from 'date-fns';
+import CanvasJSReact from '@canvasjs/react-charts';
+import { format, startOfMonth } from 'date-fns';
 ("use client");
 
 import http from "./../../../http";
 import { ToastContainer, toast } from "react-toastify";
+
+var CanvasJS = CanvasJSReact.CanvasJS;
+var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 const App = () => {
   const { id } = useParams();
@@ -104,6 +108,57 @@ const App = () => {
     getTrialReceipt(); 
   };
 
+  const filterFinishedReceipts = (receipts) => {
+    return receipts.filter((receipt) => receipt.trialStatus === "Finished");
+  };
+
+  const finishedReceipts=filterFinishedReceipts(trialReceiptEntries)
+
+  const graphDataArray = [];
+
+finishedReceipts.forEach(receipt => {
+  const date = new Date(receipt.dateOfTrial);
+  const monthYear = format(date, 'MMM yyyy'); // Format: "Aug 2023"
+
+  const existingData = graphDataArray.find(data => data.x.getTime() === date.getTime());
+
+  if (existingData) {
+    existingData.y++;
+  } else {
+    graphDataArray.push({
+      x: date,
+      y: 1,
+    });
+  }
+});
+
+const maxDataPoints = 10; // Define the maximum number of data points to display
+const step = Math.ceil(graphDataArray.length / maxDataPoints);
+
+const filteredDataPoints = graphDataArray.filter((point, index) => index % step === 0);
+
+
+
+const graphOptions = {
+  theme: 'light2',
+  animationEnabled: true,
+  title: {
+    text: 'Finished Trial Receipts Over Time',
+  },
+  axisX: {
+    title: 'Date of Trial Receipt',
+    valueFormatString: 'MMM YYYY', // Format for x-axis labels (Month abbreviation)
+  },
+  axisY: {
+    title: 'Number of Finished Receipts',
+  },
+  data: [
+    {
+      type: 'line',
+      dataPoints: graphDataArray,
+    },
+  ],
+};
 
   useEffect(() => {
     getTrialReceipt();
@@ -343,6 +398,11 @@ const App = () => {
               })}
             </tbody>
           </table>
+<br />
+<div className="mt-5">
+        <CanvasJSChart options={graphOptions} />
+      </div>
+<br />
         </div>
       <Button href="/Trials/trialAdmin/TrialsCarAdminPage" className="  dark:bg-gray-800 text-white hover:bg-green-600 hover:text-white"
         style={{left:"93%", marginTop:"50px"}}
