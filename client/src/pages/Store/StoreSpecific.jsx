@@ -1,5 +1,12 @@
 import { Box } from "@mui/material";
-import { BrowserRouter as Router, Routes, Route, Link, useNavigate, useParams } from "react-router-dom";
+import {
+    BrowserRouter as Router,
+    Routes,
+    Route,
+    Link,
+    useNavigate,
+    useParams,
+} from "react-router-dom";
 import React, { useContext, useEffect, useState } from "react";
 import "./../../App.css";
 import http from "../../http";
@@ -20,10 +27,18 @@ function AdminUpdate(props) {
 
     if (isAdmin) {
         return (
-            <Link to={`/Store/StoreUpdateItem/${id}`} className="inline-flex">
-                <button type='button' className='w-max | text-white hover:text-black | dark:hover:bg-gradient-to-b from-red-400 to-red-600 | border-white dark:border-red-800 border-solid border-2 rounded hover:ease-in-out duration-200 | font-semibold text-xl | mx-4 m-10 px-2 py-1 | float-right inline'>Update vehicle</button>
+            <Link
+                to={`/Store/StoreUpdateItem/${id}`}
+                className="inline-flex"
+            >
+                <button
+                    type="button"
+                    className="w-max | text-white hover:text-black | dark:hover:bg-gradient-to-b from-red-400 to-red-600 | border-white dark:border-red-800 border-solid border-2 rounded hover:ease-in-out duration-200 | font-semibold text-xl | mx-4 m-10 px-2 py-1 | float-right inline"
+                >
+                    Update vehicle
+                </button>
             </Link>
-        )
+        );
     }
 }
 
@@ -51,25 +66,41 @@ function StoreSpecific() {
         carHeight: "",
         isModified: false,
         carMods: "",
-        soldBy: ""
+        soldBy: "",
     });
 
     useEffect(() => {
         http.get(`/store/viewStoreItem/${id}`).then((res) => {
             if (res.data.carMods == "") {
-                res.data.carMods = "None"
+                res.data.carMods = "None";
             }
             setStore(res.data);
         });
     }, []);
 
+    const [userInfo, setUserInfo] = useState({
+        fullName: "",
+        emailAccount: "",
+    });
+
+    useEffect(() => {
+        http.get("/user/viewAccount").then((res) => {
+            console.log(res.status);
+            console.log(res.data);
+            setUserInfo(res.data);
+        });
+    });
+
     return (
         <Box>
             <div className="flex bg-zinc-800 rounded m-auto">
                 <div className="m-7">
-                    <img src={`${import.meta.env.VITE_FILE_BASE_URL_STORE
-                        }${store.carImageFile}`}
-                        className="w-96 h-80 m-0 border rounded-md" />
+                    <img
+                        src={`${import.meta.env.VITE_FILE_BASE_URL_STORE}${
+                            store.carImageFile
+                        }`}
+                        className="w-96 h-80 m-0 border rounded-md"
+                    />
                 </div>
                 <div className="text-white m-5 p-5">
                     <div className="text-4xl mb-3">
@@ -78,40 +109,46 @@ function StoreSpecific() {
                     <div className="text-xl bg-black rounded-md p-5 w-1/2">
                         Car Plate Number: {store.carPlateNo}
                         <br />
-                        {store.carBrand},  {store.carModel}
+                        {store.carBrand}, {store.carModel}
                         <br />
                         Sold By: {store.soldBy}
                     </div>
                     <div className="">
-                        <button className="mt-5 mr-4 px-2 py-1 border rounded transition-colors text-white hover:text-black dark:hover:bg-gradient-to-b from-slate-50 to-slate-400 border-black dark:border-white border-solid border-2 rounded hover:ease-in-out duration-200 font-semibold text-xl ">
-                            Buy Now
-                        </button>
+                        {userInfo.fullName != store.soldBy && (
+                            <button className="mt-5 mr-4 px-2 py-1 border rounded transition-colors text-white hover:text-black dark:hover:bg-gradient-to-b from-slate-50 to-slate-400 border-black dark:border-white border-solid border-2 rounded hover:ease-in-out duration-200 font-semibold text-xl ">
+                                Buy Now
+                            </button>
+                        )}
+                        {userInfo.fullName == store.soldBy && (
+                            <button className="mt-5 mr-4 px-2 py-1 border rounded transition-colors text-white hover:text-black dark:hover:bg-gradient-to-b from-slate-50 to-slate-400 border-black dark:border-white border-solid border-2 rounded hover:ease-in-out duration-200 font-semibold text-xl ">
+                                Edit
+                            </button>
+                        )}
                         <Link to="/Trials/trialUsers/TrialsCarUserPage">
                             <button className="mx-4 px-2 py-1 border rounded transition-colors text-white hover:text-black dark:hover:bg-gradient-to-b from-slate-50 to-slate-400 border-black dark:border-white border-solid border-2 rounded hover:ease-in-out duration-200 font-semibold text-xl ">
                                 Check for Trials Availability
                             </button>
                         </Link>
-                        {(user && <AdminUpdate isAdmin={user.adminNo} />)}
+                        {user && <AdminUpdate isAdmin={user.adminNo} />}
                     </div>
                 </div>
             </div>
             <div className="text-white">
-                <div className="text-center text-4xl m-7">
-                    Vehicle Overview
-                </div>
+                <div className="text-center text-4xl m-7">Vehicle Overview</div>
                 <div>
                     <div className="grid grid-cols-2 mb-10">
                         <div className="">
-                            <span className="text-3xl">
-                                Car Specification
-                            </span>
+                            <span className="text-3xl">Car Specification</span>
                             <span className="p-3 mt-5 bg-zinc-800 rounded flex">
                                 Car Brand: {store.carBrand} <br />
                                 Car Model: {store.carModel} <br />
                                 Car Engine: {store.carEngine} <br />
                                 Car Speed (km/h): {store.carSpeed} <br />
                                 Car Fuel Type: {store.carFuelType} <br />
-                                Car Fuel Consumption: {store.carFuelConsume} <br />
+                                Car Fuel Consumption: {
+                                    store.carFuelConsume
+                                }{" "}
+                                <br />
                                 Car Mods: {store.carMods}
                             </span>
                         </div>
@@ -129,15 +166,16 @@ function StoreSpecific() {
                             </span>
                         </div>
                     </div>
-
                 </div>
-
             </div>
             <Routes>
-                <Route path={"/StoreUpdateItem/:id"} element={<StoreUpdateItem />} />
+                <Route
+                    path={"/StoreUpdateItem/:id"}
+                    element={<StoreUpdateItem />}
+                />
             </Routes>
         </Box>
-    )
+    );
 }
 
-export default StoreSpecific
+export default StoreSpecific;
