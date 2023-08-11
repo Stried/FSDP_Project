@@ -68,13 +68,8 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: false
         },
-        isModified: { // Yes, No
-            type: DataTypes.BOOLEAN,
-            allowNull: false
-        },
         carMods: { // It has 18 wheels, tank threads, and comes installed with a 125mm railcannon. Radio only plays "Majulah Singapura" on loop at max volume.
-            type: DataTypes.TEXT,
-            allowNull: false // add a placeholder such as "No Mods made"
+            type: DataTypes.TEXT
         },
         soldBy: {
             type: DataTypes.TEXT,

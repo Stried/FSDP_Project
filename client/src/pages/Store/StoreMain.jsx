@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { Box, Input, IconButton } from '@mui/material';
 import { Search, Clear } from '@mui/icons-material';
 import StoreAddItem from "../Store/StoreAddItem";
-import StoreUpdateItem from "../Store/StoreUpdateItem";
 import StoreSpecific from "../Store/StoreSpecific";
 import { Link, Routes, Route, useParams } from "react-router-dom";
 import UserContext from "../../contexts/UserContext";
@@ -140,7 +139,6 @@ function StoreMain() {
             </div>
             <Routes>
                 <Route path={"/StoreAddItem"} element={<StoreAddItem/>} />
-                <Route path={"/StoreUpdateItem/:id"} element={<StoreUpdateItem/>} />
                 <Route path={"/StoreSpecific/:id"} element={<StoreSpecific/>} />
             </Routes>
         </Box>

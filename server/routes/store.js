@@ -24,7 +24,6 @@ router.post("/createStoreItem", validateToken, async (req, res) => {
         carLength: yup.number().integer().required(),
         carWidth: yup.number().integer().required(),
         carHeight: yup.number().integer().required(),
-        isModified: yup.boolean().required(),
         carMods: yup.string()
     });
     try {
@@ -128,7 +127,6 @@ router.put("/updateStoreItem/:id", validateToken, async (req, res) => {
         carLength: yup.number().integer().required(),
         carWidth: yup.number().integer().required(),
         carHeight: yup.number().integer().required(),
-        isModified: yup.boolean().required(),
         carMods: yup.string(),
     });
     try {
