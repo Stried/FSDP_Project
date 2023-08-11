@@ -54,6 +54,7 @@ function EditLocations() {
     const deleteLocation = () => {
         http.delete(`/locations/deleteLocation/${id}`).then(() => {
             navigate("/locations/locationsMain")
+            window.location.reload();
         }).catch(function (err) {
             console.log(err)
         })
