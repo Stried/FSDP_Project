@@ -280,8 +280,8 @@ const App = () => {
                             <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
                               Are you sure you want to delete the trial car
                               with:{" "}
-                              <div>Carplate number: {trialCar.carPlateNo}</div>{" "}
-                              <div>Model: {trialCar.name}</div>
+                              <div>Carplate number: <b>{trialCar.carPlateNo}</b></div>{" "}
+                              <div>Model: <b>{trialCar.name}</b></div>
                             </p>
                           </div>
                         </Modal.Body>

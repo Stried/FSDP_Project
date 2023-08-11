@@ -97,7 +97,7 @@ const App = () => {
     <br />
     <div className="chart-container w-11/12 mt-10">
       {trialReceiptList.length === 0 ? (
-        <p className="text-center text-gray-500">No data available to display.</p>
+        <p className="text-center text-gray-500">No data available to display for the graph.</p>
       ) : (
         <CanvasJSChart options={chartOptions} />
       )}

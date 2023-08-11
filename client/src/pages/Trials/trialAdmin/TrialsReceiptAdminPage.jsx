@@ -332,9 +332,9 @@ const App = () => {
                               Are you sure you want to delete the trial receipt
                               with:{" "}
                               <div>
-                                Receipt number: {trialReceipt.trialReceiptId}
+                                Receipt number: <b>{trialReceipt.trialReceiptId}</b>
                               </div>{" "}
-                              <div>Model: {trialReceipt.modelName}</div>
+                              <div>Model: <b>{trialReceipt.modelName}</b></div>
                             </p>
                           </div>
                         </Modal.Body>
