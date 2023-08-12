@@ -56,9 +56,9 @@ function ViewAccount() {
 
     const [ userCarSalesListing, setUserCarSalesListing ] = useState([]);
     const [ userStoreReceiptList, setUserStoreReceiptList ] = useState([]);
-    const [userFollowersList, setUserFollowersList] = useState([]);
-    const [userReceiptList, setUserReceiptList] = useState([]);
-    const [selectedTrialReceipt, setSelectedTrialReceipt] = useState({
+    const [ userFollowersList, setUserFollowersList ] = useState([]);
+    const [ userReceiptList, setUserReceiptList ] = useState([]);
+    const [ selectedTrialReceipt, setSelectedTrialReceipt ] = useState({
         trialReceiptId: "",
         dateOfTrial: "",
         trialReport: "",
@@ -155,13 +155,14 @@ function ViewAccount() {
     useEffect(() => {
         http.get("/store/viewStoreReceipt")
             .then((res) => {
-                setUserReceiptList(res.data);
-                console.log("User Store Receipts successfully logged.")
+                setUserStoreReceiptList(res.data);
+                console.log(res.data)
+                console.log("User Store Receipts successfully logged.");
             })
             .catch(function (err) {
                 console.log(err);
-        })
-    })
+            });
+    }, [])
 
     useEffect(() => {
         http.get("/user/viewAccount/allFollowers")
@@ -205,22 +206,6 @@ function ViewAccount() {
                 <div id="userAccountDetails">
                     <p className="text-3xl font-medium mb-10">
                         {user.fullName}'s Account Details
-                        <span className="flex space-x-3 mt-2">
-                            <Badge
-                                color="success"
-                                size={"sm"}
-                                className="w-fit"
-                            >
-                                User
-                            </Badge>
-                            <Badge
-                                color="indigo"
-                                size={"sm"}
-                                className="w-fit"
-                            >
-                                Admin
-                            </Badge>
-                        </span>
                     </p>
                     <div className="my-3 flex flex-row h-fit">
                         <div
@@ -397,11 +382,36 @@ function ViewAccount() {
                                             userStoreReceiptList.map(
                                                 (userListing, i) => {
                                                     return (
-                                                        <div className="">
+                                                        <div className="bg-slate-800 p-5 mr-2 mb-2">
                                                             <div className="">
-                                                                {
-                                                                    userListing.carPlateNo
-                                                                }
+                                                                <p className="text-xl flex">
+                                                                    <BiReceipt className="my-auto" />{" "}
+                                                                    <span className="my-auto ml-2 text-xs text-ellipsis overflow-hidden">
+                                                                        {
+                                                                            userListing.carReceiptId
+                                                                        }
+                                                                    </span>
+                                                                </p>
+                                                                <p className="text-xl flex mt-5">
+                                                                    <AiFillCar className="my-auto" />{" "}
+                                                                    <span className="my-auto ml-2">
+                                                                        {
+                                                                            userListing.carBrand
+                                                                        }{" "}
+                                                                        {
+                                                                            userListing.carModel
+                                                                        }{ " " }
+                                                                        ({
+                                                                            userListing.carPlateNo
+                                                                        })
+                                                                    </span>
+                                                                </p>
+                                                                <p className="text-xl flex mt-2">
+                                                                    <BiSolidBadgeDollar className="my-auto" />{" "}
+                                                                    <span className="my-auto ml-2">
+                                                                        To be added...
+                                                                    </span>
+                                                                </p>
                                                             </div>
                                                         </div>
                                                     );

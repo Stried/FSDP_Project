@@ -121,29 +121,13 @@ function ViewOtherUser() {
                             >
                                 <p>Home</p>
                             </Breadcrumb.Item>
-                            <Breadcrumb.Item href="/user/viewAccount">
-                                My Account
+                            <Breadcrumb.Item href={`/user/${otherUser.userName}`}>
+                                {otherUser.userName} Account
                             </Breadcrumb.Item>
                         </Breadcrumb>
                         <div id="userAccountDetails">
                             <p className="text-3xl font-medium mb-10">
                                 {otherUser.fullName}'s Account Details
-                                <span className="flex space-x-3 mt-2">
-                                    <Badge
-                                        color="success"
-                                        size={"sm"}
-                                        className="w-fit"
-                                    >
-                                        User
-                                    </Badge>
-                                    <Badge
-                                        color="indigo"
-                                        size={"sm"}
-                                        className="w-fit"
-                                    >
-                                        Admin
-                                    </Badge>
-                                </span>
                             </p>
                             <div className="my-3 flex flex-row">
                                 <div
