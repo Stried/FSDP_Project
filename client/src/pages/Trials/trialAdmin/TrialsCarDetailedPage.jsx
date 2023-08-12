@@ -124,30 +124,30 @@ const App = () => {
   };
 
   const finishedReceipts=filterFinishedReceipts(trialReceiptEntries)
+  const monthData = {};
 
-  const graphDataArray = [];
+  finishedReceipts.forEach((receipt) => {
+    const date = new Date(receipt.dateOfTrial);
+    const monthYear = format(date, 'MMM yyyy');
+    
+    if (!monthData[monthYear]) {
+      monthData[monthYear] = 0;
+    }
+    
+    monthData[monthYear]++;
+  });
+  
+  const graphDataArray = Object.entries(monthData).map(([monthYear, count]) => ({
+    label: monthYear,
+    y: count,
+  }));
 
-finishedReceipts.forEach(receipt => {
-  const date = new Date(receipt.dateOfTrial);
-  const monthYear = format(date, 'MMM yyyy'); 
-
-  const existingData = graphDataArray.find(data => data.x.getTime() === date.getTime());
-
-  if (existingData) {
-    existingData.y++;
-  } else {
-    graphDataArray.push({
-      x: date,
-      y: 1,
-    });
-  }
-});
+  graphDataArray.sort((a, b) => new Date(a.label) - new Date(b.label));
 
 const maxDataPoints = 10; 
 const step = Math.ceil(graphDataArray.length / maxDataPoints);
 
 const filteredDataPoints = graphDataArray.filter((point, index) => index % step === 0);
-
 
 
 const graphOptions = {
@@ -157,15 +157,16 @@ const graphOptions = {
     text: 'Finished Trial Receipts Over Time',
   },
   axisX: {
-    title: 'Date of Trial Receipt',
-    valueFormatString: 'MMM YYYY', 
+    title: 'Month',
+    interval: 1, // Show every month label
   },
   axisY: {
     title: 'Number of Finished Receipts',
   },
   data: [
     {
-      type: 'line',
+      type: 'line', // Use line chart for month data
+      markerType: 'circle', // Use circles to mark data points
       dataPoints: graphDataArray,
     },
   ],

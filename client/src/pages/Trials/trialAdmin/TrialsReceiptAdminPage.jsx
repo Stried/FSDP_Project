@@ -363,6 +363,8 @@ const App = () => {
               })}
             </tbody>
           </table>
+          <br />
+          <br />
         </div>
         <ToastContainer />
       </Box>
