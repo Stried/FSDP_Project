@@ -12,6 +12,9 @@ import * as React from "react";
 ("use client");
 import Imageone from './../../../assets/CarouselUserTrialCars/charging.png';
 import Imagetwo from './../../../assets/CarouselUserTrialCars/electric-cars-vehicles-explainer-101.png';
+import Imagethree from './../../../assets/CarouselUserTrialCars/charger.png';
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 import DefaultImage from '../../../../DefaultImage';
 import http from "../../../http";
 import { ToastContainer, toast } from "react-toastify";
@@ -119,8 +122,51 @@ return(
       <h1 className="text-center text-5xl text-green-400">
         Trial Car User Page
       </h1>
-
-
+<br/>
+      <div className="carousel-container h-15">
+        <Carousel
+          showThumbs={false}
+          showStatus={false}
+          infiniteLoop
+          autoPlay
+          interval={5000} // Adjust interval as needed
+          transitionTime={400} // Adjust transition time as needed
+          dynamicHeight
+        >
+          <div>
+            <DefaultImage src={Imageone} style={{ objectFit: 'contain', height: '450px', maxHeight:'450' }} alt="Carousel Image 1 " />
+            <a href="#">
+            <div className="overlay absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 hover:opacity-100 bg-black bg-opacity-50">
+        <p className="overlay-text text-white text-center text-3xl p-2">
+          The Future of Electronic vehicles
+        </p>
+      </div>
+      </a>
+          </div>
+          <div>
+            <DefaultImage src={Imagetwo} style={{ objectFit: 'contain', height: '450px', maxHeight:'450' }} alt="Carousel Image 2"  />
+            <a href="#">
+            <div className="overlay absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 hover:opacity-100 bg-black bg-opacity-50">
+        <p className="overlay-text text-white text-center text-3xl p-2">
+          an In Depth Guide on Electronic Vehicles
+        </p>
+      </div>
+      </a>
+          </div>
+          <div>
+         
+            <DefaultImage src={Imagethree} style={{ objectFit: 'contain', height: '450px', maxHeight:'450' }} alt="Carousel Image 3"  />
+          
+            <a href="#">
+            <div className="overlay absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 hover:opacity-100 bg-black bg-opacity-50">
+        <p className="overlay-text text-white text-center text-3xl p-2">
+          Charging Stations
+        </p>
+      </div>
+      </a>
+          </div>
+        </Carousel>
+      </div>
 <br />
 <br />
 <div>
@@ -213,7 +259,6 @@ Reserve your 2-hour electrifying journey today and let's ignite a new era of dri
                       }`}
                       
                     />
-
                     <div class="p-5">
                       <a href="#">
                         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">

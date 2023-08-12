@@ -22,7 +22,7 @@ import * as React from "react";
 import CanvasJSReact from '@canvasjs/react-charts';
 import { format, startOfMonth } from 'date-fns';
 ("use client");
-
+import DefaultImage from '../../../../DefaultImage';
 import http from "./../../../http";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -188,32 +188,37 @@ const graphOptions = {
   console.log("trialReceiptEntries:", trialReceiptEntries);
 
   return (
-    <div className="relative min-h-screen text-white">
+    <div className="relative min-h-screen text-white text-center">
       <h1 className="text-center text-5xl text-green-400">Trial Car Records</h1>
       <br></br>
-      <div class="relative overflow-x-auto shadow-md sm:rounded-lg mx-7 ml-16 flex">
-        <Grid item xs={12} md={6} lg={6} key={trialCar.carPlateNo}>
+      <br></br>
+  <div className="relative shadow-md sm:rounded-lg mx-2 sm:mx-6 lg:mx-16 flex text-left">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-0">
+      <div className="w-full h-full">
+        <div className="w-85 h-80 mx-auto">
+        <DefaultImage
+          src={`${import.meta.env.VITE_FILE_BASE_URL_STORE}${trialCar.carImageFile}`}
+          className="object-contain w-full h-full"
+          alt="Car Image"
+          style={{ objectFit: 'contain' }}
+        />
+      </div>
+    </div>
+    <div className="col-span-1">
+    <Grid item xs={12} md={6} lg={6} key={trialCar.carPlateNo}>
           <div className="text-3xl font-semibold float-left w-1/3 h-max">
-            {trialCar.carPlateNo}
+            <span className="text-green-400">{trialCar.carPlateNo}</span>
             <br />
             <div className="text-xl font-medium float-left">
               {trialCar.carDescription}
             </div>
             <br />
             <div className="text-xl font-medium float-left">
-              Location:
-              {trialCar.address}
+              Location:{" "}
+              <span className="text-green-400">{trialCarEntry.address}</span>
             </div>
             <br />
             <br />
-            Image of car:
-            <div className="w-80 h-80">
-              <img
-                src={`${import.meta.env.VITE_FILE_BASE_URL_STORE}${
-                  trialCar.carImageFile
-                }`}
-              />
-            </div>
           </div>
 
           <div className="w-2/3 grid grid-cols-2 columns-2">
@@ -237,12 +242,12 @@ const graphOptions = {
                 Car Speed:{" "}
                 <span className="text-green-400">{trialCar.carSpeed}</span>
               </p>
+            </div>
+            <div className="w-max ml-10 pl-5 pb-3 font-medium text-xl space-y-1">
               <p>
                 Car Seats:{" "}
                 <span className="text-green-400">{trialCar.carSeats}</span>
               </p>
-            </div>
-            <div className="w-max ml-10 pl-5 pb-3 font-medium text-xl space-y-1">
               <p>
                 Car Fuel Type:{" "}
                 <span className="text-green-400">{trialCar.carFuelType}</span>
@@ -274,8 +279,14 @@ const graphOptions = {
             </div>
           </div>
         </Grid>
+    </div>
+  </div>
       </div>
-      
+      <br />
+  <br />  <br />
+  <hr/>
+  <br />  <br />
+
       <h1 className="text-center text-5xl text-green-400">
          Model Trial Receipt Records
         </h1>
