@@ -382,7 +382,7 @@ function ViewAccount() {
                                             userStoreReceiptList.map(
                                                 (userListing, i) => {
                                                     return (
-                                                        <div className="bg-slate-800 p-5 mr-2 mb-2">
+                                                        <div className="bg-slate-800 p-5 mr-2 mb-2 ">
                                                             <div className="">
                                                                 <p className="text-xl flex">
                                                                     <BiReceipt className="my-auto" />{" "}

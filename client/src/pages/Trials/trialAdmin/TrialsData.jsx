@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import http from "./../../../http";
+import http from "../../../http";
 import React, { Component } from 'react';
 import CanvasJSReact from '@canvasjs/react-charts';
 var CanvasJS = CanvasJSReact.CanvasJS;
@@ -34,7 +34,6 @@ const App = () => {const calculateAverageRating = (receiptList) => {
   return averageRatingsArray;
 };
   
-
   const [trialReceiptList, setTrialReceiptList] = useState([]);
 const [storeReceiptList, setStoreReceiptList] = useState([])
   const getTrialReceipt = () => {

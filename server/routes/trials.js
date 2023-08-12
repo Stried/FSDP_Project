@@ -298,11 +298,18 @@ router.get("/viewAllTrialReceipt", validateToken, async (req, res) => {
 });
 
 router.get("/getAllTrialReceiptRatings", validateToken, async (req, res) => {
-
+    if (!req.user.adminNo) {
+        console.log("Page Not Found!");
+        res.status(404).json("Page Is Not Found.");
+        return;
+    };
     const allReceipts = await TrialReceipt.findAll({
         where: {
             ratings: {
-                [Sequelize.Op.not]: null
+                [Sequelize.Op.and]: {
+                    [Sequelize.Op.not]: null,
+                    [Sequelize.Op.not]: 0
+                }
             }
         }
     });

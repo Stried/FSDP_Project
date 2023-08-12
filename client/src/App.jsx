@@ -43,7 +43,7 @@ import LocationsMain from "./pages/Locations/LocationsMain";
 import CreateLocations from "./pages/Locations/CreateLocations";
 import EditLocations from "./pages/Locations/EditLocations";
 
-import TrialsData from "./pages/Trials/trialUsers/TrialsData";
+import TrialsData from "./pages/Trials/trialAdmin/TrialsData";
 import TrialsAddPage from "./pages/Trials/trialAdmin/TrialsCarAdd";
 import TrialsAdminPage from "./pages/Trials/trialAdmin/TrialsCarAdminPage";
 import TrialsUpdatePage from "./pages/Trials/trialAdmin/TrialsCarAdminUpdate";
