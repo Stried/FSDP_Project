@@ -388,8 +388,32 @@ function ViewAccount() {
                                         )}
                                     </div>
                                 </Tabs.Item>
-                                <Tabs.Item icon={ BiReceipt } title="Store Receipt">
-                                    <div className="grid grid-cols-3"></div>
+                                <Tabs.Item
+                                    icon={BiReceipt}
+                                    title="Store Receipt"
+                                >
+                                    <div className="grid grid-cols-3">
+                                        {userStoreReceiptList.length > 0 ? (
+                                            userStoreReceiptList.map(
+                                                (userListing, i) => {
+                                                    return (
+                                                        <div className="">
+                                                            <div className="">
+                                                                {
+                                                                    userListing.carPlateNo
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    );
+                                                }
+                                            )
+                                        ) : (
+                                            <div className="text-xl font-medium">
+                                                You currently have no Store
+                                                receipts.
+                                            </div>
+                                        )}
+                                    </div>
                                 </Tabs.Item>
                                 <Tabs.Item
                                     icon={BiReceipt}
@@ -468,30 +492,31 @@ function ViewAccount() {
                                                                             toggleModal(
                                                                                 i
                                                                             );
-                                                                              handleGiveFeedback(
-                                                                                  userListing.trialReceiptId
-                                                                              );
+                                                                            handleGiveFeedback(
+                                                                                userListing.trialReceiptId
+                                                                            );
                                                                         }}
                                                                         className={`mt-3 ${
                                                                             userListing.ratings ===
-                                                                            null ||
-                                    userListing.ratings === 0
+                                                                                null ||
+                                                                            userListing.ratings ===
+                                                                                0
                                                                                 ? "bg-green-400 text-white transition duration-300 hover:bg-green-600 hover:text-black"
                                                                                 : "bg-gray-400 text-gray-600"
                                                                         } px-4 py-2 rounded ${
                                                                             userListing.ratings !==
-                                                                            null && 
-                                    userListing.ratings !==0
+                                                                                null &&
+                                                                            userListing.ratings !==
+                                                                                0
                                                                                 ? "disabled"
                                                                                 : ""
                                                                         }`}
                                                                         disabled={
-                                                                            
-                                    userListing.ratings !==
-                                                                            null
-                                                                         &&
-                                    userListing.ratings !== 0
-                                  }
+                                                                            userListing.ratings !==
+                                                                                null &&
+                                                                            userListing.ratings !==
+                                                                                0
+                                                                        }
                                                                         title={
                                                                             userListing.ratings !==
                                                                             null
@@ -669,7 +694,6 @@ function ViewAccount() {
                                 </Tabs.Item>
                             </Tabs.Group>
                         </div>
-
                     </div>
                 </div>
             </div>
