@@ -12,7 +12,7 @@ import http from "../../http";
 import "react-toastify/dist/ReactToastify.css";
 import UserContext from "../../contexts/UserContext";
 import StoreUpdateItem from "./StoreUpdateItem";
-
+import DefaultImage from './../../../DefaultImage';
 function AdminUpdate(props) {
     const isAdmin = props.isAdmin;
 
@@ -94,10 +94,11 @@ function StoreSpecific() {
         <Box>
             <div className="flex bg-zinc-800 rounded m-auto">
                 <div className="m-7">
-                    <img
-                        src={`${import.meta.env.VITE_FILE_BASE_URL_STORE}${store.carImageFile
-                            }`}
-                        className="w-96 h-80 m-0 border rounded-md"
+                <DefaultImage className="w-96 h-80 m-0 border rounded-md"
+                      src={`${import.meta.env.VITE_FILE_BASE_URL_STORE}${
+                        store.carImageFile
+                      }`}
+                      
                     />
                 </div>
                 <div className="text-white m-5 p-5">

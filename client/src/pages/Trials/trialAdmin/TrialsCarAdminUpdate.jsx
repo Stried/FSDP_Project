@@ -26,8 +26,10 @@ function TrialsCarAdminUpdate() {
     let { carPlateNo } = useParams();
 
     const options = [
-        { value: "serangoon", label: "serangoon" },
-        { value: "hougang", label: "hougang" },
+        { value: "Serangoon", label: "Serangoon" },
+        { value: "115C Yishun Ring Road", label: "115C Yishun Ring Road" },
+        { value: "51 Ang Mo Kio Ave 9", label: "51 Ang Mo Kio Ave 9" },
+        { value: "815 Bukit Batok West Ave. 5", label: "815 Bukit Batok West Ave. 5" },
     ];
 
 
