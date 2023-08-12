@@ -108,6 +108,8 @@ function StoreUpdateItem() {
         onSubmit: (data) => {
             if (imageFile) {
                 data.carImageFile = imageFile;
+            } else {
+                data.carImageFile = "defaultCar.png"
             }
             data.carPlateNo.trim(),
                 data.carDescription.trim(),
