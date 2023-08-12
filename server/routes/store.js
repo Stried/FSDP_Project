@@ -60,8 +60,11 @@ router.post("/createStoreReceipt", validateToken, async (req, res) => {
         carPlate: yup.string().required(),
         cardNumber: yup.string().required(),
         cardHolderName: yup.string().required(),
-        cardExpiryDate: yup.date().required(),
+        cardExpiryYear: yup.number().required(),
+        cardExpiryMonth: yup.number().required(),
         cvc: yup.number().required(),
+        userCity: yup.string().required(),
+        userZipCode: yup.string().required(),
         userAddress: yup.string().required()
     });
     try {
@@ -151,11 +154,14 @@ router.get("/viewStoreReceipt", async (req, res) => {
             { carModel: { [Sequelize.Op.like]: `%${search}%` } },
             { cardNumber: { [Sequelize.Op.like]: `%${search}%` } },
             { cardHolderName: { [Sequelize.Op.like]: `%${search}%` } },
-            { cardExpiryDate: { [Sequelize.Op.like]: `%${search}%` } },
+            { cardExpiryYear: { [Sequelize.Op.like]: `%${search}%` } },
+            { cardExpiryMonth: { [Sequelize.Op.like]: `%${search}%` } },
             { cvc: { [Sequelize.Op.like]: `%${search}%` } },
             { userEmailAccount: { [Sequelize.Op.like]: `%${search}%` } },
             { boughtBy: { [Sequelize.Op.like]: `%${search}%` } },
             { userPhoneNo: { [Sequelize.Op.like]: `%${search}%` } },
+            { userCity: { [Sequelize.Op.like]: `%${search}%` } },
+            { userZipCode: { [Sequelize.Op.like]: `%${search}%` } },
             { userAddress: { [Sequelize.Op.like]: `%${search}%` } },
             { createdAt: { [Sequelize.Op.like]: `%${search}%` } },
         ];
@@ -252,8 +258,11 @@ router.put("/updateStoreReceipt/:id", validateToken, async (req, res) => {
         carPlate: yup.string().required(),
         cardNumber: yup.string().required(),
         cardHolderName: yup.string().required(),
-        cardExpiryDate: yup.date().required(),
+        cardExpiryYear: yup.number().required(),
+        cardExpiryMonth: yup.number().required(),
         cvc: yup.number().required(),
+        userCity: yup.string().required(),
+        userZipCode: yup.string().required(),
         userAddress: yup.string().required()
     });
     try {
@@ -318,7 +327,7 @@ router.delete("/deleteStoreItem/:id", async (req, res) => {
 router.delete("/deleteStoreReceipt/:id", async (req, res) => {
     let id = req.params.id;
     let num = await StoreReceipt.destroy({
-        where: { carReceiptId : id }
+        where: { carPlate : id }
     })
     if (num == 1) {
         res.json({

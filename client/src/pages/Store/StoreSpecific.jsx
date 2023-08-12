@@ -4,7 +4,6 @@ import {
     Routes,
     Route,
     Link,
-    useNavigate,
     useParams,
 } from "react-router-dom";
 import React, { useContext, useEffect, useState } from "react";
@@ -96,9 +95,8 @@ function StoreSpecific() {
             <div className="flex bg-zinc-800 rounded m-auto">
                 <div className="m-7">
                     <img
-                        src={`${import.meta.env.VITE_FILE_BASE_URL_STORE}${
-                            store.carImageFile
-                        }`}
+                        src={`${import.meta.env.VITE_FILE_BASE_URL_STORE}${store.carImageFile
+                            }`}
                         className="w-96 h-80 m-0 border rounded-md"
                     />
                 </div>
@@ -113,16 +111,21 @@ function StoreSpecific() {
                         <br />
                         Sold By: {store.soldBy}
                     </div>
-                    <div className="">
+                    <div className="-mb-10">
                         {userInfo.fullName != store.soldBy && (
-                            <button className="mt-5 mr-4 px-2 py-1 border rounded transition-colors text-white hover:text-black dark:hover:bg-gradient-to-b from-slate-50 to-slate-400 border-black dark:border-white border-solid border-2 rounded hover:ease-in-out duration-200 font-semibold text-xl ">
-                                Buy Now
-                            </button>
+                            <Link to={`/Store/StoreReceiptCreate/${id}`}>
+                                <button className="mt-5 mr-4 px-2 py-1 border rounded transition-colors text-white hover:text-black dark:hover:bg-gradient-to-b from-slate-50 to-slate-400 border-black dark:border-white border-solid border-2 rounded hover:ease-in-out duration-200 font-semibold text-xl ">
+                                    Buy Now
+                                </button>
+                            </Link>
                         )}
                         {userInfo.fullName == store.soldBy && (
-                            <button className="mt-5 mr-4 px-2 py-1 border rounded transition-colors text-white hover:text-black dark:hover:bg-gradient-to-b from-slate-50 to-slate-400 border-black dark:border-white border-solid border-2 rounded hover:ease-in-out duration-200 font-semibold text-xl ">
-                                Edit
-                            </button>
+                            <Link to={`/Store/StoreUpdateItem/${id}`}>
+                                <button className="mt-5 mr-4 px-2 py-1 border rounded transition-colors text-white hover:text-black dark:hover:bg-gradient-to-b from-slate-50 to-slate-400 border-black dark:border-white border-solid border-2 rounded hover:ease-in-out duration-200 font-semibold text-xl ">
+                                    Edit
+                                </button>
+                            </Link>
+
                         )}
                         <Link to="/Trials/trialUsers/TrialsCarUserPage">
                             <button className="mx-4 px-2 py-1 border rounded transition-colors text-white hover:text-black dark:hover:bg-gradient-to-b from-slate-50 to-slate-400 border-black dark:border-white border-solid border-2 rounded hover:ease-in-out duration-200 font-semibold text-xl ">
@@ -143,12 +146,9 @@ function StoreSpecific() {
                                 Car Brand: {store.carBrand} <br />
                                 Car Model: {store.carModel} <br />
                                 Car Engine: {store.carEngine} <br />
-                                Car Speed (km/h): {store.carSpeed} <br />
+                                Car Speed: {store.carSpeed}km/h <br />
                                 Car Fuel Type: {store.carFuelType} <br />
-                                Car Fuel Consumption: {
-                                    store.carFuelConsume
-                                }{" "}
-                                <br />
+                                Car Fuel Consumption: {store.carFuelConsume}kw/h <br />
                                 Car Mods: {store.carMods}
                             </span>
                         </div>
@@ -174,7 +174,7 @@ function StoreSpecific() {
                     element={<StoreUpdateItem />}
                 />
             </Routes>
-        </Box>
+        </Box >
     );
 }
 

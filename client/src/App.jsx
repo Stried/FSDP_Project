@@ -56,6 +56,7 @@ import StoreMain from "./pages/Store/StoreMain";
 import StoreAddItem from "./pages/Store/StoreAddItem";
 import StoreUpdateItem from "./pages/Store/StoreUpdateItem";
 import StoreSpecific from "./pages/Store/StoreSpecific";
+import StoreReceiptCreate from "./pages/Store/StoreReceipt/userStoreReceipt/StoreReceiptCreate"
 import AdminEditUser from "./pages/Users/adminComponents/AdminEditUser";
 import InvalidToken from "./pages/Users/InvalidToken";
 import Documentations from "./Documentation";
@@ -216,6 +217,10 @@ function App() {
                             <Route
                                 path={"/Store/StoreSpecific/:id"}
                                 element={<StoreSpecific />}
+                            />
+                            <Route
+                                path={"/Store/StoreReceiptCreate/:id"}
+                                element={<StoreReceiptCreate />}
                             />
                             <Route
                                 path={"/Trials/trialAdmin/TrialsCarAdminPage"}
