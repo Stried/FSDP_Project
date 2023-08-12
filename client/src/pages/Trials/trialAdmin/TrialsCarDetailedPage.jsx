@@ -155,19 +155,29 @@ const graphOptions = {
   animationEnabled: true,
   title: {
     text: 'Finished Trial Receipts Over Time',
+    fontFamily: "Montserrat", 
+    fontColor: "#22c55e",
   },
+  backgroundColor: "#1F2937",
   axisX: {
-    title: 'Month',
-    interval: 1, // Show every month label
+    title: 'Time',
+    labelFontColor: "#FFFFFF",  // X-axis labels color
+    titleFontColor:"#FFFFFF", 
+    fontFamily: "Montserrat", 
+    interval: 1, 
   },
   axisY: {
-    title: 'Number of Finished Receipts',
+    title: 'Finished Receipts',
+    titleFontColor:"#FFFFFF", 
+    labelFontColor: "#FFFFFF",  // X-axis labels color
+    fontFamily: "Montserrat", 
   },
   data: [
     {
-      type: 'line', // Use line chart for month data
-      markerType: 'circle', // Use circles to mark data points
+      type: 'line', 
+      markerType: 'circle', 
       dataPoints: graphDataArray,
+      color:"#22c55e",
     },
   ],
 };
@@ -195,7 +205,6 @@ const graphOptions = {
               {trialCar.address}
             </div>
             <br />
-            <div>INSERT IMAGE HERE</div>
             <br />
             Image of car:
             <div className="w-80 h-80">
