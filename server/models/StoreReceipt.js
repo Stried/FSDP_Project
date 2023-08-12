@@ -25,8 +25,12 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.TEXT,
             allowNull: false
         },
-        cardExpiryDate: {
-            type: DataTypes.DATEONLY,
+        cardExpiryYear: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        cardExpiryMonth: {
+            type: DataTypes.INTEGER,
             allowNull: false
         },
         cvc: {
@@ -35,6 +39,14 @@ module.exports = (sequelize, DataTypes) => {
         },
         boughtBy: {
             type: DataTypes.STRING,
+            allowNull: false
+        },
+        userCity: {
+            type: DataTypes.TEXT,
+            allowNull: false
+        },
+        userZipCode: {
+            type: DataTypes.TEXT,
             allowNull: false
         },
         userAddress: {
