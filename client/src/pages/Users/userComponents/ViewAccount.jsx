@@ -40,7 +40,7 @@ import "react-toastify/dist/ReactToastify.css";
 import UserContext from "../../../contexts/UserContext";
 import * as yup from "yup";
 import charging from "./../../../../../client/src/assets/CarouselUserTrialCars/charging.png"
-
+import dayjs from 'dayjs';
 function ViewAccount() {
     const navigate = useNavigate();
     const { userInfo } = useContext(UserContext);
@@ -399,20 +399,9 @@ function ViewAccount() {
                                         {userReceiptList.length > 0 ? (
                                             userReceiptList.map(
                                                 (userListing, i) => {
-                                                    const formattedDate =
-                                                        format(
-                                                            new Date(
-                                                                userListing.dateOfTrial
-                                                            ),
-                                                            "yyyy-MM-dd"
-                                                        );
-                                                    const formattedTime =
-                                                        format(
-                                                            new Date(
-                                                                userListing.dateOfTrial
-                                                            ),
-                                                            "ha"
-                                                        );
+                                                    const formattedDate = dayjs(userListing.dateOfTrial).format('YYYY-MM-DD');
+                                                    const formattedTime = dayjs(userListing.dateOfTrial).format('hA');
+                                                    
 
                                                     return (
                                                         <div
