@@ -1,6 +1,3 @@
-// May need to add some more if not enough stuff or details.
-// Remember to trunce/drop table in MySQL workbench if changed.
-
 module.exports = (sequelize, DataTypes) => {
     const Store = sequelize.define("Store", {
         carPlateNo: { // SBA1234A
@@ -91,6 +88,10 @@ module.exports = (sequelize, DataTypes) => {
 
     Store.associate = (models) => {
         Store.hasOne(models.TrialCar, {
+            foreignKey: "carPlateNo",
+            onDelete: "cascade"
+        });
+        Store.hasOne(models.StoreReceipt, {
             foreignKey: "carPlateNo",
             onDelete: "cascade"
         });

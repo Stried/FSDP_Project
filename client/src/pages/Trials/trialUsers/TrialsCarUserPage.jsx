@@ -10,6 +10,8 @@ import {
 } from "react-router-dom";
 import * as React from "react";
 ("use client");
+import Imageone from './../../../assets/CarouselUserTrialCars/charging.png';
+import Imagetwo from './../../../assets/CarouselUserTrialCars/electric-cars-vehicles-explainer-101.png';
 import DefaultImage from '../../../../DefaultImage';
 import http from "../../../http";
 import { ToastContainer, toast } from "react-toastify";
@@ -118,96 +120,56 @@ return(
         Trial Car User Page
       </h1>
 
-      <div id="default-carousel" class="relative w-full" data-carousel="slide">
 
-    <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
-
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <i src="client\src\assets\CarouselUserTrialCars\electric-cars-vehicles-explainer-101.png" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="..."/>
-        </div>
-
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <i src="charging.png" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="..."/>
-        </div>
-
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="1648435670128.png" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="..."/>
-        </div>
-
-    </div>
-
-    <div class="absolute z-30 flex space-x-3 -translate-x-1/2 bottom-5 left-1/2">
-        <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 1" data-carousel-slide-to="0"></button>
-        <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 2" data-carousel-slide-to="1"></button>
-        <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 3" data-carousel-slide-to="2"></button>
-    </div>
-
-    <button type="button" class="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
-        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-            <svg class="w-4 h-4 text-white dark:text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
-            </svg>
-            <span class="sr-only">Previous</span>
-        </span>
-    </button>
-    <button type="button" class="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
-        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-            <svg class="w-4 h-4 text-white dark:text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
-            </svg>
-            <span class="sr-only">Next</span>
-        </span>
-    </button>
-</div>
 <br />
 <br />
 <div>
-<h1 className="text-white text-center">🌟 Introducing the Future of Driving: Trial Cars 🚗⚡</h1>
+<h1 className="text-white text-4xl text-center">🌟 Introducing the Future of Driving: <span className="text-green-400">Trial Cars</span> 🚗⚡</h1>
 <br />
 <br />
-<AnimatedParagraphSlideLeft className="text-white" >
-Are you ready to embark on an electrifying journey into the world of cutting-edge transportation? Say goodbye to hesitation and embrace the future of driving with Trial Cars – your passport to a thrilling, emission-free experience like no other!
+<AnimatedParagraphSlideLeft >
+Are you ready to embark on an <strong className="text-green-400">electrifying</strong> journey into the world of cutting-edge transportation? Say goodbye to hesitation and <strong className="text-green-400">embrace the future</strong> of driving with Trial Cars – your passport to a thrilling, emission-free experience like no other!
 </AnimatedParagraphSlideLeft>
 <br />
 <br />
-<AnimatedParagraphSlideRight className="text-white text-right" >
-Imagine gliding down the road, powered by pure innovation, in an electric car that not only reduces your carbon footprint but also revolutionizes the way you perceive driving. We understand that stepping into the realm of electric vehicles might feel like a leap of faith for some, which is why we've crafted the ultimate solution to make you feel at ease.
+<AnimatedParagraphSlideRight  >
+Imagine gliding down the road, powered by <strong className="text-green-400">pure innovation</strong>, in an electric car that not only <strong className="text-green-400">reduces</strong> your carbon footprint but also revolutionizes the way you perceive driving. We understand that stepping into the realm of electric vehicles might feel like a leap of faith for some, which is why we've crafted the <strong className="text-green-400">ultimate solution</strong> to make you feel at ease.
+</AnimatedParagraphSlideRight>
+<br />
+< hr/>
+<br />
+<AnimatedParagraphSlideLeft >
+🔌 <strong className="text-green-400">Plug Into Convenience</strong>: With Trial Cars, we've handpicked a selection of <strong className="text-green-400">top-tier</strong> electric car models, each waiting to whisk you away on a captivating test drive. The best part? It <strong className="text-green-400">won't cost you a dime!</strong> Simply browse through our lineup of exceptional electric vehicles, choose the one that resonates with your style, and reserve your exclusive 2-hour test drive.
+</AnimatedParagraphSlideLeft>
+<br />
+<br />
+
+<AnimatedParagraphSlideRight  >
+🕐 <strong className="text-green-400">Time Flies When You're Electrified</strong>: We value your time just as much as you do. Your trial period is a strictly <strong className="text-green-400">tantalizing 2 hours</strong> of unadulterated electric driving bliss. So, buckle up, press that pedal, and relish every moment as you glide through the cityscape or cruise along the countryside. No extensions, no strings attached – just two hours of <strong className="text-green-400">pure exhilaration</strong>.
 </AnimatedParagraphSlideRight>
 <br />
 <br />
 
-<AnimatedParagraphSlideLeft className="text-white" >
-🔌 Plug Into Convenience: With Trial Cars, we've handpicked a selection of top-tier electric car models, each waiting to whisk you away on a captivating test drive. The best part? It won't cost you a dime! Simply browse through our lineup of exceptional electric vehicles, choose the one that resonates with your style, and reserve your exclusive 2-hour test drive.
+<AnimatedParagraphSlideLeft  >
+🔄 <strong className="text-green-400">Seamless Flexibility</strong>: Life is unpredictable, and we get that. If your plans change, don't sweat it. Our trusty chatbot is at your service. <strong className="text-green-400">Simply send a message</strong> to our admin and voilà, your reservation is canceled. We're here to make your experience as smooth as possible, from start to finish.
 </AnimatedParagraphSlideLeft>
 <br />
 <br />
-
-<AnimatedParagraphSlideRight className="text-white" >
-🕐 Time Flies When You're Electrified: We value your time just as much as you do. Your trial period is a strictly tantalizing 2 hours of unadulterated electric driving bliss. So, buckle up, press that pedal, and relish every moment as you glide through the cityscape or cruise along the countryside. No extensions, no strings attached – just two hours of pure exhilaration.
+<AnimatedParagraphSlideRight >
+🚫 <strong className="text-green-400">Missed the Moment? Don't Worry</strong>: We believe in <strong className="text-green-400">second chances!</strong> If you happen to miss your reservation, don't despair. Another <strong className="text-green-400">opportunity</strong> is just around the corner. Secure your spot once more and get ready to embark on your electric escapade.
 </AnimatedParagraphSlideRight>
 <br />
 <br />
-
-<AnimatedParagraphSlideLeft className="text-white" >
-🔄 Seamless Flexibility: Life is unpredictable, and we get that. If your plans change, don't sweat it. Our trusty chatbot is at your service. Simply send a message to our admin and voilà, your reservation is canceled. We're here to make your experience as smooth as possible, from start to finish.
+<AnimatedParagraphSlideLeft >
+<strong className="text-green-400">Join us</strong> in embracing the future of driving, one electrifying adventure at a time. Whether you're a veteran electric car enthusiast or taking your first exhilarating leap into the world of <strong className="text-green-400">emission-free driving</strong>, Trial Cars are here to make your transition seamless, your <strong className="text-green-400">experience unforgettable</strong>, and <strong className="text-green-400">your impact</strong> on the planet undeniable.
 </AnimatedParagraphSlideLeft>
 <br />
 <br />
-<AnimatedParagraphSlideRight className="text-white">
-🚫 Missed the Moment? Don't Worry: We believe in second chances! If you happen to miss your reservation, don't despair. Another opportunity is just around the corner. Secure your spot once more and get ready to embark on your electric escapade.
-</AnimatedParagraphSlideRight>
-<br />
-<br />
-<AnimatedParagraphSlideLeft className="text-white">
-Join us in embracing the future of driving, one electrifying adventure at a time. Whether you're a veteran electric car enthusiast or taking your first exhilarating leap into the world of emission-free driving, Trial Cars are here to make your transition seamless, your experience unforgettable, and your impact on the planet undeniable.
-</AnimatedParagraphSlideLeft>
-<br />
-<br />
-<p className="text-white text-center">
+<p className="text-white text-4xl text-center">
 Reserve your 2-hour electrifying journey today and let's ignite a new era of driving together! 🌟⚡🚀
 </p>
 <br />
-<img src="./charging.png" class="absolute block w-full top-1/2 left-1/2" alt="..."/>
+
 <br />
 <br />
 </div>
@@ -278,6 +240,7 @@ Reserve your 2-hour electrifying journey today and let's ignite a new era of dri
           })}
         </div>
       </div>
+      <br></br>
       <ToastContainer />
     </div>
   );

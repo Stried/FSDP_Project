@@ -47,6 +47,12 @@ module.exports = (sequelize, DataTypes) => {
             as: "sellers"
         });
 
+        UserAccount.hasMany(models.StoreReceipt, {
+            foreignKey: "emailAccount",
+            onDelete: "cascade",
+            as: "buyers"
+        })
+
         UserAccount.hasMany(models.UserFollower, {
             foreignKey: "emailAccount",
             onDelete: "cascade",

@@ -467,26 +467,31 @@ function ViewAccount() {
                                                                         onClick={() => {
                                                                             toggleModal(
                                                                                 i
-                                                                            ),
-                                                                                handleGiveFeedback(
-                                                                                    userListing.trialReceiptId
-                                                                                );
+                                                                            );
+                                                                              handleGiveFeedback(
+                                                                                  userListing.trialReceiptId
+                                                                              );
                                                                         }}
                                                                         className={`mt-3 ${
                                                                             userListing.ratings ===
-                                                                            null
+                                                                            null ||
+                                    userListing.ratings === 0
                                                                                 ? "bg-green-400 text-white transition duration-300 hover:bg-green-600 hover:text-black"
                                                                                 : "bg-gray-400 text-gray-600"
                                                                         } px-4 py-2 rounded ${
                                                                             userListing.ratings !==
-                                                                            null
+                                                                            null && 
+                                    userListing.ratings !==0
                                                                                 ? "disabled"
                                                                                 : ""
                                                                         }`}
                                                                         disabled={
-                                                                            userListing.ratings !==
+                                                                            
+                                    userListing.ratings !==
                                                                             null
-                                                                        }
+                                                                         &&
+                                    userListing.ratings !== 0
+                                  }
                                                                         title={
                                                                             userListing.ratings !==
                                                                             null

@@ -4,36 +4,35 @@ import React, { Component } from 'react';
 import CanvasJSReact from '@canvasjs/react-charts';
 var CanvasJS = CanvasJSReact.CanvasJS;
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
-const App = () => {
-  const calculateAverageRating = (receiptList) => {
-    const modelRatings = {};
-    
-    receiptList.forEach((trialReceipt) => {
-      const modelName = trialReceipt.modelName;
-      const rating = trialReceipt.ratings;
-  
-      if (rating !== null && rating!==0) {
-        if (!modelRatings[modelName]) {
-          modelRatings[modelName] = {
-            totalRating: 0,
-            count: 0,
-          };
-        }
-    
-        modelRatings[modelName].totalRating += rating;
-        modelRatings[modelName].count++;
+const App = () => {const calculateAverageRating = (receiptList) => {
+  const modelRatings = {};
+
+  receiptList.forEach((trialReceipt) => {
+    const modelName = trialReceipt.modelName;
+    const rating = trialReceipt.ratings;
+
+    if (rating !== null && rating!==0) {
+      if (!modelRatings[modelName]) {
+        modelRatings[modelName] = {
+          totalRating: 0,
+          count: 0,
+        };
       }
-    });
-  
-    const averageRatingsArray = [];
-    for (const modelName in modelRatings) {
-      const { totalRating, count } = modelRatings[modelName];
-      const averageRating = count > 0 ? totalRating / count : 0;
-      averageRatingsArray.push({ modelName, averageRating });
+
+      modelRatings[modelName].totalRating += rating;
+      modelRatings[modelName].count++;
     }
-  
-    return averageRatingsArray;
-  };
+  });
+
+  const averageRatingsArray = [];
+  for (const modelName in modelRatings) {
+    const { totalRating, count } = modelRatings[modelName];
+    const averageRating = count > 0 ? totalRating / count : 0;
+    averageRatingsArray.push({ modelName, averageRating, count }); // Include count in the array
+  }
+
+  return averageRatingsArray;
+};
   
 
   const [trialReceiptList, setTrialReceiptList] = useState([]);
@@ -82,9 +81,10 @@ const App = () => {
       {
         type: "column",
         
-        dataPoints: sortedTop5.map(({ modelName, averageRating }) => ({
+        dataPoints: sortedTop5.map(({ modelName, averageRating, count }) => ({
           label: modelName,
-          y: averageRating
+          y: averageRating,
+          toolTipContent: `${modelName}<br>Average Rating: ${averageRating}<br>Feedback Count: ${count}`
         }))
       }
     ]

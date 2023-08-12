@@ -295,7 +295,7 @@ const App = () => {
                             Delete
                           </button>
                           <button
-                            onClick={() => setOpenModal(undefined)}
+                            onClick={() => toggleModal(i)}
                             className="px-3 py-2 bg-sky-400 hover:bg-sky-600 hover:text-white rounded font-medium"
                           >
                             Cancel
