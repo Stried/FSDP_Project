@@ -363,7 +363,7 @@ function EcoLifeSideBar() {
                     onClick={toggleNav}
                 >
                     {!arrowClose && (
-                        <div className="h-20 w-7 ">
+                        <div className="h-20 w-7 absolute left-0 inset-y-0">
                             <div className="left-1 top-10 absolute ">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -376,7 +376,7 @@ function EcoLifeSideBar() {
                         </div>
                     )}
                     {arrowClose && (
-                        <div className="h-20 w-7">
+                        <div className="h-20 w-7 absolute left-0 inset-y-0">
                             <div className="left-1 top-10 absolute ">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
