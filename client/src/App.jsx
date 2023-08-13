@@ -83,6 +83,7 @@ function App() {
 
     const Protected = ({ isAdminCheck, children }) => {
         let testCheck = isAdminCheck;
+        console.log(testCheck)
         if (!testCheck) {
             console.log(testCheck);
             console.log("Failed");
@@ -241,8 +242,8 @@ function App() {
                                 
                                 element={
                                     <Protected isAdminCheck={isAdminCheck}>
-                                <TrialsAdminPage />
-                                </Protected>
+                                        <TrialsAdminPage />
+                                    </Protected>
                             }
                             />
                             <Route
@@ -252,8 +253,8 @@ function App() {
                                 
                                 element={
                                     <Protected isAdminCheck={isAdminCheck}>
-                                <TrialsUpdatePage />
-                                </Protected>
+                                        <TrialsUpdatePage />
+                                    </Protected>
                             }
                                 
                             />
@@ -261,16 +262,18 @@ function App() {
                                 path={"/Trials/trialAdmin/TrialsCarAdd"}
                                 element={
                                     <Protected isAdminCheck={isAdminCheck}>
-                                <TrialsAddPage />
-                                </Protected>
+                                        <TrialsAddPage />
+                                    </Protected>
                                 }
                             />
                             <Route
-                                path={"/Trials/trialAdmin/TrialsCarDetailedPage/:id"}
+                                path={
+                                    "/Trials/trialAdmin/TrialsCarDetailedPage/:id"
+                                }
                                 element={
                                     <Protected isAdminCheck={isAdminCheck}>
-                                <TrialsCarDetails />
-                                </Protected>
+                                        <TrialsCarDetails />
+                                    </Protected>
                             }
                             />
                             <Route
@@ -289,8 +292,8 @@ function App() {
                                 }
                                 element={
                                     <Protected isAdminCheck={isAdminCheck}>
-                                <TrialsReceiptAdminPage />
-                                </Protected>
+                                        <TrialsReceiptAdminPage />
+                                    </Protected>
                                 }
                             />
                             <Route
@@ -299,8 +302,8 @@ function App() {
                                 }
                                 element={
                                     <Protected isAdminCheck={isAdminCheck}>
-                                <TrialsReceiptReportPage />
-                                </Protected>
+                                        <TrialsReceiptReportPage />
+                                    </Protected>
                             }
                             />
                             <Route
@@ -309,8 +312,8 @@ function App() {
                                 }
                                 element={
                                     <Protected isAdminCheck={isAdminCheck}>
-                                <TrialsData />
-                            </Protected>
+                                        <TrialsData />
+                                    </Protected>
                             }
                             />
                             <Route

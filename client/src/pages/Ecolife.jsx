@@ -50,7 +50,7 @@ function Ecolife() {
                     className={`grid grid-rows-3 grid-cols-2 my-5 p-5 space-x-5 rounded-md text-slate-700 font-bold`}
                     id="bentoBoxes"
                 >
-                    <div className="row-span-3 rounded-lg p-5 bg-white/70 ">
+                    <div className="row-span-3 rounded-lg p-5 bg-white/90 ">
                         <p className=" text-lg">Trial Cars</p>
                         <div className="mt-8">
                             <p className="text-4xl text-green-600 font-extrabold">
@@ -88,7 +88,7 @@ function Ecolife() {
                         </button>
                         
                     </div>
-                    <div className="row-span-2 p-5 mb-2 rounded-lg bg-white/70">
+                    <div className="row-span-2 p-5 mb-2 rounded-lg bg-white/90">
                         <p className="text-lg">Store</p>
                         <div className="mt-4">
                             <p className="text-4xl text-green-600 font-extrabold">
@@ -120,7 +120,7 @@ function Ecolife() {
                             </svg>
                         </button>
                     </div>
-                    <div className="p-5 mt-2 rounded-lg bg-white/70">
+                    <div className="p-5 mt-2 rounded-lg bg-white/90">
                         <p className="text-lg">Users</p>
                         <div className="font-extrabold text-3xl">
                             Sign up now,{" "}
@@ -169,7 +169,7 @@ function Ecolife() {
                     </button>
                 </div>
             </div>
-            <div className="mt-20 bg-white/70 rounded-lg p-5">
+            <div className="mt-20 mb-5 bg-white/90 rounded-lg p-5">
                 <div className="text-slate-700 font-medium">
                     <p className="text-4xl font-extrabold pt-3">
                         Why{" "}
