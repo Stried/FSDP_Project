@@ -30,14 +30,14 @@ function StoreReceiptCreate() {
         },
         validationSchema: yup.object().shape({
             carPlate: yup.string().required(),
-            cardNumber: yup.string().min(12, "Card Number cannot be more than 12").max(12, "Card Number cannot be more than 12").required(),
-            cardHolderName: yup.string().required(),
-            cardExpiryMonth: yup.number().min(2, "Month of Expiry cannot be less than 2 characters").min(2, "Month of Expiry cannot be more than 2 characters").required(),
-            cardExpiryYear: yup.number().min(2, "Year of Expiry cannot be less than 2 characters").max(2, "Year of Expiry cannot be more than 2 characters").required(),
-            cvc: yup.number().min(3, "Security code cannot be less than 3").max(3, "Security code cannot be more than 3").required(),
-            userAddress: yup.string().required(),
-            userCity: yup.string().required(),
-            userZipCode: yup.number().min(6, "Zip or Postal Code cannot be less than 6").max(6, "Zip or Postal Code cannot be more than 6").required()
+            cardNumber: yup.string().min(12, "Card Number cannot be more than 12").max(12, "Card Number cannot be more than 12").required("Card Number cannot be empty"),
+            cardHolderName: yup.string().required("Card Holder Name cannot be empty"),
+            cardExpiryMonth: yup.number().min(1, "Month of Expiry cannot be less than 2 characters").max(12, "Month of Expiry cannot be more than 12").required("Month of Expiry cannot be empty"),
+            cardExpiryYear: yup.number().min(24, "Year of Expiry cannot be less than 2 characters").max(99, "Year of Expiry cannot be more than 2 characters").required("Year of Expiry cannot be empty"),
+            cvc: yup.number().test("is-three-digit", "Security Code must be a 3-digit number.", (value) => value.toString().length === 3).required("Security Code cannot be empty"),
+            userAddress: yup.string().required("Address cannot be empty"),
+            userCity: yup.string().required("City cannot be empty"),
+            userZipCode: yup.number().test("is-six-digit", "Postal or Zip Code must be a 6-digit number.", (value) => value.toString().length === 6).required("Postal or Zip Code cannot be empty")
         }),
         onSubmit: (data) => {
             data.carPlate.trim(),
@@ -95,19 +95,8 @@ function StoreReceiptCreate() {
                             helperText={formik.touched.cardHolderName && formik.errors.cardHolderName}
                         />
                     </div>
-                    <div className="w-2/12 px-5 inline-block text-white">
+                    <div className="w-2/12 px-5 inline-block">
                         <span className="text-white">Expiration Date</span>
-                        <FormInputSingleLine
-                            valueName="cardExpiryYear"
-                            name="Year"
-                            type="text"
-                            value={formik.values.cardExpiryYear}
-                            onChange={formik.handleChange}
-                            error={formik.touched.cardExpiryYear && Boolean(formik.errors.cardExpiryYear)}
-                            helperText={formik.touched.cardExpiryYear && formik.errors.cardExpiryYear}
-                        />
-                    </div>
-                    <div className="w-2/12 pr-5 inline-block">
                         <FormInputSingleLine
                             valueName="cardExpiryMonth"
                             name="Month"
@@ -116,6 +105,17 @@ function StoreReceiptCreate() {
                             onChange={formik.handleChange}
                             error={formik.touched.cardExpiryMonth && Boolean(formik.errors.cardExpiryMonth)}
                             helperText={formik.touched.cardExpiryMonth && formik.errors.cardExpiryMonth}
+                        />
+                    </div>
+                    <div className="w-2/12 pr-5 inline-block text-white">
+                        <FormInputSingleLine
+                            valueName="cardExpiryYear"
+                            name="Year"
+                            type="text"
+                            value={formik.values.cardExpiryYear}
+                            onChange={formik.handleChange}
+                            error={formik.touched.cardExpiryYear && Boolean(formik.errors.cardExpiryYear)}
+                            helperText={formik.touched.cardExpiryYear && formik.errors.cardExpiryYear}
                         />
                     </div>
                     <div className="w-2/12 inline-block">

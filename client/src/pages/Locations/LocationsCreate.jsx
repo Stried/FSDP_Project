@@ -53,7 +53,7 @@ function LocationsCreate() {
             streetName: "",
             postalCode: "",
             Coordinates: "",
-            region: "",
+            status: true,
             fastCharge: false,
             noOfChargers: "",
         },
@@ -72,11 +72,9 @@ function LocationsCreate() {
                 .positive("Negative Postal Code?")
                 .integer()
                 .required("Please input a valid Postal Code."),
-            region: yup
-                .string()
-                .trim()
-                .oneOf(["N", "S", "E", "W"])
-                .required("Please specify a valid region."),
+            status: yup
+                .boolean()
+                .required("Please specify if the charger is enabled."),
             fastCharge: yup
                 .boolean()
                 .required(

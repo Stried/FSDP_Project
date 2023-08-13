@@ -24,8 +24,8 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             primaryKey: true
         },
-        region: { // NSEW
-            type: DataTypes.STRING,
+        status: { // 1, 0
+            type: DataTypes.BOOLEAN,
             allowNull: false
         },
         fastCharge: { // 1, 0
