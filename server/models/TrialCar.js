@@ -21,14 +21,12 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
             defaultValue: ""
+        },
+        carPlateNo: {
+            type: DataTypes.STRING,
+            allowNull: false
         }
     });
-     TrialCar.associate = (models) => {
-         TrialCar.belongsTo(models.Store, {
-             foreignKey: "carPlateNo",
-             as: "carplate"
-         });
-     };
      TrialCar.associate = (models) => {
         TrialCar.hasMany(models.TrialReceipt, {
             foreignKey: "id",
