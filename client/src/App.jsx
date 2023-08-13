@@ -60,7 +60,9 @@ import StoreSpecific from "./pages/Store/StoreSpecific";
 import StoreReceiptCreate from "./pages/Store/StoreReceipt/StoreReceiptCreate";
 import AdminEditUser from "./pages/Users/adminComponents/AdminEditUser";
 import InvalidToken from "./pages/Users/InvalidToken";
+
 import Documentations from "./Documentation";
+import PrivacyPolicy from "./PrivacyPolicy.jsx";
 
 function App() {
     const [user, setUser] = useState(null);
@@ -125,6 +127,10 @@ function App() {
                             <Route
                                 path={"/documentations"}
                                 element={<Documentations />}
+                            />
+                            <Route
+                                path={"/PrivacyPolicy"}
+                                element={<PrivacyPolicy />}
                             />
                             <Route
                                 path={"/user/createAccount"}

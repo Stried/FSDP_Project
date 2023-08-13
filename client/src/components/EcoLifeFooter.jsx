@@ -22,7 +22,7 @@ function EcoLifeFooter() {
                         <Footer.LinkGroup>
                             <Footer.Link href="/documentations">Documentations</Footer.Link>
                             <Footer.Link>About</Footer.Link>
-                            <Footer.Link>Privacy Policy</Footer.Link>
+                            <Footer.Link href="/privacyPolicy">Privacy Policy</Footer.Link>
                             <Footer.Link>Contact Us</Footer.Link>
                         </Footer.LinkGroup>
                     </div>
