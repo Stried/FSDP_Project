@@ -128,11 +128,11 @@ function StoreSpecific() {
                             </Link>
 
                         )}
-                        <Link to="/Trials/trialUsers/TrialsCarUserPage">
+                        {/* <Link to="/Trials/trialUsers/TrialsCarUserPage">
                             <button className="mx-4 px-2 py-1 border rounded transition-colors text-white hover:text-black dark:hover:bg-gradient-to-b from-slate-50 to-slate-400 border-black dark:border-white border-solid border-2 rounded hover:ease-in-out duration-200 font-semibold text-xl ">
                                 Check for Trials Availability
                             </button>
-                        </Link>
+                        </Link> */}
                         {user && <AdminUpdate isAdmin={user.adminNo} />}
                     </div>
                 </div>

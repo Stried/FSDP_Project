@@ -4,6 +4,7 @@ const router = express.Router();
 const { UserAccount, Store, StoreReceipt, Sequelize } = require('../models');
 const { validateToken } = require("../middlewares/auth");
 const yup = require("yup");
+const { Op } = require('sequelize');
 
 router.post("/createStoreItem", validateToken, async (req, res) => {
     let data = req.body;
@@ -127,7 +128,7 @@ router.get("/viewStore", async (req, res) => {
     }
 
     let list = await Store.findAll({
-        where: condition,
+        where: [condition, {emailAccount: {[Op.notIn]: ["muelsyse@ecolife.labs"]}}],
         order: [['carPlateNo', 'ASC']]
     });
     res.json(list);

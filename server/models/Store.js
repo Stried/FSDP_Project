@@ -87,10 +87,6 @@ module.exports = (sequelize, DataTypes) => {
     };
 
     Store.associate = (models) => {
-        Store.hasOne(models.TrialCar, {
-            foreignKey: "carPlateNo",
-            onDelete: "cascade"
-        });
         Store.hasOne(models.StoreReceipt, {
             foreignKey: "carPlateNo",
             onDelete: "cascade"
