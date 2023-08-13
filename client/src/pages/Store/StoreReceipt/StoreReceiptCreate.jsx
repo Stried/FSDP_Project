@@ -3,11 +3,12 @@ import {
 } from "@mui/material";
 import { BrowserRouter as Router, Routes, Route, Link, useNavigate, useParams } from "react-router-dom";
 import React, { useState } from "react";
-import "./../../../../App.css";
-import http from "./../../../../http";
-import FormInputSingleLine from "./../../../../components/FormInputSingleLine";
+import "./../../../App.css";
+import http from "../../../http";
+import FormInputSingleLine from "../../../components/FormInputSingleLine";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import { ToastContainer, toast } from "react-toastify";
 
 function StoreReceiptCreate() {
     const { id } = useParams();
@@ -17,6 +18,7 @@ function StoreReceiptCreate() {
     const formik = useFormik({
         initialValues: {
             carPlate: id,
+            price: 0,
             cardNumber: "",
             cardHolderName: "",
             cardExpiryYear: 0,
@@ -28,14 +30,14 @@ function StoreReceiptCreate() {
         },
         validationSchema: yup.object().shape({
             carPlate: yup.string().required(),
-            cardNumber: yup.string().required(),
-            cardHolderName: yup.string().required(),
-            cardExpiryYear: yup.number().required(),
-            cardExpiryMonth: yup.number().required(),
-            cvc: yup.number().required(),
-            userAddress: yup.string().required(),
-            userCity: yup.string().required(),
-            userZipCode: yup.number().required()
+            cardNumber: yup.string().min(12, "Card Number cannot be more than 12").max(12, "Card Number cannot be more than 12").required("Card Number cannot be empty"),
+            cardHolderName: yup.string().required("Card Holder Name cannot be empty"),
+            cardExpiryMonth: yup.number().min(1, "Month of Expiry cannot be less than 2 characters").max(12, "Month of Expiry cannot be more than 12").required("Month of Expiry cannot be empty"),
+            cardExpiryYear: yup.number().min(24, "Year of Expiry cannot be less than 2 characters").max(99, "Year of Expiry cannot be more than 2 characters").required("Year of Expiry cannot be empty"),
+            cvc: yup.number().test("is-three-digit", "Security Code must be a 3-digit number.", (value) => value.toString().length === 3).required("Security Code cannot be empty"),
+            userAddress: yup.string().required("Address cannot be empty"),
+            userCity: yup.string().required("City cannot be empty"),
+            userZipCode: yup.number().test("is-six-digit", "Postal or Zip Code must be a 6-digit number.", (value) => value.toString().length === 6).required("Postal or Zip Code cannot be empty")
         }),
         onSubmit: (data) => {
             data.carPlate.trim(),
@@ -45,8 +47,12 @@ function StoreReceiptCreate() {
 
             http.post("/store/createStoreReceipt", data)
                 .then((res) => {
-                    console.log(res.status);
-                    navigate("/store/StoreMain");
+                    console.log(res.status);                    
+                    http.delete(`/store/deleteStoreItem/${id}`)
+                    .then((res) => {
+                        console.log(res.data);
+                        navigate("/store/StoreMain");
+                    });
                 })
                 .catch(function (err) {
                     console.log(err);
@@ -64,7 +70,7 @@ function StoreReceiptCreate() {
                     </h1>
                 </div>
                 <div className="pr-7">
-                <div className="text-white text-center text-2xl mt-5">
+                    <div className="text-white text-center text-2xl mt-5">
                         Payment Method
                     </div>
                     <div className="w-6/12">
@@ -89,19 +95,8 @@ function StoreReceiptCreate() {
                             helperText={formik.touched.cardHolderName && formik.errors.cardHolderName}
                         />
                     </div>
-                    <div className="w-2/12 px-5 inline-block text-white">
+                    <div className="w-2/12 px-5 inline-block">
                         <span className="text-white">Expiration Date</span>
-                        <FormInputSingleLine
-                            valueName="cardExpiryYear"
-                            name="Year"
-                            type="text"
-                            value={formik.values.cardExpiryYear}
-                            onChange={formik.handleChange}
-                            error={formik.touched.cardExpiryYear && Boolean(formik.errors.cardExpiryYear)}
-                            helperText={formik.touched.cardExpiryYear && formik.errors.cardExpiryYear}
-                        />
-                    </div>
-                    <div className="w-2/12 pr-5 inline-block">
                         <FormInputSingleLine
                             valueName="cardExpiryMonth"
                             name="Month"
@@ -110,6 +105,17 @@ function StoreReceiptCreate() {
                             onChange={formik.handleChange}
                             error={formik.touched.cardExpiryMonth && Boolean(formik.errors.cardExpiryMonth)}
                             helperText={formik.touched.cardExpiryMonth && formik.errors.cardExpiryMonth}
+                        />
+                    </div>
+                    <div className="w-2/12 pr-5 inline-block text-white">
+                        <FormInputSingleLine
+                            valueName="cardExpiryYear"
+                            name="Year"
+                            type="text"
+                            value={formik.values.cardExpiryYear}
+                            onChange={formik.handleChange}
+                            error={formik.touched.cardExpiryYear && Boolean(formik.errors.cardExpiryYear)}
+                            helperText={formik.touched.cardExpiryYear && formik.errors.cardExpiryYear}
                         />
                     </div>
                     <div className="w-2/12 inline-block">
@@ -125,7 +131,7 @@ function StoreReceiptCreate() {
                     </div>
                     <div className="text-white text-center text-2xl mt-5">
                         Billing Information
-                    </div>                    
+                    </div>
                     <div className="w-1/2 inline-block">
                         <FormInputSingleLine
                             valueName="carPlate"
@@ -163,7 +169,7 @@ function StoreReceiptCreate() {
                         <FormInputSingleLine
                             valueName="userZipCode"
                             name="Zip or Postal Code"
-                            type="text"
+                            type="number"
                             value={formik.values.userZipCode}
                             onChange={formik.handleChange}
                             error={formik.touched.userZipCode && Boolean(formik.errors.userZipCode)}

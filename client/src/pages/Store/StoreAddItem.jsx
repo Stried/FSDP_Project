@@ -21,6 +21,30 @@ function StoreAddItem() {
         { value: "Hybrid", label: "Hybrid" }
     ];
 
+    const customStyles = {
+        control: (provided, state) => ({
+            ...provided,
+            border: state.isFocused ? '2px solid white' : '1px solid white',
+            backgroundColor: "black/40",
+            boxShadow: 'none',
+            ':hover': {
+                backgroundColor: 'black/40',
+                border: state.isFocused ? '2px solid white' : '1px solid white',
+                color: state.isSelected ? 'white' : 'black',
+            },
+        }),
+        option: (provided, state) => ({
+            ...provided,
+            backgroundColor: state.isSelected ? 'white' : 'white', // Custom option background color
+            color: state.isSelected ? 'black' : 'black', // Custom option text color
+            
+        }),
+        singleValue: base => ({
+            ...base,
+            color: "#fff"
+        }),
+    }
+
     const typeHandleChange = (selectedOption) => {
         formik.setFieldValue("carFuelType", selectedOption.value);
     };
@@ -69,16 +93,16 @@ function StoreAddItem() {
             carMods: ""
         },
         validationSchema: yup.object().shape({
-            carPlateNo: yup.string().trim().max(8, "Car Plate cannot be less that 8").required("Car Plate cannot be empty"),
+            carPlateNo: yup.string().trim().min(8, "Car Plate cannot be less than 8").max(8, "Car Plate cannot be more than 8").required("Car Plate cannot be empty"),
             carDescription: yup.string().trim().required("Car Description cannot be empty"),
-            carPrice: yup.number().integer().min(10000).required("Price cannot be empty"),
+            carPrice: yup.number().integer().min(10000, "Car Price must be minimum of $10,000").required("Price cannot be empty"),
             carBrand: yup.string().trim().required("Brand cannot be empty"),
             carModel: yup.string().trim().required("Model cannot be empty"),
             carEngine: yup.string().trim().required("Engine cannot be empty"),
-            carSpeed: yup.number().integer().required("Speed cannot be empty"),
+            carSpeed: yup.number().integer().min(1, "Speed cannot be less than 0").required("Speed cannot be empty"),
             carFuelType: yup.string().required("Fuel Type cannot be empty"),
             carFuelConsume: yup.number().integer().required("Fuel Consumption cannot be empty"),
-            carProductionDate: yup.date().required("Production Date cannot be empty"),
+            carProductionDate: yup.date().min("1900-01-01", "Production Date cannot be before 1923").required("Production Date cannot be empty"),
             carBodyType: yup.string().trim().required("Body Type cannot be empty"),
             carColor: yup.string().trim().required("Color cannot be empty"),
             carSeats: yup.number().integer().min(1, "The minimum seat is 1").required("Seats cannot be empty"),
@@ -92,7 +116,7 @@ function StoreAddItem() {
                 data.carImageFile = imageFile;
             } else {
                 data.carImageFile = "defaultCar.png"
-            }        
+            }
             data.carPlateNo.trim(),
                 data.carDescription.trim(),
                 data.carBrand.trim(),
@@ -101,6 +125,8 @@ function StoreAddItem() {
                 data.carFuelType.trim(),
                 data.carBodyType.trim(),
                 data.carColor.trim()
+
+
 
             http.post("/store/createStoreItem", data)
                 .then((res) => {
@@ -265,10 +291,13 @@ function StoreAddItem() {
                         <Select
                             className="bg-black/40 text-black"
                             name="carFuelType"
-                            onChange={typeHandleChange}   
-                            options={options}                    
+                            onChange={typeHandleChange}
+                            options={options}
                             value={options.find(option => option.value === formik.values.carFuelType)}
+                            styles={customStyles}
                             placeholder="Fuel Type"
+                            error={formik.touched.carFuelType && Boolean(formik.errors.carFuelType)}
+                            helperText={formik.touched.carFuelType && formik.errors.carFuelType}
                         />
                     </div>
                     <div className="w-6/12 inline-block pl-5">
@@ -287,6 +316,7 @@ function StoreAddItem() {
                             valueName="carProductionDate"
                             name="Production Date"
                             type="date"
+                            placeholder=" "
                             value={formik.values.carProductionDate}
                             onChange={formik.handleChange}
                             error={formik.touched.carProductionDate && Boolean(formik.errors.carProductionDate)}

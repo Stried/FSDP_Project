@@ -17,7 +17,7 @@ function User(props) {
         <Link to="/Store/StoreAddItem">
           <button
             type="button"
-            className="w-max | text-white hover:text-black | dark:hover:bg-gradient-to-r from-green-400 to-emerald-600 | border-white dark:border-green-500 border-solid border-2 rounded   hover:ease-in-out duration-300 | font-semibold text-xl | mx-4 mr-10 m-10 px-2 py-1 | float-right inline"
+            className="w-max | text-white hover:text-black | dark:hover:bg-gradient-to-r from-green-400 to-emerald-600 | border-white dark:border-green-500 border-solid border-2 rounded hover:ease-in-out hover:scale-110 duration-300 | font-semibold text-xl | mx-4 mr-10 m-10 px-2 py-1 | float-right inline "
           >
             Sell your vehicle here!
           </button>
@@ -37,6 +37,15 @@ function StoreMain() {
       setStoreList(res.data);
     });
   }, []);
+
+  const onClickSort = (e) => {
+    sortStore(e);
+  }
+  const sortStore = (sort) => {
+    http.get(`/store/viewStore?search=${sort}`).then((res) => {
+      setStoreList(res.data);
+    });
+  }
 
   const [search, setSearch] = useState("");
   const onSearchChange = (e) => {
@@ -68,15 +77,19 @@ function StoreMain() {
     getStore();
   };
 
+  const handleClick = () => {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  };
+
   return (
     <Box>
       <div className="">
         <div className="text-white | text-3xl | m-10 | inline-flex">
-          Categories
+          Categories:
         </div>
-        <button className="text-white | text-2xl | mx-10">All</button>
-        <button className="text-white | text-2xl | mx-10">Electric</button>
-        <button className="text-white | text-2xl | mx-10">Hybrid</button>
+        <button className="text-white | text-2xl | mx-5 border rounded px-5 p-3 transition ease-in-out delay-150 hover:scale-110 duration-300" onClick={() => onClickSort("")}>All</button>
+        <button className="text-white | text-2xl | mx-5 border rounded px-5 p-3 transition ease-in-out delay-150 hover:scale-110 duration-300" onClick={() => onClickSort("Electric")}>Electric</button>
+        <button className="text-white | text-2xl | mx-5 border rounded px-5 p-3 transition ease-in-out delay-150 hover:scale-110 duration-300" onClick={() => onClickSort("Hybrid")}>Hybrid</button>
         {user && <User isUser={user.id} />}
       </div>
       <div className="ml-7 flex">
@@ -106,11 +119,11 @@ function StoreMain() {
       <div className="grid grid-cols-3 mx-10 gap-x-5 mb-10">
         {storeList.map((store, i) => {
           return (
-              <div className="text-white shadow-lg bg-slate-800 pt-2 my-2 group border-2 border-transparent border-solid hover:border-green-500 duration-300 hover:ease-in-out">
-                  <Link to={`/Store/StoreSpecific/${store.carPlateNo}`}>
+              <div className="text-white shadow-lg bg-slate-800 pt-2 my-2 group border-2 border-transparent border-solid hover:border-green-500 duration-300 hover:ease-in-out hover:scale-105">
+                  <Link onClick={handleClick} to={`/Store/StoreSpecific/${store.carPlateNo}`}>
                       <div className="pt-3">
                           <DefaultImage
-                              className="text-2xl font-medium px-5"
+                              className="text-2xl font-medium px-5 w-fit h-80 m-auto"
                               src={`${
                                   import.meta.env.VITE_FILE_BASE_URL_STORE
                               }${store.carImageFile}`}

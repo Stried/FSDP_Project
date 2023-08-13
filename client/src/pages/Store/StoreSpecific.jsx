@@ -12,17 +12,13 @@ import http from "../../http";
 import "react-toastify/dist/ReactToastify.css";
 import UserContext from "../../contexts/UserContext";
 import StoreUpdateItem from "./StoreUpdateItem";
+import { AiOutlineUser } from "react-icons/ai";
 import DefaultImage from './../../../DefaultImage';
+
 function AdminUpdate(props) {
     const isAdmin = props.isAdmin;
 
     const { id } = useParams();
-
-    useEffect(() => {
-        http.get(`/store/viewStoreItem/${id}`).then((res) => {
-            setStore(res.data);
-        });
-    }, []);
 
     if (isAdmin) {
         return (
@@ -68,6 +64,16 @@ function StoreSpecific() {
         soldBy: "",
     });
 
+    const [storeList, setStoreList] = useState([]);
+    useEffect(() => {
+        http.get(`/store/viewStore?search=${store.carFuelType}`).then((res) => {
+            const updatedStoreList = res.data
+            .filter(element => element.carPlateNo !== store.carPlateNo)
+            .slice(0, 2);
+        setStoreList(updatedStoreList);
+            });
+        });
+
     useEffect(() => {
         http.get(`/store/viewStoreItem/${id}`).then((res) => {
             if (res.data.carMods == "") {
@@ -84,28 +90,33 @@ function StoreSpecific() {
 
     useEffect(() => {
         http.get("/user/viewAccount").then((res) => {
-            console.log(res.status);
-            console.log(res.data);
             setUserInfo(res.data);
         });
     });
+
+    const handleClick = () => {
+        setTimeout(() => {
+            window.location.reload();
+        });
+        window.scrollTo({ top: 0, behavior: 'auto' });
+    };
+
 
     return (
         <Box>
             <div className="flex bg-zinc-800 rounded m-auto">
                 <div className="m-7">
-                <DefaultImage className="w-96 h-80 m-0 border rounded-md"
-                      src={`${import.meta.env.VITE_FILE_BASE_URL_STORE}${
-                        store.carImageFile
-                      }`}
-                      
+                    <DefaultImage className="w-96 h-80 m-0 border rounded-md"
+                        src={`${import.meta.env.VITE_FILE_BASE_URL_STORE}${store.carImageFile
+                            }`}
+
                     />
                 </div>
                 <div className="text-white m-5 p-5">
-                    <div className="text-4xl mb-3">
+                    <div className="text-4xl mb-5">
                         ${store.carPrice.toLocaleString()}
                     </div>
-                    <div className="text-xl bg-black rounded-md p-5 w-1/2">
+                    <div className="text-xl bg-black rounded-md p-5">
                         Car Plate Number: {store.carPlateNo}
                         <br />
                         {store.carBrand}, {store.carModel}
@@ -167,6 +178,45 @@ function StoreSpecific() {
                             </span>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div>
+                <div className="text-white text-4xl">
+                    Still Can't Decide? You May Also Like These!
+                </div>
+                <div className="grid grid-cols-2 mx-10 gap-x-5 mb-10">
+                    {storeList.map((store, i) => {
+                        return (
+                            <div className="text-white shadow-lg bg-slate-800 pt-2 my-2 group border-2 border-transparent border-solid hover:border-green-500 duration-300 hover:ease-in-out">
+                                <Link onClick={handleClick} to={`/Store/StoreSpecific/${store.carPlateNo}`}>
+                                    <div className="pt-3">
+                                        <DefaultImage
+                                            className="text-2xl font-medium px-5 w-fit h-80 m-auto"
+                                            src={`${import.meta.env.VITE_FILE_BASE_URL_STORE
+                                                }${store.carImageFile}`}
+                                        />
+                                        <div className="mx-5 my-2 p-3 bg-black/60">
+                                            <p className="text-2xl font-medium pt-5">
+                                                {store.carBrand} {store.carModel}
+                                            </p>
+                                            <p className="text-xl">
+                                                ${store.carPrice.toLocaleString()}
+                                            </p>
+                                            <p>Production: {store.carProductionDate}</p>
+                                            <p className="flex pt-3 pb-2">
+                                                <AiOutlineUser className="mt-1" />{" "}
+                                                <span className="pl-1 text-green-400">
+                                                    <a href="/user/MuelMuel">
+                                                        {store.emailAccount}
+                                                    </a>
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </Link>
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
             <Routes>

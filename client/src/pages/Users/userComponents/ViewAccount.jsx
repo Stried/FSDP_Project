@@ -402,14 +402,16 @@ function ViewAccount() {
                                                                             userListing.carModel
                                                                         }{ " " }
                                                                         ({
-                                                                            userListing.carPlateNo
+                                                                            userListing.carPlate
                                                                         })
                                                                     </span>
                                                                 </p>
                                                                 <p className="text-xl flex mt-2">
                                                                     <BiSolidBadgeDollar className="my-auto" />{" "}
                                                                     <span className="my-auto ml-2">
-                                                                        To be added...
+                                                                        ${
+                                                                            userListing.price.toLocaleString()
+                                                                        }
                                                                     </span>
                                                                 </p>
                                                             </div>
@@ -644,7 +646,7 @@ function ViewAccount() {
                                             userFollowersList.map(
                                                 (followers, i) => {
                                                     return (
-                                                        <div className="p-2 bg-slate-800 text-center rounded">
+                                                        <div className="p-2 mb-2 mr-2 bg-slate-800 text-center rounded">
                                                             <a
                                                                 href={`/user/${followers.userName}`}
                                                             >

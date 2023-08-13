@@ -5,7 +5,8 @@ import http from "../../../http";
 const UserChatRoom = ({otherUserAccount}) => {
     const [ user, setUser ] = useState(null);
     const [ otherUserAcc, setOtherUserAcc ] = useState(null);
-    console.log("Other user is: " + otherUserAccount)
+    const [ otherUserName, setOtherUserName ] = useState(otherUserAccount);
+    console.log("Other user is: " + otherUserName)
 
     const chatboxEL = useRef();
     const [ talkLoaded, markTalkLoaded ] = useState(false);
@@ -15,8 +16,6 @@ const UserChatRoom = ({otherUserAccount}) => {
         http.get("/user/viewAccount")
             .then((res) => {
                 setUser(res.data);
-                console.log(res.data);
-                console.log(user);
                 console.log("User Info successfully logged.");
             })
             .catch(function (err) {
@@ -25,29 +24,28 @@ const UserChatRoom = ({otherUserAccount}) => {
     }, []);
 
     useEffect(() => {
-        http.get(`/user/${otherUserAccount}`)
+        http.get(`/user/${otherUserName}`)
             .then((res) => {
                 setOtherUserAcc(res.data);
-                
-                console.log(res.data);
-                console.log("The other user is" + otherUserAcc);
+
                 console.log("Successfully loaded user info");
             })
             .catch(function (err) {
                 console.log(err);
             });
-    }, []);
+    }, [otherUserName]);
 
     useEffect(() => {
-        if (talkLoaded && user) {
+        if (talkLoaded && user && otherUserAcc) {
             const currentUser = new Talk.User({
                 id: user.id,
                 name: user.userName,
                 email: user.emailAccount,
-                photoUrl: `${import.meta.env.VITE_FILE_BASE_URL}${user.imageFile
-                    }`,
+                photoUrl: `${import.meta.env.VITE_FILE_BASE_URL}${
+                    user.imageFile
+                }`,
                 welcomeMessage: "Hello!",
-                role: "default"
+                role: "default",
             });
 
             const otherUser = new Talk.User({
@@ -62,10 +60,7 @@ const UserChatRoom = ({otherUserAccount}) => {
                 me: currentUser,
             });
 
-            const conversationId = Talk.oneOnOneId(
-                currentUser,
-                otherUser
-            );
+            const conversationId = Talk.oneOnOneId(currentUser, otherUser);
             const conversation =
                 session.getOrCreateConversation(conversationId);
             conversation.setParticipant(currentUser);
@@ -74,7 +69,7 @@ const UserChatRoom = ({otherUserAccount}) => {
             const chatbox = session.createPopup();
             chatbox.select(conversation);
             chatbox.mount({ show: false });
-            
+
             const button = document.getElementById("openChat");
             button.addEventListener("click", (event) => {
                 event.preventDefault();
@@ -83,7 +78,7 @@ const UserChatRoom = ({otherUserAccount}) => {
 
             return () => session.destroy();
         }
-    }, [ talkLoaded, user, otherUserAcc ]);
+    }, [user, otherUserAcc, talkLoaded]);
 
 
 

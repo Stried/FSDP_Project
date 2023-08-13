@@ -9,16 +9,16 @@ const { Op } = require('sequelize');
 router.post("/createStoreItem", validateToken, async (req, res) => {
     let data = req.body;
     let validationSchema = yup.object().shape({
-        carPlateNo: yup.string().trim().max(8, "Car Plate cannot be less that 8").required("Car Plate cannot be empty"),
+        carPlateNo: yup.string().trim().min(8, "Car Plate cannot be less than 8").max(8, "Car Plate cannot be more than 8").required("Car Plate cannot be empty"),
         carDescription: yup.string().trim().required("Car Description cannot be empty"),
-        carPrice: yup.number().integer().min(10000).required("Price cannot be empty"),
+        carPrice: yup.number().integer().min(10000, "Car Price must be minimum of $10,000").required("Price cannot be empty"),
         carBrand: yup.string().trim().required("Brand cannot be empty"),
         carModel: yup.string().trim().required("Model cannot be empty"),
         carEngine: yup.string().trim().required("Engine cannot be empty"),
-        carSpeed: yup.number().integer().required("Speed cannot be empty"),
+        carSpeed: yup.number().integer().min(1, "Speed cannot be less than 0").required("Speed cannot be empty"),
         carFuelType: yup.string().required("Fuel Type cannot be empty"),
         carFuelConsume: yup.number().integer().required("Fuel Consumption cannot be empty"),
-        carProductionDate: yup.date().required("Production Date cannot be empty"),
+        carProductionDate: yup.date().min("1900-01-01", "Production Date cannot be before 1923").required("Production Date cannot be empty"),
         carBodyType: yup.string().trim().required("Body Type cannot be empty"),
         carColor: yup.string().trim().required("Color cannot be empty"),
         carSeats: yup.number().integer().min(1, "The minimum seat is 1").required("Seats cannot be empty"),
@@ -59,14 +59,14 @@ router.post("/createStoreReceipt", validateToken, async (req, res) => {
     let data = req.body;
     let validationSchema = yup.object().shape({
         carPlate: yup.string().required(),
-        cardNumber: yup.string().required(),
-        cardHolderName: yup.string().required(),
-        cardExpiryYear: yup.number().required(),
-        cardExpiryMonth: yup.number().required(),
-        cvc: yup.number().required(),
-        userCity: yup.string().required(),
-        userZipCode: yup.string().required(),
-        userAddress: yup.string().required()
+        cardNumber: yup.string().min(12, "Card Number cannot be more than 12").max(12, "Card Number cannot be more than 12").required("Card Number cannot be empty"),
+        cardHolderName: yup.string().required("Card Holder Name cannot be empty"),
+        cardExpiryMonth: yup.number().min(1, "Month of Expiry cannot be less than 2 characters").max(12, "Month of Expiry cannot be more than 12").required("Month of Expiry cannot be empty"),
+        cardExpiryYear: yup.number().min(24, "Year of Expiry cannot be less than 2 characters").max(99, "Year of Expiry cannot be more than 2 characters").required("Year of Expiry cannot be empty"),
+        cvc: yup.number().test("is-three-digit", "Security Code must be a 3-digit number.", (value) => value.toString().length === 3).required("Security Code cannot be empty"),
+        userAddress: yup.string().required("Address cannot be empty"),
+        userCity: yup.string().required("City cannot be empty"),
+        userZipCode: yup.number().test("is-six-digit", "Postal or Zip Code must be a 6-digit number.", (value) => value.toString().length === 6).required("Postal or Zip Code cannot be empty")
     });
     try {
         await validationSchema.validate(data,
@@ -91,11 +91,12 @@ router.post("/createStoreReceipt", validateToken, async (req, res) => {
     data.userPhoneNo = phoneNo;
 
     let car = await Store.findByPk(data.carPlate);
-    data.carPlateNo = car.carPlateNo;
+    data.carPlate = car.carPlateNo;
     data.carBrand = car.carBrand;
     data.carModel = car.carModel;
+    data.price = car.carPrice;
+    data.carImageFile = car.carImageFile;
 
-    
     let result = await StoreReceipt.create(data);
     res.json(result);
 });
@@ -128,7 +129,7 @@ router.get("/viewStore", async (req, res) => {
     }
 
     let list = await Store.findAll({
-        where: [condition, {emailAccount: {[Op.notIn]: ["muelsyse@ecolife.labs"]}}],
+        where: [condition, { emailAccount: { [Op.notIn]: ["muelsyse@ecolife.labs"] } }],
         order: [['carPlateNo', 'ASC']]
     });
     res.json(list);
@@ -198,23 +199,23 @@ router.put("/updateStoreItem/:id", validateToken, async (req, res) => {
 
     // Validate request body
     let validationSchema = yup.object().shape({
-        carPlateNo: yup.string().trim().max(8).required(),
-        carDescription: yup.string().trim().required(),
-        carPrice: yup.number().integer().required(),
-        carBrand: yup.string().trim().required(),
-        carModel: yup.string().trim().required(),
-        carEngine: yup.string().trim().required(),
-        carSpeed: yup.number().integer().required(),
-        carFuelType: yup.string().required(),
-        carFuelConsume: yup.number().integer().required(),
-        carProductionDate: yup.date().required(),
-        carBodyType: yup.string().trim().required(),
-        carColor: yup.string().trim().required(),
-        carSeats: yup.number().integer().min(1).required(),
-        carLength: yup.number().integer().required(),
-        carWidth: yup.number().integer().required(),
-        carHeight: yup.number().integer().required(),
-        carMods: yup.string(),
+        carPlateNo: yup.string().trim().min(8, "Car Plate cannot be less than 8").max(8, "Car Plate cannot be more than 8").required("Car Plate cannot be empty"),
+        carDescription: yup.string().trim().required("Car Description cannot be empty"),
+        carPrice: yup.number().integer().min(10000, "Car Price must be minimum of $10,000").required("Price cannot be empty"),
+        carBrand: yup.string().trim().required("Brand cannot be empty"),
+        carModel: yup.string().trim().required("Model cannot be empty"),
+        carEngine: yup.string().trim().required("Engine cannot be empty"),
+        carSpeed: yup.number().integer().min(1, "Speed cannot be less than 0").required("Speed cannot be empty"),
+        carFuelType: yup.string().required("Fuel Type cannot be empty"),
+        carFuelConsume: yup.number().integer().required("Fuel Consumption cannot be empty"),
+        carProductionDate: yup.date().min("1900-01-01", "Production Date cannot be before 1923").required("Production Date cannot be empty"),
+        carBodyType: yup.string().trim().required("Body Type cannot be empty"),
+        carColor: yup.string().trim().required("Color cannot be empty"),
+        carSeats: yup.number().integer().min(1, "The minimum seat is 1").required("Seats cannot be empty"),
+        carLength: yup.number().integer().required("Length cannot be empty"),
+        carWidth: yup.number().integer().required("Width cannot be empty"),
+        carHeight: yup.number().integer().required("Height cannot be empty"),
+        carMods: yup.string()
     });
     try {
         await validationSchema.validate(data,
@@ -257,14 +258,14 @@ router.put("/updateStoreReceipt/:id", validateToken, async (req, res) => {
     let data = req.body;
     let validationSchema = yup.object().shape({
         carPlate: yup.string().required(),
-        cardNumber: yup.string().required(),
+        cardNumber: yup.string().min(12, "Card Number cannot be more than 12").max(12, "Card Number cannot be more than 12").required(),
         cardHolderName: yup.string().required(),
-        cardExpiryYear: yup.number().required(),
-        cardExpiryMonth: yup.number().required(),
-        cvc: yup.number().required(),
+        cardExpiryMonth: yup.number().min(2, "Month of Expiry cannot be less than 2 characters").min(2, "Month of Expiry cannot be more than 2 characters").required(),
+        cardExpiryYear: yup.number().min(2, "Year of Expiry cannot be less than 2 characters").max(2, "Year of Expiry cannot be more than 2 characters").required(),
+        cvc: yup.number().min(3, "Security code cannot be less than 3").max(3, "Security code cannot be more than 3").required(),
+        userAddress: yup.string().required(),
         userCity: yup.string().required(),
-        userZipCode: yup.string().required(),
-        userAddress: yup.string().required()
+        userZipCode: yup.number().min(6, "Zip or Postal Code cannot be less than 6").max(6, "Zip or Postal Code cannot be more than 6").required()
     });
     try {
         await validationSchema.validate(data,
@@ -292,9 +293,10 @@ router.put("/updateStoreReceipt/:id", validateToken, async (req, res) => {
     data.carPlateNo = car.carPlateNo;
     data.carBrand = car.carBrand;
     data.carModel = car.carModel;
+    data.price = car.carPrice;
 
     let num = await StoreReceipt.update(data, {
-        where: { carPlate : id }
+        where: { carPlate: id }
     });
     if (num == 1) {
         res.json({
@@ -328,7 +330,7 @@ router.delete("/deleteStoreItem/:id", async (req, res) => {
 router.delete("/deleteStoreReceipt/:id", async (req, res) => {
     let id = req.params.id;
     let num = await StoreReceipt.destroy({
-        where: { carPlate : id }
+        where: { carPlate: id }
     })
     if (num == 1) {
         res.json({
