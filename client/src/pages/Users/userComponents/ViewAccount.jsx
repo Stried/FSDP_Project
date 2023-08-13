@@ -402,14 +402,16 @@ function ViewAccount() {
                                                                             userListing.carModel
                                                                         }{ " " }
                                                                         ({
-                                                                            userListing.carPlateNo
+                                                                            userListing.carPlate
                                                                         })
                                                                     </span>
                                                                 </p>
                                                                 <p className="text-xl flex mt-2">
                                                                     <BiSolidBadgeDollar className="my-auto" />{" "}
                                                                     <span className="my-auto ml-2">
-                                                                        To be added...
+                                                                        ${
+                                                                            userListing.price.toLocaleString()
+                                                                        }
                                                                     </span>
                                                                 </p>
                                                             </div>

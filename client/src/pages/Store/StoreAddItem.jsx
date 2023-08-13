@@ -75,10 +75,10 @@ function StoreAddItem() {
             carBrand: yup.string().trim().required("Brand cannot be empty"),
             carModel: yup.string().trim().required("Model cannot be empty"),
             carEngine: yup.string().trim().required("Engine cannot be empty"),
-            carSpeed: yup.number().integer().required("Speed cannot be empty"),
+            carSpeed: yup.number().integer().min(1, "Speed cannot be less than 0").required("Speed cannot be empty"),
             carFuelType: yup.string().required("Fuel Type cannot be empty"),
             carFuelConsume: yup.number().integer().required("Fuel Consumption cannot be empty"),
-            carProductionDate: yup.date().required("Production Date cannot be empty"),
+            carProductionDate: yup.date().min("1900-01-01").required("Production Date cannot be empty"),
             carBodyType: yup.string().trim().required("Body Type cannot be empty"),
             carColor: yup.string().trim().required("Color cannot be empty"),
             carSeats: yup.number().integer().min(1, "The minimum seat is 1").required("Seats cannot be empty"),
@@ -101,6 +101,8 @@ function StoreAddItem() {
                 data.carFuelType.trim(),
                 data.carBodyType.trim(),
                 data.carColor.trim()
+
+            
 
             http.post("/store/createStoreItem", data)
                 .then((res) => {
@@ -269,6 +271,8 @@ function StoreAddItem() {
                             options={options}                    
                             value={options.find(option => option.value === formik.values.carFuelType)}
                             placeholder="Fuel Type"
+                            error={formik.touched.carFuelType && Boolean(formik.errors.carFuelType)}
+                            helperText={formik.touched.carFuelType && formik.errors.carFuelType}
                         />
                     </div>
                     <div className="w-6/12 inline-block pl-5">

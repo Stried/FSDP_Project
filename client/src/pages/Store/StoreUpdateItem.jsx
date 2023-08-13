@@ -87,19 +87,19 @@ function StoreUpdateItem() {
         initialValues: store,
         enableReinitialize: true,
         validationSchema: yup.object().shape({
-            carPlateNo: yup.string().trim().max(8).required("Car Plate cannot be empty"),
+            carPlateNo: yup.string().trim().max(8, "Car Plate cannot be less that 8").required("Car Plate cannot be empty"),
             carDescription: yup.string().trim().required("Car Description cannot be empty"),
             carPrice: yup.number().integer().min(10000).required("Price cannot be empty"),
             carBrand: yup.string().trim().required("Brand cannot be empty"),
             carModel: yup.string().trim().required("Model cannot be empty"),
             carEngine: yup.string().trim().required("Engine cannot be empty"),
-            carSpeed: yup.number().integer().required("Speed cannot be empty"),
+            carSpeed: yup.number().integer().min(1, "Speed cannot be less than 0").required("Speed cannot be empty"),
             carFuelType: yup.string().required("Fuel Type cannot be empty"),
             carFuelConsume: yup.number().integer().required("Fuel Consumption cannot be empty"),
-            carProductionDate: yup.date().required("Production Date cannot be empty"),
+            carProductionDate: yup.date().min("1900-01-01", "Production Date cannot be before 1923").required("Production Date cannot be empty"),
             carBodyType: yup.string().trim().required("Body Type cannot be empty"),
             carColor: yup.string().trim().required("Color cannot be empty"),
-            carSeats: yup.number().integer().min(1).required("Seats cannot be empty"),
+            carSeats: yup.number().integer().min(1, "The minimum seat is 1").required("Seats cannot be empty"),
             carLength: yup.number().integer().required("Length cannot be empty"),
             carWidth: yup.number().integer().required("Width cannot be empty"),
             carHeight: yup.number().integer().required("Height cannot be empty"),
@@ -138,15 +138,21 @@ function StoreUpdateItem() {
         http.delete(`/store/deleteStoreItem/${id}`)
             .then((res) => {
                 console.log(res.data);
+                window.scrollTo({ top: 0, behavior: 'auto' });
                 navigate("/store/StoreMain");
             });
     }
     const [open, setOpen] = useState(false);
     const handleOpen = () => {
         setOpen(true);
+        window.scrollTo({ top: 0, behavior: 'auto' });
     };
     const handleClose = () => {
         setOpen(false);
+    };
+
+    const handleClick = () => {
+        window.scrollTo({ top: 0, behavior: 'auto' });
     };
 
     return (
@@ -377,7 +383,9 @@ function StoreUpdateItem() {
                         <Button
                             variant="contained"
                             type="submit"
-                            className="bg-green-400 text-black hover:bg-green-600 hover:text-white mr-3">
+                            className="bg-green-400 text-black hover:bg-green-600 hover:text-white mr-3"
+                            onClick={handleClick}
+                            >
                             Update
                         </Button>
                         <Button

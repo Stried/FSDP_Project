@@ -3,11 +3,12 @@ import {
 } from "@mui/material";
 import { BrowserRouter as Router, Routes, Route, Link, useNavigate, useParams } from "react-router-dom";
 import React, { useState } from "react";
-import "./../../../../App.css";
-import http from "./../../../../http";
-import FormInputSingleLine from "./../../../../components/FormInputSingleLine";
+import "./../../../App.css";
+import http from "../../../http";
+import FormInputSingleLine from "../../../components/FormInputSingleLine";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import { ToastContainer, toast } from "react-toastify";
 
 function StoreReceiptCreate() {
     const { id } = useParams();
@@ -17,6 +18,7 @@ function StoreReceiptCreate() {
     const formik = useFormik({
         initialValues: {
             carPlate: id,
+            price: 0,
             cardNumber: "",
             cardHolderName: "",
             cardExpiryYear: 0,
@@ -28,14 +30,14 @@ function StoreReceiptCreate() {
         },
         validationSchema: yup.object().shape({
             carPlate: yup.string().required(),
-            cardNumber: yup.string().required(),
+            cardNumber: yup.string().min(12, "Card Number cannot be more than 12").max(12, "Card Number cannot be more than 12").required(),
             cardHolderName: yup.string().required(),
-            cardExpiryYear: yup.number().required(),
-            cardExpiryMonth: yup.number().required(),
-            cvc: yup.number().required(),
+            cardExpiryMonth: yup.number().min(2, "Month of Expiry cannot be less than 2 characters").min(2, "Month of Expiry cannot be more than 2 characters").required(),
+            cardExpiryYear: yup.number().min(2, "Year of Expiry cannot be less than 2 characters").max(2, "Year of Expiry cannot be more than 2 characters").required(),
+            cvc: yup.number().min(3, "Security code cannot be less than 3").max(3, "Security code cannot be more than 3").required(),
             userAddress: yup.string().required(),
             userCity: yup.string().required(),
-            userZipCode: yup.number().required()
+            userZipCode: yup.number().min(6, "Zip or Postal Code cannot be less than 6").max(6, "Zip or Postal Code cannot be more than 6").required()
         }),
         onSubmit: (data) => {
             data.carPlate.trim(),
@@ -45,8 +47,12 @@ function StoreReceiptCreate() {
 
             http.post("/store/createStoreReceipt", data)
                 .then((res) => {
-                    console.log(res.status);
-                    navigate("/store/StoreMain");
+                    console.log(res.status);                    
+                    http.delete(`/store/deleteStoreItem/${id}`)
+                    .then((res) => {
+                        console.log(res.data);
+                        navigate("/store/StoreMain");
+                    });
                 })
                 .catch(function (err) {
                     console.log(err);
@@ -64,7 +70,7 @@ function StoreReceiptCreate() {
                     </h1>
                 </div>
                 <div className="pr-7">
-                <div className="text-white text-center text-2xl mt-5">
+                    <div className="text-white text-center text-2xl mt-5">
                         Payment Method
                     </div>
                     <div className="w-6/12">
@@ -125,7 +131,7 @@ function StoreReceiptCreate() {
                     </div>
                     <div className="text-white text-center text-2xl mt-5">
                         Billing Information
-                    </div>                    
+                    </div>
                     <div className="w-1/2 inline-block">
                         <FormInputSingleLine
                             valueName="carPlate"
@@ -163,7 +169,7 @@ function StoreReceiptCreate() {
                         <FormInputSingleLine
                             valueName="userZipCode"
                             name="Zip or Postal Code"
-                            type="text"
+                            type="number"
                             value={formik.values.userZipCode}
                             onChange={formik.handleChange}
                             error={formik.touched.userZipCode && Boolean(formik.errors.userZipCode)}
