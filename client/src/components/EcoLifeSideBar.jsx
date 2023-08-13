@@ -266,12 +266,12 @@ const SideNav = ({ isOpen }) => {
                                     >
                                         View Chargers
                                     </a>
-                                    <a
-                                        href="/locations/ToggleLocations"
+                                    <Link
+                                        to="/locations/ViewLocationStatus"
                                         className="flex items-center pl-16 p-2 text-gray-900 rounded-lg dark:text-white dark:hover:text-black dark:hover:bg-green-400 transition duration-200 "
                                     >
-                                        Toggle Chargers
-                                    </a>
+                                        View Location Status
+                                    </Link>
                                 </div>
                             )}
                         </li>

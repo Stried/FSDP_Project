@@ -42,8 +42,8 @@ const App = () => {
       carPlateNo: yup
         .string()
         .trim()
-        .min(3, "Name must be Minimum 3 Characters.")
-        .max(100, "Name must be Maximum 100 Characters")
+        .min(8, "Name must be Minimum 3 Characters.")
+        .max(8, "Name must be Maximum 100 Characters")
         .required("Name is required."),
       address: yup
         .string()
