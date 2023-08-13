@@ -229,23 +229,43 @@ function App() {
                             />
                             <Route
                                 path={"/Trials/trialAdmin/TrialsCarAdminPage"}
-                                element={<TrialsAdminPage />}
+                                
+                                element={
+                                    <Protected isAdminCheck={isAdminCheck}>
+                                <TrialsAdminPage />
+                                </Protected>
+                            }
                             />
                             <Route
                                 path={
                                     "/Trials/trialAdmin/TrialsCarAdminUpdate/:carPlateNo"
                                 }
-                                element={<TrialsUpdatePage />}
+                                
+                                element={
+                                    <Protected isAdminCheck={isAdminCheck}>
+                                <TrialsUpdatePage />
+                                </Protected>
+                            }
+                                
                             />
                             <Route
                                 path={"/Trials/trialAdmin/TrialsCarAdd"}
-                                element={<TrialsAddPage />}
+                                element={
+                                    <Protected isAdminCheck={isAdminCheck}>
+                                <TrialsAddPage />
+                                </Protected>
+                                }
                             />
                             <Route
                                 path={
                                     "/Trials/trialAdmin/TrialsCarDetailedPage/:id"
                                 }
-                                element={<TrialsCarDetails />}
+
+                                element={
+                                    <Protected isAdminCheck={isAdminCheck}>
+                                <TrialsCarDetails />
+                                </Protected>
+                            }
                             />
                             <Route
                                 path={"/Trials/trialUsers/TrialsCarUserPage"}
@@ -261,19 +281,31 @@ function App() {
                                 path={
                                     "/Trials/trialAdmin/TrialsReceiptAdminPage"
                                 }
-                                element={<TrialsReceiptAdminPage />}
+                                element={
+                                    <Protected isAdminCheck={isAdminCheck}>
+                                <TrialsReceiptAdminPage />
+                                </Protected>
+                                }
                             />
                             <Route
                                 path={
                                     "/Trials/trialAdmin/TrialsReceiptReportPage/:id"
                                 }
-                                element={<TrialsReceiptReportPage />}
+                                element={
+                                    <Protected isAdminCheck={isAdminCheck}>
+                                <TrialsReceiptReportPage />
+                                </Protected>
+                            }
                             />
                             <Route
                                 path={
                                     "/Trials/trialUsers/TrialsData"
                                 }
-                                element={<TrialsData />}
+                                element={
+                                    <Protected isAdminCheck={isAdminCheck}>
+                                <TrialsData />
+                            </Protected>
+                            }
                             />
                             <Route
                                 path={"*"}

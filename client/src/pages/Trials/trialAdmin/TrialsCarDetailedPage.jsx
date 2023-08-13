@@ -441,13 +441,7 @@ const App = () => {
         </div>
         <br />
       </div>
-      <Button
-        href="/Trials/trialAdmin/TrialsCarAdminPage"
-        className="  dark:bg-gray-800 text-white hover:bg-green-600 hover:text-white"
-        style={{ left: "93%", marginTop: "50px" }}
-      >
-        Back
-      </Button>
+
       <br />
       <br />
       <ToastContainer />

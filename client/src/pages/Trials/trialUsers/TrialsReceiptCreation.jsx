@@ -337,13 +337,8 @@ const App = () => {
           Book
         </Button>
       </Box>
-      <Button
-        href="/Trials/trialUsers/TrialsCarUserPage"
-        className=" mt-32 mb-16 dark:bg-gray-800 text-white hover:bg-green-600 hover:text-white"
-        style={{ left: "93%" }}
-      >
-        Back
-      </Button>
+<br />
+<br />
       <ToastContainer />
     </div>
   );
