@@ -54,16 +54,21 @@ const SideNav = ({ isOpen }) => {
 
     const [isAdminCheck, setIsAdminCheck] = useState(null);
 
-    const [accordionOpen, setAccordionOpen] = useState(false);
+    const [locationsAccordionOpen, setLocationsAccordionOpen] = useState(false);
+    const [trialsAccordionOpen, setTrialsAccordionOpen] = useState(false);
 
-    const toggleAccordion = () => {
-        setAccordionOpen(!accordionOpen);
+    const toggleLocationsAccordion = () => {
+        setLocationsAccordionOpen(!locationsAccordionOpen);
     };
+
+    const toggleTrialsAccordion = () => {
+        setTrialsAccordionOpen(!trialsAccordionOpen);
+    };
+
     return (
         <div
-            className={`fixed left-0 top-0 h-full w-64 bg-gradient-to-r z-50 text-white  transition-transform duration-300 transform ${
-                isOpen ? "translate-x-0" : "-translate-x-full"
-            }`}
+            className={`fixed left-0 top-0 h-full w-64 bg-gradient-to-r z-50 text-white  transition-transform duration-300 transform ${isOpen ? "translate-x-0" : "-translate-x-full"
+                }`}
         >
             <aside
                 id="separator-sidebar"
@@ -106,7 +111,7 @@ const SideNav = ({ isOpen }) => {
                             <ul>
                                 <button
                                     className=" w-full text-left"
-                                    onClick={toggleAccordion}
+                                    onClick={toggleTrialsAccordion}
                                 >
                                     <a
                                         href="#"
@@ -126,7 +131,7 @@ const SideNav = ({ isOpen }) => {
                                             ></path>
                                         </svg>
                                         <span className="ml-3">Trials</span>
-                                        {!accordionOpen && (
+                                        {!trialsAccordionOpen && (
                                             <div className="pl-20 font-bold ">
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
@@ -144,7 +149,7 @@ const SideNav = ({ isOpen }) => {
                                                 </svg>
                                             </div>
                                         )}
-                                        {accordionOpen && (
+                                        {trialsAccordionOpen && (
                                             <div className="pl-20 font-bold ">
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
@@ -165,7 +170,7 @@ const SideNav = ({ isOpen }) => {
                                     </a>
                                 </button>
                             </ul>
-                            {accordionOpen && (
+                            {trialsAccordionOpen && (
                                 <div>
                                     <a
                                         href="/Trials/trialAdmin/TrialsCarAdd"
@@ -195,23 +200,80 @@ const SideNav = ({ isOpen }) => {
                             )}
                         </li>
                         <li id="locations">
-                            <Link
-                                to="/locations/LocationsMain"
-                                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white dark:hover:text-black dark:hover:bg-green-400 transition duration-200"
-                            >
-                                <svg
-                                    aria-hidden="true"
-                                    className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                                    fill="currentColor"
-                                    viewBox="0 0 20 20"
-                                    xmlns="http://www.w3.org/2000/svg"
+                            <ul>
+                                <button
+                                    className=" w-full text-left"
+                                    onClick={toggleLocationsAccordion}
                                 >
-                                    <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
-                                </svg>
-                                <span className="flex-1 ml-3 whitespace-nowrap">
-                                    Locations
-                                </span>
-                            </Link>
+                                    <a
+                                        href="#"
+                                        className="flex font-medium items-center p-2 text-gray-900 rounded-lg dark:text-white dark:hover:text-black dark:hover:bg-green-400 transition duration-200 "
+                                    >
+                                        <svg
+                                            aria-hidden="true"
+                                            className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                                            fill="currentColor"
+                                            viewBox="0 0 20 20"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+                                        </svg>
+                                        <span className="ml-3">Locations</span>
+                                        {!locationsAccordionOpen && (
+                                            <div className="pl-20 font-bold ">
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    width="32"
+                                                    height="28"
+                                                    fill="currentColor"
+                                                    class="bi bi-chevron-compact-down"
+                                                    viewBox="0 0 16 16"
+                                                >
+                                                    {" "}
+                                                    <path
+                                                        fill-rule="evenodd"
+                                                        d="M1.553 6.776a.5.5 0 0 1 .67-.223L8 9.44l5.776-2.888a.5.5 0 1 1 .448.894l-6 3a.5.5 0 0 1-.448 0l-6-3a.5.5 0 0 1-.223-.67z"
+                                                    />{" "}
+                                                </svg>
+                                            </div>
+                                        )}
+                                        {locationsAccordionOpen && (
+                                            <div className="pl-20 font-bold ">
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    width="32"
+                                                    height="28"
+                                                    fill="currentColor"
+                                                    class="bi bi-chevron-compact-up"
+                                                    viewBox="0 0 16 16"
+                                                >
+                                                    {" "}
+                                                    <path
+                                                        fill-rule="evenodd"
+                                                        d="M7.776 5.553a.5.5 0 0 1 .448 0l6 3a.5.5 0 1 1-.448.894L8 6.56 2.224 9.447a.5.5 0 1 1-.448-.894l6-3z"
+                                                    />{" "}
+                                                </svg>
+                                            </div>
+                                        )}
+                                    </a>
+                                </button>
+                            </ul>
+                            {locationsAccordionOpen && (
+                                <div>
+                                    <a
+                                        href="/locations/LocationsMain"
+                                        className="flex items-center pl-16 p-2 text-gray-900 rounded-lg dark:text-white dark:hover:text-black dark:hover:bg-green-400 transition duration-200 "
+                                    >
+                                        View Chargers
+                                    </a>
+                                    <a
+                                        href="/locations/ToggleLocations"
+                                        className="flex items-center pl-16 p-2 text-gray-900 rounded-lg dark:text-white dark:hover:text-black dark:hover:bg-green-400 transition duration-200 "
+                                    >
+                                        Toggle Chargers
+                                    </a>
+                                </div>
+                            )}
                         </li>
                         <li id="createAdmin">
                             <Link
@@ -294,11 +356,10 @@ function EcoLifeSideBar() {
                 className=""
             >
                 <button
-                    className={`fixed z-40 p-3 py-5 ml-0 w-4 h-24 rounded-r-2xl bg-gradient-to-l from-green-400 to-emerald-600 text-grey transition-transform duration-300 ${
-                        isOpen
-                            ? "translate-x-64 translate-y-20"
-                            : "translate-x-0 translate-y-20"
-                    }`}
+                    className={`fixed z-40 p-3 py-5 ml-0 w-4 h-24 rounded-r-2xl bg-gradient-to-l from-green-400 to-emerald-600 text-grey transition-transform duration-300 ${isOpen
+                        ? "translate-x-64 translate-y-20"
+                        : "translate-x-0 translate-y-20"
+                        }`}
                     onClick={toggleNav}
                 >
                     {!arrowClose && (
@@ -332,9 +393,8 @@ function EcoLifeSideBar() {
             <SideNav isOpen={isOpen} />
 
             <div
-                className={`text-white transition duration-500 ${
-                    isOpen ? " opacity-25 " : " opacity-100 "
-                }`}
+                className={`text-white transition duration-500 ${isOpen ? " opacity-25 " : " opacity-100 "
+                    }`}
             ></div>
         </div>
     );

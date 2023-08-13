@@ -42,6 +42,7 @@ import SupportHelpDesk from "./pages/Users/SupportHelpDesk";
 import LocationsMain from "./pages/Locations/LocationsMain";
 import CreateLocations from "./pages/Locations/CreateLocations";
 import EditLocations from "./pages/Locations/EditLocations";
+import ToggleLocations from "./pages/Locations/ToggleLocations";
 
 import TrialsData from "./pages/Trials/trialAdmin/TrialsData";
 import TrialsAddPage from "./pages/Trials/trialAdmin/TrialsCarAdd";
@@ -201,6 +202,10 @@ function App() {
                             <Route
                                 path={"/locations/editLocations/:id"}
                                 element={<EditLocations />}
+                            />
+                            <Route
+                                path={"locations/ToggleLocations"}
+                                element={<ToggleLocations />}
                             />
                             <Route
                                 path={"/Store/StoreMain"}
