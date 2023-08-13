@@ -172,30 +172,30 @@ const SideNav = ({ isOpen }) => {
                             </ul>
                             {trialsAccordionOpen && (
                                 <div>
-                                    <a
-                                        href="/Trials/trialAdmin/TrialsCarAdd"
+                                    <Link
+                                        to="/Trials/trialAdmin/TrialsCarAdd"
                                         className="flex items-center pl-16 p-2 text-gray-900 rounded-lg dark:text-white dark:hover:text-black dark:hover:bg-green-400 transition duration-200 "
                                     >
                                         Add Trial Car
-                                    </a>
-                                    <a
-                                        href="/Trials/trialAdmin/TrialsCarAdminPage"
+                                    </Link>
+                                    <Link
+                                        to="/Trials/trialAdmin/TrialsCarAdminPage"
                                         className="flex items-center pl-16 p-2 text-gray-900 rounded-lg dark:text-white dark:hover:text-black dark:hover:bg-green-400 transition duration-200 "
                                     >
                                         View Trial Cars
-                                    </a>
-                                    <a
-                                        href="/Trials/trialAdmin/TrialsReceiptAdminPage"
+                                    </Link>
+                                    <Link
+                                        to="/Trials/trialAdmin/TrialsReceiptAdminPage"
                                         className="flex items-center pl-16 p-2 text-gray-900 rounded-lg dark:text-white dark:hover:text-black dark:hover:bg-green-400 transition duration-200 "
                                     >
                                         View Trial Receipts
-                                    </a>
-                                    <a
-                                        href="/Trials/trialUsers/TrialsData"
+                                    </Link>
+                                    <Link
+                                        to="/Trials/trialUsers/TrialsData"
                                         className="flex items-center pl-16 p-2 text-gray-900 rounded-lg dark:text-white dark:hover:text-black dark:hover:bg-green-400 transition duration-200 "
                                     >
                                         View Trial Statistics
-                                    </a>
+                                    </Link>
                                 </div>
                             )}
                         </li>
