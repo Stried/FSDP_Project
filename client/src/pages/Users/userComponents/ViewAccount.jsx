@@ -644,7 +644,7 @@ function ViewAccount() {
                                             userFollowersList.map(
                                                 (followers, i) => {
                                                     return (
-                                                        <div className="p-2 bg-slate-800 text-center rounded">
+                                                        <div className="p-2 mb-2 mr-2 bg-slate-800 text-center rounded">
                                                             <a
                                                                 href={`/user/${followers.userName}`}
                                                             >
