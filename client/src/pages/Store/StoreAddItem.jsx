@@ -115,7 +115,7 @@ function StoreAddItem() {
             if (imageFile) {
                 data.carImageFile = imageFile;
             } else {
-                data.carImageFile = "defaultCar.png"
+                data.carImageFile = "image.jpeg"
             }
             data.carPlateNo.trim(),
                 data.carDescription.trim(),
