@@ -66,7 +66,7 @@ function LocationsMain() {
             <div className="mb-4 flex justify-center items-center">
                 {(user && <AddCharger isAdmin={user.adminNo} />)}
             </div>
-            <div className="max-w-screen mx-auto grid grid-cols-2 gap-4">
+            <div className="max-w-screen mx-auto grid grid-cols-2 gap-4 w-1/2">
                 {locationList.map((location, key) => {
                     return (
                         <div className="text-black">
