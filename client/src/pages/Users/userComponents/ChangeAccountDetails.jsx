@@ -105,7 +105,7 @@ function ChangeAccountDetails() {
                 .integer("Phone number must be a Singapore Number.")
                 .min(80000000, "Phone Number must be a Singapore Number.")
                 .max(99999999, "Phone Number must be a Singapore Number.")
-                .nullable(),
+                .required(),
             emailAccount: yup
                 .string()
                 .email("Please enter a valid email address.")

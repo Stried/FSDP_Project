@@ -235,7 +235,7 @@ router.put("/viewAccount/changeDetails", validateToken, async (req, res) => {
     let checkUserPhone = await UserAccount.findOne({
         where: { phoneNo: data.phoneNo }
     });
-    if (checkUserPhone && data.phoneNo !== currentUser.phoneNo) {
+    if (checkUserPhone && data.phoneNo != currentUser.phoneNo) {
         res.status(400).json({ message: "Phone Number already exists." });
         return;
     };
