@@ -87,9 +87,9 @@ function StoreUpdateItem() {
         initialValues: store,
         enableReinitialize: true,
         validationSchema: yup.object().shape({
-            carPlateNo: yup.string().trim().max(8, "Car Plate cannot be less that 8").required("Car Plate cannot be empty"),
+            carPlateNo: yup.string().trim().min(8, "Car Plate cannot be less than 8").max(8, "Car Plate cannot be more than 8").required("Car Plate cannot be empty"),
             carDescription: yup.string().trim().required("Car Description cannot be empty"),
-            carPrice: yup.number().integer().min(10000).required("Price cannot be empty"),
+            carPrice: yup.number().integer().min(10000, "Car Price must be minimum of $10,000").required("Price cannot be empty"),
             carBrand: yup.string().trim().required("Brand cannot be empty"),
             carModel: yup.string().trim().required("Model cannot be empty"),
             carEngine: yup.string().trim().required("Engine cannot be empty"),
@@ -154,6 +154,30 @@ function StoreUpdateItem() {
     const handleClick = () => {
         window.scrollTo({ top: 0, behavior: 'auto' });
     };
+
+    const customStyles = {
+        control: (provided, state) => ({
+            ...provided,
+            border: state.isFocused ? '2px solid white' : '1px solid white',
+            backgroundColor: "black/40",
+            boxShadow: 'none',
+            ':hover': {
+                backgroundColor: 'black/40',
+                border: state.isFocused ? '2px solid white' : '1px solid white',
+                color: state.isSelected ? 'white' : 'black',
+            },
+        }),
+        option: (provided, state) => ({
+            ...provided,
+            backgroundColor: state.isSelected ? 'white' : 'white', // Custom option background color
+            color: state.isSelected ? 'black' : 'black', // Custom option text color
+            
+        }),
+        singleValue: base => ({
+            ...base,
+            color: "#fff"
+        }),
+    }
 
     return (
         <Box component={"div"} className="pl-7 bg-zinc-800 rounded w-11/12 m-auto">
@@ -308,6 +332,7 @@ function StoreUpdateItem() {
                             name="carFuelType"
                             onChange={typeHandleChange}
                             options={options}
+                            styles={customStyles}
                             value={options.find(option => option.value === formik.values.carFuelType)}
                             placeholder="Fuel Type"
                         />
@@ -385,7 +410,7 @@ function StoreUpdateItem() {
                             type="submit"
                             className="bg-green-400 text-black hover:bg-green-600 hover:text-white mr-3"
                             onClick={handleClick}
-                            >
+                        >
                             Update
                         </Button>
                         <Button

@@ -113,10 +113,10 @@ function StoreSpecific() {
                     />
                 </div>
                 <div className="text-white m-5 p-5">
-                    <div className="text-4xl mb-3">
+                    <div className="text-4xl mb-5">
                         ${store.carPrice.toLocaleString()}
                     </div>
-                    <div className="text-xl bg-black rounded-md p-5 w-2/3">
+                    <div className="text-xl bg-black rounded-md p-5">
                         Car Plate Number: {store.carPlateNo}
                         <br />
                         {store.carBrand}, {store.carModel}

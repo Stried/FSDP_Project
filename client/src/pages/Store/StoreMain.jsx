@@ -87,8 +87,8 @@ function StoreMain() {
         <div className="text-white | text-3xl | m-10 | inline-flex">
           Categories:
         </div>
-        <button className="text-white | text-2xl | mx-5 border rounded px-5 p-3" onClick={() => onClickSort("")}>All</button>
-        <button className="text-white | text-2xl | mx-5 border rounded px-5 p-3" onClick={() => onClickSort("Electric")}>Electric</button>
+        <button className="text-white | text-2xl | mx-5 border rounded px-5 p-3 transition ease-in-out delay-150 hover:scale-110 duration-300" onClick={() => onClickSort("")}>All</button>
+        <button className="text-white | text-2xl | mx-5 border rounded px-5 p-3 transition ease-in-out delay-150 hover:scale-110 duration-300" onClick={() => onClickSort("Electric")}>Electric</button>
         <button className="text-white | text-2xl | mx-5 border rounded px-5 p-3 transition ease-in-out delay-150 hover:scale-110 duration-300" onClick={() => onClickSort("Hybrid")}>Hybrid</button>
         {user && <User isUser={user.id} />}
       </div>
@@ -119,7 +119,7 @@ function StoreMain() {
       <div className="grid grid-cols-3 mx-10 gap-x-5 mb-10">
         {storeList.map((store, i) => {
           return (
-              <div className="text-white shadow-lg bg-slate-800 pt-2 my-2 group border-2 border-transparent border-solid hover:border-green-500 duration-300 hover:ease-in-out">
+              <div className="text-white shadow-lg bg-slate-800 pt-2 my-2 group border-2 border-transparent border-solid hover:border-green-500 duration-300 hover:ease-in-out hover:scale-105">
                   <Link onClick={handleClick} to={`/Store/StoreSpecific/${store.carPlateNo}`}>
                       <div className="pt-3">
                           <DefaultImage
