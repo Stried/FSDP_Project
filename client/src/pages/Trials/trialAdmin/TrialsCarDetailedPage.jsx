@@ -192,7 +192,7 @@ const App = () => {
                     src={`${import.meta.env.VITE_FILE_BASE_URL_STORE}${
                       trialCar.carImageFile
                     }`}
-                    className="object-cover w-full h-full"
+                    className="object-cover w-full h-full rounded-lg"
                     alt="Car Image"
                     style={{ objectFit: "contain" }}
                   />
