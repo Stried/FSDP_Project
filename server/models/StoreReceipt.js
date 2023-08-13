@@ -5,6 +5,10 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             primaryKey: true
         },
+        price: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
         carReceiptId: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV1
@@ -60,6 +64,11 @@ module.exports = (sequelize, DataTypes) => {
         userEmailAccount: {
             type: DataTypes.TEXT,
             allowNull: false
+        },
+        carImageFile: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            defaultValue: ""
         }
     });
 
@@ -67,10 +76,6 @@ module.exports = (sequelize, DataTypes) => {
         StoreReceipt.belongsTo(models.UserAccount, {
             foreignKey: "emailAccount",
             as: "buyers"
-        });
-        StoreReceipt.belongsTo(models.Store, {
-            foreignKey: "carPlateNo",
-            as: "car"
         });
     };
 

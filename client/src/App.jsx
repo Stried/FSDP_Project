@@ -56,7 +56,7 @@ import StoreMain from "./pages/Store/StoreMain";
 import StoreAddItem from "./pages/Store/StoreAddItem";
 import StoreUpdateItem from "./pages/Store/StoreUpdateItem";
 import StoreSpecific from "./pages/Store/StoreSpecific";
-import StoreReceiptCreate from "./pages/Store/StoreReceipt/userStoreReceipt/StoreReceiptCreate"
+import StoreReceiptCreate from "./pages/Store/StoreReceipt/StoreReceiptCreate"
 import AdminEditUser from "./pages/Users/adminComponents/AdminEditUser";
 import InvalidToken from "./pages/Users/InvalidToken";
 import Documentations from "./Documentation";
