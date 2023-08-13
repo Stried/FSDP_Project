@@ -18,7 +18,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import CustomSelectCars from "./CustomSelectCars";
 
-const App = () => {
+function TrialsCarAdd() {
   
   const options = [
     { value: "Serangoon", label: "Serangoon" },
@@ -120,4 +120,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default TrialsCarAdd;

@@ -20,7 +20,7 @@ import http from "../../../http";
 import { ToastContainer, toast } from "react-toastify";
 import { useSpring, animated, config } from "react-spring";
 import { useInView } from "react-intersection-observer";
-const App = () => {
+function TrialsCarUserPage() {
   const [trialCarList, setTrialCarList] = useState([]);
   const getTrialCar = () => {
     http.get("/trials/viewTrialCar").then((res) => {
@@ -354,4 +354,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default TrialsCarUserPage;

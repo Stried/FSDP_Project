@@ -19,7 +19,7 @@ import FormInputSingleLine from "./../../../components/FormInputSingleLine";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-const App = () => {
+function TrialsReceiptAdminPage() {
   const [trialReceiptList, setTrialReceiptList] = useState([]);
   const getTrialReceipt = () => {
     http.get("/trials/viewAllTrialReceipt").then((res) => {
@@ -372,4 +372,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default TrialsReceiptAdminPage;
