@@ -42,6 +42,7 @@ import SupportHelpDesk from "./pages/Users/SupportHelpDesk";
 import LocationsMain from "./pages/Locations/LocationsMain";
 import CreateLocations from "./pages/Locations/CreateLocations";
 import EditLocations from "./pages/Locations/EditLocations";
+import ToggleLocations from "./pages/Locations/ToggleLocations";
 
 import TrialsData from "./pages/Trials/trialAdmin/TrialsData";
 import TrialsAddPage from "./pages/Trials/trialAdmin/TrialsCarAdd";
@@ -56,7 +57,7 @@ import StoreMain from "./pages/Store/StoreMain";
 import StoreAddItem from "./pages/Store/StoreAddItem";
 import StoreUpdateItem from "./pages/Store/StoreUpdateItem";
 import StoreSpecific from "./pages/Store/StoreSpecific";
-import StoreReceiptCreate from "./pages/Store/StoreReceipt/userStoreReceipt/StoreReceiptCreate"
+import StoreReceiptCreate from "./pages/Store/StoreReceipt/StoreReceiptCreate"
 import AdminEditUser from "./pages/Users/adminComponents/AdminEditUser";
 import InvalidToken from "./pages/Users/InvalidToken";
 import Documentations from "./Documentation";
@@ -201,6 +202,10 @@ function App() {
                             <Route
                                 path={"/locations/editLocations/:id"}
                                 element={<EditLocations />}
+                            />
+                            <Route
+                                path={"locations/ToggleLocations"}
+                                element={<ToggleLocations />}
                             />
                             <Route
                                 path={"/Store/StoreMain"}

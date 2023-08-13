@@ -59,14 +59,14 @@ router.post("/createStoreReceipt", validateToken, async (req, res) => {
     let data = req.body;
     let validationSchema = yup.object().shape({
         carPlate: yup.string().required(),
-        cardNumber: yup.string().required(),
-        cardHolderName: yup.string().required(),
-        cardExpiryYear: yup.number().required(),
-        cardExpiryMonth: yup.number().required(),
-        cvc: yup.number().required(),
-        userCity: yup.string().required(),
-        userZipCode: yup.string().required(),
-        userAddress: yup.string().required()
+            cardNumber: yup.string().min(12, "Card Number cannot be more than 12").max(12, "Card Number cannot be more than 12").required(),
+            cardHolderName: yup.string().required(),
+            cardExpiryMonth: yup.number().min(2, "Month of Expiry cannot be less than 2 characters").min(2, "Month of Expiry cannot be more than 2 characters").required(),
+            cardExpiryYear: yup.number().min(2, "Year of Expiry cannot be less than 2 characters").max(2, "Year of Expiry cannot be more than 2 characters").required(),
+            cvc: yup.number().min(3, "Security code cannot be less than 3").max(3, "Security code cannot be more than 3").required(),
+            userAddress: yup.string().required(),
+            userCity: yup.string().required(),
+            userZipCode: yup.number().min(6, "Zip or Postal Code cannot be less than 6").max(6, "Zip or Postal Code cannot be more than 6").required()
     });
     try {
         await validationSchema.validate(data,
@@ -91,10 +91,11 @@ router.post("/createStoreReceipt", validateToken, async (req, res) => {
     data.userPhoneNo = phoneNo;
 
     let car = await Store.findByPk(data.carPlate);
-    data.carPlateNo = car.carPlateNo;
+    data.carPlate = car.carPlateNo;
     data.carBrand = car.carBrand;
     data.carModel = car.carModel;
-
+    data.price = car.carPrice;
+    data.carImageFile = car.carImageFile;
     
     let result = await StoreReceipt.create(data);
     res.json(result);
@@ -257,14 +258,14 @@ router.put("/updateStoreReceipt/:id", validateToken, async (req, res) => {
     let data = req.body;
     let validationSchema = yup.object().shape({
         carPlate: yup.string().required(),
-        cardNumber: yup.string().required(),
-        cardHolderName: yup.string().required(),
-        cardExpiryYear: yup.number().required(),
-        cardExpiryMonth: yup.number().required(),
-        cvc: yup.number().required(),
-        userCity: yup.string().required(),
-        userZipCode: yup.string().required(),
-        userAddress: yup.string().required()
+            cardNumber: yup.string().min(12, "Card Number cannot be more than 12").max(12, "Card Number cannot be more than 12").required(),
+            cardHolderName: yup.string().required(),
+            cardExpiryMonth: yup.number().min(2, "Month of Expiry cannot be less than 2 characters").min(2, "Month of Expiry cannot be more than 2 characters").required(),
+            cardExpiryYear: yup.number().min(2, "Year of Expiry cannot be less than 2 characters").max(2, "Year of Expiry cannot be more than 2 characters").required(),
+            cvc: yup.number().min(3, "Security code cannot be less than 3").max(3, "Security code cannot be more than 3").required(),
+            userAddress: yup.string().required(),
+            userCity: yup.string().required(),
+            userZipCode: yup.number().min(6, "Zip or Postal Code cannot be less than 6").max(6, "Zip or Postal Code cannot be more than 6").required()
     });
     try {
         await validationSchema.validate(data,
@@ -292,6 +293,7 @@ router.put("/updateStoreReceipt/:id", validateToken, async (req, res) => {
     data.carPlateNo = car.carPlateNo;
     data.carBrand = car.carBrand;
     data.carModel = car.carModel;
+    data.price = car.carPrice;
 
     let num = await StoreReceipt.update(data, {
         where: { carPlate : id }
