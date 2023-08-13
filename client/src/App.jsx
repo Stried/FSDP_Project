@@ -1,18 +1,18 @@
 "use client";
 import React from "react";
 import {
-  Container,
-  AppBar,
-  Toolbar,
-  Typography,
-  CssBaseline,
+    Container,
+    AppBar,
+    Toolbar,
+    Typography,
+    CssBaseline,
 } from "@mui/material";
 import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Link,
-  Navigate,
+    BrowserRouter as Router,
+    Routes,
+    Route,
+    Link,
+    Navigate,
 } from "react-router-dom";
 import { useState, useEffect } from "react";
 import http from "./http";
@@ -63,225 +63,269 @@ import InvalidToken from "./pages/Users/InvalidToken";
 import Documentations from "./Documentation";
 
 function App() {
-  const [user, setUser] = useState(null);
+    const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    if (localStorage.getItem("accessToken")) {
-      // Todo: Get user data from server
-      http.get("/user/auth").then((res) => {
-        setUser(res.data.user);
-        setIsAdminCheck(res.data.user.adminNo);
-      });
-    }
-  }, []);
+    useEffect(() => {
+        if (localStorage.getItem("accessToken")) {
+            // Todo: Get user data from server
+            http.get("/user/auth").then((res) => {
+                setUser(res.data.user);
+                setIsAdminCheck(res.data.user.adminNo);
+            });
+        }
+    }, []);
 
-  function mainPage() {
-    if (window.location.pathname === "/") {
-      return <div>Welcome To Ecolife.</div>;
-    }
-  }
-
-  const Protected = ({ isAdminCheck, children }) => {
-    let testCheck = isAdminCheck;
-    if (!testCheck) {
-      console.log(testCheck);
-      console.log("Failed");
-      return <Navigate to={"/404"} />;
+    function mainPage() {
+        if (window.location.pathname === "/") {
+            return <div>Welcome To Ecolife.</div>;
+        }
     }
 
-    return children;
-  };
+    const Protected = ({ children }) => {
+        if (localStorage.getItem("accessToken")) {
+            // Todo: Get user data from server
+            http.get("/user/auth").then((res) => {
+                const testCheck = res.data.user.adminNo;
+                if (!testCheck) {
+                    console.log(testCheck);
+                    console.log("Failed");
+                    return <Navigate to={"/404"} />;
+                }
+                setIsAdminCheck(res.data.user.adminNo)
+            });
+        }
 
-  const [isAdminCheck, setIsAdminCheck] = useState(null);
 
-  return (
-    <UserContext.Provider value={{ user, setUser }}>
-      <div
-        id="root"
-        className="w-full min-h-screen overflow-x-hidden | bg-gradient-to-b dark:from-zinc-900 dark:to-black from-slate-200 to-white"
-      >
-        <Router>
-          <div>
-            <EcoLifeAppBar />
-          </div>
+        return children;
+    };
 
-          <div className={`${isAdminCheck ? "inline" : "hidden"}`}>
-            <EcoLifeSideBar />
-          </div>
+    const [isAdminCheck, setIsAdminCheck] = useState(null);
 
-          <div className="px-12 min-h-screen">
-            <Routes>
-              <Route path={"/"} element={<Ecolife />} />
-              <Route path={"/documentations"} element={<Documentations />} />
-              <Route
-                path={"/user/createAccount"}
-                element={<UserCreateAccount />}
-              />
-              <Route path={"/user/login"} element={<UserEnterAccount />} />
-              <Route path={"/user/viewAccount"} element={<ViewAccount />} />
-              <Route
-                path={"/user/viewAccount/settings"}
-                element={<Setting />}
-              />
-              <Route
-                path={"/user/updatePassword"}
-                element={<UserChangePassword />}
-              />
-              <Route
-                path={"/user/forgetPassword"}
-                element={<UserForgetPasswordEmail />}
-              />
-              <Route
-                path={"/user/resetPassword"}
-                element={<UserForgetPasswordReset />}
-              />
-              <Route
-                path={"/user/adminPanel"}
-                element={
-                  <Protected isAdminCheck={isAdminCheck}>
-                    <AdminPanelMain />
-                  </Protected>
-                }
-              />
-              <Route path={"/user/:username"} element={<ViewOtherUser />} />
-              <Route
-                path={"/admin/viewAllUsers"}
-                element={
-                  <Protected isAdminCheck={isAdminCheck}>
-                    <ViewAllAccounts />
-                  </Protected>
-                }
-              />
-              <Route
-                path={"/admin/editUser/:username"}
-                element={
-                  <Protected isAdminCheck={isAdminCheck}>
-                    <AdminEditUser />
-                  </Protected>
-                }
-              />
-              <Route
-                path={"/admin/createAdmin"}
-                element={
-                  <Protected isAdminCheck={isAdminCheck}>
-                    <CreateAdmin />
-                  </Protected>
-                }
-              />
-              <Route
-                path={"/resetPassword/invalidToken"}
-                element={<InvalidToken />}
-              />
-              <Route path={"/user/chat"} element={<TalkJSTest />} />
-              <Route
-                path={"/locations/LocationsMain"}
-                element={<LocationsMain />}
-              />
-              <Route
-                path={"/locations/createLocation"}
-                element={<CreateLocations />}
-              />
-              <Route
-                path={"/locations/editLocations/:id"}
-                element={<EditLocations />}
-              />
-              <Route
-                path={"locations/ViewLocationStatus"}
-                element={<ViewLocationStatus />}
-              />
-              <Route path={"/Store/StoreMain"} element={<StoreMain />} />
-              <Route path={"/Store/StoreAddItem"} element={<StoreAddItem />} />
-              <Route
-                path={"/Store/StoreUpdateItem/:id"}
-                element={<StoreUpdateItem />}
-              />
-              <Route
-                path={"/Store/StoreSpecific/:id"}
-                element={<StoreSpecific />}
-              />
-              <Route
-                path={"/Store/StoreReceiptCreate/:id"}
-                element={<StoreReceiptCreate />}
-              />
-              <Route
-                path={"/Trials/trialAdmin/TrialsCarAdminPage"}
-                element={
-                  <Protected isAdminCheck={isAdminCheck}>
-                    <TrialsAdminPage />
-                  </Protected>
-                }
-              />
-              <Route
-                path={"/Trials/trialAdmin/TrialsCarAdminUpdate/:carPlateNo"}
-                element={
-                  <Protected isAdminCheck={isAdminCheck}>
-                    <TrialsUpdatePage />
-                  </Protected>
-                }
-              />
-              <Route
-                path={"/Trials/trialAdmin/TrialsCarAdd"}
-                element={
-                  <Protected isAdminCheck={isAdminCheck}>
-                    <TrialsAddPage />
-                  </Protected>
-                }
-              />
-              <Route
-                path={"/Trials/trialAdmin/TrialsCarDetailedPage/:id"}
-                element={
-                  <Protected isAdminCheck={isAdminCheck}>
-                    <TrialsCarDetails />
-                  </Protected>
-                }
-              />
-              <Route
-                path={"/Trials/trialUsers/TrialsCarUserPage"}
-                element={<TrialsCarUserPage />}
-              />
-              <Route
-                path={"/Trials/trialUsers/TrialsReceiptCreation/:model"}
-                element={<TrialsReceiptCreate />}
-              />
-              <Route
-                path={"/Trials/trialAdmin/TrialsReceiptAdminPage"}
-                element={
-                  <Protected isAdminCheck={isAdminCheck}>
-                    <TrialsReceiptAdminPage />
-                  </Protected>
-                }
-              />
-              <Route
-                path={"/Trials/trialAdmin/TrialsReceiptReportPage/:id"}
-                element={
-                  <Protected isAdminCheck={isAdminCheck}>
-                    <TrialsReceiptReportPage />
-                  </Protected>
-                }
-              />
-              <Route
-                path={"/Trials/trialUsers/TrialsData"}
-                element={
-                  <Protected isAdminCheck={isAdminCheck}>
-                    <TrialsData />
-                  </Protected>
-                }
-              />
-              <Route path={"*"} element={<PageNotFound />} />
-            </Routes>
-          </div>
-          {user && (
-            <div className="fixed">
-              <SupportHelpDesk />
+    return (
+        <UserContext.Provider value={{ user, setUser }}>
+            <div
+                id="root"
+                className="w-full min-h-screen overflow-x-hidden | bg-gradient-to-b dark:from-zinc-900 dark:to-black from-slate-200 to-white"
+            >
+                <Router>
+                    <div>
+                        <EcoLifeAppBar />
+                    </div>
+
+                    <div className={`${isAdminCheck ? "inline" : "hidden"}`}>
+                        <EcoLifeSideBar />
+                    </div>
+
+                    <div className="px-12 min-h-screen">
+                        <Routes>
+                            <Route
+                                path={"/"}
+                                element={<Ecolife />}
+                            />
+                            <Route
+                                path={"/documentations"}
+                                element={<Documentations />}
+                            />
+                            <Route
+                                path={"/user/createAccount"}
+                                element={<UserCreateAccount />}
+                            />
+                            <Route
+                                path={"/user/login"}
+                                element={<UserEnterAccount />}
+                            />
+                            <Route
+                                path={"/user/viewAccount"}
+                                element={<ViewAccount />}
+                            />
+                            <Route
+                                path={"/user/viewAccount/settings"}
+                                element={<Setting />}
+                            />
+                            <Route
+                                path={"/user/updatePassword"}
+                                element={<UserChangePassword />}
+                            />
+                            <Route
+                                path={"/user/forgetPassword"}
+                                element={<UserForgetPasswordEmail />}
+                            />
+                            <Route
+                                path={"/user/resetPassword"}
+                                element={<UserForgetPasswordReset />}
+                            />
+                            <Route
+                                path={"/user/adminPanel"}
+                                element={
+                                    <Protected>
+                                        <AdminPanelMain />
+                                    </Protected>
+                                }
+                            />
+                            <Route
+                                path={"/user/:username"}
+                                element={<ViewOtherUser />}
+                            />
+                            <Route
+                                path={"/admin/viewAllUsers"}
+                                element={
+                                    <Protected>
+                                        <ViewAllAccounts />
+                                    </Protected>
+                                }
+                            />
+                            <Route
+                                path={"/admin/editUser/:username"}
+                                element={
+                                    <Protected>
+                                        <AdminEditUser />
+                                    </Protected>
+                                }
+                            />
+                            <Route
+                                path={"/admin/createAdmin"}
+                                element={
+                                    <Protected>
+                                        <CreateAdmin />
+                                    </Protected>
+                                }
+                            />
+                            <Route
+                                path={"/resetPassword/invalidToken"}
+                                element={<InvalidToken />}
+                            />
+                            <Route
+                                path={"/user/chat"}
+                                element={<TalkJSTest />}
+                            />
+                            <Route
+                                path={"/locations/LocationsMain"}
+                                element={<LocationsMain />}
+                            />
+                            <Route
+                                path={"/locations/createLocation"}
+                                element={<CreateLocations />}
+                            />
+                            <Route
+                                path={"/locations/editLocations/:id"}
+                                element={<EditLocations />}
+                            />
+                            <Route
+                                path={"locations/ViewLocationStatus"}
+                                element={<ViewLocationStatus />}
+                            />
+                            <Route
+                                path={"/Store/StoreMain"}
+                                element={<StoreMain />}
+                            />
+                            <Route
+                                path={"/Store/StoreAddItem"}
+                                element={<StoreAddItem />}
+                            />
+                            <Route
+                                path={"/Store/StoreUpdateItem/:id"}
+                                element={<StoreUpdateItem />}
+                            />
+                            <Route
+                                path={"/Store/StoreSpecific/:id"}
+                                element={<StoreSpecific />}
+                            />
+                            <Route
+                                path={"/Store/StoreReceiptCreate/:id"}
+                                element={<StoreReceiptCreate />}
+                            />
+                            <Route
+                                path={"/Trials/trialAdmin/TrialsCarAdminPage"}
+                                element={
+                                    <Protected>
+                                        <TrialsAdminPage />
+                                    </Protected>
+                                }
+                            />
+                            <Route
+                                path={
+                                    "/Trials/trialAdmin/TrialsCarAdminUpdate/:carPlateNo"
+                                }
+                                element={
+                                    <Protected>
+                                        <TrialsUpdatePage />
+                                    </Protected>
+                                }
+                            />
+                            <Route
+                                path={"/Trials/trialAdmin/TrialsCarAdd"}
+                                element={
+                                    <Protected>
+                                        <TrialsAddPage />
+                                    </Protected>
+                                }
+                            />
+                            <Route
+                                path={
+                                    "/Trials/trialAdmin/TrialsCarDetailedPage/:id"
+                                }
+                                element={
+                                    <Protected>
+                                        <TrialsCarDetails />
+                                    </Protected>
+                                }
+                            />
+                            <Route
+                                path={"/Trials/trialUsers/TrialsCarUserPage"}
+                                element={<TrialsCarUserPage />}
+                            />
+                            <Route
+                                path={
+                                    "/Trials/trialUsers/TrialsReceiptCreation/:model"
+                                }
+                                element={<TrialsReceiptCreate />}
+                            />
+                            <Route
+                                path={
+                                    "/Trials/trialAdmin/TrialsReceiptAdminPage"
+                                }
+                                element={
+                                    <Protected>
+                                        <TrialsReceiptAdminPage />
+                                    </Protected>
+                                }
+                            />
+                            <Route
+                                path={
+                                    "/Trials/trialAdmin/TrialsReceiptReportPage/:id"
+                                }
+                                element={
+                                    <Protected>
+                                        <TrialsReceiptReportPage />
+                                    </Protected>
+                                }
+                            />
+                            <Route
+                                path={"/Trials/trialUsers/TrialsData"}
+                                element={
+                                    <Protected>
+                                        <TrialsData />
+                                    </Protected>
+                                }
+                            />
+                            <Route
+                                path={"*"}
+                                element={<PageNotFound />}
+                            />
+                        </Routes>
+                    </div>
+                    {user && (
+                        <div className="fixed">
+                            <SupportHelpDesk />
+                        </div>
+                    )}
+                    <div className="mt-auto">
+                        <EcoLifeFooter />
+                    </div>
+                </Router>
             </div>
-          )}
-          <div className="mt-auto">
-            <EcoLifeFooter />
-          </div>
-        </Router>
-      </div>
-    </UserContext.Provider>
-  );
+        </UserContext.Provider>
+    );
 }
 
 export default App;
