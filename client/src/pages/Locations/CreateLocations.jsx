@@ -52,7 +52,7 @@ function CreateLocations() {
         initialValues: {
             locationName: "",
             streetName: "",
-            postalCode: 0,
+            postalCode: "",
             coordinates: "",
             description: "",
             status: true,
@@ -77,15 +77,6 @@ function CreateLocations() {
                     "Postal Code must be a 6-digit number.",
                     (value) => value.toString().length === 6
                 )
-                .test("unique-postal-code", "This postal code already exists.", async (value) => {
-                    try {
-                        const response = await http.get(`/locations/updateLocation/${value}`);
-                        return !response.data.exists;
-                    } catch (error) {
-                        console.error(error);
-                        return false;
-                    }
-                })
                 .required("Postal Code is required."),
             status: yup.boolean().oneOf([true, false], "True or False only").required(),
             fastCharge: yup.boolean().oneOf([true, false], "True or False only").required(),
@@ -111,7 +102,7 @@ function CreateLocations() {
                 .catch(function (err) {
                     console.log(err);
                     toast.error(`${err.response.data.message}`);
-                });
+                  });
         },
     });
 
@@ -253,7 +244,9 @@ function CreateLocations() {
                     </Button>
                 </Box>
             </div>
+            <ToastContainer />
         </div>
+        
     );
 }
 
