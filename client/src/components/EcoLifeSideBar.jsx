@@ -220,7 +220,7 @@ const SideNav = ({ isOpen }) => {
                                         </svg>
                                         <span className="ml-3">Locations</span>
                                         {!locationsAccordionOpen && (
-                                            <div className="pl-20 font-bold ">
+                                            <div className="pl-11 font-bold ">
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     width="32"
@@ -238,7 +238,7 @@ const SideNav = ({ isOpen }) => {
                                             </div>
                                         )}
                                         {locationsAccordionOpen && (
-                                            <div className="pl-20 font-bold ">
+                                            <div className="pl-11 font-bold ">
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     width="32"
