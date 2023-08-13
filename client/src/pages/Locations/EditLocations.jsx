@@ -24,7 +24,7 @@ function EditLocations() {
         streetName: "",
         postalCode: "",
         coordinates: "",
-        region: "",
+        status: "",
         fastCharge: "",
         noOfChargers: "",
         description: ""
@@ -39,7 +39,7 @@ function EditLocations() {
                     streetName: locationData.streetName,
                     postalCode: locationData.postalCode,
                     coordinates: locationData.LatAxis + ", " + locationData.LongAxis,
-                    region: locationData.region,
+                    status: locationData.status,
                     fastCharge: locationData.fastCharge,
                     noOfChargers: locationData.noOfChargers,
                     description: locationData.description
@@ -64,18 +64,6 @@ function EditLocations() {
     const { id } = useParams();
     const [openModal, setOpenModal] = useState("");
 
-    const options = [
-        { value: "N", label: "North" },
-        { value: "S", label: "South" },
-        { value: "E", label: "East" },
-        { value: "W", label: "West" },
-    ];
-    const defaultOption = options[0];
-
-    const handleRegionChange = (selectedOption) => {
-        formik.setFieldValue("region", selectedOption.value);
-    };
-
     const handleCheckboxChange = (event) => {
         const { name, checked } = event.target;
         formik.setFieldValue("fastCharge", checked);
@@ -87,7 +75,7 @@ function EditLocations() {
         setValue(event.target.value);
     };
 
-    // values: locationName, streetName, postalCode, coordinates, region, fastCharge, noOfChargers
+    // values: locationName, streetName, postalCode, coordinates, status, fastCharge, noOfChargers
     const formik = useFormik({
         initialValues: LocationInfo,
         enableReinitialize: true,
@@ -105,7 +93,7 @@ function EditLocations() {
                 .integer()
                 .positive("Postal code cannot be negative.")
                 .required("Postal Code is required."),
-            region: yup.string().trim().oneOf(["N", "S", "E", "W"], "Please enter N, S, E, W").required(),
+            status: yup.boolean().oneOf([true, false], "True or False only").required(),
             fastCharge: yup.boolean().oneOf([true, false], "True or False only").required(),
             noOfChargers: yup.number().integer().positive("Number of charger must be more than 0").required(),
             coordinates: yup.string().trim().required(),
@@ -133,117 +121,138 @@ function EditLocations() {
                 component="form"
                 onSubmit={formik.handleSubmit}
             >
-                {/* // values: locationName, streetName, postalCode, LatAxis, LongAxis, region, fastCharge, noOfChargers, description */}
-                <FormInputSingleLine
-                    name="Location Name"
-                    valueName="locationName"
-                    type="text"
-                    onChange={formik.handleChange}
-                    value={formik.values.locationName}
-                    error={
-                        formik.touched.locationName &&
-                        Boolean(formik.errors.locationName)
-                    }
-                    helperText={
-                        formik.touched.locationName &&
-                        formik.errors.locationName
-                    }
-                />
-                <FormInputSingleLine
-                    name="Street Name"
-                    valueName="streetName"
-                    type="text"
-                    onChange={formik.handleChange}
-                    value={formik.values.streetName}
-                    error={
-                        formik.touched.streetName &&
-                        Boolean(formik.errors.streetName)
-                    }
-                    helperText={
-                        formik.touched.streetName &&
-                        formik.errors.streetName
-                    }
-                />
-                <FormInputSingleLine
-                    name="Postal Code"
-                    valueName="postalCode"
-                    type="number"
-                    onChange={formik.handleChange}
-                    value={formik.values.postalCode}
-                    error={
-                        formik.touched.postalCode &&
-                        Boolean(formik.errors.postalCode)
-                    }
-                    helperText={
-                        formik.touched.postalCode &&
-                        formik.errors.postalCode
-                    }
-                />
-                <FormInputSingleLine
-                    name="Coordinates"
-                    valueName="coordinates"
-                    type="text"
-                    onChange={formik.handleChange}
-                    value={formik.values.coordinates}
-                    error={
-                        formik.touched.coordinates &&
-                        Boolean(formik.errors.coordinates)
-                    }
-                    helperText={
-                        formik.touched.coordinates &&
-                        formik.errors.coordinates
-                    }
-                />
-                <Select
-                    className="mt-4 bg-gray-400"
-                    name="region"
-                    options={options}
-                    value={options.find(option => option.value === formik.values.region)}
-                    onChange={handleRegionChange}
-                    placeholder="Select a region"
-                />
-                <div className="flex mt-4">
-                    <Checkbox
-                        className="text-white -ml-3"
-                        value="fastCharge"
-                        name="fastCharge"
-                        type="checkbox"
+                {/* // values: locationName, streetName, postalCode, LatAxis, LongAxis, status, fastCharge, noOfChargers, description */}
+                <div className="flex">
+                        <Checkbox
+                            className="text-white mt-2 -ml-3"
+                            value="status"
+                            name="status"
+                            type="checkbox"
+                            onChange={formik.handleChange}
+                            checked={formik.values.status}
+                        />
+                        <span className="text-xl text-white flex content-center mt-4">
+                            Enabled
+                        </span>
+                    </div>
+                <div className="w-3/5">
+                    <FormInputSingleLine
+                        name="Location Name"
+                        valueName="locationName"
+                        type="text"
                         onChange={formik.handleChange}
+                        value={formik.values.locationName}
+                        error={
+                            formik.touched.locationName &&
+                            Boolean(formik.errors.locationName)
+                        }
+                        helperText={
+                            formik.touched.locationName &&
+                            formik.errors.locationName
+                        }
                     />
-                    <span className="text-xl text-white flex content-center mt-2">
-                        Fast Charge
-                    </span>
                 </div>
-                <FormInputSingleLine
-                    name="Number Of Chargers"
-                    valueName="noOfChargers"
-                    type="number"
-                    onChange={formik.handleChange}
-                    value={formik.values.noOfChargers}
-                    error={
-                        formik.touched.noOfChargers &&
-                        Boolean(formik.errors.noOfChargers)
-                    }
-                    helperText={
-                        formik.touched.noOfChargers &&
-                        formik.errors.noOfChargers
-                    }
-                />
-                <FormInputSingleLine
-                    name="Description"
-                    valueName="description"
-                    type="textarea"
-                    onChange={formik.handleChange}
-                    value={formik.values.description}
-                    error={
-                        formik.touched.description &&
-                        Boolean(formik.errors.description)
-                    }
-                    helperText={
-                        formik.touched.description &&
-                        formik.errors.description
-                    }
-                />
+                <div className="w-3/5">
+                    <FormInputSingleLine
+                        name="Street Name"
+                        valueName="streetName"
+                        type="text"
+                        onChange={formik.handleChange}
+                        value={formik.values.streetName}
+                        error={
+                            formik.touched.streetName &&
+                            Boolean(formik.errors.streetName)
+                        }
+                        helperText={
+                            formik.touched.streetName &&
+                            formik.errors.streetName
+                        }
+                    />
+                </div>
+                <div className="w-3/5">
+                    <FormInputSingleLine
+                        name="Postal Code"
+                        valueName="postalCode"
+                        type="number"
+                        onChange={formik.handleChange}
+                        value={formik.values.postalCode}
+                        error={
+                            formik.touched.postalCode &&
+                            Boolean(formik.errors.postalCode)
+                        }
+                        helperText={
+                            formik.touched.postalCode &&
+                            formik.errors.postalCode
+                        }
+                    />
+                </div>
+                <div className="w-3/5">
+                    <FormInputSingleLine
+                        name="Coordinates"
+                        valueName="coordinates"
+                        type="text"
+                        onChange={formik.handleChange}
+                        value={formik.values.coordinates}
+                        error={
+                            formik.touched.coordinates &&
+                            Boolean(formik.errors.coordinates)
+                        }
+                        helperText={
+                            formik.touched.coordinates &&
+                            formik.errors.coordinates
+                        }
+                    />
+                </div>
+                <div className="flex">
+                    <div className="w-1/5">
+                        <FormInputSingleLine
+                            name="Number Of Chargers"
+                            valueName="noOfChargers"
+                            type="number"
+                            onChange={formik.handleChange}
+                            value={formik.values.noOfChargers}
+                            error={
+                                formik.touched.noOfChargers &&
+                                Boolean(formik.errors.noOfChargers)
+                            }
+                            helperText={
+                                formik.touched.noOfChargers &&
+                                formik.errors.noOfChargers
+                            }
+                        />
+                    </div>
+                    <div className="flex ml-4 w-4/5">
+                        <Checkbox
+                            className="text-white mt-2 -ml-3"
+                            value="fastCharge"
+                            name="fastCharge"
+                            type="checkbox"
+                            onChange={formik.handleChange}
+                            checked={formik.values.fastCharge}
+                        />
+                        <span className="text-xl text-white flex content-center mt-7">
+                            Fast Charge
+                        </span>
+                    </div>
+                </div>
+
+                <div className="w-3/5">
+                    <FormInputSingleLine
+                        name="Description"
+                        valueName="description"
+                        type="textarea"
+                        onChange={formik.handleChange}
+                        value={formik.values.description}
+                        error={
+                            formik.touched.description &&
+                            Boolean(formik.errors.description)
+                        }
+                        helperText={
+                            formik.touched.description &&
+                            formik.errors.description
+                        }
+                    />
+                </div>
                 <ToastContainer />
                 <div>
                     <Button

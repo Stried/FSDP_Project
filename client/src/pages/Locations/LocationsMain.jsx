@@ -69,34 +69,71 @@ function LocationsMain() {
             <div className="max-w-screen mx-auto grid grid-cols-2 gap-4">
                 {locationList.map((location, key) => {
                     return (
-                        <div className='text-black'>
+                        <div className="text-black">
                             <div className="bg-gray-200 p-4 rounded-lg mb-4">
                                 <h2 className="text-xl font-semibold mb-2">
                                     {location.locationName}
                                 </h2>
+                                <p className="text-wrap font-bold">
+                                    {location.streetName}
+                                </p>
+                                <p className="text-wrap">
+                                    Singapore {location.postalCode}
+                                </p>
+                                <p className="text-wrap">
+                                    {location.status ? (
+                                        <p>Status:⠀
+                                            <span className="text-green-500 mt-2">
+                                                Enabled
+                                            </span>
+                                        </p>
+                                    ) : (
+                                        <p>Status:⠀
+                                            <span className="text-red-500 mt-2">
+                                                Disabled
+                                            </span>
+                                        </p>
+                                    )}
+                                </p>
                                 <p className="text-wrap">
                                     {location.description}
                                 </p>
+                                <p className="text-wrap">
+                                    Chargers: <span className="font-bold">{location.noOfChargers}</span>{location.fastCharge && (
+                                        <span className="text-blue-500 mt-2 font-bold"> (FastCharge)</span>
+                                    )}
+                                </p>
+
                                 <div className="mx-auto pt-2">
                                     <Map
                                         height={300}
-                                        defaultCenter={[location.LatAxis, location.LongAxis]}
+                                        defaultCenter={[
+                                            location.LatAxis,
+                                            location.LongAxis,
+                                        ]}
                                         defaultZoom={17}
                                     >
                                         <Marker
                                             width={40}
                                             color={color}
-                                            anchor={[location.LatAxis, location.LongAxis]}
+                                            anchor={[
+                                                location.LatAxis,
+                                                location.LongAxis,
+                                            ]}
                                         />
                                     </Map>
-                                    {(user && <EditCharger isAdmin={user.adminNo} postalCode={location.postalCode} />)}
+                                    {(user && (
+                                        <EditCharger
+                                            isAdmin={user.adminNo}
+                                            postalCode={location.postalCode}
+                                        />
+                                    ))}
                                 </div>
                             </div>
                         </div>
-                    )
+                    );
                 })}
             </div>
-
         </Box>
     );
 }
