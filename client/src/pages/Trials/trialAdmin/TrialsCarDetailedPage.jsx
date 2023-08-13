@@ -218,7 +218,7 @@ function TrialsCarDetailedPage() {
               className={`w-4/12 bg-gray-700 rounded-md absolute bottom-0 left-40 transition-transform duration-300 ${
                 isCardShifted ? "transform translate-x-[325px]" : ""
               }`}
-              style={{ width: "26.7%", borderRadius: "8px", height: "564px", backgroundColor:"RGB(53, 63, 78)" }}
+              style={{ width: "21.875rem", borderRadius: "8px", height: "35.25em", backgroundColor:"RGB(53, 63, 78)" }}
             >
               <CardContent className="px-12">
                 <Typography
@@ -282,7 +282,7 @@ function TrialsCarDetailedPage() {
               isCardShifted ? "transform translate-x-[325px]" : ""
             }`}
             onClick={handleToggle}
-            style={{ left: "505px", top: "60px", cursor: "pointer" }}
+            style={{ left: "31.563rem", top: "3.75rem", cursor: "pointer" }}
           >
             <div className=" h-32 w-8 rounded-r-md " style={{ backgroundColor:"RGB(53, 63, 78)"}}>
               <div className="text-center top-4 left-2 relative">
