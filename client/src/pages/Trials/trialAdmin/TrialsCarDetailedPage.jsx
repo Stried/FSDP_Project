@@ -170,9 +170,7 @@ const App = () => {
 
 
 
-  const toggleDrawer = (open) => {
-    setDrawerOpen(open);
-  };
+
 
   useEffect(() => {
     getTrialReceipt();
