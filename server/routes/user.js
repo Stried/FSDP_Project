@@ -799,5 +799,13 @@ router.get("/viewAccount/allFollowers/:username", validateToken, async (req, res
     }
 })
 
+router.get("/getUserByFullName/:fullName", async (req, res) => {
+    let theUser = await UserAccount.findOne({
+        where: { fullName: req.params.fullName }
+    });
+
+    res.json(theUser);
+})
+
 module.exports = router;
 console.timeEnd("User Routes")

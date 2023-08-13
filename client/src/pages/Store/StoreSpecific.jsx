@@ -5,6 +5,7 @@ import {
     Route,
     Link,
     useParams,
+    useNavigate,
 } from "react-router-dom";
 import React, { useContext, useEffect, useState } from "react";
 import "./../../App.css";
@@ -39,6 +40,7 @@ function AdminUpdate(props) {
 
 function StoreSpecific() {
     const { user } = useContext(UserContext);
+    const navigate = useNavigate();
 
     const { id } = useParams();
 
@@ -72,7 +74,7 @@ function StoreSpecific() {
             .slice(0, 2);
         setStoreList(updatedStoreList);
             });
-        });
+        }, []);
 
     useEffect(() => {
         http.get(`/store/viewStoreItem/${id}`).then((res) => {
@@ -92,7 +94,7 @@ function StoreSpecific() {
         http.get("/user/viewAccount").then((res) => {
             setUserInfo(res.data);
         });
-    });
+    }, []);
 
     const handleClick = () => {
         setTimeout(() => {
@@ -101,15 +103,29 @@ function StoreSpecific() {
         window.scrollTo({ top: 0, behavior: 'auto' });
     };
 
+    const navUserPage = (soldBy) => {
+        console.log(soldBy)
+        http.get(`/user/getUserByFullName/${soldBy}`)
+            .then((res) => {
+                console.log("HELLO " + store.soldBy)
+                navigate(`/user/${res.data.userName}`);
+            })
+            .catch(function (err) {
+                console.log(err);
+            })
+        
+        
+    }
 
     return (
         <Box>
             <div className="flex bg-zinc-800 rounded m-auto">
                 <div className="m-7">
-                    <DefaultImage className="w-96 h-80 m-0 border rounded-md"
-                        src={`${import.meta.env.VITE_FILE_BASE_URL_STORE}${store.carImageFile
-                            }`}
-
+                    <DefaultImage
+                        className="w-96 h-80 m-0 border rounded-md"
+                        src={`${import.meta.env.VITE_FILE_BASE_URL_STORE}${
+                            store.carImageFile
+                        }`}
                     />
                 </div>
                 <div className="text-white m-5 p-5">
@@ -125,11 +141,16 @@ function StoreSpecific() {
                     </div>
                     <div className="-mb-10">
                         {userInfo.fullName != store.soldBy && (
-                            <Link to={`/Store/StoreReceiptCreate/${id}`}>
-                                <button className="mt-5 mr-4 px-2 py-1 border rounded transition-colors text-white hover:text-black dark:hover:bg-gradient-to-b from-slate-50 to-slate-400 border-black dark:border-white border-solid border-2 rounded hover:ease-in-out duration-200 font-semibold text-xl ">
-                                    Buy Now
+                            <div className="">
+                                <Link to={`/Store/StoreReceiptCreate/${id}`}>
+                                    <button className="mt-5 mr-4 px-2 py-1 border rounded transition-colors text-white hover:text-black dark:hover:bg-gradient-to-b from-slate-50 to-slate-400 border-black dark:border-white border-solid border-2 rounded hover:ease-in-out duration-200 font-semibold text-xl ">
+                                        Buy Now
+                                    </button>
+                                </Link>
+                                <button onClick={() => {navUserPage(store.soldBy)}} className="mt-5 mr-4 px-2 py-1 border rounded transition-colors text-white hover:text-black dark:hover:bg-gradient-to-b from-slate-50 to-slate-400 border-black dark:border-white border-solid border-2 rounded hover:ease-in-out duration-200 font-semibold text-xl ">
+                                    View User Account
                                 </button>
-                            </Link>
+                            </div>
                         )}
                         {userInfo.fullName == store.soldBy && (
                             <Link to={`/Store/StoreUpdateItem/${id}`}>
@@ -137,13 +158,8 @@ function StoreSpecific() {
                                     Edit
                                 </button>
                             </Link>
-
                         )}
-                        {/* <Link to="/Trials/trialUsers/TrialsCarUserPage">
-                            <button className="mx-4 px-2 py-1 border rounded transition-colors text-white hover:text-black dark:hover:bg-gradient-to-b from-slate-50 to-slate-400 border-black dark:border-white border-solid border-2 rounded hover:ease-in-out duration-200 font-semibold text-xl ">
-                                Check for Trials Availability
-                            </button>
-                        </Link> */}
+
                         {user && <AdminUpdate isAdmin={user.adminNo} />}
                     </div>
                 </div>
@@ -160,7 +176,9 @@ function StoreSpecific() {
                                 Car Engine: {store.carEngine} <br />
                                 Car Speed: {store.carSpeed}km/h <br />
                                 Car Fuel Type: {store.carFuelType} <br />
-                                Car Fuel Consumption: {store.carFuelConsume}kw/h <br />
+                                Car Fuel Consumption: {
+                                    store.carFuelConsume
+                                }kw/h <br />
                                 Car Mods: {store.carMods}
                             </span>
                         </div>
@@ -188,21 +206,31 @@ function StoreSpecific() {
                     {storeList.map((store, i) => {
                         return (
                             <div className="text-white shadow-lg bg-slate-800 pt-2 my-2 group border-2 border-transparent border-solid hover:border-green-500 duration-300 hover:ease-in-out">
-                                <Link onClick={handleClick} to={`/Store/StoreSpecific/${store.carPlateNo}`}>
+                                <Link
+                                    onClick={handleClick}
+                                    to={`/Store/StoreSpecific/${store.carPlateNo}`}
+                                >
                                     <div className="pt-3">
                                         <DefaultImage
                                             className="text-2xl font-medium px-5 w-fit h-80 m-auto"
-                                            src={`${import.meta.env.VITE_FILE_BASE_URL_STORE
-                                                }${store.carImageFile}`}
+                                            src={`${
+                                                import.meta.env
+                                                    .VITE_FILE_BASE_URL_STORE
+                                            }${store.carImageFile}`}
                                         />
                                         <div className="mx-5 my-2 p-3 bg-black/60">
                                             <p className="text-2xl font-medium pt-5">
-                                                {store.carBrand} {store.carModel}
+                                                {store.carBrand}{" "}
+                                                {store.carModel}
                                             </p>
                                             <p className="text-xl">
-                                                ${store.carPrice.toLocaleString()}
+                                                $
+                                                {store.carPrice.toLocaleString()}
                                             </p>
-                                            <p>Production: {store.carProductionDate}</p>
+                                            <p>
+                                                Production:{" "}
+                                                {store.carProductionDate}
+                                            </p>
                                             <p className="flex pt-3 pb-2">
                                                 <AiOutlineUser className="mt-1" />{" "}
                                                 <span className="pl-1 text-green-400">
@@ -225,7 +253,7 @@ function StoreSpecific() {
                     element={<StoreUpdateItem />}
                 />
             </Routes>
-        </Box >
+        </Box>
     );
 }
 
