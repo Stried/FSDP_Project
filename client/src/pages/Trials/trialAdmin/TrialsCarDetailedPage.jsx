@@ -11,7 +11,9 @@ import {
   List,
   ListItem,
   ListItemText,
+  IconButton
 } from "@mui/material";
+import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import zIndex from "@mui/material/styles/zIndex";
 import { useState, useEffect, useContext } from "react";
 import {
@@ -45,16 +47,7 @@ const App = () => {
     setIsCardShifted(!isCardShifted);
   };
 
-  const cardStyle = {
-    width: "27.8%", // Adjust width as needed
-    backgroundColor: "rgb(31 41 55)",
-    borderRadius: "8px",
-    position: "absolute",
-    height:"575px",
-    bottom: "0px",
-    left: isCardShifted ? "39%" : "0", // Shift the card to the right when button is toggled
-    transition: "left 0.3s ease", // Add smooth transition
-  };
+
 
   const [trialReceiptEntries, settrialReceiptEntries] = useState([]);
   const [trialCar, setTrialCar] = useState({
@@ -109,21 +102,6 @@ const App = () => {
       });
   };
 
-  const [sortField, setSortField] = useState("carPlateNo"); // Default sort field is "carPlateNo"
-  const [sortDirection, setSortDirection] = useState("asc"); // Default sort direction is "asc"
-
-  const sortTrialReceipt = (field, direction) => {
-    const sortedList = [...trialReceiptEntries];
-    sortedList.sort((a, b) => {
-      if (direction === "asc") {
-        return a[field].localeCompare(b[field], undefined, { numeric: true });
-      } else {
-        return b[field].localeCompare(a[field], undefined, { numeric: true });
-      }
-    });
-    settrialReceiptEntries(sortedList);
-  };
-
 
   const filterFinishedReceipts = (receipts) => {
     return receipts.filter((receipt) => receipt.trialStatus === "Finished");
@@ -169,7 +147,6 @@ const App = () => {
     },
     backgroundColor: "#1F2937",
     axisX: {
-      title: "Time",
       labelFontColor: "#FFFFFF", // X-axis labels color
       titleFontColor: "#FFFFFF",
       fontFamily: "Montserrat",
@@ -190,6 +167,8 @@ const App = () => {
       },
     ],
   };
+
+
 
   const toggleDrawer = (open) => {
     setDrawerOpen(open);
@@ -237,41 +216,73 @@ const App = () => {
                   Car Model:{" "}
                   <span className="text-green-400">{trialCar.carModel}</span>
                 </div>
-                <Button
-                  onClick={handleToggle}
-                  className="mt-3"
-                  variant="outlined"
-                  color="primary"
-                >
-                  {isCardShifted ? "Close Sidebar" : "Open Sidebar"}
-                </Button>
               </CardContent>
             </Card>
 
             <Card
-              className="w-4/12 bg-gray-800 rounded-md absolute "
-              style={cardStyle}
+              className={`w-4/12 bg-gray-800 rounded-md absolute bottom-0 left-40 transition-transform duration-300 ${ isCardShifted ? "transform translate-x-[350px]" : "" }`}
+              style={{width:"27.8%", backgroundColor:"rgb(31 41 55)",borderRadius: "8px",height:"527px",
+              }}
             >
-              <CardContent className="px-12 ">
+              <CardContent className="px-12">
                 <Typography
                   variant="h4"
-                  className="text-center text-5xl text-green-400"
+                  className="text-center text-4xl text-green-400"
                 >
                   Description:
                 </Typography>
-                <Button
-                  onClick={handleToggle}
-                  className="mt-3"
-                  variant="outlined"
-                  color="primary"
-                >
-                  {isCardShifted ? "Close Sidebar" : "Open Sidebar"}
-                </Button>
-                <p className="overflow-hidden" style={{ overflowWrap: "break-word" }}>
-                  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+                <br />
+                <br />
+                <div className=" border-2 border-green-500 rounded-md">
+                <div className="p-2 max-h-96 overflow-auto ">
+                <p className="overflow-hidden text-white" style={{ overflowWrap: "break-word" }}>
+                  {trialCar.carDescription}
                 </p>
+                </div>
+                </div>
               </CardContent>
             </Card>
+          </div>
+          <div
+    className={`text-center top-10 left-1 absolute transition-transform duration-300 ${
+      isCardShifted ? "transform translate-x-[350px]" : ""
+    }`}
+    onClick={handleToggle}
+    style={{left:"515px", top:"60px", cursor: "pointer"}}
+  >
+          <div className="bg-gray-800 h-32 w-8 rounded-r-md " >
+            <div className="text-center top-4 left-2 relative" >
+            {!isCardShifted && (
+                        <div className="h-20 w-7 ">
+                            <div className="left-1 top-10 absolute  ">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    height="1em"
+                                    viewBox="0 0 512 512"
+                                    fill="rgb(34 197 94)"
+                                >
+                                    <path d="M470.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 256 265.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160zm-352 160l160-160c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L210.7 256 73.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0z" />
+                                </svg>
+                            </div>
+                        </div>
+                    )}
+                    {isCardShifted && (
+                        <div className="h-20 w-7">
+                            <div className="left-1 top-10 absolute ">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    height="1em"
+                                    viewBox="0 0 512 512"
+                                    fill="rgb(34 197 94)"
+                                >
+                                    <path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160zm352-160l-160 160c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L301.3 256 438.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0z" />
+                                </svg>
+                            </div>
+                        </div>
+                    )}
+                </div>
+          </div>
           </div>
 
           <div className="col-span-1">
@@ -295,7 +306,7 @@ const App = () => {
                     <span className="text-green-400">{trialCar.carSpeed}</span>
                   </p>
                 </div>
-                <div className="w-max ml-16 pl-5 pb-3 font-medium text-xl space-y-1">
+                <div className="w-max ml-20 pl-5 pb-3 font-medium text-xl space-y-1">
                   <p>
                     Car Seats:{" "}
                     <span className="text-green-400">{trialCar.carSeats}</span>
@@ -420,10 +431,11 @@ const App = () => {
           </tbody>
         </table>
         <br />
-        <div className="chart-container w-11/12 mt-10">
-          {finishedReceipts.length === 0 ? (
+
+        <div className="chart-container w-12/12 mt-10">
+          {finishedReceipts.length <= 1 ? (
             <p className="text-center text-gray-500">
-              No data available to display for the graph.
+              No data or not enough data available to display for the graph.
             </p>
           ) : (
             <CanvasJSChart options={graphOptions} />
