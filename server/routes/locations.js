@@ -21,7 +21,6 @@ router.post("/createLocation", validateToken, async (req, res) => {
         await validationSchema.validate(data, { abortEarly: false });
     } catch (err) {
         console.error(err);
-        console.log("Demons are taking over.")
         res.status(400).json({ errors: err.errors });
         return;
     }

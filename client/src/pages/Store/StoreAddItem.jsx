@@ -126,8 +126,6 @@ function StoreAddItem() {
                 data.carBodyType.trim(),
                 data.carColor.trim()
 
-
-
             http.post("/store/createStoreItem", data)
                 .then((res) => {
                     console.log(res.status);
