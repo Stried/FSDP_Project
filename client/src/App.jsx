@@ -42,7 +42,7 @@ import SupportHelpDesk from "./pages/Users/SupportHelpDesk";
 import LocationsMain from "./pages/Locations/LocationsMain";
 import CreateLocations from "./pages/Locations/CreateLocations";
 import EditLocations from "./pages/Locations/EditLocations";
-import ToggleLocations from "./pages/Locations/ToggleLocations";
+import ViewLocationStatus from "./pages/Locations/ViewLocationStatus";
 
 import TrialsData from "./pages/Trials/trialAdmin/TrialsData";
 import TrialsAddPage from "./pages/Trials/trialAdmin/TrialsCarAdd";
@@ -197,15 +197,24 @@ function App() {
                             />
                             <Route
                                 path={"/locations/createLocation"}
-                                element={<CreateLocations />}
+                                element={
+                                    <Protected isAdminCheck={isAdminCheck}>
+                                        <CreateLocations />
+                                    </Protected>}
                             />
                             <Route
                                 path={"/locations/editLocations/:id"}
-                                element={<EditLocations />}
+                                element={
+                                    <Protected isAdminCheck={isAdminCheck}>
+                                        <EditLocations />
+                                    </Protected>}
                             />
                             <Route
-                                path={"locations/ToggleLocations"}
-                                element={<ToggleLocations />}
+                                path={"locations/ViewLocationStatus"}
+                                element={
+                                    <Protected isAdminCheck={isAdminCheck}>
+                                        <ViewLocationStatus />
+                                    </Protected>}
                             />
                             <Route
                                 path={"/Store/StoreMain"}

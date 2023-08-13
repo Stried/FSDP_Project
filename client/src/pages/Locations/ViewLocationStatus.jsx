@@ -1,9 +1,9 @@
 import { Box, Button } from "@mui/material";
 import { useState, useEffect, useContext } from "react";
-import http from "./../../http";
-import UserContext from "./../../contexts/UserContext";
+import http from "../../http";
+import UserContext from "../../contexts/UserContext";
 
-function ToggleLocations(props) {
+function ViewLocationStatus(props) {
     const { user } = useContext(UserContext);
     const [locationList, setLocationList] = useState([]);
 
@@ -64,4 +64,4 @@ function ToggleLocations(props) {
     );
 }
 
-export default ToggleLocations;
+export default ViewLocationStatus;
