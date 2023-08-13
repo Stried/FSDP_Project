@@ -17,8 +17,8 @@ import { ToastContainer, toast } from "react-toastify";
 const App = () => {
   const [trialCarList, setTrialCarList] = useState([]);
 
-  const [sortField, setSortField] = useState("carPlateNo"); // Default sort field is "carPlateNo"
-  const [sortDirection, setSortDirection] = useState("asc"); // Default sort direction is "asc"
+  const [sortField, setSortField] = useState("carPlateNo");
+  const [sortDirection, setSortDirection] = useState("asc");
   const [openModals, setOpenModals] = useState([]);
   const sortTrialCars = (field, direction) => {
     const sortedList = [...trialCarList];

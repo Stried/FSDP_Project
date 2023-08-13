@@ -317,7 +317,7 @@ const App = () => {
                 <div class="p-5 w-96">
                   <div class="max-w-sm bg-white border  transition duration-300  border-gray-200 rounded-md dark:bg-gray-800 hover:shadow-green-500 shadow-3xl ease-out dark:border-gray-700">
                     <DefaultImage
-                      className="object-cover h-48 w-96"
+                      className="object-cover h-48 w-96 rounded-lg"
                       src={`${import.meta.env.VITE_FILE_BASE_URL_STORE}${
                         trialCar.carImageFile
                       }`}

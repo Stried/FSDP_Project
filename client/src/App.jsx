@@ -266,10 +266,7 @@ function App() {
                                 }
                             />
                             <Route
-                                path={
-                                    "/Trials/trialAdmin/TrialsCarDetailedPage/:id"
-                                }
-
+                                path={"/Trials/trialAdmin/TrialsCarDetailedPage/:id"}
                                 element={
                                     <Protected isAdminCheck={isAdminCheck}>
                                 <TrialsCarDetails />
