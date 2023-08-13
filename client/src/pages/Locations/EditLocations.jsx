@@ -92,10 +92,20 @@ function EditLocations() {
                 .number()
                 .integer()
                 .positive("Postal code cannot be negative.")
+                .test(
+                    "is-six-digit",
+                    "Postal Code must be a 6-digit number.",
+                    (value) => value.toString().length === 6
+                )
                 .required("Postal Code is required."),
             status: yup.boolean().oneOf([true, false], "True or False only").required(),
             fastCharge: yup.boolean().oneOf([true, false], "True or False only").required(),
-            noOfChargers: yup.number().integer().positive("Number of charger must be more than 0").required(),
+            noOfChargers: yup
+                .number()
+                .integer()
+                .positive("Number of charger must be more than 0")
+                .required("Number of Chargers is required.")
+                .test("greater-than-zero", "Number of Chargers must be greater than 0", (value) => value > 0),
             coordinates: yup.string().trim().required(),
             description: yup.string().trim().required()
         }),
@@ -123,18 +133,18 @@ function EditLocations() {
             >
                 {/* // values: locationName, streetName, postalCode, LatAxis, LongAxis, status, fastCharge, noOfChargers, description */}
                 <div className="flex">
-                        <Checkbox
-                            className="text-white mt-2 -ml-3"
-                            value="status"
-                            name="status"
-                            type="checkbox"
-                            onChange={formik.handleChange}
-                            checked={formik.values.status}
-                        />
-                        <span className="text-xl text-white flex content-center mt-4">
-                            Enabled
-                        </span>
-                    </div>
+                    <Checkbox
+                        className="text-white mt-2 -ml-3"
+                        value="status"
+                        name="status"
+                        type="checkbox"
+                        onChange={formik.handleChange}
+                        checked={formik.values.status}
+                    />
+                    <span className="text-xl text-white flex content-center mt-4">
+                        Enabled
+                    </span>
+                </div>
                 <div className="w-3/5">
                     <FormInputSingleLine
                         name="Location Name"
@@ -166,23 +176,6 @@ function EditLocations() {
                         helperText={
                             formik.touched.streetName &&
                             formik.errors.streetName
-                        }
-                    />
-                </div>
-                <div className="w-3/5">
-                    <FormInputSingleLine
-                        name="Postal Code"
-                        valueName="postalCode"
-                        type="number"
-                        onChange={formik.handleChange}
-                        value={formik.values.postalCode}
-                        error={
-                            formik.touched.postalCode &&
-                            Boolean(formik.errors.postalCode)
-                        }
-                        helperText={
-                            formik.touched.postalCode &&
-                            formik.errors.postalCode
                         }
                     />
                 </div>
@@ -298,6 +291,7 @@ function EditLocations() {
                             </button>
                         </Modal.Footer>
                     </Modal>
+                    <ToastContainer />
                 </div>
             </Box>
 
