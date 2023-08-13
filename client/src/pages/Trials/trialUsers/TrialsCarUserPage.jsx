@@ -206,7 +206,7 @@ const App = () => {
       <br />
       <br />
       <div>
-        <h1 className="text-white text-4xl text-center">
+        <h1 className="text-white text-4xl text-center mb-10">
           🌟 Introducing the Future of Driving:{" "}
           <span className="text-green-400">Trial Cars</span> 🚗⚡
         </h1>
@@ -282,23 +282,6 @@ const App = () => {
           the corner. Secure your spot once more and get ready to embark on your
           electric escapade.
         </AnimatedParagraphSlideRight>
-
-        <AnimatedParagraphSlideLeft>
-          <strong className="text-green-400">Join us</strong> in embracing the
-          future of driving, one electrifying adventure at a time. Whether
-          you're a veteran electric car enthusiast or taking your first
-          exhilarating leap into the world of{" "}
-          <strong className="text-green-400">emission-free driving</strong>,
-          Trial Cars are here to make your transition seamless, your{" "}
-          <strong className="text-green-400">experience unforgettable</strong>,
-          and <strong className="text-green-400">your impact</strong> on the
-          planet undeniable.
-        </AnimatedParagraphSlideLeft>
-
-        <p className="text-white text-4xl text-center">
-          Reserve your 2-hour electrifying journey today and let's ignite a new
-          era of driving together! 🌟⚡🚀
-        </p>
       </div>
       <Box>
         <div className="dark:text-white text-black text-lg font-medium mx-4">
@@ -334,7 +317,7 @@ const App = () => {
                 <div class="p-5 w-96">
                   <div class="max-w-sm bg-white border  transition duration-300  border-gray-200 rounded-md dark:bg-gray-800 hover:shadow-green-500 shadow-3xl ease-out dark:border-gray-700">
                     <DefaultImage
-                      className="object-contain h-48 w-96"
+                      className="object-cover h-48 w-96"
                       src={`${import.meta.env.VITE_FILE_BASE_URL_STORE}${
                         trialCar.carImageFile
                       }`}
