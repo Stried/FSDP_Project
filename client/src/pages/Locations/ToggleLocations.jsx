@@ -1,59 +1,64 @@
 import { Box, Button } from "@mui/material";
-import {
-    Link,
-    useNavigate,
-} from "react-router-dom";
-import React, { useRef, useEffect, useState, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import http from "./../../http";
-import "./../../App.css";
 import UserContext from "./../../contexts/UserContext";
 
 function ToggleLocations(props) {
-    const navigate = useNavigate();
-    const isAdmin = props.isAdmin;
-    const id = props.postalCode;
     const { user } = useContext(UserContext);
     const [locationList, setLocationList] = useState([]);
 
     useEffect(() => {
-        http.get("locations/LocationsMain").then((res) => {
-            setLocationList(res.data);
-        });
+        fetchLocations();
     }, []);
+
+    const fetchLocations = async () => {
+        try {
+            const response = await http.get("locations/LocationsMain");
+            setLocationList(response.data);
+        } catch (error) {
+            console.error("Error fetching locations:", error);
+        }
+    };
 
     return (
         <Box className="mx-10 items-center">
             <h1 className="text-4xl font-bold mt-8 mb-6 text-white text-center">
-                Toggle Chargers
+                View Charger Status
             </h1>
-            <div className="max-w-screen mx-auto">
-                {locationList.map((location, key) => {
-                    return (
-                        <div key={key} className="bg-gray-200 p-4 rounded-lg mb-4 flex">
-                            <div className="flex-grow">
-                                <h2 className="text-xl font-semibold mb-2">
-                                    {location.locationName}
-                                </h2>
-                                <p className="text-wrap">
-                                    {location.streetName}
-                                </p>
-                                <p className="text-wrap">
-                                    Singapore {location.postalCode}
-                                </p>
-                                <p className="text-wrap">
-                                    Number of Chargers: {location.noOfChargers}
-                                </p>
-                                <p className="text-wrap">
-                                    {location.description}
-                                </p>
-                            </div>
-                            <div className="flex items-center">
-                                {/* Add Toggle button */}
-                                <Button className="ml-2">Toggle</Button>
-                            </div>
-                        </div>
-                    );
-                })}
+            <div className="mx-auto">
+                <table className="w-3/4 mx-auto rounded-lg overflow-hidden">
+                    <thead>
+                        <tr className="text-white">
+                            <th className="text-left p-2">Location Name</th>
+                            <th className="text-left p-2">Street Name</th>
+                            <th className="text-left p-2">Postal Code</th>
+                            <th className="text-left p-2">Number of Chargers</th>
+                            <th className="text-left p-2">Description</th>
+                            <th className="text-left p-2">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {locationList.map((location, key) => (
+                            <tr key={key} className="bg-gray-200">
+                                <td className="p-2">{location.locationName}</td>
+                                <td className="p-2">{location.streetName}</td>
+                                <td className="p-2">Singapore {location.postalCode}</td>
+                                <td className="p-2">{location.noOfChargers}</td>
+                                <td className="p-2">{location.description}</td>
+                                <td className="p-2">
+                                    <div className="ml-5"
+                                        style={{
+                                            width: "15px",
+                                            height: "15px",
+                                            borderRadius: "50%",
+                                            backgroundColor: location.status ? "green" : "red"
+                                        }}
+                                    />
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             </div>
         </Box>
     );

@@ -12,7 +12,7 @@ router.post("/createLocation", validateToken, async (req, res) => {
         locationName: yup.string().trim().required("Please provide a location name."),
         streetName: yup.string().trim().required("Please provide a street name."),
         postalCode: yup.number().positive().integer().required("Please input a valid Postal Code."),
-        region: yup.string().trim().oneOf(["N", "S", "E", "W"]).required("Please specify a valid region."),
+        status: yup.boolean().required("Please specify if the charger is enabled."),
         fastCharge: yup.boolean().required("Please specify if the charger is capable of FastCharge."),
         noOfChargers: yup.number().positive().integer().required("Please specify the number of chargers in the location."),
         description: yup.string().trim().required("Provide a fitting description of the area.")
@@ -31,7 +31,7 @@ router.post("/createLocation", validateToken, async (req, res) => {
     data.locationName = data.locationName.trim();
     data.streetName = data.streetName.trim();
     data.postalCode = data.postalCode;
-    data.region = data.region.trim();
+    data.status = data.status;
     data.LatAxis = coordinates[0];
     data.LongAxis = coordinates[1];
     data.fastCharge = data.fastCharge;
@@ -43,7 +43,7 @@ router.post("/createLocation", validateToken, async (req, res) => {
         locationName: data.locationName,
         streetName: data.streetName,
         postalCode: data.postalCode,
-        region: data.region,
+        status: data.status,
         LatAxis: data.LatAxis,
         LongAxis: data.LongAxis, 
         fastCharge: data.fastCharge,
@@ -123,7 +123,7 @@ router.put("/updateLocation/:id", validateToken, async (req, res) => {
         locationName: yup.string().trim().required("Please provide a location name."),
         streetName: yup.string().trim().required("Please provide a street name."),
         postalCode: yup.number().positive().integer().required("Please input a valid Postal Code."),
-        region: yup.string().trim().oneOf([ "N", "S", "E", "W" ]).required("Please specify a valid region."),
+        status: yup.boolean().required("Please specify if the charger is enabled."),
         coordinates: yup.string().trim().required(),
         fastCharge: yup.boolean().required("Please specify if the charger is capable of FastCharge."),
         noOfChargers: yup.number().positive().integer().required("Please specify the number of chargers in the location."),
@@ -142,7 +142,7 @@ router.put("/updateLocation/:id", validateToken, async (req, res) => {
     data.locationName = data.locationName.trim();
     data.streetName = data.streetName.trim();
     data.postalCode = data.postalCode;
-    data.region = data.region.trim();
+    data.status = data.status;
     data.LatAxis = coordinates[0];
     data.LongAxis = coordinates[1];
     data.fastCharge = data.fastCharge;
@@ -155,7 +155,7 @@ router.put("/updateLocation/:id", validateToken, async (req, res) => {
         locationName: data.locationName,
         streetName: data.streetName,
         postalCode: data.postalCode,
-        region: data.region,
+        status: data.status,
         fastCharge: data.fastCharge,
         noOfChargers: data.noOfChargers,
         description: data.description
