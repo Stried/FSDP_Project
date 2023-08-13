@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import CanvasJSReact from '@canvasjs/react-charts';
 var CanvasJS = CanvasJSReact.CanvasJS;
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
-const App = () => {const calculateAverageRating = (receiptList) => {
+function TrialsData() {const calculateAverageRating = (receiptList) => {
   const modelRatings = {};
 
   receiptList.forEach((trialReceipt) => {
@@ -184,10 +184,12 @@ const [storeReceiptList, setStoreReceiptList] = useState([])
             <CanvasJSChart options={chartOptionsStore} />
           )}
         </div>
+        
       </div>
+      
     </div>
   
   );
 };
 
-export default App;
+export default TrialsData;

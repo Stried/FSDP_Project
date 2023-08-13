@@ -14,9 +14,8 @@ import { Modal } from "flowbite-react";
 import http from "./../../../http";
 import { ToastContainer, toast } from "react-toastify";
 
-const App = () => {
+function TrialsCarAdminPage() {
   const [trialCarList, setTrialCarList] = useState([]);
-
   const [sortField, setSortField] = useState("carPlateNo");
   const [sortDirection, setSortDirection] = useState("asc");
   const [openModals, setOpenModals] = useState([]);
@@ -280,8 +279,12 @@ const App = () => {
                             <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
                               Are you sure you want to delete the trial car
                               with:{" "}
-                              <div>Carplate number: <b>{trialCar.carPlateNo}</b></div>{" "}
-                              <div>Model: <b>{trialCar.name}</b></div>
+                              <div>
+                                Carplate number: <b>{trialCar.carPlateNo}</b>
+                              </div>{" "}
+                              <div>
+                                Model: <b>{trialCar.name}</b>
+                              </div>
                             </p>
                           </div>
                         </Modal.Body>
@@ -313,6 +316,6 @@ const App = () => {
       </Box>
     </div>
   );
-};
+}
 
-export default App;
+export default TrialsCarAdminPage;

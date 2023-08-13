@@ -35,7 +35,7 @@ import { ToastContainer, toast } from "react-toastify";
 var CanvasJS = CanvasJSReact.CanvasJS;
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
-const App = () => {
+function TrialsCarDetailedPage() {
   const { id } = useParams();
 
   const [trialCarEntry, setTrialCarEntry] = useState({
@@ -449,4 +449,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default TrialsCarDetailedPage;

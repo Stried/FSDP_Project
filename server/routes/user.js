@@ -235,7 +235,7 @@ router.put("/viewAccount/changeDetails", validateToken, async (req, res) => {
     let checkUserPhone = await UserAccount.findOne({
         where: { phoneNo: data.phoneNo }
     });
-    if (checkUserPhone && data.phoneNo !== currentUser.phoneNo) {
+    if (checkUserPhone && data.phoneNo != currentUser.phoneNo) {
         res.status(400).json({ message: "Phone Number already exists." });
         return;
     };
@@ -797,6 +797,14 @@ router.get("/viewAccount/allFollowers/:username", validateToken, async (req, res
         console.log("Followers failed loading.");
         console.log(err);
     }
+})
+
+router.get("/getUserByFullName/:fullName", async (req, res) => {
+    let theUser = await UserAccount.findOne({
+        where: { fullName: req.params.fullName }
+    });
+
+    res.json(theUser);
 })
 
 module.exports = router;

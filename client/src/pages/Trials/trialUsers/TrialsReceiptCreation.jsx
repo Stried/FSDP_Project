@@ -21,7 +21,7 @@ import { useFormik } from "formik";
 import DefaultImage from '../../../../DefaultImage';
 import * as yup from "yup";
 import { setHours, setMinutes } from "date-fns";
-const App = () => {
+function TrialsReceiptCreation() {
   const navigate = useNavigate();
 
   const { model } = useParams();
@@ -344,4 +344,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default TrialsReceiptCreation;

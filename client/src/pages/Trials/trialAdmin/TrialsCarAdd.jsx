@@ -18,7 +18,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import CustomSelectCars from "./CustomSelectCars";
 
-const App = () => {
+function TrialsCarAdd() {
   
   const options = [
     { value: "Serangoon", label: "Serangoon" },
@@ -42,14 +42,14 @@ const App = () => {
       carPlateNo: yup
         .string()
         .trim()
-        .min(8, "Name must be Minimum 3 Characters.")
-        .max(8, "Name must be Maximum 100 Characters")
-        .required("Name is required."),
+        .min(8, "Car plate Number must be Minimum 8 Characters.")
+        .max(8, "Car plate Number must be Maximum 8 Characters")
+        .required("Car plate Number is required."),
       address: yup
         .string()
         .trim()
-        .min(3, "address must be Minimum 3 Characters.")
-        .max(100, "address must be Maximum 100 Characters")
+        .min(3, "Address must be Minimum 3 Characters.")
+        .max(100, "Address must be Maximum 100 Characters")
         .required("Address is required"),
     }),
     onSubmit: async (data) => {
@@ -81,7 +81,6 @@ const App = () => {
           onSubmit={formik.handleSubmit}
           className="mx-7 ml-16"
         >
-          <label >Car Plate No</label>
           <FormInputSingleLine
             name="Car Plate No"
             valueName="carPlateNo"
@@ -95,7 +94,7 @@ const App = () => {
           />
 <br></br>
 <br></br>
-          <label >Address</label>
+          <label className="text-white">Address</label>
           <CustomSelectCars
             value={formik.values.address}
             onChange={(value) => formik.setFieldValue("address", value.value)}
@@ -121,4 +120,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default TrialsCarAdd;

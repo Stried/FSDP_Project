@@ -57,7 +57,7 @@ import StoreMain from "./pages/Store/StoreMain";
 import StoreAddItem from "./pages/Store/StoreAddItem";
 import StoreUpdateItem from "./pages/Store/StoreUpdateItem";
 import StoreSpecific from "./pages/Store/StoreSpecific";
-import StoreReceiptCreate from "./pages/Store/StoreReceipt/StoreReceiptCreate"
+import StoreReceiptCreate from "./pages/Store/StoreReceipt/StoreReceiptCreate";
 import AdminEditUser from "./pages/Users/adminComponents/AdminEditUser";
 import InvalidToken from "./pages/Users/InvalidToken";
 
@@ -83,14 +83,20 @@ function App() {
         }
     }
 
-    const Protected = ({ isAdminCheck, children }) => {
-        let testCheck = isAdminCheck;
-        console.log(testCheck)
-        if (!testCheck) {
-            console.log(testCheck);
-            console.log("Failed");
-            return <Navigate to={"/404"} />;
+    const Protected = ({ children }) => {
+        if (localStorage.getItem("accessToken")) {
+            // Todo: Get user data from server
+            http.get("/user/auth").then((res) => {
+                const testCheck = res.data.user.adminNo;
+                if (!testCheck) {
+                    console.log(testCheck);
+                    console.log("Failed");
+                    return <Navigate to={"/404"} />;
+                }
+                setIsAdminCheck(res.data.user.adminNo)
+            });
         }
+
 
         return children;
     };
@@ -157,7 +163,7 @@ function App() {
                             <Route
                                 path={"/user/adminPanel"}
                                 element={
-                                    <Protected isAdminCheck={isAdminCheck}>
+                                    <Protected>
                                         <AdminPanelMain />
                                     </Protected>
                                 }
@@ -169,7 +175,7 @@ function App() {
                             <Route
                                 path={"/admin/viewAllUsers"}
                                 element={
-                                    <Protected isAdminCheck={isAdminCheck}>
+                                    <Protected>
                                         <ViewAllAccounts />
                                     </Protected>
                                 }
@@ -177,7 +183,7 @@ function App() {
                             <Route
                                 path={"/admin/editUser/:username"}
                                 element={
-                                    <Protected isAdminCheck={isAdminCheck}>
+                                    <Protected>
                                         <AdminEditUser />
                                     </Protected>
                                 }
@@ -185,7 +191,7 @@ function App() {
                             <Route
                                 path={"/admin/createAdmin"}
                                 element={
-                                    <Protected isAdminCheck={isAdminCheck}>
+                                    <Protected>
                                         <CreateAdmin />
                                     </Protected>
                                 }
@@ -204,24 +210,15 @@ function App() {
                             />
                             <Route
                                 path={"/locations/createLocation"}
-                                element={
-                                    <Protected isAdminCheck={isAdminCheck}>
-                                        <CreateLocations />
-                                    </Protected>}
+                                element={<CreateLocations />}
                             />
                             <Route
                                 path={"/locations/editLocations/:id"}
-                                element={
-                                    <Protected isAdminCheck={isAdminCheck}>
-                                        <EditLocations />
-                                    </Protected>}
+                                element={<EditLocations />}
                             />
                             <Route
                                 path={"locations/ViewLocationStatus"}
-                                element={
-                                    <Protected isAdminCheck={isAdminCheck}>
-                                        <ViewLocationStatus />
-                                    </Protected>}
+                                element={<ViewLocationStatus />}
                             />
                             <Route
                                 path={"/Store/StoreMain"}
@@ -245,29 +242,26 @@ function App() {
                             />
                             <Route
                                 path={"/Trials/trialAdmin/TrialsCarAdminPage"}
-                                
                                 element={
-                                    <Protected isAdminCheck={isAdminCheck}>
+                                    <Protected>
                                         <TrialsAdminPage />
                                     </Protected>
-                            }
+                                }
                             />
                             <Route
                                 path={
                                     "/Trials/trialAdmin/TrialsCarAdminUpdate/:carPlateNo"
                                 }
-                                
                                 element={
-                                    <Protected isAdminCheck={isAdminCheck}>
+                                    <Protected>
                                         <TrialsUpdatePage />
                                     </Protected>
-                            }
-                                
+                                }
                             />
                             <Route
                                 path={"/Trials/trialAdmin/TrialsCarAdd"}
                                 element={
-                                    <Protected isAdminCheck={isAdminCheck}>
+                                    <Protected>
                                         <TrialsAddPage />
                                     </Protected>
                                 }
@@ -277,10 +271,10 @@ function App() {
                                     "/Trials/trialAdmin/TrialsCarDetailedPage/:id"
                                 }
                                 element={
-                                    <Protected isAdminCheck={isAdminCheck}>
+                                    <Protected>
                                         <TrialsCarDetails />
                                     </Protected>
-                            }
+                                }
                             />
                             <Route
                                 path={"/Trials/trialUsers/TrialsCarUserPage"}
@@ -297,7 +291,7 @@ function App() {
                                     "/Trials/trialAdmin/TrialsReceiptAdminPage"
                                 }
                                 element={
-                                    <Protected isAdminCheck={isAdminCheck}>
+                                    <Protected>
                                         <TrialsReceiptAdminPage />
                                     </Protected>
                                 }
@@ -307,20 +301,18 @@ function App() {
                                     "/Trials/trialAdmin/TrialsReceiptReportPage/:id"
                                 }
                                 element={
-                                    <Protected isAdminCheck={isAdminCheck}>
+                                    <Protected>
                                         <TrialsReceiptReportPage />
                                     </Protected>
-                            }
+                                }
                             />
                             <Route
-                                path={
-                                    "/Trials/trialUsers/TrialsData"
-                                }
+                                path={"/Trials/trialUsers/TrialsData"}
                                 element={
-                                    <Protected isAdminCheck={isAdminCheck}>
+                                    <Protected>
                                         <TrialsData />
                                     </Protected>
-                            }
+                                }
                             />
                             <Route
                                 path={"*"}
