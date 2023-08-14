@@ -10,7 +10,7 @@ import {
 } from "react-router-dom";
 import * as React from "react";
 ("use client");
-import Imageone from "./../../../assets/CarouselUserTrialCars/charging.png";
+import Imageone from "./../../../assets/CarouselUserTrialCars/2023-tesla-model-x-101-1671475309.jpeg";
 import Imagetwo from "./../../../assets/CarouselUserTrialCars/electric-cars-vehicles-explainer-101.png";
 import Imagethree from "./../../../assets/CarouselUserTrialCars/charger.png";
 import { Carousel } from "react-responsive-carousel";
@@ -196,7 +196,7 @@ function TrialsCarUserPage() {
             <a href="#">
               <div className="overlay absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 hover:opacity-100 bg-black bg-opacity-50">
                 <p className="overlay-text text-white text-center text-3xl p-2">
-                  Charging Stations
+                  Charging Stations Guide
                 </p>
               </div>
             </a>
