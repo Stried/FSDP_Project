@@ -62,7 +62,7 @@ router.post("/createStoreReceipt", validateToken, async (req, res) => {
         cardNumber: yup.string().min(16, "Card Number cannot be more than 16").max(16, "Card Number cannot be more than 16").required("Card Number cannot be empty"),
         cardHolderName: yup.string().required("Card Holder Name cannot be empty"),
         cardExpiryMonth: yup.number().min(1, "Month of Expiry cannot be less than 2 characters").max(12, "Month of Expiry cannot be more than 12").required("Month of Expiry cannot be empty"),
-        cardExpiryYear: yup.number().min(24, "Year of Expiry cannot be less than 2 characters").max(99, "Year of Expiry cannot be more than 2 characters").required("Year of Expiry cannot be empty"),
+        cardExpiryYear: yup.number().min(24, "Year of Expiry cannot be before 2024").max(99, "Year of Expiry cannot be more than 2 characters").required("Year of Expiry cannot be empty"),
         cvc: yup.number().test("is-three-digit", "Security Code must be a 3-digit number.", (value) => value.toString().length === 3).required("Security Code cannot be empty"),
         userAddress: yup.string().required("Address cannot be empty"),
         userCity: yup.string().required("City cannot be empty"),

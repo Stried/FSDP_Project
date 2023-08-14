@@ -9,9 +9,11 @@ import FormInputSingleLine from "../../../components/FormInputSingleLine";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
+import { Modal } from "flowbite-react";
 
 function StoreReceiptCreate() {
     const { id } = useParams();
+    const [openModal, setOpenModal] = useState("");
 
     const navigate = useNavigate();
 
@@ -33,7 +35,7 @@ function StoreReceiptCreate() {
             cardNumber: yup.string().min(16, "Card Number cannot be more than 16").max(16, "Card Number cannot be more than 16").required("Card Number cannot be empty"),
             cardHolderName: yup.string().required("Card Holder Name cannot be empty"),
             cardExpiryMonth: yup.number().min(1, "Month of Expiry cannot be less than 2 characters").max(12, "Month of Expiry cannot be more than 12").required("Month of Expiry cannot be empty"),
-            cardExpiryYear: yup.number().min(24, "Year of Expiry cannot be less than 2 characters").max(99, "Year of Expiry cannot be more than 2 characters").required("Year of Expiry cannot be empty"),
+            cardExpiryYear: yup.number().min(24, "Year of Expiry cannot be before 2024").max(99, "Year of Expiry cannot be more than 2 characters").required("Year of Expiry cannot be empty"),
             cvc: yup.number().test("is-three-digit", "Security Code must be a 3-digit number.", (value) => value.toString().length === 3).required("Security Code cannot be empty"),
             userAddress: yup.string().required("Address cannot be empty"),
             userCity: yup.string().required("City cannot be empty"),
@@ -51,7 +53,6 @@ function StoreReceiptCreate() {
                     http.delete(`/store/deleteStoreItem/${id}`)
                     .then((res) => {
                         console.log(res.data);
-                        navigate("/store/StoreMain");
                     });
                 })
                 .catch(function (err) {
@@ -179,11 +180,36 @@ function StoreReceiptCreate() {
                     <div>
                         <Button
                             variant="contained"
-                            type="submit"
-                            className="bg-green-400 text-black hover:bg-green-600 hover:text-white mt-5"							>
+                            className="bg-green-400 text-black hover:bg-green-600 hover:text-white mt-5"
+                            onClick={() => {
+                                setOpenModal("deleteModal");
+                            }}
+                            type="submit"							>
                             Purchase
                         </Button>
                     </div>
+                    <Modal
+                        dismissible
+                        show={openModal === "deleteModal"}
+                        onClose={() => setOpenModal(undefined)}
+                    >
+                        <Modal.Header>Purcahse complete</Modal.Header>
+                        <Modal.Body>
+                            <div className="space-y-6">
+                                <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                                    Click to Exit
+                                </p>
+                            </div>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <button
+                                onClick={() => navigate("/store/StoreMain")}
+                                className="px-3 py-2 bg-green-500 hover:bg-green-600 hover:text-white rounded font-medium"
+                            >
+                                Exit
+                            </button>
+                        </Modal.Footer>
+                    </Modal>
                 </div>
             </Box>
         </Box>
