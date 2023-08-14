@@ -39,7 +39,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UserContext from "../../../contexts/UserContext";
 import * as yup from "yup";
-import charging from "./../../../../../client/src/assets/CarouselUserTrialCars/charging.png"
 import dayjs from 'dayjs';
 function ViewAccount() {
     const navigate = useNavigate();
